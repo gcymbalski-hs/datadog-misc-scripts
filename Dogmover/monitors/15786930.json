@@ -1,0 +1,42 @@
+{
+    "deleted": null,
+    "id": 15786930,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1080556332,
+            "monitor_id": 15786930,
+            "scope": [
+                "*"
+            ],
+            "start": 1608827012
+        }
+    ],
+    "message": "@slack-incidents-beta",
+    "multi": false,
+    "name": "High Average Response Time on UK Production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 1200.0,
+            "warning": 1000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_10m):max:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.avg{project:handshake-uk-production} > 1200",
+    "tags": [],
+    "type": "metric alert"
+}

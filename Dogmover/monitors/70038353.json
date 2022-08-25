@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 70038353,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}} The student mobile app is experiencing a higher than usual number of errors. Check Bugsnag's [timeline](https://app.bugsnag.com/handshake/handshake-ios-student/timeline?filters[event.since][0]=1h&filters[error.status][0]=open) to see what's going wrong. {{/is_alert}} @slack-incidents-students",
+    "multi": false,
+    "name": "Student iOS App Stability",
+    "options": {
+        "enable_logs_sample": false,
+        "groupby_simple_monitor": true,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "restriction_query": null,
+        "silenced": {},
+        "thresholds": {
+            "critical": 200.0,
+            "warning": 150.0
+        },
+        "timeout_h": 1
+    },
+    "query": "events(\"source:bugsnag status:error \\\"Handshake iOS - Student\\\"\").rollup(\"count\").last(\"1h\") > 200",
+    "tags": [
+        "team:student"
+    ],
+    "type": "event-v2 alert"
+}

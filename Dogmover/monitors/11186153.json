@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 11186153,
+    "matching_downtimes": [],
+    "message": "The replica {{ replica_name.name }} replicating off of leader database {{ database_id.name }} has a high replication lag. This is measured in bytes. It means that requests reading the replica database may be reading out of date data. Potential resolutions:\n\n1. If database load is below 50% cpu and not expected to increase, disable the replica (see Knockoff configuration)\n2. List out and kill queries that are potentially delaying the replication lag \n @slack-incidents-infrastructure",
+    "multi": false,
+    "name": "Production Handshake Replica ({{ replica_name.name }}) High Replication Lag",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 30,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10000000.0,
+            "warning": 8000000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:gcp.cloudsql.database.postgresql.replication.replica_byte_lag{database_id:handshake-production:handshake-charcoal-lemur,replica_name:handshake-production:handshake-arrogant-ape,database_id:handshake-production:handshake-driving-stallion,database_id:handshake-production:handshake-upward-worm} > 10000000",
+    "tags": [
+        "team:platform"
+    ],
+    "type": "metric alert"
+}

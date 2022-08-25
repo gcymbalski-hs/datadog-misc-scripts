@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 35303977,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}The virtual fair schedule page is taking a long time to load. Check for recent changes to virtual fairs. Alternatively, check if other incidents are occurring as it may be a widespread issue.{{/is_alert}}\n\n{{#is_recovery}}Latency is back to normal.{{/is_recovery}}\n\n@slack-incidents-emp-productivity",
+    "multi": false,
+    "name": "Virtual Fair Schedule Page High Latency",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3.0,
+            "warning": 2.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:trace.rack.request.duration.by.resource_service.95p{env:production,service:handshake,resource_name:careerfairscontroller_schedule} > 3",
+    "tags": [],
+    "type": "metric alert"
+}

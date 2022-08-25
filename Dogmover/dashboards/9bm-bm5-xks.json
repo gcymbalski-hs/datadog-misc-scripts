@@ -1,0 +1,133 @@
+{
+    "author_handle": "support-handshake-1",
+    "author_name": "Datadog Support",
+    "created_at": "2018-04-19T07:04:25.824691+00:00",
+    "description": "Heroku equivelant (cloned)",
+    "id": "9bm-bm5-xks",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2018-04-19T07:10:13.139242+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "*",
+            "name": "namespace",
+            "prefix": "kube_namespace"
+        },
+        {
+            "default": "*",
+            "name": "tier",
+            "prefix": "kube_tier"
+        },
+        {
+            "default": "*",
+            "name": "state_namespace",
+            "prefix": "namespace"
+        },
+        {
+            "default": "*",
+            "name": "state_deployment",
+            "prefix": "deployment"
+        }
+    ],
+    "title": "DD Support - Application State (cloned)",
+    "url": "/dashboard/9bm-bm5-xks/dd-support---application-state-cloned",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:kubernetes.cpu.usage.total{$cluster,$namespace,$tier} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Avg of kubernetes.cpu.usage.total over $cluster,$namespace,$tier by kube_depl...",
+                "type": "timeseries"
+            },
+            "id": 298850683
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:kubernetes.cpu.usage.total{$cluster,$namespace,$tier} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Max of kubernetes.cpu.usage.total over $cluster,$namespace,$tier by kube_depl...",
+                "type": "timeseries"
+            },
+            "id": 298850684
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "count_not_null(max:kubernetes.cpu.usage.total{$cluster,$namespace,$tier} by {kube_deployment})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "COUNT NON NULL (cpu max)",
+                "type": "timeseries"
+            },
+            "id": 298850708
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:kubernetes.memory.usage{$cluster,$namespace,$tier} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Avg of kubernetes.memory.usage over $cluster,$namespace,$tier by kube_deployment",
+                "type": "timeseries"
+            },
+            "id": 298850686
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "count_not_null(avg:kubernetes.memory.usage{$cluster,$namespace,$tier} by {kube_deployment})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "COUNT NON NULL (mem)",
+                "type": "timeseries"
+            },
+            "id": 298850981
+        }
+    ]
+}

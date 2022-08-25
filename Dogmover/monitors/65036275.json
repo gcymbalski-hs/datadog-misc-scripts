@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 65036275,
+    "matching_downtimes": [],
+    "message": "`next::employer::jobpositionscontroller_index` error rate is too high.",
+    "multi": false,
+    "name": "Resource next::employer::jobpositionscontroller_index has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m):( sum:trace.rack.request.errors{env:production,resource_name:next::employer::jobpositionscontroller_index,service:handshake}.as_count() / sum:trace.rack.request.hits{env:production,resource_name:next::employer::jobpositionscontroller_index,service:handshake}.as_count() ) > 0.05",
+    "tags": [
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-errors"
+    ],
+    "type": "query alert"
+}

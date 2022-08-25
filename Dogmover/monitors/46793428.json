@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 46793428,
+    "matching_downtimes": [],
+    "message": "Datadog Daemon Set containers in handshake-demo have a lot of restarts. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2295562637/K8+Container+Restarts for help debugging.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Datadog Daemon Set Restarts in handshake-demo",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 20.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{project:handshake-demo,kube_namespace:datadog} by {kube_daemon_set} > 20",
+    "tags": [
+        "env:demo",
+        "project:handshake-demo",
+        "region:us-central1",
+        "repo:terraform-web",
+        "team:cloud-engineering"
+    ],
+    "type": "query alert"
+}

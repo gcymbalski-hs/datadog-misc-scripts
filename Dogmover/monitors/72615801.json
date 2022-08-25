@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 72615801,
+    "matching_downtimes": [],
+    "message": "**Employer ID: {{[@current_institution.id].name}} \nEmployer Name: {{[@current_institution.name].name}} **\n\nThis employer has triggered a 500 on the dashboard or company profile via (controller): {{span.resource_name}} \n\n@gabriel@joinhandshake.com \n\n([Datadog login if needed](https://app.datadoghq.com/account/login/id/d5c071843))",
+    "multi": true,
+    "name": "Company profile 500",
+    "options": {
+        "enable_logs_sample": true,
+        "groupby_simple_monitor": false,
+        "include_tags": false,
+        "new_group_delay": 60,
+        "notify_audit": true,
+        "notify_no_data": false,
+        "restriction_query": null,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        }
+    },
+    "query": "trace-analytics(\"env:production service:handshake operation_name:rack.request resource_name:\\\"Next::Employer::EmployersController#show\\\" status:error\").rollup(\"cardinality\", \"error.type\").by(\"@current_institution.id,@current_institution.name\").last(\"5m\") >= 1",
+    "tags": [
+        "env:production",
+        "service:handshake",
+        "operation_name:rack.request",
+        "resource_name:\"Next::Employer::EmployersController#show\"",
+        "status:error"
+    ],
+    "type": "trace-analytics alert"
+}

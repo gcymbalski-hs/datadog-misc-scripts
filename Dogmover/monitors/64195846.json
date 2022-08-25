@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 64195846,
+    "matching_downtimes": [],
+    "message": "`next::employer::employerscontroller_create` average latency is too high.\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Resource next::employer::employerscontroller_create has a high average latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.5
+        }
+    },
+    "query": "avg(last_10m):( avg:trace.rack.request{env:production,resource_name:next::employer::employerscontroller_create,service:handshake} ) > 1.5",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::employerscontroller_create",
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-controller-latency"
+    ],
+    "type": "query alert"
+}

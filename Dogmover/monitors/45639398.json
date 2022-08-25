@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 45639398,
+    "matching_downtimes": [],
+    "message": "Redis instance {{instance_id.name}} is rejecting connections.\n @slack-incidents-platform-services",
+    "multi": true,
+    "name": "Session Service Redis Connections Rejected",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1h):max:gcp.redis.stats.reject_connections_count{instance_id:projects/handshake-demo/locations/us-central1/instances/session-service-crisp-alpaca OR instance_id:projects/handshake-staging/locations/us-central1/instances/session-service-expert-impala OR instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy OR instance_id:projects/handshake-uk-staging/locations/europe-west2/instances/session-service-gorgeous-jaguar OR instance_id:projects/handshake-uk-production/locations/europe-west2/instances/session-service-selected-tetra} by {instance_id}.as_count() > 0",
+    "tags": [
+        "team:platform",
+        "team:iam"
+    ],
+    "type": "query alert"
+}

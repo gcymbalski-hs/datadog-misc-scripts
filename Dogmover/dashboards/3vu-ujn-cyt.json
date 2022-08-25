@@ -1,0 +1,238 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-07-09T20:47:36.056222+00:00",
+    "description": "",
+    "id": "3vu-ujn-cyt",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-04-27T23:37:45.672627+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "project",
+            "prefix": "project_id"
+        },
+        {
+            "default": "*",
+            "name": "dataset_id",
+            "prefix": "dataset_id"
+        }
+    ],
+    "title": "Bigquery",
+    "url": "/dashboard/3vu-ujn-cyt/bigquery",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Insert Rates",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:gcp.bigquery.storage.uploaded_row_count{$project,dataset_id:mailgun_events} by {dataset_id,table}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Mailgun Record Inserts",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1736138540609112
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:gcp.bigquery.storage.uploaded_row_count{$project,dataset_id:segment} by {dataset_id,table}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Segment Record Inserts",
+                            "type": "timeseries"
+                        },
+                        "id": 2810747840219028
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:gcp.bigquery.storage.uploaded_row_count{$project,dataset_id:activities} by {dataset_id,table}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Activities Record Inserts",
+                            "type": "timeseries"
+                        },
+                        "id": 6742365042494714
+                    }
+                ]
+            },
+            "id": 7174857018575766
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Dead Letter",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:gcp.bigquery.storage.uploaded_row_count{$project,dataset_id:activities,table:dead_letter} by {dataset_id,table}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Activities Dead Letter Table",
+                            "type": "timeseries"
+                        },
+                        "id": 2842117831166082
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:gcp.bigquery.storage.uploaded_row_count{$project,dataset_id:segment,table:dead_letter} by {dataset_id,table}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Segment Dead Letter Table",
+                            "type": "timeseries"
+                        },
+                        "id": 1950515847109842
+                    }
+                ]
+            },
+            "id": 6634479147725276
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.bigquery.query.count{$project,$dataset_id} by {project_id}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Query Count",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2509366962128360
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.bigquery.query.execution_times.avg{$project,$dataset_id} by {project_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Avg Query Execution Time",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 437808267604420
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.bigquery.query.scanned_bytes{$project,$dataset_id} by {project_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Scanned Bytes per Project",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5703281736722490
+        }
+    ]
+}

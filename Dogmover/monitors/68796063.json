@@ -1,0 +1,25 @@
+{
+    "deleted": null,
+    "id": 68796063,
+    "matching_downtimes": [],
+    "message": "`handshake-notifications` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Service handshake-notifications has a high p90 latency on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.8
+        }
+    },
+    "query": "percentile(last_10m):p90:trace.inbox_hsn_handshake_notifications_consumer{env:production,service:handshake-notifications} > 1",
+    "tags": [
+        "service:handshake-notifications",
+        "env:production"
+    ],
+    "type": "metric alert"
+}

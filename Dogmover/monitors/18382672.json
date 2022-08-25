@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 18382672,
+    "matching_downtimes": [],
+    "message": "Requests to fetch users via the Skilljar API are resulting in a lot of unexpected status codes.\n\nThese requests should return 200 status codes when a Skilljar user is found.\n\nPlease check the runbook on how to debug: https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#Skilljar-user-errors-(i.e.-Triggered:-Skilljar#Index-has-a-high-error-rate-in-production)\n\nPlease note that we should verify that the error here is not stemming from a mishandling of API requests / responses on our side\n\nPlease reach out to Alex if you need help\n\n @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Skilljar - User lookup requests have a high error rate in {{env.name}}",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "renotify_occurrences": null,
+        "renotify_statuses": null,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3.0,
+            "warning": 2.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):( sum:handshake.skilljar.find_skilljar_user.errors{*} by {env}.as_count() / sum:handshake.skilljar.find_skilljar_user.hits{*} by {env}.as_count() ) > 3",
+    "tags": [
+        "service:handshake",
+        "resource_name:skilljarcontroller_index",
+        "team:university"
+    ],
+    "type": "query alert"
+}

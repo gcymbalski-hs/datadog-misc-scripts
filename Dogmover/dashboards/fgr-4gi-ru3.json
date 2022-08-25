@@ -1,0 +1,272 @@
+{
+    "author_handle": "jauriemma@joinhandshake.com",
+    "author_name": "Jeff Auriemma",
+    "created_at": "2021-08-20T13:24:19.488628+00:00",
+    "description": "",
+    "id": "fgr-4gi-ru3",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-10-06T19:43:33.615228+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "[Student] Iterable Enablement",
+    "url": "/dashboard/fgr-4gi-ru3/student-iterable-enablement",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "does not send iterable event",
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.create_internal_message.after_deliver_email{$env,no_iterable_event}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "sends iterable event",
+                                "formula": "query0"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "sum:handshake.create_internal_message.after_deliver_email{$env,send_iterable_dm_event}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "handshake.create_internal_message.after_deliver_email with env:staging",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4195533008825215,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:handshake.toggles.checks{$env,*,*,region:us-central1} by {result}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Toggles by Result",
+                "type": "timeseries"
+            },
+            "id": 6150780618892664,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.elasticsearch.query.hits{env:production,region:us-central1,resource:517541543943a72c,service:handshake-elasticsearch}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.elasticsearch.query.errors{env:production,region:us-central1,resource:517541543943a72c,service:handshake-elasticsearch}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests/Errors tes_campaign_results",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4150218513660457,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 8,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.elasticsearch.query.hits{env:production,region:us-central1,resource:e36fc3102bd37af2,service:handshake-elasticsearch}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.elasticsearch.query.errors{env:production,region:us-central1,resource:e36fc3102bd37af2,service:handshake-elasticsearch}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Requests/Errors tes_campaign_results__email_events",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6004312028132724,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:iterable_event_ingestor.requests{*}.as_count()"
+                    }
+                ],
+                "title": "iterable_event_ingestor.requests",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 6713086523617476,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 2
+            }
+        }
+    ]
+}

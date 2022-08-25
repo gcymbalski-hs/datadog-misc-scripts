@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 79960335,
+    "matching_downtimes": [],
+    "message": "There is a failure allocating NAT IP addresses in the gateway. The most common reason is having insufficient number of NAT IP addresses.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Unable to allocate NAT IP address",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 900,
+        "no_data_timeframe": 120,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "avg(last_1h):avg:gcp.router.nat.nat_allocation_failed{*} by {gateway_name,project_id} > 0",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

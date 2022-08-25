@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 38458169,
+    "matching_downtimes": [],
+    "message": "Cronofy bulk sync request has partial errors, \n\nCheck Bugsnag for what the partial errors are and manually resync the calendar associated if needed.\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks#EducationIncidentRunbooks-CronofyCalendarsOutofSync\n\n@slack-incidents-edu",
+    "multi": false,
+    "name": "EDU Cronofy Batch Process Partial Errors",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_15m):avg:handshake.cronofy_partial_success_error{*}.as_count() > 10",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

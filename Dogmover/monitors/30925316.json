@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 30925316,
+    "matching_downtimes": [],
+    "message": "[{{project_id}} - skill-groups-skills-to-handshake] subscription is backed up. Either it is receiving more messages than it can handle, or it is not processing messages properly.\n\n{{#is_alert}}\nTo resolve, investigate why the subscription is backed up, such as running a backfill. If there is a surge of events, it may be fine and we just need to consider scaling up.\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{project_id}} -skill-groups-skills-to-handshake] subscription is no longer backed up.\n{{/is_recovery}} @slack-incidents-employers",
+    "multi": true,
+    "name": "Pubsub: skill-groups-skills-to-handshake is backed up",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 174000.0,
+            "warning": 129600.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_30m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:skill-groups-skills-to-handshake} by {project_id} > 174000",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "query alert"
+}

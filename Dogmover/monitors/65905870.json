@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 65905870,
+    "matching_downtimes": [],
+    "message": "Monitor Delayed Mass Emails at [https://app.joinhandshake.com/admin/object_browser](https://app.joinhandshake.com/admin/object_browser) (delayed mass emails are denoted by the column: **Delayed by Thirty Minutes?**\n\nA MassEmail must have gotten delayed from sending even though the current time is past the MassEmail's send date. This could happen for various reasons but the most recent case was due to a backed up Sidekiq queue that prevented jobs in that queue from running. \n\nPlease see more details at: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2424849/General+Runbook+of+Smaller+Incidents#GeneralRunbookofSmallerIncidents-LongrunningMassEmails @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Delayed Mass Emails",
+    "options": {
+        "escalation_message": "There are still mass emails that have been delayed from sending past their send date/time",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 720,
+        "renotify_occurrences": 0,
+        "renotify_statuses": [
+            "alert",
+            "no data"
+        ],
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "min(last_1h):sum:handshake.health.mass_email_delayed_past_send_date_count{env:production} by {region} > 0",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 11776506,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nHandshake {{cluster-name.name}} web CPU Usage is High. \n\n[Datadog Kubernetes Pod and Deployments Dashboard](https://app.datadoghq.com/dashboard/5j5-6kj-ngv/kubernetes-pod--deployment-metrics?tpl_var_deployment=handshake-web&tpl_var_namespace=handshake).\n\nConsider:\n- The max number of pods has been reached and this needs to be increased?\n- Pods are in a bad state and need to be restarted?\n- A recent change that needs to be reverted / rolled back?\n{{/is_alert}}\n\n{{#is_recovery}} Handshake {{cluster-name.name}} web CPU Usage alert is off. {{/is_recovery}}\n\n@slack-incidents\n\n{{#is_match \"region.name\" \"europe-\"}}\n@slack-incidents-uk \n{{/is_match}}",
+    "multi": true,
+    "name": "Handshake {{cluster-name.name}} web CPU Usage is High",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.99,
+            "warning": 0.95
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_30m):( max:docker.cpu.usage{kube_deployment:handshake-web} by {cluster-name,region} / max:kubernetes.cpu.limits{kube_deployment:handshake-web} by {cluster-name,region} ) / 100 > 0.99",
+    "tags": [],
+    "type": "query alert"
+}

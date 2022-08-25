@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 11050019,
+    "matching_downtimes": [],
+    "message": "{{^is_match \"cluster_name\" \"test\"}} {{/is_match}}\n\n{{cluster_name}} failed in {{project_id}} @slack-test-incidents-data",
+    "multi": true,
+    "name": "DAG task failure test",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 900,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_5m",
+            "trigger_window": "last_5m"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_1h):anomalies(max:gcp.dataproc.cluster.job.failed_count{*} by {cluster_name,project_id}, 'basic', 1, direction='above', alert_window='last_5m', interval=20, count_default_zero='true') >= 1",
+    "tags": [],
+    "type": "query alert"
+}

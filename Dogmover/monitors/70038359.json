@@ -1,0 +1,46 @@
+{
+    "deleted": null,
+    "id": 70038359,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1780003734,
+            "monitor_id": 70038359,
+            "scope": [
+                "*"
+            ],
+            "start": 1646166675
+        }
+    ],
+    "message": "{{#is_warning}}\n{{event.text}} \n@slack-stu-relationships-incidents \n{{/is_warning}}\n{{#is_alert}}\n{{event.text}} \n@slack-stu-relationships-incidents \n{{/is_alert}}",
+    "multi": true,
+    "name": "[STU Relationships] Generating Follow Up Conversations",
+    "options": {
+        "enable_logs_sample": false,
+        "escalation_message": "",
+        "groupby_simple_monitor": false,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "restriction_query": null,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 50.0,
+            "warning": 1.0
+        },
+        "timeout_h": 1
+    },
+    "query": "events(\"tags:(\"team:student\" AND \"env:production\") \\\"Generating Follow Up Conversations\\\"\").rollup(\"count\").by(\"project\").last(\"5m\") >= 50",
+    "tags": [
+        "team:student",
+        "squad:stu-relationships"
+    ],
+    "type": "event-v2 alert"
+}

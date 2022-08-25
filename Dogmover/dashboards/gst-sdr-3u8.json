@@ -1,0 +1,363 @@
+{
+    "author_handle": "dweinand@joinhandshake.com",
+    "author_name": "Dan Weinand",
+    "created_at": "2019-06-19T21:48:38.899905+00:00",
+    "description": "",
+    "id": "gst-sdr-3u8",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2020-04-08T11:22:04.646673+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Frontend] Student Overview",
+    "url": "/dashboard/gst-sdr-3u8/frontend-student-overview",
+    "widgets": [
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 2,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_red",
+                                "value": 7300
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_yellow",
+                                "value": 5166
+                            },
+                            {
+                                "comparator": "<=",
+                                "palette": "white_on_green",
+                                "value": 5166
+                            }
+                        ],
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,user:students,connection:4g}"
+                    }
+                ],
+                "text_align": "center",
+                "time": {
+                    "live_span": "1d"
+                },
+                "title": "Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 2427110310005924,
+            "layout": {
+                "height": 15,
+                "width": 44,
+                "x": 0,
+                "y": 1
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,user:students,connection:4g}.rollup(avg, 86400)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "3mo"
+                },
+                "title": "Past Quarter Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 609099831870346,
+            "layout": {
+                "height": 15,
+                "width": 64,
+                "x": 44,
+                "y": 1
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_red",
+                                "value": 7300
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_yellow",
+                                "value": 5166
+                            },
+                            {
+                                "comparator": "<=",
+                                "palette": "white_on_green",
+                                "value": 5166
+                            }
+                        ],
+                        "q": "top(avg:fmc.handshake.tti.95percentile{env:production,user:students,connection:4g} by {resource}, 25, 'mean', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "time": {
+                    "live_span": "1d"
+                },
+                "title": "Slowest Resources - Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "toplist"
+            },
+            "id": 4380717641365156,
+            "layout": {
+                "height": 30,
+                "width": 108,
+                "x": 0,
+                "y": 61
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 2,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_red",
+                                "value": 7300
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_yellow",
+                                "value": 5166
+                            },
+                            {
+                                "comparator": "<=",
+                                "palette": "white_on_green",
+                                "value": 5166
+                            }
+                        ],
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,user:students,resource:dashboard,connection:4g}"
+                    }
+                ],
+                "time": {
+                    "live_span": "1d"
+                },
+                "title": "Dashboard - Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 3834467414567772,
+            "layout": {
+                "height": 15,
+                "width": 44,
+                "x": 0,
+                "y": 16
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 2,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_red",
+                                "value": 7300
+                            },
+                            {
+                                "comparator": ">=",
+                                "palette": "white_on_yellow",
+                                "value": 5166
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_green",
+                                "value": 5166
+                            }
+                        ],
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,user:students,resource:postings,connection:4g}"
+                    }
+                ],
+                "time": {
+                    "live_span": "1d"
+                },
+                "title": "Job Search - Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 3430213083035685,
+            "layout": {
+                "height": 15,
+                "width": 44,
+                "x": 0,
+                "y": 31
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,user:students,resource:dashboard}.rollup(avg, 86400)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "3mo"
+                },
+                "title": "Dashboard - Past Quarter Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 1125217432608290,
+            "layout": {
+                "height": 15,
+                "width": 64,
+                "x": 44,
+                "y": 16
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,user:students,resource:postings}.rollup(avg, 86400)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "3mo"
+                },
+                "title": "Job Search - Past Quarter Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 8340521631381448,
+            "layout": {
+                "height": 15,
+                "width": 64,
+                "x": 44,
+                "y": 31
+            }
+        },
+        {
+            "definition": {
+                "autoscale": false,
+                "custom_unit": "",
+                "precision": 2,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_red",
+                                "value": 7300
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_yellow",
+                                "value": 7300
+                            },
+                            {
+                                "comparator": "<=",
+                                "palette": "white_on_green",
+                                "value": 5166
+                            }
+                        ],
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,resource:student_account_registrations,connection:4g}"
+                    }
+                ],
+                "time": {},
+                "title": "Sign Up - Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 8626540911728774,
+            "layout": {
+                "height": 15,
+                "width": 44,
+                "x": 0,
+                "y": 46
+            }
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:fmc.handshake.tti.95percentile{env:production,connection:4g,resource:student_account_registrations}.rollup(avg, 86400)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "3mo"
+                },
+                "title": "Sign Up - Past Quarter Daily Average Time to Interactive 4G",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5156320463836887,
+            "layout": {
+                "height": 15,
+                "width": 64,
+                "x": 44,
+                "y": 46
+            }
+        }
+    ]
+}

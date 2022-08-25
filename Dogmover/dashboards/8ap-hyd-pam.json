@@ -1,0 +1,298 @@
+{
+    "author_handle": "pierre@joinhandshake.com",
+    "author_name": "Pierre Maris",
+    "created_at": "2021-01-26T17:45:06.349279+00:00",
+    "description": "",
+    "id": "8ap-hyd-pam",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-02-03T22:32:37.159896+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "Document uploads",
+    "url": "/dashboard/8ap-hyd-pam/document-uploads",
+    "widgets": [
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.uploads.perform{$env} by {upload_source}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Document upload perform by upload source",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8376800109494676
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.uploads.perform{$env} by {upload_source}.as_count().rollup(avg, 300)/avg:handshake.uploads.worker_success{$env} by {upload_source}.as_count().rollup(avg, 300)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Document upload success rate",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4624429096045882
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "metadata": [
+                            {
+                                "alias_name": "Retry",
+                                "expression": "avg:handshake.uploads.worker_retry{*} by {upload_source}.as_count()"
+                            },
+                            {
+                                "alias_name": "Failure",
+                                "expression": "avg:handshake.uploads.worker_permanent_failure{*} by {upload_source}.as_count()"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.uploads.worker_retry{$env} by {upload_source}.as_count(), avg:handshake.uploads.worker_permanent_failure{$env} by {upload_source}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Document uploads retry/failure by upload souce",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6057297882104906
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.fetch_pdf.start{$env} by {upload_source}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "PDF conversions by upload source",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4069322869648570
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.fetch_pdf.start{$env} by {content_type}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "PDF conversions by content type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6499296431026628
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "metadata": [
+                            {
+                                "alias_name": "Invalid document ID",
+                                "expression": "avg:handshake.fetch_pdf.cannot_find_document_error{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "Invalid file format",
+                                "expression": "avg:handshake.fetch_pdf.invalid_file_format{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "Cloudconvert error",
+                                "expression": "avg:handshake.cloudconvert.conversion_error{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "Handshake Office errors",
+                                "expression": "avg:handshake.handshake_office.retrieve_pdf_403_error{$env}.as_count()+avg:handshake.handshake_office_returned_errors{$env}.as_count()+avg:handshake.handshake_office_no_response{$env}.as_count()+avg:handshake.handshake_office_connection_refused{$env}.as_count()"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.fetch_pdf.cannot_find_document_error{$env}.as_count(), avg:handshake.fetch_pdf.invalid_file_format{$env}.as_count(), avg:handshake.cloudconvert.conversion_error{$env}.as_count(), avg:handshake.handshake_office.retrieve_pdf_403_error{$env}.as_count()+avg:handshake.handshake_office_returned_errors{$env}.as_count()+avg:handshake.handshake_office_no_response{$env}.as_count()+avg:handshake.handshake_office_connection_refused{$env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "PDF conversion errors",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2011955685911408
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "Cloudconvert",
+                                "expression": "avg:handshake.fetch_pdf.cloudconvert_conversion{$env}.as_count().rollup(avg, 300)/avg:handshake.cloudconvert.convert_success{$env}.as_count().rollup(avg, 300)"
+                            },
+                            {
+                                "alias_name": "Handshake Office",
+                                "expression": "avg:handshake.handshake_office.start{$env}.as_count().rollup(avg, 300)/(avg:handshake.handshake_office.retrieve_pdf_403_error{$env}.as_count().rollup(avg, 300)+avg:handshake.handshake_office_returned_errors{$env}.as_count().rollup(avg, 300)+avg:handshake.handshake_office_no_response{$env}.as_count().rollup(avg, 300)+avg:handshake.handshake_office_connection_refused{$env}.as_count().rollup(avg, 300))"
+                            }
+                        ],
+                        "q": "avg:handshake.fetch_pdf.cloudconvert_conversion{$env}.as_count().rollup(avg, 300)/avg:handshake.cloudconvert.convert_success{$env}.as_count().rollup(avg, 300), avg:handshake.handshake_office.start{$env}.as_count().rollup(avg, 300)/(avg:handshake.handshake_office.retrieve_pdf_403_error{$env}.as_count().rollup(avg, 300)+avg:handshake.handshake_office_returned_errors{$env}.as_count().rollup(avg, 300)+avg:handshake.handshake_office_no_response{$env}.as_count().rollup(avg, 300)+avg:handshake.handshake_office_connection_refused{$env}.as_count().rollup(avg, 300))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "PDF conversion success rate",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 9001568020199102
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.fetch_pdf.perform.avg{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average PDF conversion time",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5192705924757260
+        }
+    ]
+}

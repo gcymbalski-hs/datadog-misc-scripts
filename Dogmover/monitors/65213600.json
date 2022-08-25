@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 65213600,
+    "matching_downtimes": [],
+    "message": "`distributejobpostings` average latency is too high.",
+    "multi": false,
+    "name": "Resource distributejobpostings has a high average latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0,
+            "warning": 1.5
+        }
+    },
+    "query": "percentile(last_10m):(p90:trace.sidekiq.job{env:production,resource_name:distributejobpostings,service:handshake-sidekiq}) > 2",
+    "tags": [
+        "service:handshake-sidekiq",
+        "env:production",
+        "resource_name:distributejobpostings",
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-worker-latency"
+    ],
+    "type": "query alert"
+}

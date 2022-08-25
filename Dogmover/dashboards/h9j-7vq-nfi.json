@@ -1,0 +1,267 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-01-28T02:32:57.477929+00:00",
+    "description": null,
+    "id": "h9j-7vq-nfi",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2019-08-14T16:21:30.352455+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "*",
+            "name": "namespace",
+            "prefix": "namespace"
+        },
+        {
+            "default": "*",
+            "name": "deployment",
+            "prefix": "deployment"
+        }
+    ],
+    "title": "[Kubernetes] Kube State Metrics",
+    "url": "/dashboard/h9j-7vq-nfi/kubernetes-kube-state-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes_state.deployment.replicas_desired{$cluster,$namespace,$deployment} by {deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Desired pods by deployment",
+                "type": "timeseries"
+            },
+            "id": 275613460
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes_state.deployment.replicas_available{$cluster,$namespace,$deployment} by {deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Available pods by deployment",
+                "type": "timeseries"
+            },
+            "id": 275613461
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:kubernetes_state.deployment.replicas_unavailable{$cluster,$namespace,$deployment} by {deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Unavailable pods by deployment",
+                "type": "timeseries"
+            },
+            "id": 275613673
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes_state.container.running{$cluster,$namespace,$deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes_state.container.waiting{$cluster,$namespace,$deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes_state.container.terminated{$cluster,$namespace,$deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Container statuses",
+                "type": "timeseries"
+            },
+            "id": 275613684
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:kubernetes_state.deployment.replicas_desired{$cluster,$namespace,$deployment} by {deployment}-avg:kubernetes_state.deployment.replicas_available{$cluster,$namespace,$deployment} by {deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Number of desired deployments not ready",
+                "type": "timeseries"
+            },
+            "id": 275614436
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes_state.container.restarts{$cluster,$namespace,$deployment} by {pod}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Running Pods Restart Sum",
+                "type": "timeseries"
+            },
+            "id": 350280170
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:kubernetes_state.node.status{$cluster} by {node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Node Status Uptime",
+                "type": "timeseries"
+            },
+            "id": 275615437
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes_state.daemonset.desired{$cluster,$namespace,$deployment} by {daemonset}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Daemonset Desired Pod Counts",
+                "type": "timeseries"
+            },
+            "id": 275615662
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes_state.daemonset.ready{$cluster,$namespace,$deployment} by {daemonset}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Daemonset Ready Pod Counts",
+                "type": "timeseries"
+            },
+            "id": 275615663
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:kubernetes_state.nodes.by_condition{$cluster,$namespace,$deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Node States by Condition",
+                "type": "timeseries"
+            },
+            "id": 350275125
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:kubernetes_state.job.failed{$cluster,$namespace,$deployment}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Failed Jobs",
+                "type": "timeseries"
+            },
+            "id": 350275772
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:kubernetes_state.job.succeeded{$cluster,$namespace,$deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Jobs Succeeded",
+                "type": "timeseries"
+            },
+            "id": 350276533
+        }
+    ]
+}

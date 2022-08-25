@@ -1,0 +1,77 @@
+{
+    "author_handle": "lydia@joinhandshake.com",
+    "author_name": "Lydia Nash",
+    "created_at": "2022-07-27T22:57:26.112457+00:00",
+    "description": "",
+    "id": "bbr-zpg-g8p",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-27T22:57:26.112457+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": null,
+    "title": "Lydia's Dashboard Wed, Jul 27, 5:57:25 pm",
+    "url": "/dashboard/bbr-zpg-g8p/lydias-dashboard-wed-jul-27-55725-pm",
+    "widgets": [
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "default_zero(postgresql_queries_time_num / postgresql_queries_count_denom)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "postgresql_queries_time_num",
+                                "query": "sum:postgresql.queries.time{region:us-central1 AND db:handshake AND instance_name:handshake-brave-mayfly AND query_signature:c8e5623c8cde9c28}.as_count().rollup(10)"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "postgresql_queries_count_denom",
+                                "query": "sum:postgresql.queries.count{region:us-central1 AND db:handshake AND instance_name:handshake-brave-mayfly AND query_signature:c8e5623c8cde9c28}.as_count().rollup(10)"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "default_zero(postgresql_queries_time_num / postgresql_queries_count_denom)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "postgresql_queries_time_num",
+                                "query": "sum:postgresql.queries.time{region:us-central1 AND db:handshake AND instance_name:handshake-brave-mayfly AND NOT query_signature:c8e5623c8cde9c28}.as_count().rollup(10)"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "postgresql_queries_count_denom",
+                                "query": "sum:postgresql.queries.count{region:us-central1 AND db:handshake AND instance_name:handshake-brave-mayfly AND NOT query_signature:c8e5623c8cde9c28}.as_count().rollup(10)"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    }
+                ],
+                "title": "Avg Latency",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 8145487890064720,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}

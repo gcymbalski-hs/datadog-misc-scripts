@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 23645316,
+    "matching_downtimes": [],
+    "message": "The average database duration in the UK region is higher than normal, based on historical data. This may indicate high database load, network issues to Postgres, or slow queries being run, like a new Importer job if triggered in low traffic, \"off\" hours. \n\nNote: Metric looks for anomalies based on daily historical data, based on math copied from APM graphs.",
+    "multi": false,
+    "name": "[Reversed due to noisy alerts] UK High Database Duration",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_15m"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.6
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_4h):anomalies(median_3(sum:trace.rack.request.duration.by_service{env:production,service:handshake,sublayer_service:handshake-postgres,region:europe-west2}.rollup(sum).fill(zero)) / median_3(sum:trace.rack.request.hits{env:production,service:handshake,region:europe-west2}.as_count().rollup(sum).fill(zero)), 'agile', 5, direction='above', alert_window='last_15m', interval=60, count_default_zero='true', seasonality='daily', timezone='europe/london') >= 1",
+    "tags": [],
+    "type": "query alert"
+}

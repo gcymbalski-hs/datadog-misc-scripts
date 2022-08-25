@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 15350826,
+    "matching_downtimes": [],
+    "message": "The connection count for our primary Redis instance in Production is low. Verify that the correct URL from Memorystore is set as REDIS_URL and that the service can be connected to successfully. @slack-incidents",
+    "multi": false,
+    "name": "Redis Connection Count Low (US Production)",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 50.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_15m):avg:gcp.redis.clients.connected{project_id:handshake-production} < 50",
+    "tags": [
+        "env:production",
+        "maintenance:true",
+        "region:us-central1"
+    ],
+    "type": "metric alert"
+}

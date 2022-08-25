@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 8553308,
+    "matching_downtimes": [],
+    "message": "Session service request p95 latency high on {{env.name}}.\n @slack-incidents-platform-services",
+    "multi": true,
+    "name": "Session Service Request P95 Latency High",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 30,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "critical_recovery": 0.02,
+            "warning": 0.02
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):p95:trace.http.request{service:session-service,!env:staging} by {env,region} > 0.05",
+    "tags": [
+        "team:platform",
+        "team:iam"
+    ],
+    "type": "query alert"
+}

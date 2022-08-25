@@ -1,0 +1,363 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-03-29T00:48:37.001780+00:00",
+    "description": "",
+    "id": "wwu-kjb-x75",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-27T15:39:30.502538+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "service",
+            "prefix": "service"
+        },
+        {
+            "default": "*",
+            "name": "host",
+            "prefix": "host"
+        },
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "*",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Custom APM Trace",
+    "url": "/dashboard/wwu-kjb-x75/custom-apm-trace",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.hits{$service,$env,$host,$region} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of trace.rack.request.hits over $service by host",
+                "type": "timeseries"
+            },
+            "id": 292898012
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.hits{$service,$host,$env,$region} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sidekiq jobs by Host",
+                "type": "timeseries"
+            },
+            "id": 341413219
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{$service,$host,$env,$region} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trace Errors by Endpoint",
+                "type": "timeseries"
+            },
+            "id": 327521198
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:trace.sidekiq.job.errors{$service,$host,$env,$region} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sidekiq Errors by Job",
+                "type": "timeseries"
+            },
+            "id": 341413169
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{$service,$host,$env,$region} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trace request errors by Host",
+                "type": "timeseries"
+            },
+            "id": 341338640
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.hits{$service,$host,$env,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trace count by Host",
+                "type": "timeseries"
+            },
+            "id": 328410411972524
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.errors{$service,$host,$env,$region} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sidekiq errors by Host",
+                "type": "timeseries"
+            },
+            "id": 343048140
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "p90:trace.rack.request{$env,$host,$region,$service} by {env,service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p50:trace.rack.request{$env,$host,$region,$service} by {env,service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p99:trace.rack.request{$env,$host,$region,$service} by {env,service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "P90, P95, P99 Response Time",
+                "type": "timeseries"
+            },
+            "id": 292899277
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:trace.rack.request.duration{$service,$host,$env,$region} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trace Duration by Node",
+                "type": "timeseries"
+            },
+            "id": 292898156
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:trace.rack.request.duration.by_type{$service,$host,$env,$region} by {sublayer_type}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of trace.rack.request.duration.by_type over $service,$host,$env by sublay...",
+                "type": "timeseries"
+            },
+            "id": 327524354
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "p50:trace.sidekiq.job{$env,$host,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p90:trace.sidekiq.job{$env,$host,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p95:trace.sidekiq.job{$env,$host,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p99:trace.sidekiq.job{$env,$host,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sidekiq Durations",
+                "type": "timeseries"
+            },
+            "id": 341413184
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.postgres.query.hits{$service,$host,$env,$region} by {service}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Postgres Hits by Service",
+                "type": "timeseries"
+            },
+            "id": 348898467
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.hits{http.status_code:500,$service,$env,$host,$region} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of trace.rack.request.hits over http.status_code:500,$service,$env,$host ...",
+                "type": "timeseries"
+            },
+            "id": 351858952
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.hits{$service,$host,$env,$region} by {instance-id}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of trace.rack.request.hits over $service,$host,$env by instance-id",
+                "type": "timeseries"
+            },
+            "id": 8377844119923698
+        }
+    ]
+}

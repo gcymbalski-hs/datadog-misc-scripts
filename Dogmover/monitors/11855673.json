@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 11855673,
+    "matching_downtimes": [],
+    "message": "Ambassador max memory usage is high (cluster: {{cluster-name.name}}).\n\n[Datadog Kubernetes Pod and Deployments Dashboard](https://app.datadoghq.com/dashboard/5j5-6kj-ngv/kubernetes-pod--deployment-metrics?live=true&tile_size=m&tpl_var_deployment=ambassador-061&tpl_var_namespace=%2A)\n\n{{#is_match \"cluster-name.name\" \"uk-\"}}\n@slack-incidents-uk \n{{/is_match}} @slack-incidents-infrastructure",
+    "multi": true,
+    "name": "Ambassador Max Memory Usage Is High (Cluster: {{cluster-name.name}})",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "warning": 0.8
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):( max:kubernetes.memory.usage{kube_service:ambassador} by {cluster-name} / max:kubernetes.memory.limits{kube_service:ambassador} by {cluster-name} ) > 0.9",
+    "tags": [],
+    "type": "query alert"
+}

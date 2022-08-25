@@ -1,0 +1,42 @@
+{
+    "deleted": null,
+    "id": 8332239,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 976675560,
+            "monitor_id": 8332239,
+            "scope": [
+                "*"
+            ],
+            "start": 1601312879
+        }
+    ],
+    "message": "@slack-incidents-beta",
+    "multi": false,
+    "name": "High P95 Response Time on US Production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 2000.0,
+            "warning": 1500.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_15m):max:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.95percentile{project:handshake-production} > 2000",
+    "tags": [],
+    "type": "metric alert"
+}

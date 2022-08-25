@@ -1,0 +1,1048 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2021-09-02T22:02:04.990645+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "vkc-9v8-wye",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-03T20:24:50.740449+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Database] Subtransactions (Production)",
+    "url": "/dashboard/vkc-9v8-wye/database-subtransactions-production",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Primary",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Web Replica",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Jobs Replica",
+                                "formula": "query3"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-brave-mayfly}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-active-sponge}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-mighty-shrew}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CPU",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 695314918908156,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Primary",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Web Replica",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Jobs Replica",
+                                "formula": "query3"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.postgresql.transaction_count{database_id:handshake-production:handshake-brave-mayfly}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.cloudsql.database.postgresql.transaction_count{database_id:handshake-production:handshake-active-sponge}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:gcp.cloudsql.database.postgresql.transaction_count{database_id:handshake-production:handshake-mighty-shrew}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Transactions",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7657094824891422,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Open",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Idle",
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:postgresql.transactions.open{instance_name:handshake-brave-mayfly}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "max:postgresql.transactions.idle_in_transaction{instance_name:handshake-brave-mayfly}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Open Transactions on primary",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7623442714951874,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 0,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.database.subtransaction{env:production,app:dd-postgres-*} by {app}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "Subtransactions By Instance",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "label": "Subtransactions"
+                }
+            },
+            "id": 2181065190595905,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 6,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Primary",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Web Replica",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Jobs Replica",
+                                "formula": "query3"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:pgbouncer.stats.avg_transaction_time{kube_deployment:handshake-brave-mayfly-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "max:pgbouncer.stats.avg_transaction_time{kube_deployment:handshake-active-sponge-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "max:pgbouncer.stats.avg_transaction_time{kube_deployment:handshake-mighty-shrew-pgbouncer}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg Transaction Time",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6057571790732096,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 0,
+                "y": 6
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Subtransactions",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.database.subtransaction{env:production} by {cluster-name}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "red"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Subtransactions By Cluster",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "label": "Subtransactions"
+                }
+            },
+            "id": 3657964834077998,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 6,
+                "y": 6
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Active",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Idle",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Used",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Login",
+                                "formula": "query4"
+                            },
+                            {
+                                "alias": "Tested",
+                                "formula": "query5"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:pgbouncer.pools.sv_active{kube_deployment:handshake-brave-mayfly-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:pgbouncer.pools.sv_idle{kube_deployment:handshake-brave-mayfly-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "sum:pgbouncer.pools.sv_used{kube_deployment:handshake-brave-mayfly-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:pgbouncer.pools.sv_login{kube_deployment:handshake-brave-mayfly-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query5",
+                                "query": "sum:pgbouncer.pools.sv_tested{kube_deployment:handshake-brave-mayfly-pgbouncer}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Active Connections (Primary)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4860749252569912,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 0,
+                "y": 9
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Read Ops",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Write Ops",
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.disk.read_ops_count{database_id:handshake-production:handshake-brave-mayfly}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.cloudsql.database.disk.write_ops_count{database_id:handshake-production:handshake-brave-mayfly}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Read/Write Ops (Primary)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8858751654169290,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 4,
+                "y": 9
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Transaction ID Utilization",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.cloudsql.database.postgresql.transaction_id_utilization{database_id:handshake-production:handshake-brave-mayfly}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "orange"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Transaction ID Utilization (Primary)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1930941181274346,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 8,
+                "y": 9
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Active",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Idle",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Used",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Login",
+                                "formula": "query4"
+                            },
+                            {
+                                "alias": "Tested",
+                                "formula": "query5"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:pgbouncer.pools.sv_active{kube_deployment:handshake-active-sponge-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:pgbouncer.pools.sv_idle{kube_deployment:handshake-active-sponge-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "sum:pgbouncer.pools.sv_used{kube_deployment:handshake-active-sponge-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:pgbouncer.pools.sv_login{kube_deployment:handshake-active-sponge-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query5",
+                                "query": "sum:pgbouncer.pools.sv_tested{kube_deployment:handshake-active-sponge-pgbouncer}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Active Connections (Web Replica)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4262558819978816,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 0,
+                "y": 12
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Read Ops",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Write Ops",
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.disk.read_ops_count{database_id:handshake-production:handshake-active-sponge}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.cloudsql.database.disk.write_ops_count{database_id:handshake-production:handshake-active-sponge}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Read/Write Ops (Web Replica)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2017004274032722,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 4,
+                "y": 12
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Replica Lag",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-production:handshake-active-sponge}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "orange"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Replica Lag (Web Replica)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 936257955868946,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 8,
+                "y": 12
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Active",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Idle",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Used",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Login",
+                                "formula": "query4"
+                            },
+                            {
+                                "alias": "Tested",
+                                "formula": "query5"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:pgbouncer.pools.sv_active{kube_deployment:handshake-mighty-shrew-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:pgbouncer.pools.sv_idle{kube_deployment:handshake-mighty-shrew-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "sum:pgbouncer.pools.sv_used{kube_deployment:handshake-mighty-shrew-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:pgbouncer.pools.sv_login{kube_deployment:handshake-mighty-shrew-pgbouncer}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query5",
+                                "query": "sum:pgbouncer.pools.sv_tested{kube_deployment:handshake-mighty-shrew-pgbouncer}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Active Connections (Jobs Replica)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8274716963330752,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 0,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Read Ops",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Write Ops",
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.disk.read_ops_count{database_id:handshake-production:handshake-mighty-shrew}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.cloudsql.database.disk.write_ops_count{database_id:handshake-production:handshake-mighty-shrew}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Read/Write Ops (Jobs Replica)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4774196995571586,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 4,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Replica Lag",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-production:handshake-mighty-shrew}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "orange"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Replica Lag (Jobs Replica)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8184336456578740,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 8,
+                "y": 15
+            }
+        }
+    ]
+}

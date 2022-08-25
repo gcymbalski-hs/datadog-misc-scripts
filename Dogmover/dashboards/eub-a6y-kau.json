@@ -1,0 +1,1326 @@
+{
+    "author_handle": "lena@joinhandshake.com",
+    "author_name": "Lena Banks",
+    "created_at": "2021-03-31T22:55:15.810777+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "eub-a6y-kau",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2022-08-02T21:59:57.972548+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Campaigns Squad",
+    "url": "/dashboard/eub-a6y-kau/campaigns-squad",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.campaigns.campaign_queue.delay{*} by {employer_id,env,region}/60/60",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaign Lock Delay in Hours",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 271991308638682,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 18
+            }
+        },
+        {
+            "definition": {
+                "query": "Unscheduled Invalid Campaign status:warn",
+                "tags_execution": "and",
+                "time": {
+                    "live_span": "2d"
+                },
+                "title": "Count of Invalid Campaigns Unscheduled",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 464005229670178,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 0,
+                "y": 54
+            }
+        },
+        {
+            "definition": {
+                "query": "Mismatched Approved Schools status:warn",
+                "tags_execution": "and",
+                "time": {
+                    "live_span": "2d"
+                },
+                "title": "Mismatched Approved Schools",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 8386694520149491,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 51,
+                "y": 54
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.employers.batched_campaign.delayed.max{*} by {env,campaign}/1000/60/60",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Delay by Campaign in Hours",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3945467224405016,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.campaign_unlock.delayed_messages{env:production} by {campaign,region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Unlock Worker Unindexed Messages Count",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5502399311607854,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 18
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.batched_campaign.set_recipients.max{*} by {campaign}/1000",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Set Recipients Duration in Seconds",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8789628801295236,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 36
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.employers.batched_campaign.total_time.median{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.batched_campaign.total_time.avg{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.employers.batched_campaign.total_time.max{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaign Workers Total Operation Time",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5190500387123270,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 74
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.employers.batched_campaign.filter_recipients.count{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Filtered Campaign Recipient Count",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3317947659525334,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 36
+            }
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.employers.campaign.calculate_recipients.scroll_loops{*}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignRecipients scroll loops",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8888276365273324,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 92
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Set Recipients (sec)",
+                                "formula": "query1 / 1000"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.employers.batched_campaign.set_recipients.max{*}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignBatchWorker Time To Set Campaign Recipients",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4732665576284984,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 74
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.employers.batched_campaign.delayed.avg{env:production,app:handshake} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.employers.batched_campaign.delayed.max{env:production,app:handshake}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.employers.batched_campaign.delayed.avg{env:production,app:handshake}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaign Delivery Delay (ms)",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3577444082706224,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 111
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.employers.batched_campaign.campaigns_processed{*}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Batched Campaigns Processed",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5317425558966474,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 130
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.batched_campaign.send_messages.avg{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.batched_campaign.send_messages.max{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.batched_campaign.send_messages.median{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignBatchWorker Total Time To Queue Messages",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2669063994618998,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 111
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.batched_campaign.message_failures{env:production}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Batched Message Failures",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4177662531561316,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 130
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.batched_campaign.filter_recipients.avg{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignBatchWorker Time to Filter Recipients",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8247784440546864,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 102,
+                "y": 54
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = d"
+                    },
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    },
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:handshake.activities.send_notification_emails.95percentile{*} by {service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "p95 Avg time to send email through ActivityDistributor / NotificationSender (Not Campaign Specific)",
+                "type": "timeseries"
+            },
+            "id": 3618184098604878,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 103,
+                "y": 74
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-charcoal-lemur}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-arrogant-ape}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "gcp.cloudsql.database.cpu.utilization",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4145167527531320,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 103,
+                "y": 130
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:gcp.cloudsql.database.postgresql.transaction_count{database_id:handshake-production:handshake-charcoal-lemur}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "gcp.cloudsql.database.postgresql.transaction_count",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6217688475803384,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 103,
+                "y": 92
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "avg:gcp.cloudsql.database.memory.usage{database_id:handshake-production:handshake-charcoal-lemur}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "gcp.cloudsql.database.memory.usage",
+                "type": "timeseries"
+            },
+            "id": 5139070470200912,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 103,
+                "y": 111
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.employers.campaign_dates.handled_stuck_in_queue{env:production}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaigns stuck in queued over 4 hours",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5327929168196862,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 102,
+                "y": 18
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employers.campaigns.campaign_queue.delay{env:production} by {employer_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaign Lock Queue Delay (seconds)",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3073773147238908,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 102,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.employers.campaign_unlock.delayed_messages{*} by {campaign}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaign Unlock Worker - Delayed Message counts",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8972202335181946,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 102,
+                "y": 36
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "on_right_yaxis": false,
+                        "q": "min:handshake.employers.batched_campaign.filter_recipients.count{*} by {campaign_date}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "thick",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Filtered Campaign Recipient Count Graph",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8540216176935884,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 148
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.employer.reply_via_email.hits{*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Reply Via Email Hits",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4822898371882740,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 188
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Errors / Retries",
+                                "formula": "(query1 + query2) / 6"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.email.email_reply_service.inbound_processing.failed{*}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:handshake.email.email_reply_service.validate_message_url.failed{*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Email Reply Service Errors",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7303639597414910,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 52,
+                "y": 188
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "24",
+                "text": "Reply Via Email",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 6906331408047652,
+            "layout": {
+                "height": 3,
+                "width": 24,
+                "x": 0,
+                "y": 183
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "24",
+                "text": "Campaign Details",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 251563230836128,
+            "layout": {
+                "height": 3,
+                "width": 24,
+                "x": 0,
+                "y": 68
+            }
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\u00a0high cpu 80%\u00a0",
+                        "value": "y = 0.8"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.cloudsql.database.cpu.utilization{*,*} by {project_id,database_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CPU Utilization",
+                "type": "timeseries"
+            },
+            "id": 8351164570417098,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 148
+            }
+        },
+        {
+            "definition": {
+                "query": "Campaign Over Error \"Threshold:\" Moved To Error State status:error",
+                "tags_execution": "and",
+                "time": {
+                    "live_span": "1w"
+                },
+                "title": "Count of Campaign Over Error Threshold",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 988516002820550,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 0,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "event_size": "l",
+                "query": "Campaign Over Error Threshold: Moved To Error State",
+                "time": {
+                    "live_span": "1w"
+                },
+                "title": "Campaign Over Error Threshold - Stream",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 6509716934425132,
+            "layout": {
+                "height": 38,
+                "width": 47,
+                "x": 103,
+                "y": 148
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.employer.reply_via_email.hits{*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Reply Via Email Hits",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6150582336711514,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 103,
+                "y": 188
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.employers.campaign.calculate_recipients.scroll_loops{*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignRecipients total scroll loops",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5215867490891008,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 92
+            }
+        },
+        {
+            "definition": {
+                "query": "\"Campaign Message Worker Find Conversation Query Timeout\" status:error",
+                "tags_execution": "and",
+                "title": "Conversation Query Timeout",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 6377946084351464,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 51,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\u00a0high cpu 80%\u00a0",
+                        "value": "y = 0.8"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-brave-mayfly} by {project_id,database_id}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query0"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-active-sponge} by {project_id,database_id}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query0"
+                            },
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-mighty-shrew} by {project_id,database_id}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-star-lamb} by {project_id,database_id}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CPU Utilization",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7023637528597740,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}

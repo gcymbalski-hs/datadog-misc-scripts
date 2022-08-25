@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 17489131,
+    "matching_downtimes": [],
+    "message": "What you should do:\n* Monitor rate until it goes down.\n\nSee https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#Cronofy-Rate-Limiting\n@slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Calendar Sync: Cronofy API Request Limit Reached",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2000.0,
+            "critical_recovery": 1700.0,
+            "warning": 1500.0,
+            "warning_recovery": 1000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1m):sum:handshake.cronofy_api_request_attempt{app:handshake,env:production} by {region}.as_count() >= 2000",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

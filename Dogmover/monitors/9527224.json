@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 9527224,
+    "matching_downtimes": [],
+    "message": "External appointments out of date with cronofy.\n\nSee https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#External-Appointments-Out-of-Date\n\n@slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Calendar Sync: External appointments out of date",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 200.0,
+            "critical_recovery": 50.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):sum:handshake.appointments.not_in_sync_with_cronofy{env:production} by {region} > 200",
+    "tags": [
+        "team:university",
+        "env:production"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,282 @@
+{
+    "author_handle": "tpiscitell@joinhandshake.com",
+    "author_name": "Tom Piscitell",
+    "created_at": "2022-08-10T17:56:49.931434+00:00",
+    "description": "",
+    "id": "4zx-iwp-b6y",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-22T15:28:55.662233+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "Project",
+            "prefix": "project_id"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "target_proxy_name",
+            "prefix": "target_proxy_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "backend_name",
+            "prefix": "backend_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster-name",
+            "prefix": "cluster-name"
+        }
+    ],
+    "title": "[Load Balancing] TCP to HTTPS Migration",
+    "url": "/dashboard/4zx-iwp-b6y/load-balancing-tcp-to-https-migration",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "HTTPS Requests",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.loadbalancing.https.request_count{$Project,$target_proxy_name} by {project_id,target_proxy_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "TCP Bytes",
+                                "formula": "query0"
+                            }
+                        ],
+                        "on_right_yaxis": true,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "sum:gcp.loadbalancing.l3.external.ingress_bytes_count{$Project,$backend_name} by {project_id,backend_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "HTTPS Load Balancer Request vs TCP Load Balancer Bytes",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 7471350762867282,
+            "layout": {
+                "height": 3,
+                "width": 10,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.loadbalancing.https.request_count{$Project,$target_proxy_name} by {project_id,target_proxy_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "HTTPS Load Balancer Request Count",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 2662430683395508,
+            "layout": {
+                "height": 3,
+                "width": 10,
+                "x": 0,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.loadbalancing.l3.external.ingress_bytes_count{$Project,$backend_name} by {project_id,backend_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "TCP Load Balancer Ingress Bytes",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 725638499769596,
+            "layout": {
+                "height": 4,
+                "width": 10,
+                "x": 0,
+                "y": 6
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            },
+                            {
+                                "formula": "query3"
+                            },
+                            {
+                                "formula": "query4"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:envoy.http.ingress_http.downstream_rq_2xx{$cluster-name}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:envoy.http.ingress_http.downstream_rq_3xx{$cluster-name}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:envoy.http.ingress_http.downstream_rq_4xx{$cluster-name}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "avg:envoy.http.ingress_http.downstream_rq_5xx{$cluster-name}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Ambassador Downstream Responses",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 6054912687388218,
+            "layout": {
+                "height": 3,
+                "width": 10,
+                "x": 0,
+                "y": 10
+            }
+        }
+    ]
+}

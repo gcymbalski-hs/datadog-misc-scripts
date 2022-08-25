@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 72491478,
+    "matching_downtimes": [],
+    "message": "{{kube_deployment.name}} has high CPU usage compared to CPU limits.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "High CPU Usage on handshake-web",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "warning": 0.8
+        }
+    },
+    "query": "avg(last_15m):( avg:kubernetes.cpu.usage.total{kube_deployment:handshake-web*} by {cluster-location,project,kube_deployment} / 1000000000 ) / avg:kubernetes.cpu.limits{kube_deployment:handshake-web*} by {cluster-location,project,kube_deployment} > 0.9",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

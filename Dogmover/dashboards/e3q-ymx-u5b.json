@@ -1,0 +1,1282 @@
+{
+    "author_handle": "rsmith@joinhandshake.com",
+    "author_name": "Rachel Smith",
+    "created_at": "2020-12-02T18:26:33.488521+00:00",
+    "description": "",
+    "id": "e3q-ymx-u5b",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-05T18:04:08.298736+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variable_presets": [
+        {
+            "name": "Demo Env",
+            "template_variables": [
+                {
+                    "name": "environment",
+                    "value": "demo"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-demo"
+                },
+                {
+                    "name": "cluster_name",
+                    "value": "demo-marketplace-interactions"
+                }
+            ]
+        }
+    ],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "environment",
+            "prefix": "env"
+        }
+    ],
+    "title": "Marketplace Interactions",
+    "url": "/dashboard/e3q-ymx-u5b/marketplace-interactions",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "General",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "[Click here for Elasticsearch metrics](https://docs.datadoghq.com/integrations/elastic/?tab=host#metrics)\n\n[Click here for Google Cloud metrics](https://cloud.google.com/monitoring/api/metrics_gcp)\n\n[Marketplace Interactions Wiki Page](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/1238663286/Marketplace+Interactions)",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 1869983149520746
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.TouchpointsEnrichment.runtime_sec{*} / 60",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Touchpoint Enrichment Runtime (Minutes)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7273296081982882
+                    }
+                ]
+            },
+            "id": 7429151408859254
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "PubSub",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "BigQuery",
+                                            "expression": "avg:gcp.pubsub.subscription.sent_message_count{subscription_id:touchpoints-to-dataflow,$project_id}"
+                                        },
+                                        {
+                                            "alias_name": "Elasticsearch",
+                                            "expression": "avg:gcp.pubsub.subscription.sent_message_count{subscription_id:touchpoints-to-elasticsearch,$project_id}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:gcp.pubsub.subscription.sent_message_count{subscription_id:touchpoints-to-dataflow}, avg:gcp.pubsub.subscription.sent_message_count{subscription_id:touchpoints-to-elasticsearch}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Raw Touchpoints Sent to Elasticsearch & BigQuery",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2281300604480092
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "BigQuery",
+                                            "expression": "avg:gcp.pubsub.subscription.sent_message_count{subscription_id:enriched-touchpoints-to-warehouses,$project_id}"
+                                        },
+                                        {
+                                            "alias_name": "Elasticsearch",
+                                            "expression": "avg:gcp.pubsub.subscription.sent_message_count{subscription_id:enriched-touchpoints-to-elasticsearch,$project_id}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:gcp.pubsub.subscription.sent_message_count{subscription_id:enriched-touchpoints-to-warehouses}, avg:gcp.pubsub.subscription.sent_message_count{subscription_id:enriched-touchpoints-to-elasticsearch}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Enriched Touchpoints Sent to Elasticsearch & BigQuery",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7233088901338710
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Raw to BigQuery",
+                                            "expression": "avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:touchpoints-to-dataflow,$project_id}"
+                                        },
+                                        {
+                                            "alias_name": "Raw to ElasticSearch",
+                                            "expression": "avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:touchpoints-to-elasticsearch,$project_id}"
+                                        },
+                                        {
+                                            "alias_name": "Enriched to BigQuery",
+                                            "expression": "avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:enriched-touchpoints-to-warehouses,$project_id}"
+                                        },
+                                        {
+                                            "alias_name": "Enriched to ElasticSearch",
+                                            "expression": "avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:enriched-touchpoints-to-elasticsearch,$project_id}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:touchpoints-to-dataflow}, avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:touchpoints-to-elasticsearch}, avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:enriched-touchpoints-to-warehouses}, avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:enriched-touchpoints-to-elasticsearch}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Unacked Messages",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2243988158099680
+                    }
+                ]
+            },
+            "id": 8468950072503080
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Elasticsearch Cluster",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "check": "elasticsearch.can_connect",
+                            "group": "$cluster_name",
+                            "group_by": [],
+                            "grouping": "cluster",
+                            "tags": [
+                                "$cluster_name"
+                            ],
+                            "title": "",
+                            "title_align": "center",
+                            "title_size": "16",
+                            "type": "check_status"
+                        },
+                        "id": 8835601517880566
+                    },
+                    {
+                        "definition": {
+                            "check": "elasticsearch.cluster_health",
+                            "group": "$cluster_name",
+                            "group_by": [],
+                            "grouping": "cluster",
+                            "tags": [
+                                "es-cluster-name:production-marketplace-interactions"
+                            ],
+                            "title": "",
+                            "title_align": "center",
+                            "title_size": "16",
+                            "type": "check_status"
+                        },
+                        "id": 7215111097217058
+                    },
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "If the cluster status is yellow, at least one replica shard is unallocated or missing. Search results will still be complete, but if more shards disappear, you may lose data.\n\nA red cluster status indicates that at least one primary shard is missing, and you are missing data, which means that searches will return partial results. You will also be blocked from indexing into that shard. Consider setting up an alert to trigger if status has been yellow for more than 5 min or if the status has been red for the past minute.",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 2610895942178516
+                    },
+                    {
+                        "definition": {
+                            "custom_unit": "%",
+                            "precision": 1,
+                            "requests": [
+                                {
+                                    "aggregator": "last",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": "<",
+                                            "palette": "green_on_white",
+                                            "value": 80
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "palette": "yellow_on_white",
+                                            "value": 80
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "palette": "red_on_white",
+                                            "value": 90
+                                        }
+                                    ],
+                                    "q": "(1 - (sum:elasticsearch.fs.total.available_in_bytes{*} / sum:elasticsearch.fs.total.total_in_bytes{*})) * 100"
+                                }
+                            ],
+                            "title": "Disk Space Used",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 4227314865012206
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "last",
+                                    "q": "sum:elasticsearch.store.size{*}"
+                                }
+                            ],
+                            "title": "Size of Stored Data",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 3465525341003796
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:elasticsearch.docs.count{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Number of Documents",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5148874251134310
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:elasticsearch.process.open_fd{*}"
+                                }
+                            ],
+                            "title": "Average Number of File Descriptors Opened",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 1406151908437326
+                    },
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "Elasticsearch uses a lot of file descriptors for node-to-node communications, client connections, and file operations.. Running out of file descriptors can be disastrous and will most probably lead to data loss.",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 3890515498237782
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:elasticsearch.pending_tasks_total{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Number of Pending Tasks",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7360303006275136
+                    },
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "**Pending tasks:** any cluster-level changes (e.g. create index, update mapping, allocate or fail shard) which have not yet been executed. They can only be handled by master nodes and are processed in priority order. They start to accumulate when the number of changes occurs more quickly than the master can process them. You want to keep an eye on this metric if it keeps increasing. \nThe number of pending tasks is a good indication of how smoothly the cluster is operating. If the master node is very busy and the number of pending tasks doesn\u2019t subside, it can lead to an unstable cluster.\n",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 3055469310103822
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "per_second(avg:elasticsearch.transport.tx_size{*} by {host})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "purple"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Bytes Sent (per node)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4857635483050638
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "per_second(avg:elasticsearch.transport.rx_size{*} by {host})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "green"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Bytes Received (per node)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 242833998031230
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Query",
+                                            "expression": "sum:elasticsearch.search.query.time{$cluster_name}/sum:elasticsearch.search.query.total{$cluster_name}"
+                                        }
+                                    ],
+                                    "q": "sum:elasticsearch.search.query.time{*} / sum:elasticsearch.search.query.total{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Fetch",
+                                            "expression": "sum:elasticsearch.search.fetch.time{$cluster_name}/sum:elasticsearch.search.fetch.total{$cluster_name}"
+                                        }
+                                    ],
+                                    "q": "sum:elasticsearch.search.fetch.time{*} / sum:elasticsearch.search.fetch.total{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Query and Fetch Latency (Seconds)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8916981854961594
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.indexing.index.time{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Indexing Latency (Seconds)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 111807691329786
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "per_second(sum:elasticsearch.http.total_opened{*})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Opened HTTP Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 742734753851046
+                    },
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "If the total number of opened HTTP connections is constantly increasing, it could indicate that the clients are not properly establishing persistent connections. ",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 6245156375616058
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:jvm.mem.heap_in_use{*} by {host}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Memory (Percent of Heap in Use)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3490225788902672
+                    }
+                ]
+            },
+            "id": 4809343461618564
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "BigQuery",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "last",
+                                    "q": "sum:gcp.bigquery.storage.stored_bytes{dataset_id:marketplace_interactions}"
+                                }
+                            ],
+                            "title": "Size of Stored Data",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 8583037132214376
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Total",
+                                            "expression": "sum:gcp.bigquery.storage.uploaded_bytes{dataset_id:marketplace_interactions,$project_id}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "sum:gcp.bigquery.storage.uploaded_bytes{dataset_id:marketplace_interactions}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Uploaded Bytes",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 302024725068784
+                    }
+                ]
+            },
+            "id": 8132320901598810
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Dataflow",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.dataflow.job.elements_produced_count{job_name:marketplace-interactions-touchpoints-6e41e17fc6e42c9275f92cad0663d02b25bc3d6a}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Touchpoints - Elements Produced",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5821296555107284
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.dataflow.job.backlog_elements{job_name:marketplace-interactions-touchpoints-6e41e17fc6e42c9275f92cad0663d02b25bc3d6a}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Touchpoints - Unprocessed Input Elements",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1960631749485168
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.dataflow.job.elements_produced_count{job_name:enriched-touchpoints-pipeline-6e41e17fc6e42c9275f92cad0663d02b25bc3d6a}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Enriched Touchpoints - Elements Produced",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 727331600913798
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.dataflow.job.backlog_elements{job_name:enriched-touchpoints-pipeline-6e41e17fc6e42c9275f92cad0663d02b25bc3d6a}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Enriched Touchpoints - Unprocessed Input Elements",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7860099921125408
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.dataflow.job.elements_produced_count{job_name:mailgun-events-to-touchpoints-279a7a27c0eb215d293afcb277f8a974f9b7102d}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Mailgun Touchpoints - Elements Produced",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7685712402272232
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.dataflow.job.backlog_elements{job_name:mailgun-events-to-touchpoints-279a7a27c0eb215d293afcb277f8a974f9b7102d}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Mailgun Events - Unprocessed Input Elements",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3158366011580394
+                    }
+                ]
+            },
+            "id": 8010008407850556
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Matching Process",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "Matching Process: for List Upload and eventually the Applicant Analysis report, we search for candidate touchpoints in Marketplace Interactions.",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 2910819112173284
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "execution time (ms)",
+                                            "expression": "avg:handshake.list_upload_analysis_service.call.avg{$environment}"
+                                        }
+                                    ],
+                                    "q": "avg:handshake.list_upload_analysis_service.call.avg{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "List Upload Service Average Time (ms)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3347676086605158
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:handshake.list_upload_analysis_service.call.count{*}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Count of List Upload Analysis Service Calls",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5526505912836638
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Student Match Scrolling Search",
+                                            "expression": "avg:handshake.influence_analysis_student.search_client.execute_scrolling_search.max{$environment}"
+                                        },
+                                        {
+                                            "alias_name": "Touchpoints Scrolling Search",
+                                            "expression": "avg:handshake.touchpoints.search_client.execute_scrolling_search.95percentile{$environment}"
+                                        }
+                                    ],
+                                    "q": "avg:handshake.influence_analysis_student.search_client.execute_scrolling_search.max{*}, avg:handshake.touchpoints.search_client.execute_scrolling_search.95percentile{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Scrolling Search Timing",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4098764118742012
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:handshake.touchpoints.search_client.execute_scrolling_search.count{*}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Scrolling Search Count",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2884969113795910
+                    }
+                ]
+            },
+            "id": 7032242143437850
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Elastic Indexing - Deep Dive",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "background_color": "gray",
+                            "content": "Datadog reports detailed Indexing status. They can be confusing.\n[See this ES Forum post which talks about indexing total time](https://discuss.elastic.co/t/monitoring-elasticsearch-performance/33895/2).\n\n[Datadog Elastic Metrics Guide](https://docs.datadoghq.com/integrations/elastic/?tab=host#metrics)\n\n",
+                            "font_size": "14",
+                            "show_tick": false,
+                            "text_align": "left",
+                            "tick_edge": "left",
+                            "tick_pos": "50%",
+                            "type": "note"
+                        },
+                        "id": 4928121519810139
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "derivative(avg:elasticsearch.indexing.index.time{es-cluster-name:production-marketplace-interactions})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Elastic Indexing Time - Derivative of Total Time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6588868109743197
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.primaries.indexing.index.time{es-cluster-name:production-marketplace-interactions}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Elastic Primaries Indexing Time (Cumulative Total)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3921352581814894
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.primaries.indexing.index.current{es-cluster-name:production-marketplace-interactions}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "elasticsearch.primaries.indexing.index.current",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 3841887668572987
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.indexing.index.current{es-cluster-name:production-marketplace-interactions}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "elasticsearch.indexing.index.current",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 4842706716072336
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.indices.indexing.throttle_time{es-cluster-name:production-marketplace-interactions}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "elasticsearch.indices.indexing.throttle_time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1129299967950691
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.primaries.indexing.index.total{es-cluster-name:production-marketplace-interactions}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "elasticsearch.primaries.indexing.index.total",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 4971835675466432
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.indexing.index.total{es-cluster-name:production-marketplace-interactions}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "elasticsearch.indexing.index.total",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1807272870503637
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.indices.indexing.index_failed{es-cluster-name:production-marketplace-interactions}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "elasticsearch.indices.indexing.index_failed",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 5711623655798761
+                    }
+                ]
+            },
+            "id": 3382457685939645
+        }
+    ]
+}

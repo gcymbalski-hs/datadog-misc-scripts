@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 34829202,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}The applicant analysis service has hit its latency threshold alert. This is INFORMATIONAL in nature, indicating that the latency is poor. Modify or delete this alert as necessary.{{/is_alert}}\n{{#is_warning}}The applicant analysis service has hit its latency threshold warning. This is INFORMATIONAL in nature, indicating that the latency is poor. Modify or delete this alert as necessary.{{/is_warning}}\n@slack-emp-integ-analytics-bots",
+    "multi": false,
+    "name": "Applicant analysis service :: latency threshold",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 60000.0,
+            "warning": 45000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_5m):max:handshake.applicant_analysis_service.call.max{originated:controller} > 60000",
+    "tags": [],
+    "type": "query alert"
+}

@@ -1,0 +1,482 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-01-22T02:27:41.676181+00:00",
+    "description": "",
+    "id": "f5f-q9n-bpa",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-01-09T23:47:47.330166+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "*",
+            "name": "node",
+            "prefix": "host"
+        },
+        {
+            "default": "*",
+            "name": "",
+            "prefix": null
+        }
+    ],
+    "title": "[Kubernetes] Cluster State",
+    "url": "/dashboard/f5f-q9n-bpa/kubernetes-cluster-state",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:system.load.1{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:system.load.15{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "system.load.1, system.load.15",
+                "type": "timeseries"
+            },
+            "id": 274205722
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.cpu.requests{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.cpu.capacity{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.cpu.limits{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "cpu_usage_normalized",
+                                "expression": "sum:kubernetes.cpu.usage.total{$cluster,$node}/1000000000"
+                            }
+                        ],
+                        "q": "sum:kubernetes.cpu.usage.total{$cluster,$node}/1000000000",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "kubernetes.cpu.requests, kubernetes.cpu.capacity, kubernetes.cpu.limits, kube...",
+                "type": "timeseries"
+            },
+            "id": 274211892
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.usage{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.capacity{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.limits{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.requests{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "kubernetes.memory.usage, kubernetes.memory.capacity, kubernetes.memory.limits...",
+                "type": "timeseries"
+            },
+            "id": 274211928
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:system.load.1{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of system.load.1 over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 274205723
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.cpu.usage.total{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of kubernetes.cpu.usage.total over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 274211929
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.cpu.usage.total{$cluster,$node} by {kube_namespace}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of kubernetes.cpu.usage.total over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 311587853
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.memory.usage{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of kubernetes.memory.usage over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 274211972
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.memory.usage{$cluster,$node} by {kube_namespace}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of kubernetes.memory.usage over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 311587855
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.pods.running{$cluster,$node} by {kube_namespace}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sum of kubernetes.pods.running over $cluster by kube_namespace",
+                "type": "timeseries"
+            },
+            "id": 275602950
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:system.disk.in_use{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Max of system.disk.in_use over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 289105597
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:system.disk.free{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of system.disk.free over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 308741789
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "max:system.io.util{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Max of system.io.util over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 289105653
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "max:gcp.gce.instance.network.sent_bytes_count{$cluster,$node} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Max of gcp.gce.instance.network.sent_bytes_count over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 302877899
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "max:gcp.gce.instance.network.received_bytes_count{$cluster,$node} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Max of gcp.gce.instance.network.received_bytes_count over $cluster by host",
+                "type": "timeseries"
+            },
+            "id": 302878378
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:gcp.gce.instance.is_running{$cluster,$node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Node Count",
+                "type": "timeseries"
+            },
+            "id": 305460552
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.pods.running{$cluster,$node} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Pods per Node",
+                "type": "timeseries"
+            },
+            "id": 309295269
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:kubernetes_state.node.status{$cluster,$node,status:unschedulable} by {node}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Nodes Unschedulable (Probably unhealthy)",
+                "type": "timeseries"
+            },
+            "id": 351070986
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes_state.nodes.by_condition{$cluster,$node} by {condition,status}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Nodes Conditions",
+                "type": "timeseries"
+            },
+            "id": 352502609
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes_state.container.waiting{$cluster,$node} by {container}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Waiting Containers",
+                "type": "timeseries"
+            },
+            "id": 2323706256210890
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 45762330,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-employers",
+    "multi": true,
+    "name": "Elasticsearch Employer Indexer High Priority Document Updates Delayed",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 30000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_30m):avg:handshake.elasticsearch_indexer.delay.total.avg{priority:high,env:production,cluster:employers} by {env,cluster,region} > 30000",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "metric alert"
+}

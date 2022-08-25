@@ -1,0 +1,738 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-01-22T02:02:28.477544+00:00",
+    "description": "Heroku equivelant",
+    "id": "5j5-6kj-ngv",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-15T17:38:55.846525+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "namespace",
+            "prefix": "kube_namespace"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "deployment",
+            "prefix": "kube_deployment"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "state_namespace",
+            "prefix": "namespace"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "state_deployment",
+            "prefix": "deployment"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "pod",
+            "prefix": "pod_name"
+        }
+    ],
+    "title": "[Kubernetes] Pod & Deployment Metrics",
+    "url": "/dashboard/5j5-6kj-ngv/kubernetes-pod--deployment-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "By Deployment",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:kubernetes_state.deployment.replicas{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "max:kubernetes_state.deployment.replicas_desired{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "Pod Count by Deployment",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 274213390
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:kubernetes.cpu.requests{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:kubernetes.cpu.usage.total{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:kubernetes.cpu.limits{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Total CPU by Deployment",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 311588192
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:docker.cpu.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg Docker CPU by Deployment",
+                            "type": "timeseries"
+                        },
+                        "id": 293724070
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:docker.cpu.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Max Docker CPU by Deployment",
+                            "type": "timeseries"
+                        },
+                        "id": 293787748
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "(query1 / query2) / 100"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:docker.cpu.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:kubernetes.cpu.limits{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg CPU Usage Percent by Deployment",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1632500921516546
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "(query1 / query2) / 100"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:docker.cpu.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "max:kubernetes.cpu.limits{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Max CPU Usage Percent by Deployment",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8494733880772386
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "sum:kubernetes.memory.requests{$cluster,$namespace,$deployment,$pod} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Memory Request by Deployment",
+                            "type": "timeseries"
+                        },
+                        "id": 311588196
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:kubernetes.memory.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Memory by Deployment",
+                            "type": "timeseries"
+                        },
+                        "id": 311588161
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:\"release-stage:production\" \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "max",
+                                            "formula": "query1 / query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:kubernetes.memory.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "max:kubernetes.memory.limits{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "avg",
+                                            "formula": "query0 / query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "avg:kubernetes.memory.usage{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.memory.limits{$cluster,$namespace,$deployment,$pod} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Memory Usage Percent by Deployment",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 348355326
+                    }
+                ]
+            },
+            "id": 6431871642117032
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "By Pod",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "ewma_5(max:kubernetes.cpu.usage.total{$cluster,$namespace,$deployment,$pod} by {pod_name})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "CPU by Pod (EWMA5)",
+                            "type": "timeseries"
+                        },
+                        "id": 274203569
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:kubernetes.cpu.usage.total{$cluster,$namespace,$deployment,$pod} by {pod_name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "CPU by Pod (Raw)",
+                            "type": "timeseries"
+                        },
+                        "id": 5390923793950324
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:kubernetes.cpu.usage.total{$cluster,$namespace,$deployment,$pod} by {pod_name})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "CPU by Pod (Smoothed)",
+                            "type": "timeseries"
+                        },
+                        "id": 4274489992768150
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:kubernetes.memory.usage{$cluster,$namespace,$deployment,$pod} by {pod_name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Memory by Pod",
+                            "type": "timeseries"
+                        },
+                        "id": 274203583
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.containers.restarts{$cluster,$namespace,$deployment,$state_namespace,$state_deployment,$pod} by {kube_deployment,pod_name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Restarts by Pod",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 2602452208773612
+                    }
+                ]
+            },
+            "id": 3228521489687212
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "By Container",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "ewma_5(max:kubernetes.cpu.usage.total{$cluster,$namespace,$deployment,$pod} by {container_name})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "CPU by Container",
+                            "type": "timeseries"
+                        },
+                        "id": 357911774
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:kubernetes_state.container.restarts{$cluster,$state_namespace} by {container,project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Container Restarts",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1405140146384992
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:kubernetes_state.container.restarts{$cluster,$state_namespace} by {container,project,pod}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Container Restarts by Pod",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7364550942492884
+                    }
+                ]
+            },
+            "id": 2906973297223776
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:kubernetes.network.rx_bytes{$cluster,$namespace,$deployment,$pod} by {kube_tier}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Network Rx by Tier",
+                "type": "timeseries"
+            },
+            "id": 274214113
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:kubernetes.network_errors{$cluster,$namespace,$pod}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of kubernetes.network_errors over $cluster,$namespace",
+                "type": "timeseries"
+            },
+            "id": 274214894
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "q": "top(avg:docker.cpu.usage{$cluster,$namespace,$deployment,$pod} by {pod_name}, 10, 'mean', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Avg of docker.cpu.usage over $cluster,$namespace,$tier by pod_name",
+                "type": "toplist"
+            },
+            "id": 293787977
+        }
+    ]
+}

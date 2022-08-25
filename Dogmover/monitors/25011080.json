@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 25011080,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-platform-services\n\nGo to the GCP console for Kubernetes services, search for session service and look in the logs.",
+    "multi": true,
+    "name": "High Number of Unavailable Session-Service Pods",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.4,
+            "warning": 0.25
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_15m):sum:kubernetes_state.deployment.replicas_unavailable{namespace:session-service} by {cluster-name,deployment} / sum:kubernetes_state.deployment.replicas_desired{*} by {cluster-name,deployment} > 0.4",
+    "tags": [
+        "team:iam"
+    ],
+    "type": "query alert"
+}

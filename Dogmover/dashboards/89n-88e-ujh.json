@@ -1,0 +1,190 @@
+{
+    "author_handle": "aennamorato@joinhandshake.com",
+    "author_name": "Andrew Ennamorato",
+    "created_at": "2020-04-15T20:39:42.003587+00:00",
+    "description": "## Title\n\n Taken from `lib/trust_score/trust_score_queue.rb` \n> Measure the scores so we have a general idea of what average scores and if it ever changes drastically. Don't measure unless score is present\n",
+    "id": "89n-88e-ujh",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-31T02:37:22.543393+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Employer - Trust and Safety",
+    "url": "/dashboard/89n-88e-ujh/employer---trust-and-safety",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "avg:handshake.trust_score_queue.score{*}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trust Score - handshake.trust_score_queue.score",
+                "type": "timeseries"
+            },
+            "id": 6717681856854433
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.trust_score_queue.queued{*}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trust Score - Number of Employer IDs queued for processing",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4132110502996592
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.trust_score_queue.queue_size{env:production}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trust Score - Queue Size",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8582680307217426
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "autosmooth(sum:handshake.trust_score_queue.batch_ids{env:production})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg Number of Employer IDs that had a Trust Score Update",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5547668399163656
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employer_fraud.notification{*} by {type}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Employer Fraud Notifications Sent",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8295212165183465
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employer_fraud.notification{type:invalid_creator_email_domain}.as_count()"
+                    }
+                ],
+                "show_legend": false,
+                "title": "handshake.employer_fraud.notification with type:invalid_creator_email_domain",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 7731464144495394
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employer_fraud.notification{type:invalid_employer_email_domain}.as_count()"
+                    }
+                ],
+                "show_legend": false,
+                "title": "handshake.employer_fraud.notification with type:invalid_employer_email_domain",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3196768112080220
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.employer_fraud.notification{type:invalid_employer_website}.as_count()"
+                    }
+                ],
+                "show_legend": false,
+                "title": "handshake.employer_fraud.notification with type:invalid_employer_website",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 7377602336351557
+        }
+    ]
+}

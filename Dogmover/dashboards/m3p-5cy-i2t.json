@@ -1,0 +1,65 @@
+{
+    "author_handle": "kenon@joinhandshake.com",
+    "author_name": "Kenon Fachon",
+    "created_at": "2022-06-22T19:56:50.192811+00:00",
+    "description": "",
+    "id": "m3p-5cy-i2t",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-06-22T19:56:50.192811+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": null,
+    "title": "Kenon's Dashboard Wed, Jun 22, 3:56:49 pm",
+    "url": "/dashboard/m3p-5cy-i2t/kenons-dashboard-wed-jun-22-35649-pm",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "postings percentage",
+                                "formula": "query1 / query2 * 100"
+                            },
+                            {
+                                "alias": "postings percentage (previous week)",
+                                "formula": "week_before(query1 / query2 * 100)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.elasticsearch.query.hits{resource_name:post_handshake-production-student_postings-alias/_search}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.elasticsearch.query.hits{resource_name:post_handshake-production-student*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4866251731584119,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 72491480,
+    "matching_downtimes": [],
+    "message": "Certificate is expiring within {{threshold}} days on {{cluster-name.name}}.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Expiring SSL Certificate",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 120,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 14.0,
+            "warning": 21.0
+        }
+    },
+    "query": "min(last_1h):min:envoy.server.days_until_first_cert_expiring{*} by {cluster-name} < 14",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

@@ -1,0 +1,116 @@
+{
+    "author_handle": "gabriel@joinhandshake.com",
+    "author_name": "Gabe Forgie",
+    "created_at": "2022-05-27T15:23:38.059764+00:00",
+    "description": "",
+    "id": "2wc-mqa-5uq",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-05-27T16:49:12.399298+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Company Profile Monitoring",
+    "url": "/dashboard/2wc-mqa-5uq/company-profile-monitoring",
+    "widgets": [
+        {
+            "definition": {
+                "color_preference": "text",
+                "count": 50,
+                "display_format": "countsAndList",
+                "hide_zero_counts": true,
+                "query": "NOT status:ok company profile",
+                "show_last_triggered": true,
+                "show_priority": false,
+                "sort": "status,desc",
+                "start": 0,
+                "summary_type": "monitors",
+                "title": "Company Profile 500",
+                "title_align": "left",
+                "title_size": "13",
+                "type": "manage_status"
+            },
+            "id": 1023826453177354,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "alert_id": "72615259",
+                "time": {},
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "alert_graph",
+                "viz_type": "timeseries"
+            },
+            "id": 3157136072839528,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "idk how to datadog\n\nhere I made a monitor for high P95 latency: https://app.datadoghq.com/monitors/72615259?live=2m\n\nand here's one that gives me the specific company ID + name if somebody hits a 500: https://app.datadoghq.com/monitors/72615801",
+                "font_size": "14",
+                "has_padding": true,
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "top"
+            },
+            "id": 6198843974969960,
+            "layout": {
+                "height": 3,
+                "width": 7,
+                "x": 0,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.errors.by_http_status{resource_name:next::employer::employerscontroller_show} by {http.status_code,project}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "toplist"
+            },
+            "id": 4691197285993638,
+            "layout": {
+                "height": 4,
+                "width": 4,
+                "x": 7,
+                "y": 3
+            }
+        }
+    ]
+}

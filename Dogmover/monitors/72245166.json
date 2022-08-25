@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 72245166,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-emp-lifecycle\n \n Error in production from next/employer/self_service/subscription_controller#stripe_customer_portal",
+    "multi": false,
+    "name": "Resource next::employer::selfservice::subscriptioncontroller_stripe_customer_portal has an error on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_5m):sum:trace.rack.request.errors{resource_name:next::employer::selfservice::subscriptioncontroller_stripe_customer_portal,service:handshake,env:production}.as_count() > 0",
+    "tags": [
+        "emp-lifecycle",
+        "emp-lifecycle-self-service",
+        "emp-lfc-controller-errors",
+        "team:employer"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 18308868,
+    "matching_downtimes": [],
+    "message": "`skilljarcontroller_index` error rate is too high.\n @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Skilljar#Index has a high error rate in {{env.name}}",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "renotify_occurrences": null,
+        "renotify_statuses": null,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3.0,
+            "warning": 2.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):( sum:trace.rack.request.errors{resource_name:skilljarcontroller_index,service:handshake} by {env}.as_count() / sum:trace.rack.request.hits{resource_name:skilljarcontroller_index,service:handshake} by {env}.as_count() ) > 3",
+    "tags": [
+        "service:handshake",
+        "resource_name:skilljarcontroller_index",
+        "team:university"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,173 @@
+{
+    "author_handle": "ruban@joinhandshake.com",
+    "author_name": "Ruban Sellathurai",
+    "created_at": "2020-04-28T21:19:32.937899+00:00",
+    "description": "",
+    "id": "ev5-b8i-shm",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-04-29T23:46:16.610994+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Enhanced Auth token",
+    "url": "/dashboard/ev5-b8i-shm/enhanced-auth-token",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.cookie.auth_token.migrate_to_enhanced{env:production,app:handshake,project:handshake-production}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Migrated to new auth_token cookie",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5667825906589422
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "alias": "Success",
+                        "limit": 50,
+                        "order": "desc",
+                        "q": "sum:handshake.login.success{app:handshake,env:production,project:handshake-production} by {auth_type}"
+                    },
+                    {
+                        "aggregator": "sum",
+                        "alias": "Failure",
+                        "q": "sum:handshake.login.failure{app:handshake,env:production,project:handshake-production} by {auth_type}"
+                    }
+                ],
+                "title": "user auth",
+                "type": "query_table"
+            },
+            "id": 2761988000661048
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.login.failure{app:handshake,env:production} by {app}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Login failures",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 674490404266914
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.cas.ticket_validation_failure{app:handshake,env:production} by {app}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CAS Ticket validation Failure",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8229927636091236
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.sso_authentication_failed.count{app:handshake,env:production} by {app}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "SSO Authentication Failure",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4910121777778726
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.cookie.auth_token.roll_back_to_legacy{app:handshake,env:production} by {app}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Sum of handshake.cookie.auth_token.roll_back_to_legacy over app:handshake,env...",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8180153842723094
+        }
+    ]
+}

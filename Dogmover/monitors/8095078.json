@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 8095078,
+    "matching_downtimes": [],
+    "message": "[{{project_id}} - audit-logs-to-bq] subscription is holding very old messages. Either it is receiving more messages than it can handle, or it is not processing messages properly.\n\n{{#is_alert}}\nTo resolve, investigate why the subscription is backed up, such as workers are not running properly. If there is a surge of events, it may be fine and we just need to consider scaling up.\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{project_id}} - audit-logs-to-bq] subscription holding old messages alert has recovered\n{{/is_recovery}} @slack-incidents",
+    "multi": true,
+    "name": "Pubsub: audit-logs-to-bq subscription Holding Old Messages",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3600.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_30m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:audit-logs-to-bq} by {project_id} > 3600",
+    "tags": [],
+    "type": "metric alert"
+}

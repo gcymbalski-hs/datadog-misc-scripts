@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 44057933,
+    "matching_downtimes": [],
+    "message": "@kenon@joinhandshake.com\n\n{{#is_alert}}\nRecommendations on Demand is returning a large percentage of stale recommendations.\nTroubleshooting Guide: [https://joinhandshake.atlassian.net/wiki/spaces/SM/pages/2506785099/Recommendations+on+Demand#Troubleshooting](https://joinhandshake.atlassian.net/wiki/spaces/SM/pages/2506785099/Recommendations+on+Demand#Troubleshooting)\nDashboard: [https://app.datadoghq.com/dashboard/7tk-ygj-pgw](https://app.datadoghq.com/dashboard/7tk-ygj-pgw)\nCloud Function: [https://console.cloud.google.com/functions/details/us-central1/student-job-recommendation?project=handshake-production](https://console.cloud.google.com/functions/details/us-central1/student-job-recommendation?project=handshake-production)\n{{/is_alert}} \n\n{{#is_alert_recovery}}\nStale recommendations have returned to an acceptable level\n{{/is_alert_recovery}} @slack-incidents-students",
+    "multi": false,
+    "name": "Recommendations on Demand: Stale recommendations are high",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 6.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1h):( moving_rollup(avg:handshake.student.recommendations.job_recs_on_demand.stale{*}.as_count().fill(zero), 3600, 'sum') / moving_rollup(avg:handshake.student.recommendations.job_recs_on_demand.success{*}.as_count().fill(last), 3600, 'sum') ) * 100 > 10",
+    "tags": [],
+    "type": "query alert"
+}

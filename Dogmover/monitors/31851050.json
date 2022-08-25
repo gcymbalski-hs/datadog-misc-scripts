@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 31851050,
+    "matching_downtimes": [],
+    "message": "Warning at 300 requests per minute means we could be sending on average 5 requests per second. We are half way to our limit. \nMore info and instructions on resolving:\nhttps://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks#EducationIncidentRunbooks-LookerScheduledPlanRunOnceWarning/ReportScheduleTestEmailFailing\n\n\n@slack-incidents-edu",
+    "multi": false,
+    "name": "Run Schedule Plan Once request usage is high",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 500.0,
+            "warning": 300.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1m):sum:handshake.education.scheduled_plans.run_once{app:handshake}.as_count() >= 500",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

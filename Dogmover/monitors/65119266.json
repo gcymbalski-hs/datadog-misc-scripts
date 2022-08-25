@@ -1,0 +1,25 @@
+{
+    "deleted": null,
+    "id": 65119266,
+    "matching_downtimes": [],
+    "message": "Twilio connection error rates are high.  Consider declaring a PagerDuty incident and checking the Twilio Status Page.\n\n@slack-stu-relationships-incidents\n@jauriemma@joinhandshake.com",
+    "multi": false,
+    "name": "[Beta] [STU Relationships] Elevated Twilio Connection Error Rate",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.15,
+            "warning": 0.1
+        }
+    },
+    "query": "sum(last_30m):sum:fmc.handshake.video_sessions.connect.error{*}.as_count() / clamp_min((sum:fmc.handshake.video_sessions.connect.error{*}.as_count() + sum:fmc.handshake.video_sessions.connect.success{*}.as_count()), 50) > 0.15",
+    "tags": [],
+    "type": "query alert"
+}

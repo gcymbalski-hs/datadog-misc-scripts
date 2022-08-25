@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 65179136,
+    "matching_downtimes": [],
+    "message": "`next::employer::employerglobalsettingscontroller_update` p90 latency is too high.\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Resource next::employer::employerglobalsettingscontroller_update has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.3
+        }
+    },
+    "query": "percentile(last_10m):(p90:trace.rack.request{env:production,resource_name:next::employer::employerglobalsettingscontroller_update,service:handshake}) > 0.5",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-controller-latency",
+        "resource_name:next::employer::employerglobalsettingscontroller_update"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 31513620,
+    "matching_downtimes": [],
+    "message": "[{{database_id.name}} {{project_id.name}}] database is approaching Disk Capacity.\n\n{{#is_alert}}\nTo resolve, make sure autoscaling is working and/or add more nodes.\nhttps://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601189858/Disk+Usage+High\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{database_id.name}} {{project_id.name}}] database disk usage alert is off.\n{{/is_recovery}} @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Importer Database disk usage High",
+    "options": {
+        "escalation_message": "Importer Database Disk Usage is Still High\n\n@slack-Main_Account-incidents-edu",
+        "include_tags": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.95,
+            "warning": 0.9
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):max:gcp.cloudsql.database.disk.utilization{database_id IN (handshake-staging:importer-usually-driving-seal,handshake-production:importer-probably-national-baboon,handshake-production:importer-probably-national-baboon-replica,handshake-uk-staging:importer-freely-musical-elephant,handshake-uk-production:importer-mildly-communal-dingo)} by {project_id,database_id} > 0.95",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

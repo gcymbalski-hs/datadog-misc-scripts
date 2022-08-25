@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 24821374,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-platform-services\n\nhttps://joinhandshake.atlassian.net/wiki/spaces/PS/pages/2759393285/More+permanent+email+failures+then+deliveries",
+    "multi": false,
+    "name": "More permanent email failures then deliveries",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.5,
+            "warning": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_15m):(sum:mailgun_event_ingestor.permanent_fail{env:production}.as_rate() / sum:mailgun_event_ingestor.delivered{env:production}.as_rate()) > 1.5",
+    "tags": [],
+    "type": "query alert"
+}

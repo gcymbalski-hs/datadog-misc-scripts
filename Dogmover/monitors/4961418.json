@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 4961418,
+    "matching_downtimes": [],
+    "message": "**{{ host }}** node boot disk is low on space.\n\n{{#is_alert}}\nTo resolve, we need new nodes with fresh disk. Do a node pool change. See https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/291340563/Upgrading+Kubernetes+Cluster+Version+and+Node+Pool+Changes. For general info on node pools see https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/587759664/K8S+Node+Pools.\n{{/is_alert}} \n\n{{#is_recovery}}\n**{{ host }}** node boot disk alert is off.\n{{/is_recovery}} @pagerduty-NetworkingKubernetesIngressInfra @slack-incidents-infrastructure",
+    "multi": true,
+    "name": "Node Low on Disk Space",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 5000000000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:system.disk.free{cloud_provider:gcp} by {host} < 5000000000",
+    "tags": [],
+    "type": "metric alert"
+}

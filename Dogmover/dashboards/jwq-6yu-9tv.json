@@ -1,0 +1,817 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-04-02T21:17:34.735473+00:00",
+    "description": "",
+    "id": "jwq-6yu-9tv",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-11T17:34:42.302512+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "app",
+            "prefix": "app"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "queue",
+            "prefix": "queue"
+        },
+        {
+            "available_values": [],
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "job",
+            "prefix": "resource_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "project",
+            "prefix": "project"
+        }
+    ],
+    "title": "[Sidekiq] Workers",
+    "url": "/dashboard/jwq-6yu-9tv/sidekiq-workers",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "General",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.sidekiq.job.hits{$region,$job}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Sum of Jobs Enqueued",
+                            "type": "timeseries"
+                        },
+                        "id": 4508359207303386
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:handshake.clock_heartbeat{$region} by {region,env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Clock Heartbeats by Region, Env",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3912247986198862
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:handshake.worker_heartbeat{$region} by {region,env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Worker Heartbeats by Region, Env",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8317375298299166
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:handshake.critical_worker_heartbeat{$region} by {region,env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Critical Worker Heartbeats by Region, Env",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8937742540972838
+                    }
+                ]
+            },
+            "id": 2212940883659160
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "By Job",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,$queue,$region,$job} by {resource_name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Worker Runs by Job",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3139164549693822
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.sidekiq.job.errors{$env,$app,$queue,$region,$job} by {resource_name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Worker Errors by Job",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6063791758498874
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,$queue,$region,$job} by {resource_name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg Worker Duration by Job",
+                            "type": "timeseries"
+                        },
+                        "id": 927903344353776
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "sum:trace.sidekiq.job.duration{$env,$app,$queue,$region,$job} by {resource_name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Total Worker Time Spent by Job",
+                            "type": "timeseries"
+                        },
+                        "id": 2114857721870686
+                    }
+                ]
+            },
+            "id": 4142722904551844
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "By Queue",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:sidekiq.queue.size{$env,$app,$queue,$region} by {queue}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Queue Size by Queue",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4347222134776388
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:sidekiq.queue.latency{$env,$app,$queue,$region} by {queue}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Latency by Queue",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1274398897046452
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:kubernetes.pods.running{kube_deployment:handshake-sidekiq-*,$region,cluster-name:$env.value,$project,kube_deployment:handshake-sidekiq-$queue.value} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Pods Running By Queue",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5117867031529956
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:sidekiq.queue.size{$env,$app,$queue,$region} by {queue}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Queue Size by Queue",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 472934967994224
+                    }
+                ]
+            },
+            "id": 6192591054271506
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Queue-Specific (Jobs Must Be Added Manually)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:attachuploadedfiletorecord,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::deleteallexternalcalendarevents,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::handleexternalcalendarnotification,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::syncinitialevents,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::syncwithexternalcalendar,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:createemployerapprovals,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:distributejobpostingsforjob,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:expireallpostingsforjob,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:syncjobtointerviewschedule,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg Urgent Worker Duration by Job",
+                            "type": "timeseries"
+                        },
+                        "id": 1979494885656548
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:boothoptionworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:calculatefullyqualified,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::fetchcalendars,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::revokeuserauthorization,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:calendars::userauthorization,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:destroyinterviewscheduleworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:destroyrecordworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:interviewpacketworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:libratourgentheartbeat,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:magiclinkworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:markallinappnotificationsasread,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:newregistrationworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:passwordchangeworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:passwordresetworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:sendtestmassemail,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg Critical Worker Duration by Job",
+                            "type": "timeseries"
+                        },
+                        "id": 6092187151233480
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:boothoptionworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:calculatefullyqualified,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:calendars::fetchcalendars,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:calendars::revokeuserauthorization,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:calendars::userauthorization,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:destroyinterviewscheduleworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:destroyrecordworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:interviewpacketworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:libratourgentheartbeat,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:magiclinkworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:markallinappnotificationsasread,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:newregistrationworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:passwordchangeworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:passwordresetworker,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.sidekiq.job.hits{$env,$app,resource_name:sendtestmassemail,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Critical Worker Runs by Job",
+                            "type": "timeseries"
+                        },
+                        "id": 2355813128613190
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.sidekiq.job.duration{$env,$app,resource_name:attendeeinviteworker,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:createdemoschool,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:csvdownloadworker,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:destroyuser,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:expiredpostingscheck,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:massemailworker,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:refreshstudenthomecaches,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:sendpostingsexpiredsummary,$region,$job}, avg:trace.sidekiq.job.duration{$env,$app,resource_name:updateexpiredpostingssummarysent,$region,$job}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg Heavy Worker Duration by Job",
+                            "type": "timeseries"
+                        },
+                        "id": 8343610334894366
+                    }
+                ]
+            },
+            "id": 6290962216245906
+        }
+    ]
+}

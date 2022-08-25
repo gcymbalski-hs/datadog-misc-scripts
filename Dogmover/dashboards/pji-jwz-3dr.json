@@ -1,0 +1,176 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2021-08-20T21:01:35.468523+00:00",
+    "description": "",
+    "id": "pji-jwz-3dr",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-08-20T21:06:38.128149+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "cluster-name",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "*",
+            "name": "hpa",
+            "prefix": "hpa"
+        }
+    ],
+    "title": "Horizontal Pod Autoscaler",
+    "url": "/dashboard/pji-jwz-3dr/horizontal-pod-autoscaler",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            },
+                            {
+                                "formula": "query3"
+                            },
+                            {
+                                "formula": "query4"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:kubernetes_state.hpa.current_replicas{$cluster-name,$hpa} by {cluster-name,hpa}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:kubernetes_state.hpa.desired_replicas{$cluster-name,$hpa} by {cluster-name,hpa}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:kubernetes_state.hpa.min_replicas{$cluster-name,$hpa} by {cluster-name,hpa}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "avg:kubernetes_state.hpa.max_replicas{$cluster-name,$hpa} by {cluster-name,hpa}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "Replicas",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5483728689507160,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\u00a0max\u00a0",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1 / query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:kubernetes_state.hpa.current_replicas{$cluster-name,$hpa} by {cluster-name,hpa}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:kubernetes_state.hpa.max_replicas{$cluster-name,$hpa} by {cluster-name,hpa}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "% of Max Replicas",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5589931554584346,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 6,
+                "y": 0
+            }
+        }
+    ]
+}

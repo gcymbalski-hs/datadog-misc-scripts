@@ -1,0 +1,165 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-03-28T00:45:44.603244+00:00",
+    "description": "",
+    "id": "fjx-6ny-u6v",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2019-12-06T22:42:25.405094+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "*",
+            "name": "app",
+            "prefix": "app"
+        },
+        {
+            "default": "*",
+            "name": "table",
+            "prefix": "table"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Handshake Database",
+    "url": "/dashboard/fjx-6ny-u6v/handshake-database",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:database.row_count{$env,$app,$table,$region} by {table}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of database.row_count over $env,$app,$table by table",
+                "type": "timeseries"
+            },
+            "id": 8736404522091904
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:handshake.choose_database.master.count{$env,$app,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:handshake.choose_database.followers.count{$env,$app,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "handshake.choose_database.master.count, handshake.choose_database.followers.c...",
+                "type": "timeseries"
+            },
+            "id": 6549843574156018
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:database.index_hit_rate{$env,$app,$region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of database.index_hit_rate over $env,$app",
+                "type": "timeseries"
+            },
+            "id": 1202278473681014
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:database.max_connections{$env,$app,$region} by {env,app}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "max:database.used_connections{$env,$app,$region} by {env,app}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "database.max_connections, database.used_connections",
+                "type": "timeseries"
+            },
+            "id": 2045947023182032
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:database.idle_queries_count{$env,$app,$region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "max:database.blocked_queries_count{$env,$app,$region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "database.idle_queries_count, database.blocked_queries_count",
+                "type": "timeseries"
+            },
+            "id": 6913103576299972
+        }
+    ]
+}

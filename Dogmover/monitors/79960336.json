@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 79960336,
+    "matching_downtimes": [],
+    "message": "CPU usage on the Redis instance {{instance_id.name}} is high.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Redis High CPU",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 900,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 90.0,
+            "warning": 80.0
+        }
+    },
+    "query": "avg(last_15m):max:gcp.redis.stats.cpu_utilization{!project_id:handshake-development-204119} by {instance_id} > 90",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

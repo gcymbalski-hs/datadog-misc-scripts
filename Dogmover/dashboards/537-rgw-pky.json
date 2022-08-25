@@ -1,0 +1,874 @@
+{
+    "author_handle": "savannah@joinhandshake.com",
+    "author_name": "Savannah Worth",
+    "created_at": "2020-06-26T16:52:10.911123+00:00",
+    "description": "",
+    "id": "537-rgw-pky",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2022-08-05T20:22:02.198514+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Employer Discovery Squad Dashboard",
+    "url": "/dashboard/537-rgw-pky/employer-discovery-squad-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.employers.batched_campaign.delayed.max{*} by {env,campaign}/1000/60/60",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Delay by Campaign in Hours",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3509072468832988,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 1,
+                "y": 141
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.campaign_dates.handled_stuck_in_queue{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Count of Campaigns Stuck in Queued for 4 Hours",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3911233271546564,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 1,
+                "y": 123
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.campaigns.campaign_queue.delay{*} by {employer_id,env,region}/60/60",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Campaign Lock Delay in Hours",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8753924052238114,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 123
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.batched_campaign.set_recipients.max{*} by {campaign}/1000",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Set Recipients Duration in Seconds",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1147970843655300,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 1,
+                "y": 159
+            }
+        },
+        {
+            "definition": {
+                "color_preference": "text",
+                "count": 50,
+                "display_format": "counts",
+                "hide_zero_counts": true,
+                "query": "campaign tag:(team:employer)",
+                "show_last_triggered": false,
+                "show_priority": false,
+                "sort": "status,asc",
+                "start": 0,
+                "summary_type": "monitors",
+                "title": "Campaign Alerts",
+                "title_align": "left",
+                "title_size": "13",
+                "type": "manage_status"
+            },
+            "id": 6739508442153318,
+            "layout": {
+                "height": 12,
+                "width": 47,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "color_preference": "text",
+                "count": 50,
+                "display_format": "counts",
+                "hide_zero_counts": true,
+                "query": "team:employer elasticsearch priority",
+                "show_last_triggered": false,
+                "show_priority": false,
+                "sort": "status,asc",
+                "start": 0,
+                "summary_type": "monitors",
+                "title": "Elasticsearch Delays",
+                "title_align": "left",
+                "title_size": "13",
+                "type": "manage_status"
+            },
+            "id": 7236440139711662,
+            "layout": {
+                "height": 12,
+                "width": 46,
+                "x": 50,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "max:handshake.employers.campaign_unlock.delayed_messages{env:production} by {campaign,region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Unlock Worker Unindexed Messages Count",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7434228572482662,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 141
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "sum:handshake.employers.batched_campaign.campaigns_processed{env:production} by {region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Count of Campaigns Processed",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2815722550401868,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 51,
+                "y": 159
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "p95:trace.execute.graphql{env:production,service:employer-graphql}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "p95 Request times for  Employer Graphql",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8556131541710068,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 50,
+                "y": 22
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "sum:trace.execute.graphql.hits{service:employer-graphql,cluster-name:production2}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Total Hits to Employer Graphql",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4599772495511164,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 39
+            }
+        },
+        {
+            "definition": {
+                "query": "Unscheduled Invalid Campaign status:warn",
+                "tags_execution": "and",
+                "time": {
+                    "live_span": "2d"
+                },
+                "title": "Count of Invalid Campaigns Unscheduled",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 8289917571412396,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 51,
+                "y": 177
+            }
+        },
+        {
+            "definition": {
+                "color": "#6915F0",
+                "font_size": "auto",
+                "text": "Campaign Details",
+                "text_align": "right",
+                "type": "free_text"
+            },
+            "id": 2281271410359940,
+            "layout": {
+                "height": 6,
+                "width": 24,
+                "x": 38,
+                "y": 114
+            }
+        },
+        {
+            "definition": {
+                "color": "#6915F0",
+                "font_size": "auto",
+                "text": "Candidate Hub Details",
+                "text_align": "right",
+                "type": "free_text"
+            },
+            "id": 1735990547693130,
+            "layout": {
+                "height": 6,
+                "width": 24,
+                "x": 36,
+                "y": 14
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.execute.graphql.errors{service:employer-graphql,env:production}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Employer Graphql Errors",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3384794625957246,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 50,
+                "y": 39
+            }
+        },
+        {
+            "definition": {
+                "color_preference": "text",
+                "count": 50,
+                "display_format": "counts",
+                "hide_zero_counts": true,
+                "query": "tag:(squad:emp-marketplace)",
+                "show_last_triggered": false,
+                "show_priority": false,
+                "sort": "status,asc",
+                "start": 0,
+                "summary_type": "monitors",
+                "title": "Other Marketplace Alerts",
+                "title_align": "left",
+                "title_size": "13",
+                "type": "manage_status"
+            },
+            "id": 6192671330236666,
+            "layout": {
+                "height": 12,
+                "width": 50,
+                "x": 100,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "query": "Mismatched Approved Schools status:warn",
+                "tags_execution": "and",
+                "time": {
+                    "live_span": "2d"
+                },
+                "title": "Mismatched Approved Schools",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 6186460707821954,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 1,
+                "y": 177
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.candidate_hub.matches_search.avg{*} by {interaction_filter}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Matches ES query timing in MS",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6441250567180300,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 22
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:handshake.employers.postings.expire_count{env:production,region:us-central1}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Expiring Postings Count",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 361641449317464,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 65
+            }
+        },
+        {
+            "definition": {
+                "color": "#6915F0",
+                "font_size": "auto",
+                "text": "Posting Details",
+                "text_align": "right",
+                "type": "free_text"
+            },
+            "id": 6670096805866230,
+            "layout": {
+                "height": 6,
+                "width": 24,
+                "x": 38,
+                "y": 56
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1 / 100"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.elasticsearch_indexer.worker_future.serialization_timing.avg{env:production,index:searchindices::employerpublicstudents,region:us-central1}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "EPS Prod serialization time in seconds",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 764689002825496,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 93
+            }
+        },
+        {
+            "definition": {
+                "color": "#6915F0",
+                "font_size": "auto",
+                "text": "EmployerPublicStudents Details",
+                "text_align": "right",
+                "type": "free_text"
+            },
+            "id": 4316127711176512,
+            "layout": {
+                "height": 6,
+                "width": 42,
+                "x": 3,
+                "y": 85
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.employers.open_postings.expired_count{*} by {env,region}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Open Expired Deletion Counts",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7957289651567654,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 54,
+                "y": 65
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.employers.campaign_dates.campaigns_processed{env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 770881247703768,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 100,
+                "y": 159
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.emp.controllers.query_count{*} by {action,controller}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3253090832866708,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 100,
+                "y": 22
+            }
+        }
+    ]
+}

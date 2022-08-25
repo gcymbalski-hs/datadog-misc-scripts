@@ -1,0 +1,1238 @@
+{
+    "author_handle": "spencer@joinhandshake.com",
+    "author_name": "Spencer Miskoviak",
+    "created_at": "2019-04-18T21:24:25.911946+00:00",
+    "description": "",
+    "id": "vq6-nqi-vxe",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-04-27T14:16:48.977705+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "environment",
+            "prefix": "env"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "user-type",
+            "prefix": "user"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "route-action",
+            "prefix": "action"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "route-resource",
+            "prefix": "resource"
+        }
+    ],
+    "title": "[Frontend] Overview",
+    "url": "/dashboard/vq6-nqi-vxe/frontend-overview",
+    "widgets": [
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user-type,$route-action,$route-resource})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "area",
+                        "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,$user-type,$route-action,$route-resource})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "area",
+                        "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,$user-type,$route-action,$route-resource})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "area",
+                        "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,$user-type,$route-action,$route-resource})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Average Timings Overview",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3818111185867494
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:fmc.handshake.tti.count{$environment,$user-type,$route-action,$route-resource}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:fmc.handshake.fcp.count{$environment,$user-type,$route-action,$route-resource}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:fmc.handshake.fp.count{$environment,$user-type,$route-action,$route-resource}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:fmc.handshake.ttfb.count{$environment,$user-type,$route-action,$route-resource}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Timing Counts",
+                "type": "timeseries"
+            },
+            "id": 8063700964866450
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Time to First Byte (TTFB)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Time to First Byte (TTFB) Average",
+                            "type": "timeseries"
+                        },
+                        "id": 7427243977355576
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,$user-type,$route-action,$route-resource} by {user})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to First Byte (TTFB) by User Type",
+                            "type": "timeseries"
+                        },
+                        "id": 7649406510807202
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,$user-type,$route-action,$route-resource} by {browser})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to First Byte (TTFB) by Browser",
+                            "type": "timeseries"
+                        },
+                        "id": 3785980586118786
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,$user-type,$route-action,$route-resource} by {device})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to First Byte (TTFB) by Device Type",
+                            "type": "timeseries"
+                        },
+                        "id": 1848472121432282
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,$user-type,$route-action,$route-resource} by {connection})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to First Byte (TTFB) by Effective Connection Type",
+                            "type": "timeseries"
+                        },
+                        "id": 5494184129655268
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.median{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.max{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.95percentile{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Time to First Byte (TTFB) Median, 95th Percentile, Max",
+                            "type": "timeseries"
+                        },
+                        "id": 9081884690596
+                    }
+                ]
+            },
+            "id": 7193201913570984
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "First Paint (FP)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Paint (FP) Average",
+                            "type": "timeseries"
+                        },
+                        "id": 8321709506808858
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,$user-type,$route-action,$route-resource} by {user})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Paint (FP) by User Type",
+                            "type": "timeseries"
+                        },
+                        "id": 2545121087839524
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,$user-type,$route-action,$route-resource} by {browser})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Paint (FP) by Browser",
+                            "type": "timeseries"
+                        },
+                        "id": 1357548316339802
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,$user-type,$route-action,$route-resource} by {device})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Paint (FP) by Device Type",
+                            "type": "timeseries"
+                        },
+                        "id": 4595162718194330
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,$user-type,$route-action,$route-resource} by {connection})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Paint (FP) by Effective Connection Type",
+                            "type": "timeseries"
+                        },
+                        "id": 1012684616613512
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.median{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.max{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.95percentile{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Paint (FP) Median, 95th Percentile, Max",
+                            "type": "timeseries"
+                        },
+                        "id": 6592561755081598
+                    }
+                ]
+            },
+            "id": 6298344158134126
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "First Contentful Paint (FCP)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Contentful Paint (FCP) Average",
+                            "type": "timeseries"
+                        },
+                        "id": 1730075121737146
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,$user-type,$route-action,$route-resource} by {user})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Contentful Paint (FCP) by User Type",
+                            "type": "timeseries"
+                        },
+                        "id": 3959631039947780
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,$user-type,$route-action,$route-resource} by {browser})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Contentful Paint (FCP) by Browser",
+                            "type": "timeseries"
+                        },
+                        "id": 3396025023447482
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,$user-type,$route-action,$route-resource} by {device})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Contentful Paint (FCP) by Device Type",
+                            "type": "timeseries"
+                        },
+                        "id": 2360502413240582
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,$user-type,$route-action,$route-resource} by {connection})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Contentful Paint (FCP) by Effective Connection Type",
+                            "type": "timeseries"
+                        },
+                        "id": 1475141714816934
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.median{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.max{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.95percentile{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Contentful Paint (FCP) Median, 95th Percentile, Max",
+                            "type": "timeseries"
+                        },
+                        "id": 2087001113776604
+                    }
+                ]
+            },
+            "id": 2348942128325602
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Time to Interactive (TTI)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Time to Interactive (TTI) Average",
+                            "type": "timeseries"
+                        },
+                        "id": 6525862951474312
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user-type,$route-action,$route-resource} by {user})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to Interactive (TTI) by User Type",
+                            "type": "timeseries"
+                        },
+                        "id": 8054182574560822
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user-type,$route-action,$route-resource} by {browser})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to Interactive (TTI) by Browser",
+                            "type": "timeseries"
+                        },
+                        "id": 5652475454307760
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user-type,$route-action,$route-resource} by {device})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to Interactive (TTI) by Device Type",
+                            "type": "timeseries"
+                        },
+                        "id": 8867720622961314
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user-type,$route-action,$route-resource} by {connection})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Time to Interactive (TTI) by Effective Connection Type",
+                            "type": "timeseries"
+                        },
+                        "id": 6085730790595876
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.median{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.max{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.95percentile{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Time to Interactive (TTI) Median, 95th Percentile, Max",
+                            "type": "timeseries"
+                        },
+                        "id": 5158545229667766
+                    }
+                ]
+            },
+            "id": 7321727288929812
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "First Input Delay (FID)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Input Delay (FID) Average",
+                            "type": "timeseries"
+                        },
+                        "id": 6313966058315838
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,$user-type,$route-action,$route-resource} by {user})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Input Delay (FID) by User Type",
+                            "type": "timeseries"
+                        },
+                        "id": 1987756696117298
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,$user-type,$route-action,$route-resource} by {browser})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Input Delay (FID) by Browser",
+                            "type": "timeseries"
+                        },
+                        "id": 846406807905696
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,$user-type,$route-action,$route-resource} by {device})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Input Delay (FID) by Device Type",
+                            "type": "timeseries"
+                        },
+                        "id": 879397777553646
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,$user-type,$route-action,$route-resource} by {connection})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average First Input Delay (FID) by Effective Connection Type",
+                            "type": "timeseries"
+                        },
+                        "id": 1422524029818122
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.median{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.max{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.95percentile{$environment,$user-type,$route-action,$route-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Input Delay (FID) Median, 95th Percentile, Max",
+                            "type": "timeseries"
+                        },
+                        "id": 8281543977738146
+                    }
+                ]
+            },
+            "id": 8166747663835750
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Frontend Metrics Collector Service",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Hits",
+                                            "expression": "sum:trace.http.request.hits{service:frontend-metrics-collector,$environment}.as_rate()"
+                                        }
+                                    ],
+                                    "q": "sum:trace.http.request.hits{service:frontend-metrics-collector,$environment,$user-type,$route-action,$route-resource}.as_rate()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "Errors",
+                                            "expression": "sum:trace.http.request.errors{service:frontend-metrics-collector,$environment}.as_rate()"
+                                        }
+                                    ],
+                                    "q": "sum:trace.http.request.errors{service:frontend-metrics-collector,$environment,$user-type,$route-action,$route-resource}.as_rate()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Hit/Error Rate",
+                            "type": "timeseries"
+                        },
+                        "id": 276615131399795
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "p50:trace.http.request{$environment,$route-action,$route-resource,$user-type,service:frontend-metrics-collector}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p75:trace.http.request{$environment,$route-action,$route-resource,$user-type,service:frontend-metrics-collector}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p90:trace.http.request{$environment,$route-action,$route-resource,$user-type,service:frontend-metrics-collector}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p95:trace.http.request{$environment,$route-action,$route-resource,$user-type,service:frontend-metrics-collector}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p99:trace.http.request{$environment,$route-action,$route-resource,$user-type,service:frontend-metrics-collector}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "max:trace.http.request{$environment,$route-action,$route-resource,$user-type,service:frontend-metrics-collector}.rollup(max)",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 6417808535465085
+                    }
+                ]
+            },
+            "id": 5525384180346488
+        }
+    ]
+}

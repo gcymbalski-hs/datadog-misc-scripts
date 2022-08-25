@@ -1,0 +1,25 @@
+{
+    "deleted": null,
+    "id": 79960339,
+    "matching_downtimes": [],
+    "message": "Database Queries {{database_id.name}} running for too long.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Stuck Queries Database",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 900,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {}
+    },
+    "query": "avg(last_15m):avg:pgbouncer.stats.avg_query_time{project:handshake-production} by {db} > 3600000000",
+    "tags": [
+        "env:production",
+        "repo:terraform-datadog",
+        "service:handshake",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

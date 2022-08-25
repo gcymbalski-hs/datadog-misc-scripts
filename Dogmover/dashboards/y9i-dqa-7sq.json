@@ -1,0 +1,294 @@
+{
+    "author_handle": "jking@joinhandshake.com",
+    "author_name": "Jason King",
+    "created_at": "2020-10-26T14:50:43.687516+00:00",
+    "description": "",
+    "id": "y9i-dqa-7sq",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-12-18T15:45:46.967147+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Email Metrics",
+    "url": "/dashboard/y9i-dqa-7sq/email-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "SPF/IP Address Mismatch",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.health.email_spf_mismatch{env:production,region:us-central1}"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "handshake.health.email_spf_mismatch with region:us-central1",
+                            "type": "timeseries"
+                        },
+                        "id": 7090335453676935
+                    }
+                ]
+            },
+            "id": 3304181237223772
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Mailgun Events",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.delivered{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.delivered",
+                            "type": "timeseries"
+                        },
+                        "id": 5315331294271137
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.opened{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.opened",
+                            "type": "timeseries"
+                        },
+                        "id": 3634090815462821
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.clicked{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.clicked",
+                            "type": "timeseries"
+                        },
+                        "id": 4327816054612721
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.complained{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.complained",
+                            "type": "timeseries"
+                        },
+                        "id": 3543190571654992
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.permanent_fail{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.permanent_fail",
+                            "type": "timeseries"
+                        },
+                        "id": 6145713919288338
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.temporary_fail{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.temporary_fail",
+                            "type": "timeseries"
+                        },
+                        "id": 503096919311951
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:mailgun_event_ingestor.unsubscribed{*}.as_count()"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "mailgun_event_ingestor.unsubscribed",
+                            "type": "timeseries"
+                        },
+                        "id": 7602437886764027
+                    }
+                ]
+            },
+            "id": 3895530974408926
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Mailgun Link Forwarder Service",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.http.request.hits{env:production,service:mailgun-forwarder}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.http.request.errors{env:production,service:mailgun-forwarder}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Hit/error count on service mailgun-forwarder in env production",
+                            "type": "timeseries"
+                        },
+                        "id": 2557787484941706
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.http.request.errors{env:production,service:mailgun-forwarder} by {http.status_code}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Error count on service mailgun-forwarder in env production",
+                            "type": "timeseries"
+                        },
+                        "id": 1468115829735654
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "trace.http.request.apdex.by.service{env:production,service:mailgun-forwarder}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Apdex on service mailgun-forwarder in env production",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "max": "1"
+                            }
+                        },
+                        "id": 8395374713221281
+                    }
+                ]
+            },
+            "id": 8201900949166490
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Email Auto Reply Endpoint",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.rack.request.errors{env:production,resource:10299064e312cefc,service:handshake} by {http.status_code}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Error count on service handshake, resource EmailRepliesContro\u2026 in env production",
+                            "type": "timeseries"
+                        },
+                        "id": 2683238830139060
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.rack.request.hits{env:production,resource:10299064e312cefc,service:handshake}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.rack.request.errors{env:production,resource:10299064e312cefc,service:handshake}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Hit/error count on service handshake, resource EmailRepliesCo\u2026 in env production",
+                            "type": "timeseries"
+                        },
+                        "id": 2908177768270476
+                    }
+                ]
+            },
+            "id": 5072185492172248
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun.error{*}.as_count()"
+                    }
+                ],
+                "show_legend": false,
+                "title": "mailgun.error",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3384315917471029
+        }
+    ]
+}

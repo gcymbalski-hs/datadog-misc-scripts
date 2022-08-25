@@ -1,0 +1,46 @@
+{
+    "deleted": null,
+    "id": 22287125,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1036072168,
+            "monitor_id": 22287125,
+            "scope": [
+                "*"
+            ],
+            "start": 1605589103
+        }
+    ],
+    "message": "@slack-incidents-beta",
+    "multi": false,
+    "name": "Unusual 4XX Responses from Handshake in production2",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_30m"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_12h):anomalies(avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_4xx{cluster-name:production2}.as_count(), 'robust', 2, direction='above', alert_window='last_30m', interval=120, count_default_zero='true', seasonality='weekly', timezone='america/los_angeles') >= 1",
+    "tags": [],
+    "type": "query alert"
+}

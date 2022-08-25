@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 44161337,
+    "matching_downtimes": [],
+    "message": "The handshake-web horizontal pod autoscaler (HPA) is close to max capacity. Refer to https://joinhandshake.atlassian.net/wiki/spaces/PI/pages/2508685408/Kubernetes+-+Horizontal+Pod+Autoscaler+at+Capacity.\n\n@slack-incidents-infrastructure",
+    "multi": true,
+    "name": "handshake-web HPA near max in handshake-uk-staging",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 300,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "critical_recovery": 0.8
+        }
+    },
+    "query": "avg(last_30m):max:kubernetes_state.hpa.current_replicas{project:handshake-uk-staging,hpa:handshake-web-autoscaler} by {cluster-name} / max:kubernetes_state.hpa.max_replicas{project:handshake-uk-staging,hpa:handshake-web-autoscaler} by {cluster-name} > 0.9",
+    "tags": [
+        "env:staging",
+        "project:handshake-uk-staging",
+        "region:europe-west2"
+    ],
+    "type": "query alert"
+}

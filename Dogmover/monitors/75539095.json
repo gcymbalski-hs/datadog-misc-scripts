@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 75539095,
+    "matching_downtimes": [],
+    "message": "*A campaign queue lock is delayed by >= 24 hour.*\n\n**Priority Level: P1**\n\n[Campaigns Runbook for debugging & troubleshooting info](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601255289/Campaigns+Debugging)\n\n[Employer Campaign Lock Delay Section](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601255289/Campaigns+Debugging#Campaign-Lock-Delay)\n\n[Employer Marketplace Outreach Dashboard](https://app.datadoghq.com/dashboard/eub-a6y-kau/employer-outreach-squad)\n\n[Campaign Load Metrics](https://app.datadoghq.com/dashboard/szc-c5n-hu8/campaign-load-metrics)\n   \n@slack-incidents-emp-outreach  <!subteam^S022HA38ZRA>",
+    "multi": true,
+    "name": "24 Hour Campaign Lock Delay",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 82800.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_30m):max:handshake.employers.campaigns.campaign_queue.delay{env:production} by {region} > 82800",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "query alert"
+}

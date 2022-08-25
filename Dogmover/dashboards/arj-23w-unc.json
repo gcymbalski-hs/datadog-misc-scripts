@@ -1,0 +1,709 @@
+{
+    "author_handle": "rperez@joinhandshake.com",
+    "author_name": "Rodney Perez",
+    "created_at": "2020-10-08T16:34:29.618635+00:00",
+    "description": "",
+    "id": "arj-23w-unc",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-13T23:24:51.882727+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variable_presets": [
+        {
+            "name": "Handshake-Production",
+            "template_variables": []
+        },
+        {
+            "name": "Handshake-UK-Production",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "[\"handshake-uk-production\"]"
+                }
+            ]
+        }
+    ],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "deployment",
+            "prefix": "kube_deployment"
+        },
+        {
+            "available_values": [],
+            "default": "handshake",
+            "name": "kube_namespace",
+            "prefix": "kube_namespace"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster-name",
+            "prefix": "cluster-name"
+        }
+    ],
+    "title": "Pgbouncer Stats",
+    "url": "/dashboard/arj-23w-unc/pgbouncer-stats",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Health",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "alert_id": "24214223",
+                            "title": "Alert: [PGBouncer] MaxWait Time has increased",
+                            "type": "alert_graph",
+                            "viz_type": "toplist"
+                        },
+                        "id": 8902716791453060
+                    },
+                    {
+                        "definition": {
+                            "alert_id": "24626416",
+                            "title": "Idle Connections available by deployment",
+                            "type": "alert_graph",
+                            "viz_type": "timeseries"
+                        },
+                        "id": 3801661396620002
+                    }
+                ]
+            },
+            "id": 8995457806288666
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Resources",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:kubernetes.pods.running{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "PODS",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8785287975972332
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:kubernetes.memory.usage{$project,$deployment,$kube_namespace,kube_container_name:pgbouncer,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Memory usage in bytes",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2313536037061550
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.stats.bytes_sent_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.stats.bytes_received_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Bytes Sent and Received",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 640977875135134
+                    }
+                ]
+            },
+            "id": 5377007766915878
+        },
+        {
+            "definition": {
+                "background_color": "vivid_green",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Server Connections",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "value": "y = 0"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "(query1 + query2 + query3 + query4 + query5) / query6"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query6",
+                                            "query": "sum:pgbouncer.databases.pool_size{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_active{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_idle{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_used{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_tested{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_login{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Total Server Connections Usage",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6990618408160766
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "value": "y = 0"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        },
+                                        {
+                                            "formula": "query4"
+                                        },
+                                        {
+                                            "formula": "query5"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_active{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_idle{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_used{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_tested{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_login{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "sum:pgbouncer.databases.pool_size{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Total Server Connections",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4222234639886684
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        },
+                                        {
+                                            "formula": "query4"
+                                        },
+                                        {
+                                            "formula": "query5"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:pgbouncer.pools.sv_active{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:pgbouncer.pools.sv_idle{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "avg:pgbouncer.pools.sv_used{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "avg:pgbouncer.pools.sv_tested{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "avg:pgbouncer.pools.sv_login{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "avg:pgbouncer.databases.pool_size{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment,cluster-name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Avg Server Connections",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5856734198756716
+                    }
+                ]
+            },
+            "id": 1201125949243718
+        },
+        {
+            "definition": {
+                "background_color": "vivid_green",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Client Connections",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.cl_active{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Sum Active Client Connections",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8706295551557726
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:pgbouncer.pools.cl_active{$deployment,$kube_namespace,$project,$cluster-name} by {name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Client Connections by Host",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2072071713678048
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.cl_waiting{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Waiting Client Connections",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4331281423243764
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:pgbouncer.pools.maxwait{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Oldest Waiting Client",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6734517294322036
+                    }
+                ]
+            },
+            "id": 1761155034856696
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Usage",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:pgbouncer.stats.queries_per_second{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average queries per second",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5694997729763276
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:pgbouncer.stats.transactions_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg transactions per second",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7928605800535448
+                    }
+                ]
+            },
+            "id": 5271049520284210
+        }
+    ]
+}

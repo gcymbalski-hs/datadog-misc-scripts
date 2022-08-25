@@ -1,0 +1,135 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-04-02T23:30:37.611934+00:00",
+    "description": "",
+    "id": "h73-txb-waj",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-07-06T15:03:39.450722+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Handshake Trust Score",
+    "url": "/dashboard/h73-txb-waj/handshake-trust-score",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:handshake.trust_score_queue.queue_size{$env,$region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trust Score Queue Size",
+                "type": "timeseries"
+            },
+            "id": 480267746222290
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:trace.sidekiq.job.duration{$env,resource_name:processtrustscorequeue,$region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Trust Score Processing Time",
+                "type": "timeseries"
+            },
+            "id": 5383108716818266
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.trust_score_queue.score{$env,$region}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average Trust Scores",
+                "type": "timeseries"
+            },
+            "id": 5340065325023486
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:handshake.trust_score_queue.queued{$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg Currently Queued Trust Score Jobs",
+                "type": "timeseries"
+            },
+            "id": 601362778554372
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.trust_score_queue.employers_updated{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of employers updated",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8824657371236892
+        }
+    ]
+}

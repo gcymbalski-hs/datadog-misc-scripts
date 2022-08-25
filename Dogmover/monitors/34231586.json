@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 34231586,
+    "matching_downtimes": [],
+    "message": "The subscription for edu-email-events to ingest mailgun-events is holding old messages.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2144404005/Runbooks+EDU+Email+Events\n\nIf this monitor resolves, we should keep a close eye on the monitor's trend and ensure that messages continued to get acknowledged\n\n@slack-incidents-edu",
+    "multi": true,
+    "name": "EDU Email Events subscription backed up",
+    "options": {
+        "escalation_message": "Renotification: The subscription for edu-email-events to ingest mailgun-events is still holding old messages. \n\n@slack-incidents-edu",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 7200.0,
+            "warning": 3600.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:mailgun-events-to-edu-email-events} by {project_id} > 7200",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

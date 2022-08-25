@@ -1,0 +1,41 @@
+{
+    "deleted": null,
+    "id": 8255078,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1974937555,
+            "monitor_id": 8255078,
+            "scope": [
+                "*"
+            ],
+            "start": 1653520904
+        }
+    ],
+    "message": "Certificate is expiring within {{threshold}} days on {{cluster-name.name}} \n\n@slack-incidents-prod-infrastructure",
+    "multi": true,
+    "name": "Certificate Expiring Soon",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 60,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 1440,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 14.0,
+            "warning": 21.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_1h):min:envoy.server.days_until_first_cert_expiring{*} by {cluster-name} < 14",
+    "tags": [],
+    "type": "query alert"
+}

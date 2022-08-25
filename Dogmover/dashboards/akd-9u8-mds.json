@@ -1,0 +1,464 @@
+{
+    "author_handle": "ehinton@joinhandshake.com",
+    "author_name": "Erik Hinton",
+    "created_at": "2021-08-26T03:14:10.075438+00:00",
+    "description": "",
+    "id": "akd-9u8-mds",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-08-26T17:50:25.931373+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "5543 Explorations",
+    "url": "/dashboard/akd-9u8-mds/5543-explorations",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "formulas": [
+                            {
+                                "alias": "applications",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "events and career fairs",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "postings",
+                                "formula": "query3"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p90:trace.elasticsearch.query{env:production,region:us-central1,resource_name:get_handshake-production-student_applications-alias/_search,service:handshake-elasticsearch}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p90:trace.elasticsearch.query{env:production,region:us-central1,resource:9f5ddf2c37b34423,service:handshake-elasticsearch}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p90:trace.elasticsearch.query{env:production,region:us-central1,resource:5b3a6949d3452015,service:handshake-elasticsearch}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "ES Latency P90 Combined",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7145054001069652,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Unified Search",
+                                "formula": "autosmooth(query1)"
+                            },
+                            {
+                                "alias": "Mobile Collections",
+                                "formula": "autosmooth(query2)"
+                            },
+                            {
+                                "alias": "Postings",
+                                "formula": "autosmooth(query3)"
+                            },
+                            {
+                                "alias": "Mobile Postings",
+                                "formula": "autosmooth(query4)"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.errors{env:production,resource:ac55bd8b6298d191,service:handshake}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.rack.request.errors{env:production,resource:ff5b5392ae3b7c55,service:handshake}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "sum:trace.rack.request.errors{env:production,region:us-central1,resource:aa0567ef12129c55,service:handshake}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:trace.rack.request.errors{env:production,region:us-central1,resource:f1c6eb0e60482dce,service:handshake}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "ES Errors By Resource",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8710703405812834,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:elasticsearch.thread_pool.search.queue{es-cluster-name:production-students} by {node_name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Max of elasticsearch.thread_pool.search.queue over $cluster by node_name",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4390753694074738,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 8,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.document_updater.upserted{cluster:students} by {index}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Upserted by Index",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8711052874252732,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 10,
+                                    "order": "desc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:elasticsearch.thread_pool.search.queue{es-cluster-name:production-students} by {node_name}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Max of elasticsearch.thread_pool.search.queue over $cluster by node_name",
+                "type": "toplist"
+            },
+            "id": 4411601345434884,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 25,
+                                    "order": "desc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.get.time{es-cluster-name:production-students} by {node_name}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Avg Get Time",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "toplist"
+            },
+            "id": 1099128576604524,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 8,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "ewma_5(per_minute(query2))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.redis.stats.evicted_keys{project_id:handshake-production}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Redis Evictions",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8802765459907228,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "top(ewma_5(query1), 10, 'max', 'desc')"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p90:trace.elasticsearch.query{env:production,resource_name:get_handshake-production-student*} by {resource_name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "P90 slowest ES queries",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": false,
+                    "scale": "log"
+                }
+            },
+            "id": 114828527960508,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 6
+            }
+        }
+    ]
+}

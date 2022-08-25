@@ -1,0 +1,656 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-04-02T18:49:57.916509+00:00",
+    "description": "",
+    "id": "8kp-srr-f8k",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-17T14:47:41.961556+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "*",
+            "name": "cluster",
+            "prefix": "cluster"
+        },
+        {
+            "default": "*",
+            "name": "priority",
+            "prefix": "priority"
+        },
+        {
+            "default": "*",
+            "name": "transaction_action",
+            "prefix": "transaction_action"
+        },
+        {
+            "default": "*",
+            "name": "record_type",
+            "prefix": "type"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "[Elasticsearch] Reindex Streamer",
+    "url": "/dashboard/8kp-srr-f8k/elasticsearch-reindex-streamer",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Streaming",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.reindex_stream.enqueued{$env,$cluster,$priority,$record_type,$region} by {type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Stream by Record Type",
+                            "type": "timeseries"
+                        },
+                        "id": 2973325032902184
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.reindex_stream.enqueued{$env,$cluster,$region,$priority,$record_type} by {priority}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Stream by Priority",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3887167899176464
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.reindex_stream.enqueued{$env,$cluster,$priority,$region,$record_type} by {cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Stream by Target Cluster",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3661485586679614
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.reindex_stream.enqueued{$env,$cluster,$priority,$region,$record_type} by {source}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Stream by Source",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8833729534666916
+                    }
+                ]
+            },
+            "id": 7479298599140580
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Reindex Delays",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.reindex_stream.delay{$env,$cluster,$priority,$region} by {cluster,priority}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Reindex Delay by Priority",
+                            "type": "timeseries"
+                        },
+                        "id": 5552231610345874
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.reindex_stream.delay{$env,$cluster,$priority,$region} by {type,cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Reindex Delay by Type",
+                            "type": "timeseries"
+                        },
+                        "id": 183788782719174
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.reindex_stream.delay{$region,priority:high,cluster:default,env:production} by {type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "(Temp) High Priority Reindex Delay by Type",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6149041858887718
+                    }
+                ]
+            },
+            "id": 4033147028834648
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Queue Sizes",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "diff(max:handshake.reindex_stream.queue_size{$env,$cluster,$region})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Queue Size Rate of Change by Target Cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 7385686110099176
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.reindex_stream.queue_size{$env,$cluster,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.reindex_stream.queue_size.30min{$env,$cluster,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.reindex_stream.queue_size.5min{$env,$cluster,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.reindex_stream.queue_size.2hr{$env,$cluster,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.reindex_stream.queue_size.5hr{$env,$cluster,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Queue Sizes by Target Cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 706036966061634
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "max:handshake.reindex_stream.wal_size{$env,$region} by {env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Legacy Cluster WAL Size",
+                            "type": "timeseries"
+                        },
+                        "id": 3401661041963672
+                    }
+                ]
+            },
+            "id": 4624860691394174
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Reindex Workers",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.reindexer.add_worker{$env,$cluster,$region} by {cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Reindexer Add Worker by Cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 3249020655917350
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "avg:handshake.reindexer.num_workers{$env,$cluster,$region} by {cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Num Reindexer Workers by Cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 1371843959799416
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.reindexer.state{$env,$cluster,$region} by {state}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Reindex Worker by State",
+                            "type": "timeseries"
+                        },
+                        "id": 4275827311294338
+                    }
+                ]
+            },
+            "id": 7118017415515506
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "University Pub/Sub Reindexing Handlers",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.university_pubsub_reindexer.handle_message.count{$env,$transaction_action,$record_type,$region} by {record_type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "University Pub/Sub Messages by Record Type",
+                            "type": "timeseries"
+                        },
+                        "id": 2656755701559790
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.university_pubsub_reindexer.handle_message.success.count{$env,$region} by {record_type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "University Pub/Sub Success Count",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4334090417826428
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.university_pubsub_reindexer.handle_message.reindex_documents_timing.avg{$env,$region} by {record_type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.university_pubsub_reindexer.handle_message.reindex_documents_timing.95percentile{$env,$region} by {record_type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.university_pubsub_reindexer.handle_message.reindex_documents_timing.median{$env,$region} by {record_type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "University Pub/Sub Streaming Timing (ms)",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4001749879729154
+                    }
+                ]
+            },
+            "id": 1739958644943426
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Employer Pub/Sub Reindexing Handlers",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.employer_pubsub_reindexer.handle_message.count{$env,$transaction_action,$record_type,$region} by {record_type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Pub/Sub Messages by Record Type",
+                            "type": "timeseries"
+                        },
+                        "id": 2299147060726372
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.employer_pubsub_reindexer.handle_message.success.count{$env,$region} by {record_type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Pub/Sub Messages Success Count",
+                            "type": "timeseries"
+                        },
+                        "id": 8782689630186376
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.employer_pubsub_reindexer.handle_message.reindex_documents_timing.avg{$env,$region} by {record_type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.employer_pubsub_reindexer.handle_message.reindex_documents_timing.95percentile{$env,$region} by {record_type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.employer_pubsub_reindexer.handle_message.reindex_documents_timing.median{$env,$region} by {record_type}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Pub/Sub Streaming Timing (ms)",
+                            "type": "timeseries"
+                        },
+                        "id": 272793134802934
+                    }
+                ]
+            },
+            "id": 7411778318144514
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Student Pub/Sub Reindexing Handlers",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.pubsub_posting_reindexer.handle_message.count{$env,$region} by {record_type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Pub/Sub Messages by Record Type",
+                            "type": "timeseries"
+                        },
+                        "id": 1399374009444340
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.pubsub_posting_reindexer.handle_message.success.count{$env,$region} by {record_type}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Pub/Sub Success Count",
+                            "type": "timeseries"
+                        },
+                        "id": 691521176683218
+                    }
+                ]
+            },
+            "id": 5509197214655980
+        }
+    ]
+}

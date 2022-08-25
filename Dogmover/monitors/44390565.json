@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 44390565,
+    "matching_downtimes": [],
+    "message": "session-service/* containers in handshake-uk-production have a lot of restarts. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2295562637/K8+Container+Restarts for help debugging.\n\n@slack-incidents-platform-services",
+    "multi": true,
+    "name": "Container Restarts for session-service/* in handshake-uk-production",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 300,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{project:handshake-uk-production,kube_namespace:session-service,kube_deployment:*} by {kube_deployment} > 10",
+    "tags": [
+        "env:production",
+        "project:handshake-uk-production",
+        "region:europe-west2",
+        "team:iam"
+    ],
+    "type": "query alert"
+}

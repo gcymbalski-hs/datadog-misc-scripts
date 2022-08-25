@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 72615259,
+    "matching_downtimes": [],
+    "message": "`handshake` throughput deviated too much from its usual value.\n\n@gabriel@joinhandshake.com",
+    "multi": false,
+    "name": "High latency on next::employer::employerscontroller_show",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": true,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "warning": 4.0
+        }
+    },
+    "query": "max(last_5m):p95:trace.rack.request{env:production,resource_name:next::employer::employerscontroller_show,service:handshake} > 10",
+    "tags": [
+        "env:production",
+        "service:handshake",
+        "resource_name:next::employer::employerscontroller_show"
+    ],
+    "type": "query alert"
+}

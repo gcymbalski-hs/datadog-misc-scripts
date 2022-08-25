@@ -1,0 +1,413 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2020-12-08T19:14:14.630375+00:00",
+    "description": "",
+    "id": "ki7-95j-rui",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-12-08T19:56:50.091795+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[TMP] Indexer DB Incidents",
+    "url": "/dashboard/ki7-95j-rui/tmp-indexer-db-incidents",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Google Stuff",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-elasticsearch-indexer-nervous-kudu}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Database CPU",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5181675338021888
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.num_undelivered_messages{project_id:handshake-production,subscription_id:employer-reindex}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.num_undelivered_messages{project_id:handshake-production,subscription_id:student-reindex}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.num_undelivered_messages{project_id:handshake-production,subscription_id:university-reindex}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Undelivered Messages",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8673323090138710
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.oldest_unacked_message_age_by_region{project_id:handshake-production,subscription_id:employer-reindex}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.oldest_unacked_message_age_by_region{project_id:handshake-production,subscription_id:student-reindex}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.oldest_unacked_message_age_by_region{project_id:handshake-production,subscription_id:university-reindex}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Unacked Messages",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3301870298283532
+                    }
+                ]
+            },
+            "id": 6134846097062148
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "PGBouncer",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.sv_active{cluster-name:production2,kube_deployment:handshake-employers-es-indexer-nervous-kudu-pgbouncer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.sv_active{cluster-name:production2,kube_deployment:handshake-students-es-indexer-nervous-kudu-pgbouncer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.sv_active{cluster-name:production2,kube_deployment:handshake-universities-es-indexer-nervous-kudu-pgbouncer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Active Server Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1814765330863638
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:pgbouncer.stats.avg_transaction_time{cluster-name:production2,kube_deployment:handshake-employers-es-indexer-nervous-kudu-pgbouncer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:pgbouncer.stats.avg_transaction_time{cluster-name:production2,kube_deployment:handshake-students-es-indexer-nervous-kudu-pgbouncer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:pgbouncer.stats.avg_transaction_time{cluster-name:production2,kube_deployment:handshake-universities-es-indexer-nervous-kudu-pgbouncer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Avg Transaction Time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7540006880315468
+                    }
+                ]
+            },
+            "id": 1062261713551788
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "ES Indexer Pods",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-employer-pubsub-indexer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-employers-elasticsearch-worker}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-employers-elasticsearch-orchestrator}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Employer ES Pods",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3927911651725210
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-student-pubsub-indexer-green}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-students-elasticsearch-worker-green}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-students-elasticsearch-orchestrator-green}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Student ES Pods",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4634470654420608
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-university-pubsub-indexer}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-universities-elasticsearch-worker}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{cluster-name:production2,kube_deployment:handshake-universities-elasticsearch-orchestrator}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "University ES Pods",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3449522854856006
+                    }
+                ]
+            },
+            "id": 6740168978129172
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 18792235,
+    "matching_downtimes": [],
+    "message": "Weekly audit of Two-way calendars found out of sync calendars between HS and the user's personal calendar. The auditor has kicked off a re-sync for each user but this likely merits investigation into why these calendars were out of sync. @slack-Main_Account-incidents-edu\n\nInstructions on how to verify these users calendars are out of sync, and re-syncing can be found here\nhttps://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#Cronofy-Calendars-Out-of-Sync",
+    "multi": false,
+    "name": "Calendar Sync: Cronofy Calendars are out of Sync",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 100.0
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):sum:handshake.calendars.out_of_sync_calendars{out_of_sync:true,env:production} > 100",
+    "tags": [
+        "env:production",
+        "team:university"
+    ],
+    "type": "query alert"
+}

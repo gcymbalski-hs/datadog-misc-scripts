@@ -1,0 +1,228 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-01-15T02:39:31.083759+00:00",
+    "description": "",
+    "id": "yjn-zfs-3bh",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-14T18:22:56.385546+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "project",
+            "prefix": "project_id"
+        },
+        {
+            "default": "*",
+            "name": "job",
+            "prefix": "job_name"
+        }
+    ],
+    "title": "Dataflow",
+    "url": "/dashboard/yjn-zfs-3bh/dataflow",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:gcp.dataflow.job.current_num_vcpus{$project,$job} by {job_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CPU Allocated",
+                "type": "timeseries"
+            },
+            "id": 2663492567029936
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "derivative(avg:gcp.dataflow.job.total_vcpu_time{$project,$job} by {job_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CPU Time",
+                "type": "timeseries"
+            },
+            "id": 6447804493310006
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.dataflow.job.system_lag{$project,$job} by {job_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Job Lags",
+                "type": "timeseries"
+            },
+            "id": 8572131519755746
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "derivative(avg:gcp.dataflow.job.total_memory_usage_time{$project,$job} by {job_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Memory Usage",
+                "type": "timeseries"
+            },
+            "id": 2344929683941410
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_second(avg:gcp.dataflow.job.estimated_byte_count{$project,$job} by {job_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Estimated Byte Count per Second",
+                "type": "timeseries"
+            },
+            "id": 2083728899362440
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_second(sum:gcp.dataflow.job.element_count{$project,$job} by {job_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Elements Processed per Second",
+                "type": "timeseries"
+            },
+            "id": 293259695433504
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:gcp.dataflow.job.is_failed{$job,$project}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Job is failed Sum",
+                "type": "timeseries"
+            },
+            "id": 1652772366534850
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Compute Instances",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.gce.instance.cpu.utilization{$project,dataflow} by {dataflow_job_name,project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Avg CPU by Pipeline, Project",
+                            "type": "timeseries"
+                        },
+                        "id": 3630059022408156
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.gce.instance.network.sent_bytes_count{$project,dataflow} by {dataflow_job_name,project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Sent Bytes by Pipeline, Project",
+                            "type": "timeseries"
+                        },
+                        "id": 4044215961269708
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.gce.instance.network.received_bytes_count{$project,dataflow} by {dataflow_job_name,project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Received Bytes by Pipeline, Project",
+                            "type": "timeseries"
+                        },
+                        "id": 4247204292280256
+                    }
+                ]
+            },
+            "id": 1841183465555894
+        }
+    ]
+}

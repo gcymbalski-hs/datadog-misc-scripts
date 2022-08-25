@@ -1,0 +1,139 @@
+{
+    "author_handle": "dkador@joinhandshake.com",
+    "author_name": "Dan Kador",
+    "created_at": "2020-07-30T17:12:10.668830+00:00",
+    "description": "",
+    "id": "kx3-dxy-8wb",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2022-04-27T14:18:17.634908+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Dan Eng OKR Dashboard",
+    "url": "/dashboard/kx3-dxy-8wb/dan-eng-okr-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "show_error_budget": true,
+                "slo_id": "7a1a9aa70d2150b4a862cc20a8c994de",
+                "time_windows": [
+                    "7d",
+                    "30d",
+                    "90d"
+                ],
+                "title": "Production Availability",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "slo",
+                "view_mode": "both",
+                "view_type": "detail"
+            },
+            "id": 3406198442147042,
+            "layout": {
+                "height": 20,
+                "width": 50,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "custom_links": [],
+                "events": [
+                    {
+                        "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "autosmooth(avg:fmc.handshake.tti.median{env:production,*,*,*})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "autosmooth(avg:fmc.handshake.tti.max{env:production,*,*,*})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "autosmooth(avg:fmc.handshake.tti.95percentile{env:production,*,*,*})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Time to Interactive (TTI) Median, 95th Percentile, Max",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 6914844558878952,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 50,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "Go https://app.datadoghq.com/apm/service/handshake/rack.request?end=1596130922831&env=production&hostGroup=%2A&paused=false&start=1593538922831 for more details on latency & error rate",
+                "font_size": "14",
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 1386888160493216,
+            "layout": {
+                "height": 11,
+                "width": 31,
+                "x": 72,
+                "y": 18
+            }
+        },
+        {
+            "definition": {
+                "display_format": "two_column",
+                "env": "production",
+                "service": "handshake",
+                "show_breakdown": true,
+                "show_distribution": true,
+                "show_errors": true,
+                "show_hits": true,
+                "show_latency": true,
+                "show_resource_list": false,
+                "size_format": "medium",
+                "span_name": "rack.request",
+                "title": "handshake #env:production",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "trace_service"
+            },
+            "id": 5414377289351974,
+            "layout": {
+                "height": 72,
+                "width": 72,
+                "x": 0,
+                "y": 18
+            }
+        }
+    ]
+}

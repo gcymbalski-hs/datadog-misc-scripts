@@ -1,0 +1,660 @@
+{
+    "author_handle": "ekenney@joinhandshake.com",
+    "author_name": "Eric Kenney",
+    "created_at": "2022-05-02T16:54:50.429487+00:00",
+    "description": "",
+    "id": "2z3-xhy-yai",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-21T20:07:03.748356+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Campaign Relevancy",
+    "url": "/dashboard/2z3-xhy-yai/campaign-relevancy",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.employers.campaigns.campaign_date_retrieval.query_timing.avg{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.employers.campaigns.campaign_date_retrieval.query_timing.max{env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CampaignDateRetrievalWorker: Dates in Range Query Timing (ms)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 1994010968171834,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Start",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "End",
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:handshake.employers.campaigns.campaign_date_retrieval.start_minute{env:production} by {campaign_date_type}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "max:handshake.employers.campaigns.campaign_date_retrieval.end_minute{env:production} by {campaign_date_type}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "CampaignDateRetrievalWorker: Start & End Minutes",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 2649721721428812,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1 / 60"
+                            },
+                            {
+                                "formula": "query2 / 60"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.campaigns_publish_segment_membership_worker.calculate_recipients.calculate_relevancy_ids.avg{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.campaigns_publish_segment_membership_worker.calculate_recipients.calculate_relevancy_ids.max{env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CampaignPublishSegmentMembershipWorker: Calculate Recipients Timing (Secs)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 2663128259988590,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.employers.campaigns.campaign_publish_segment_membership_worker.finished{env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignPublishSegmentMembershipWorker Finished: Minute of Hour",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3485645037870164,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 6,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "query": "CampaignPublishSegmentMembershipWorker env:production",
+                "tags_execution": "and",
+                "title": "Publish Segment Worker Events",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 3483906035044688,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 7
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.employers.campaign.calculate_recipients.search_after_loops{env:production}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Calculate Recipients: Search After Loops",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4581739763009002,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 0,
+                "y": 8
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count",
+                                    "interval": 60000
+                                },
+                                "data_source": "events",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "Received blank relevance data"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Received blank relevance data",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 2308088940133768,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 11
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "CampaignPublishSegmentMembershipWorker Finished",
+                "tags_execution": "and",
+                "title": "Publish Segment Worker Success",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 407209954936374,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 11
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "Received blank relevance data",
+                "tags_execution": "and",
+                "title": "Blank relevance data",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 5654898083179334,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            },
+                            {
+                                "formula": "query3"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count"
+                                },
+                                "data_source": "events",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "Received blank relevance data env:production"
+                                }
+                            },
+                            {
+                                "compute": {
+                                    "aggregation": "count"
+                                },
+                                "data_source": "events",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query2",
+                                "search": {
+                                    "query": "Retrieved populated relevance data env:production"
+                                }
+                            },
+                            {
+                                "compute": {
+                                    "aggregation": "count"
+                                },
+                                "data_source": "events",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query3",
+                                "search": {
+                                    "query": "Using mixture of segment IDs and relevance data env:production"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Relevance data retrieval",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 6175851394391676,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "Using mixture of segment IDs and relevance data",
+                "tags_execution": "and",
+                "title": "Mixing relevance data and segment",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 8410689614569268,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 19
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "CampaignPublishSegmentMembershipWorker Failed",
+                "tags_execution": "and",
+                "title": "Publish Segment Worker Failures",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 2337815682707538,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 19
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "Retrieved populated relevance data",
+                "tags_execution": "and",
+                "title": "Mixing relevance data and segment",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 935217597189030,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 23
+            }
+        },
+        {
+            "definition": {
+                "color": "#6915F0",
+                "font_size": "36",
+                "text": "Staging",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 77473926594496,
+            "layout": {
+                "height": 1,
+                "width": 12,
+                "x": 0,
+                "y": 27
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "environment:staging CampaignPublishSegmentMembershipWorker",
+                "tags_execution": "and",
+                "title": "Staging Publish Segment Worker",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 7164019204577278,
+            "layout": {
+                "height": 2,
+                "width": 6,
+                "x": 0,
+                "y": 28
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.employers.campaigns.campaign_publish_segment_membership_worker.finished{env:staging}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CampaignPublishSegmentMembershipWorker Finished: Minute of Hour",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5513644677865664,
+            "layout": {
+                "height": 2,
+                "width": 6,
+                "x": 6,
+                "y": 28
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.employers.campaigns.campaign_date_retrieval.start_minute{env:staging}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.employers.campaigns.campaign_date_retrieval.end_minute{env:staging}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Staging CampaignDateRetrievalWorker: Start & End Minutes",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4732292341798010,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 30
+            }
+        }
+    ]
+}

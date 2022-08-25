@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 27479995,
+    "matching_downtimes": [],
+    "message": "@slack-emp-integ-analytics-bots  \n{{#is_alert}}\nWe typically expect fraud notifications and have not received any in the past 2 days.\n{{/is_alert}} \n\n{{#is_recovery}}\nWe are sending employer fraud notifications as expected.\n{{/is_recovery}} @slack-incidents-emp-integ-analytics",
+    "multi": false,
+    "name": "Employer fraud notifications are missing",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0,
+            "critical_recovery": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_2d):sum:handshake.employer_fraud.notification{env:production}.as_count() <= 0",
+    "tags": [
+        "env:production",
+        "team:employer"
+    ],
+    "type": "query alert"
+}

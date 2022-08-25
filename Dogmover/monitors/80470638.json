@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 80470638,
+    "matching_downtimes": [],
+    "message": "There are events in the system that do not have a valid schema and cannot be processed.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/SJ4LGuf6\n\nNotify: @slack-incidents-platform-services,@slack-incidents-employer-connections-messaging\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nInvalid schema counts are tending downward for hsn-messaging-record-changes.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-messaging-record-changes: Event with Invalid Schema",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "max(last_15m):max:DEP.inbox.invalid_payload.count{subscription:hsn-messaging-record-changes} by {project} > 1",
+    "tags": [
+        "dep_monitor:invalid_schema",
+        "service:dep",
+        "team:messaging"
+    ],
+    "type": "query alert"
+}

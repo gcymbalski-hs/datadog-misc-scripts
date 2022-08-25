@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 72646951,
+    "matching_downtimes": [],
+    "message": "`outbox-publisher-processor` 99th percentile latency is too high.\n\n@omar@joinhandshake.com",
+    "multi": false,
+    "name": "[DEP TEST] DEP Outbox Publisher p99 is over 150ms on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.3
+        }
+    },
+    "query": "percentile(last_5m):p99:trace.OutboxPublisherProcessor{env:production,resource_name:process,service:outbox-publisher-processor} > 0.3",
+    "tags": [
+        "env:production",
+        "service:outbox-publisher-processor",
+        "resource_name:process"
+    ],
+    "type": "query alert"
+}

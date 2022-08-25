@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 20001784,
+    "matching_downtimes": [],
+    "message": "The total delay from DocumentUpdate insert to when metrics is reported has exceeded {{threshold}}.\nThe current delay is {{value}}.\n\n@slack-incidents-employers",
+    "multi": true,
+    "name": "Employer - Elasticsearch Indexer Low Priority Document Updates Delayed",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3600000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_30m):avg:handshake.elasticsearch_indexer.delay.total.avg{priority:low,env:production,!cluster:students,!cluster:universities} by {env,region} > 3600000",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "metric alert"
+}

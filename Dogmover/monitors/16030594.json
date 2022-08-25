@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 16030594,
+    "matching_downtimes": [],
+    "message": "[{{project_id}} - university-reindex] subscription is holding very old messages. Either it is receiving more messages than it can handle, or it is not processing messages properly. This subscription is read by the university cluster reindexer system, so this means that there is delays in reindexing.\n\nPlease see the [University Runbook](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks) for troubleshooting steps\n\n{{#is_alert}}\nTo resolve, investigate why the subscription is backed up, such as workers are not running properly. If there is a surge of events, it may be fine and we just need to consider scaling up.\n{{/is_alert}} @slack-Main_Account-incidents-edu\n\n{{#is_recovery}}\n[{{project_id}} - university-reindex] subscription holding old messages alert has recovered\n{{/is_recovery}} @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Pubsub: university-reindex subscription Holding Old Messages",
+    "options": {
+        "escalation_message": "Renotification: Pubsub: university-reindex subscription still Holding Old Messages\n\n@slack-incidents-edu",
+        "include_tags": false,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3600.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_30m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:university-reindex} by {project_id} > 3600",
+    "tags": [
+        "team:university"
+    ],
+    "type": "metric alert"
+}

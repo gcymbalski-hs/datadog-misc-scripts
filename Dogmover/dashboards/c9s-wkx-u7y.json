@@ -1,0 +1,78 @@
+{
+    "author_handle": "crolfs@joinhandshake.com",
+    "author_name": "Chris Rolfs",
+    "created_at": "2022-08-16T22:03:29.144321+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "c9s-wkx-u7y",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-19T20:11:10.275035+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "service",
+            "prefix": "service"
+        }
+    ],
+    "title": "DEP Outbox :: DB connectivity",
+    "url": "/dashboard/c9s-wkx-u7y/dep-outbox--db-connectivity",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:DEP.outbox_publisher_processor.connection_error{$project,$project,$service} by {service}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Connection errors by service",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 1978721129064982,
+            "layout": {
+                "height": 6,
+                "width": 11,
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}

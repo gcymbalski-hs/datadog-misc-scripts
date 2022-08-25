@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 9527148,
+    "matching_downtimes": [],
+    "message": "The number of database connections is reaching the maximum\n\n@slack-incidents\n\n{{#is_match \"project_id.name\" \"handshake-production\"}}\n@pagerduty-MonolithSharedProduct \n{{/is_match}}",
+    "multi": true,
+    "name": "Database Connection Usage is High",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.8
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):max:database.percent_connections{app:handshake} by {env,region} > 0.8",
+    "tags": [
+        "team:platform"
+    ],
+    "type": "metric alert"
+}

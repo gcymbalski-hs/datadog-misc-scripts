@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 63879918,
+    "matching_downtimes": [],
+    "message": "Send Employer Job Digest Email per Employer failed. Please check associated Dashboard and logs here: https://app.datadoghq.com/s/d5c071843/wf8-nkb-vca\n \nFirst triggered at: {{first_triggered_at}}\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Send Employer Job Digest Email per Employer Failure",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 20.0
+        }
+    },
+    "query": "sum(last_10m):sum:handshake.send_employer_job_digest_email_per_employer.failure{*}.as_count() > 20",
+    "tags": [
+        "team:employer",
+        "emp-lifecycle",
+        "EmployerJobDigest"
+    ],
+    "type": "query alert"
+}

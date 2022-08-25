@@ -1,0 +1,43 @@
+{
+    "deleted": null,
+    "id": 80459028,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 2184409241,
+            "monitor_id": 80459028,
+            "scope": [
+                "*"
+            ],
+            "start": 1661270638
+        }
+    ],
+    "message": "The rate of events is exceeding the throughput of the inbox, leading to events not being handled in a timely manner.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/N1u96XtT\n\n\n\nNotify: @slack-incidents-platform-services,@slack-incidents\n\n{{#is_alert}}\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nUndelivered event counts are trending downward for hsn-handshake-handshake.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-handshake-handshake: Undelivered Events Are Too High",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 1000.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "max(last_1h):avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:hsn-handshake-handshake} by {project_id} > 1000",
+    "tags": [
+        "dep_monitor:undelivered_events_too_high",
+        "service:dep",
+        "team:platform"
+    ],
+    "type": "query alert"
+}

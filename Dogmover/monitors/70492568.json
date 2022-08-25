@@ -1,0 +1,21 @@
+{
+    "deleted": null,
+    "id": 70492568,
+    "matching_downtimes": [],
+    "message": "Private location {{location_id.name}} is underprovisioned.\nVisit this [documentation page](https://docs.datadoghq.com/synthetics/private_locations/?tab=docker#dimension-your-private-location) to learn how to scale your private location.",
+    "multi": true,
+    "name": "[Synthetic Private Locations] {{location_id.name}} is underprovisioned",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.5
+        }
+    },
+    "query": "avg(last_30m):avg:synthetics.pl.worker.remaining_slots{*} by {location_id} < 1.5",
+    "tags": [],
+    "type": "metric alert"
+}

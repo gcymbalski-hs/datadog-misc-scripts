@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 34231301,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-edu\n\nEDU Email Events Runbook https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2144404005/Runbooks+EDU+Email+Events\n\nThe. EDU Email Events Database is utilizing > 60% of its' CPU\n\nOnce this monitor resolves please keep a close eye on the CPU utilization. If it stays high or near 60%, there is a chance that a greater conversation needs to occur on whether or not our US EDU Email-Events DB has enough provisioned CPU.",
+    "multi": false,
+    "name": "[US] EDU Email Events DB High CPU",
+    "options": {
+        "escalation_message": "Renotification: EDU Email Events DB still has High CPU\n\n@slack-incidents-edu",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 120,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.6
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:edu-email-events-mint-fox} > 0.6",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 51704969,
+    "matching_downtimes": [],
+    "message": "The LD client is not yet initialized (has not finished fetching configurations from LD servers), and is serving defaults.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601549832/Launch+Darkly+Client+Serving+Defaults\n\n@slack-incidents\n\n{{#is_match \"region.name\" \"europe-\"}}\n@slack-incidents-uk \n{{/is_match}}",
+    "multi": true,
+    "name": "LD Client Serving Defaults in Adaptors::LaunchDarkly.get_user_settings",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "renotify_occurrences": null,
+        "renotify_statuses": null,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 100.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):max:handshake.launch_darkly.client_not_initialized.get_user_settings{*} by {env,region}.as_count() > 100",
+    "tags": [],
+    "type": "query alert"
+}

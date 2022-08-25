@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 8823396,
+    "matching_downtimes": [],
+    "message": "`handshake` Apdex deviated too much from its usual value meaning either high error rate or slow page loads.\n\n@slack-incidents",
+    "multi": true,
+    "name": "Handshake Production Apdex low",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.75,
+            "warning": 0.82
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_15m):avg:trace.rack.request.apdex.by.region_service{service:handshake,env:production,!region:europe-west2} by {region} < 0.75",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "maintenance:true",
+        "region:us-central1"
+    ],
+    "type": "metric alert"
+}

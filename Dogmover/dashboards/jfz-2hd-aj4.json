@@ -1,0 +1,288 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-04-20T19:40:44.453923+00:00",
+    "description": "",
+    "id": "jfz-2hd-aj4",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-11-16T18:20:03.071754+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "project",
+            "prefix": "project_id"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "target",
+            "prefix": "target_proxy_name"
+        }
+    ],
+    "title": "[Load Balancer] GCP Load Balancing",
+    "url": "/dashboard/jfz-2hd-aj4/load-balancer-gcp-load-balancing",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.loadbalancing.https.request_count{$project,$target} by {project_id,target_proxy_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests per target",
+                "type": "timeseries"
+            },
+            "id": 299275993
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.loadbalancing.https.request_count{$project,$target} by {response_code_class}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests per response code",
+                "type": "timeseries"
+            },
+            "id": 299276252
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:gcp.loadbalancing.https.total_latencies.avg{$project,$target} by {target_proxy_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.loadbalancing.https.backend_latencies.avg{$project,$target} by {target_proxy_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average Total/Backend Latency by Target",
+                "type": "timeseries"
+            },
+            "id": 299276383
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.loadbalancing.https.response_bytes_count{$project,$target} by {target_proxy_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Response Bytes by Target",
+                "type": "timeseries"
+            },
+            "id": 299276469
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.loadbalancing.https.frontend_tcp_rtt.avg{$project,$target} by {project_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg Frontend TCP Round Trip Time (RTT)",
+                "type": "timeseries"
+            },
+            "id": 305898636
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.loadbalancing.https.request_count{$project,$target,response_code_class:400} by {response_code}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "4XX Request Rate",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 305940075
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.loadbalancing.https.request_count{$project,$target,response_code_class:500} by {response_code}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "5XX Request Rate",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 306193438
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.loadbalancing.https.request_count{$project,$target} by {cache_result}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests per cache result",
+                "type": "timeseries"
+            },
+            "id": 306279051
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.loadbalancing.https.request_count{$project,$target} by {client_country}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests per country",
+                "type": "timeseries"
+            },
+            "id": 306279055
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.loadbalancing.https.request_count{$project,$target} by {client_country}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests per country",
+                "type": "timeseries"
+            },
+            "id": 306279340
+        }
+    ]
+}

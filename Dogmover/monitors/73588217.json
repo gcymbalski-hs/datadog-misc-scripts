@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 73588217,
+    "matching_downtimes": [],
+    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-MonolithSharedProduct\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Handshake's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-MonolithSharedProduct\n{{/is_match}}\n{{/is_recovery}}",
+    "multi": false,
+    "name": "[handshake-demo] Handshake Automatic Database Table Partitioning not Running",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 10,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0,
+            "critical_recovery": 1.0
+        }
+    },
+    "query": "min(last_5m):avg:postgresql.pg_cron.runs{jobname:pg-partman-maintenance-handshake,status:succeeded,app in (dd-postgres-handshake-generous-boar)} <= 0",
+    "tags": [
+        "app:handshake",
+        "env:demo",
+        "region:us-central1"
+    ],
+    "type": "query alert"
+}

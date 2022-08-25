@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 80459002,
+    "matching_downtimes": [],
+    "message": "Not enough pods in deployment guidance-inbox are available.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n\nNotify: @slack-incidents-platform-services,@slack-incidents-edu\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nPods for guidance-inbox are becoming available.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] High Number of Unavailable Pods for guidance-inbox",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "critical_recovery": 0.25
+        }
+    },
+    "query": "avg(last_15m):avg:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:guidance-inbox} by {project} / avg:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:guidance-inbox} by {project} > 0.5",
+    "tags": [
+        "dep_monitor:inbox_pods_unavailable",
+        "service:dep",
+        "team:platform",
+        "team:university"
+    ],
+    "type": "query alert"
+}

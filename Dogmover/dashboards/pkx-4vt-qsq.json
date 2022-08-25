@@ -1,0 +1,799 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2020-07-13T16:26:24.146656+00:00",
+    "description": "The purpose of this dashboard is to provide a high level overview of the infrastructure usage in our platform. We monitor key pieces of infrastructure and their hardware capacity/utilization.",
+    "id": "pkx-4vt-qsq",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-12-18T17:19:20.710876+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variable_presets": [
+        {
+            "name": "Production",
+            "template_variables": []
+        }
+    ],
+    "template_variables": [
+        {
+            "default": "production2",
+            "name": "cluster-name",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "handshake-production",
+            "name": "project_id",
+            "prefix": "project_id"
+        },
+        {
+            "default": "handshake-production",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "Performance Testing Monitor",
+    "url": "/dashboard/pkx-4vt-qsq/performance-testing-monitor",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Load Balancer",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.http.ingress_http.downstream_rq_total{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.http.ingress_http.downstream_rq_5xx{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.http.ingress_http.downstream_rq_4xx{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Ambassador Requests",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1539088161248538
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_total{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_5xx{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.http.ingress_http.downstream_rq_4xx{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Handshake Requests",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7651706126853414
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_total{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_5xx{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_4xx{$cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Session Service Requests",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2090210325192260
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.95percentile{$cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.median{$cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.avg{$cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Handshake Request Times",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4060052112912576
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.http.ingress_http.downstream_rq_time.95percentile{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.http.ingress_http.downstream_rq_time.median{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.http.ingress_http.downstream_rq_time.avg{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Ambassador Request Times",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8258781173577534
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_time.95percentile{$cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_time.median{$cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_time.avg{$cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Session Service Request Times",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8850503667807588
+                    }
+                ]
+            },
+            "id": 686159474420538
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Kubernetes",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes_state.node.status{$cluster-name,$project} by {status,cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Nodes",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4457644453334336
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes_state.node.pods_allocatable{$project,$cluster-name} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$project,$cluster-name} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Pods",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2094516534022646
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes_state.node.cpu_allocatable{$cluster-name,$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.cpu.requests{$cluster-name,$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CPU Usage",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6305118409305148
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes_state.node.memory_allocatable{$cluster-name,$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.memory.requests{$cluster-name,$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Memory Usage",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3488033489396608
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$cluster-name,kube_deployment:session-service} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$cluster-name,kube_deployment:ambassador-061} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "LB Pods",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1691551054229144
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$cluster-name,kube_namespace:handshake} by {kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Handshake Pods",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5558964968990686
+                    }
+                ]
+            },
+            "id": 903400620047412
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Postgres",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.cpu.utilization{$project_id} by {database_id,project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CPU Utilization",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4917757905445034
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.memory.utilization{$project_id} by {database_id,project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Memory Utilization",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1575734371308496
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.cloudsql.database.postgresql.num_backends{$project_id} by {database_id,project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Connections",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6767008443971488
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.utilization{$project_id} by {database_id,project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Disk Utilization",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5167063744256400
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.read_ops_count{$project_id} by {database_id,project_id}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Disk Read Ops",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1802977175110742
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.write_ops_count{$project_id} by {database_id,project_id}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Disk Write Ops",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5004429212244156
+                    }
+                ]
+            },
+            "id": 7264164563431208
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Redis",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.stats.memory.system_memory_usage_ratio{$project_id} by {instance_id,project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Memory Usage",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7689604944732952
+                    }
+                ]
+            },
+            "id": 6093383219087470
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Elasticsearch",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [
+                                {
+                                    "display_type": "warning dashed",
+                                    "label": "\u00a0yellow\u00a0",
+                                    "value": "y = 1"
+                                },
+                                {
+                                    "display_type": "ok dashed",
+                                    "label": "\u00a0green\u00a0",
+                                    "value": "y = 2"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:elasticsearch.cluster_status{$project} by {es-cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Cluster Status",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6630007256815358
+                    }
+                ]
+            },
+            "id": 6974039629797382
+        }
+    ]
+}

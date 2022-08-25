@@ -1,0 +1,2296 @@
+{
+    "author_handle": "gjustin@joinhandshake.com",
+    "author_name": "Gary Justin",
+    "created_at": "2021-11-09T16:37:45.102046+00:00",
+    "description": "",
+    "id": "vyy-bhc-9f8",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-06-15T16:09:54.262809+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "buildkite",
+            "name": "provider_name",
+            "prefix": "@ci.provider.name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "pipeline_name",
+            "prefix": "@ci.pipeline.name"
+        },
+        {
+            "available_values": [],
+            "default": "main",
+            "name": "branch_name",
+            "prefix": "@git.branch"
+        },
+        {
+            "available_values": [],
+            "default": "buildkite",
+            "name": "provider_instance",
+            "prefix": "@ci.provider.instance"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "HSN Transition CI Overview",
+    "url": "/dashboard/vyy-bhc-9f8/hsn-transition-ci-overview",
+    "widgets": [
+        {
+            "definition": {
+                "background_color": "blue",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "CI Overview",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "median",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "median",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.pipeline.name:(handshake OR handshake-next-* OR handshake-hsn-*) $branch_name ci_partial_retry:false @ci.status:success"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "CI Pipeline Durations (Daily Average)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4843599771619182,
+                        "layout": {
+                            "height": 4,
+                            "width": 6,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 25,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.status:error @ci.pipeline.name:(handshake OR handshake-next-* OR handshake-hsn-*) @git.branch:main"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Pipeline Failures (Main Branch)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6734304376088428,
+                        "layout": {
+                            "height": 4,
+                            "width": 6,
+                            "x": 6,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 25,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.status:error @ci.pipeline.name:(handshake OR handshake-next-* OR handshake-hsn-*) @git.branch:main"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {
+                                "live_span": "1mo"
+                            },
+                            "title": "Daily Pipeline Failures (Main Branch)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4235736306020590,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 0,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95 queue time",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "median queue time",
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "alias": "max queue time",
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "pc95",
+                                                "metric": "@ci.queue_time"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @ci.node.labels:queue=elastic"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "median",
+                                                "metric": "@ci.queue_time"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:job @ci.node.labels:queue=elastic"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "max",
+                                                "metric": "@ci.queue_time"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query3",
+                                            "search": {
+                                                "query": "ci_level:job @ci.node.labels:queue=elastic"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Elastic Queue Time (All Jobs)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7898071713013548,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 6,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "alias": "Job executions",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @ci.node.labels:queue=elastic"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "All Elastic Job Executions",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6182369182446202,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 0,
+                            "y": 7
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 25,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "@ci.status:error -@ci.job.name:(Coverage OR \":sunrise: :bundler:\") @ci.node.labels:queue=elastic $branch_name"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {
+                                "live_span": "1mo"
+                            },
+                            "title": "Daily Job Failures (Main Branch)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2627986933027084,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 6,
+                            "y": 7
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "alias": "Nodes",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "cardinality",
+                                                "metric": "@ci.node.name"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @ci.node.labels:queue=elastic"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "All Elastic Nodes",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7038146702515820,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 0,
+                            "y": 10
+                        }
+                    }
+                ]
+            },
+            "id": 5541013773111882,
+            "layout": {
+                "height": 14,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "blue",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Pipelines",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "alias": "Pipeline executions",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 100,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Pipeline executions",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 281886335435712,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "custom_unit": "%",
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": "<",
+                                            "palette": "white_on_red",
+                                            "value": 90
+                                        },
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "white_on_green",
+                                            "value": 90
+                                        }
+                                    ],
+                                    "formulas": [
+                                        {
+                                            "alias": "failure_rate",
+                                            "formula": "100 - (query9 / query10 * 100)"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query9",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.status:error $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query10",
+                                            "search": {
+                                                "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "title": "Pipeline overall success rate",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 6690430106976170,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Median duration",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "median",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95 duration",
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "pc95",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query0",
+                                            "search": {
+                                                "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Pipeline duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2906550365963622,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "ci_pipeline_query": {
+                                        "compute": {
+                                            "aggregation": "avg",
+                                            "facet": "@duration"
+                                        },
+                                        "group_by": [],
+                                        "index": "cipipeline",
+                                        "search": {
+                                            "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Pipeline duration distribution",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "distribution",
+                            "xaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            },
+                            "yaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6751080172191358,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar",
+                                        "bar",
+                                        "bar"
+                                    ],
+                                    "ci_pipeline_query": {
+                                        "group_by": [
+                                            {
+                                                "facet": "@ci.pipeline.name",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "aggregation": "median",
+                                                    "facet": "@duration",
+                                                    "order": "desc"
+                                                }
+                                            }
+                                        ],
+                                        "index": "cipipeline",
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "count"
+                                            },
+                                            {
+                                                "aggregation": "median",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "pc95",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "sum",
+                                                "facet": "@duration"
+                                            }
+                                        ],
+                                        "search": {
+                                            "query": "ci_level:pipeline @ci.status:success ci_partial_retry:false $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    }
+                                }
+                            ],
+                            "title": "Top slowest pipelines",
+                            "type": "query_table"
+                        },
+                        "id": 164638877287060,
+                        "layout": {
+                            "height": 5,
+                            "width": 12,
+                            "x": 0,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Failure rate",
+                                            "formula": "query1 / (query2 + query1) * 100"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.status:error $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.status:success $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Pipeline Failure Rate",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5668376310145004,
+                        "layout": {
+                            "height": 2,
+                            "width": 12,
+                            "x": 0,
+                            "y": 9
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "alias": "Pipeline failures ",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 100,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env @ci.status:error"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "red"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Failed pipelines",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8924696710929692,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 11
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "formulas": [
+                                        {
+                                            "alias": "Failed pipeline accumulated duration",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "sum",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 100,
+                                                    "sort": {
+                                                        "aggregation": "sum",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env @ci.status:error"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "red"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Failed pipelines accumulated duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6983359797309190,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 11
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar",
+                                        "bar",
+                                        "bar"
+                                    ],
+                                    "ci_pipeline_query": {
+                                        "group_by": [
+                                            {
+                                                "facet": "@ci.pipeline.name",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "aggregation": "count",
+                                                    "order": "desc"
+                                                }
+                                            }
+                                        ],
+                                        "index": "cipipeline",
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "count"
+                                            },
+                                            {
+                                                "aggregation": "median",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "pc95",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "sum",
+                                                "facet": "@duration"
+                                            }
+                                        ],
+                                        "search": {
+                                            "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env @ci.status:error ci_partial_retry:false"
+                                        }
+                                    },
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "metric": "count:*",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "metric": "median:@duration",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "metric": "pc95:@duration",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "metric": "sum:@duration",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        }
+                                    ]
+                                }
+                            ],
+                            "title": "Top failed pipelines",
+                            "type": "query_table"
+                        },
+                        "id": 6560195437330544,
+                        "layout": {
+                            "height": 5,
+                            "width": 12,
+                            "x": 0,
+                            "y": 13
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "ci_pipeline_query": {
+                                        "compute": {
+                                            "aggregation": "avg",
+                                            "facet": "@ci.queue_time"
+                                        },
+                                        "group_by": [],
+                                        "index": "cipipeline",
+                                        "search": {
+                                            "query": "ci_level:pipeline $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "orange"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Pipeline queue time distribution",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "distribution",
+                            "xaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            },
+                            "yaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7581093573746772,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 18
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "formulas": [
+                                        {
+                                            "alias": "Accumulated queue time",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "sum",
+                                                "metric": "@ci.queue_time"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 100,
+                                                    "sort": {
+                                                        "aggregation": "sum",
+                                                        "metric": "@ci.queue_time",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "$provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "orange"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Accumulated queue time per pipeline",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7493410152471318,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 18
+                        }
+                    },
+                    {
+                        "definition": {
+                            "has_search_bar": "never",
+                            "requests": [
+                                {
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar",
+                                        "bar"
+                                    ],
+                                    "ci_pipeline_query": {
+                                        "group_by": [
+                                            {
+                                                "facet": "@ci.pipeline.name",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "aggregation": "median",
+                                                    "facet": "@ci.queue_time",
+                                                    "order": "desc"
+                                                }
+                                            }
+                                        ],
+                                        "index": "cipipeline",
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "median",
+                                                "facet": "@ci.queue_time"
+                                            },
+                                            {
+                                                "aggregation": "pc95",
+                                                "facet": "@ci.queue_time"
+                                            },
+                                            {
+                                                "aggregation": "sum",
+                                                "facet": "@ci.queue_time"
+                                            }
+                                        ],
+                                        "search": {
+                                            "query": "$pipeline_name $branch_name $provider_instance $provider_name $env"
+                                        }
+                                    }
+                                }
+                            ],
+                            "title": "Top pipelines by queue time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_table"
+                        },
+                        "id": 7539945163435314,
+                        "layout": {
+                            "height": 5,
+                            "width": 12,
+                            "x": 0,
+                            "y": 20
+                        }
+                    }
+                ]
+            },
+            "id": 0,
+            "layout": {
+                "height": 26,
+                "width": 12,
+                "x": 0,
+                "y": 14
+            }
+        },
+        {
+            "definition": {
+                "background_color": "blue",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Jobs",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "alias": "Job executions",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Job executions",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8294543735765094,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "custom_unit": "%",
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": "<",
+                                            "palette": "white_on_red",
+                                            "value": 90
+                                        },
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "white_on_green",
+                                            "value": 90
+                                        }
+                                    ],
+                                    "formulas": [
+                                        {
+                                            "alias": "failure_rate",
+                                            "formula": "100 - (query9 / query10 * 100)"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query9",
+                                            "search": {
+                                                "query": "ci_level:job @ci.status:error $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query10",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "title": "Job overall success rate",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 365830491506328,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Median duration",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "median",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95 duration",
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "pc95",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query0",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Job duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5751958994944618,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "ci_pipeline_query": {
+                                        "compute": {
+                                            "aggregation": "avg",
+                                            "facet": "@duration"
+                                        },
+                                        "group_by": [],
+                                        "index": "cipipeline",
+                                        "search": {
+                                            "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Job duration distribution",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "distribution",
+                            "xaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            },
+                            "yaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3428063347751156,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar",
+                                        "bar",
+                                        "bar"
+                                    ],
+                                    "ci_pipeline_query": {
+                                        "group_by": [
+                                            {
+                                                "facet": "@ci.job.name",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "aggregation": "median",
+                                                    "facet": "@duration",
+                                                    "order": "desc"
+                                                }
+                                            }
+                                        ],
+                                        "index": "cipipeline",
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "count"
+                                            },
+                                            {
+                                                "aggregation": "median",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "pc95",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "sum",
+                                                "facet": "@duration"
+                                            }
+                                        ],
+                                        "search": {
+                                            "query": "ci_level:job @ci.status:success $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    }
+                                }
+                            ],
+                            "title": "Top slowest jobs",
+                            "type": "query_table"
+                        },
+                        "id": 324420133149028,
+                        "layout": {
+                            "height": 5,
+                            "width": 12,
+                            "x": 0,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Failure rate",
+                                            "formula": "query1 / (query2 + query1) * 100"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @ci.status:error $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:job @ci.status:success $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Job Failure Rate",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 357294540238226,
+                        "layout": {
+                            "height": 2,
+                            "width": 12,
+                            "x": 0,
+                            "y": 9
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "alias": "Job failures",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 100,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env @ci.status:error"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "red"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Failed jobs",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7712069798961362,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 11
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "formulas": [
+                                        {
+                                            "alias": "Failed job accumulated duration",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "sum",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 100,
+                                                    "sort": {
+                                                        "aggregation": "sum",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env @ci.status:error"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "red"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Failed jobs accumulated duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 313111550337052,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 11
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar",
+                                        "bar",
+                                        "bar"
+                                    ],
+                                    "ci_pipeline_query": {
+                                        "group_by": [
+                                            {
+                                                "facet": "@ci.job.name",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "aggregation": "count",
+                                                    "order": "desc"
+                                                }
+                                            }
+                                        ],
+                                        "index": "cipipeline",
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "count"
+                                            },
+                                            {
+                                                "aggregation": "median",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "pc95",
+                                                "facet": "@duration"
+                                            },
+                                            {
+                                                "aggregation": "sum",
+                                                "facet": "@duration"
+                                            }
+                                        ],
+                                        "search": {
+                                            "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env @ci.status:error"
+                                        }
+                                    },
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "metric": "count:*",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "metric": "median:@duration",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "metric": "pc95:@duration",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "metric": "sum:@duration",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        }
+                                    ]
+                                }
+                            ],
+                            "title": "Top failed jobs",
+                            "type": "query_table"
+                        },
+                        "id": 3398624479523350,
+                        "layout": {
+                            "height": 5,
+                            "width": 12,
+                            "x": 0,
+                            "y": 13
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "ci_pipeline_query": {
+                                        "compute": {
+                                            "aggregation": "avg",
+                                            "facet": "@ci.queue_time"
+                                        },
+                                        "group_by": [],
+                                        "index": "cipipeline",
+                                        "search": {
+                                            "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "orange"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Job queue time distribution",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "distribution",
+                            "xaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            },
+                            "yaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4476982738820278,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 0,
+                            "y": 18
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "formulas": [
+                                        {
+                                            "alias": "Accumulated queue time ",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "sum",
+                                                "metric": "@ci.queue_time"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job $provider_name $pipeline_name $branch_name $provider_instance $env"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "orange"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Accumulated queue time per job",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7884490507310174,
+                        "layout": {
+                            "height": 2,
+                            "width": 6,
+                            "x": 6,
+                            "y": 18
+                        }
+                    },
+                    {
+                        "definition": {
+                            "has_search_bar": "never",
+                            "requests": [
+                                {
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar",
+                                        "bar"
+                                    ],
+                                    "ci_pipeline_query": {
+                                        "group_by": [
+                                            {
+                                                "facet": "@ci.job.name",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "aggregation": "median",
+                                                    "facet": "@ci.queue_time",
+                                                    "order": "desc"
+                                                }
+                                            }
+                                        ],
+                                        "index": "cipipeline",
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "median",
+                                                "facet": "@ci.queue_time"
+                                            },
+                                            {
+                                                "aggregation": "pc95",
+                                                "facet": "@ci.queue_time"
+                                            },
+                                            {
+                                                "aggregation": "sum",
+                                                "facet": "@ci.queue_time"
+                                            }
+                                        ],
+                                        "search": {
+                                            "query": "$provider_name $pipeline_name $branch_name $provider_instance $env"
+                                        }
+                                    }
+                                }
+                            ],
+                            "title": "Top jobs by queue time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_table"
+                        },
+                        "id": 7211951605968994,
+                        "layout": {
+                            "height": 5,
+                            "width": 12,
+                            "x": 0,
+                            "y": 20
+                        }
+                    }
+                ]
+            },
+            "id": 2,
+            "layout": {
+                "height": 26,
+                "is_column_break": true,
+                "width": 12,
+                "x": 0,
+                "y": 40
+            }
+        }
+    ]
+}

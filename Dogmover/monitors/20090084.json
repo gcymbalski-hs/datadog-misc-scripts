@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 20090084,
+    "matching_downtimes": [],
+    "message": "[{{es-cluster-name}}] Elasticsearch Indexer Worker Batch has too many failed-restarted cases\n\n{{#is_match \"es-cluster-name.name\" \"students\"}}\n@slack-incidents-students\n{{/is_match}}\n\n{{#is_match \"es-cluster-name.name\" \"employers\"}}\n@slack-incidents-employers\n{{/is_match}}\n\n{{#is_alert}}\nElasticsearch Indexer Worker Batch has too many failed-restarted cases. There isn't a formalized runbook yet but investigate why there is a spike (ex. mapping mismatch, orphaned worker batches) and try to resolve it. Please also document the steps to create/update the runbook if possible\n{{/is_alert}}\n\n{{#is_recovery}}\nWorker Batches are back to a stable state\n{{/is_recovery}}",
+    "multi": true,
+    "name": "Elasticsearch Indexer Worker Batch has too many failed-restarted",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_30m):sum:handshake.elasticsearch_indexer.worker_batch.failed.awaiting_restart{!cluster:universities} by {env,region,cluster}.as_count() > 10000",
+    "tags": [
+        "team:employer",
+        "team:student"
+    ],
+    "type": "query alert"
+}

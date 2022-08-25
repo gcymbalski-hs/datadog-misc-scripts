@@ -1,0 +1,266 @@
+{
+    "author_handle": "rtrame@joinhandshake.com",
+    "author_name": "Rob Trame",
+    "created_at": "2018-08-17T20:19:09.544942+00:00",
+    "description": "Vital stats for monitoring deploys to demo.",
+    "id": "46c-qra-emn",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-04-27T14:18:01.469817+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "demo",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "handshake",
+            "name": "service",
+            "prefix": "service"
+        }
+    ],
+    "title": "Deploy Tracking (Demo)",
+    "url": "/dashboard/46c-qra-emn/deploy-tracking-demo",
+    "widgets": [
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "p50:trace.rack.request{$env,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p75:trace.rack.request{$env,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p90:trace.rack.request{$env,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p95:trace.rack.request{$env,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p99:trace.rack.request{$env,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "max:trace.rack.request{$env,$service}.rollup(max)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Latency by Service",
+                "type": "timeseries"
+            },
+            "id": 345464328
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:trace.rack.request.duration.by_service{$env,$service} by {sublayer_service}.rollup(sum).fill(zero)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Time Spent by Service",
+                "type": "timeseries"
+            },
+            "id": 345464329
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.apdex.by.service{$env,$service} by {sublayer_service}.rollup(sum).fill(zero)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Apdex Score",
+                "type": "timeseries"
+            },
+            "id": 345464330
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.hits{env:production,service:handshake}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.errors{env:production,service:handshake}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "title": "Total Requests",
+                "type": "timeseries"
+            },
+            "id": 345464331
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{$env,$service} by {resource_name}.as_rate()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Error Rate",
+                "type": "timeseries"
+            },
+            "id": 345464332
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "conditional_formats": [],
+                        "q": "top(avg:trace.rack.request.duration.by_service{$env,$service} by {resource_name}, 5, 'mean', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Request Duration by Service",
+                "type": "toplist"
+            },
+            "id": 345464333
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes.cpu.usage.total{kube_app:handshake,project:handshake-demo} by {kube_service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "CPU Usage by Service",
+                "type": "timeseries"
+            },
+            "id": 345464334
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:demo\" \"New release in\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes.memory.usage{kube_app:handshake,project:handshake-demo} by {kube_service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Memory Usage by Service",
+                "type": "timeseries"
+            },
+            "id": 345464335
+        }
+    ]
+}

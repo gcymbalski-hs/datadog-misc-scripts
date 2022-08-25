@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 7859391,
+    "matching_downtimes": [],
+    "message": "[{{project_id}} - student-reindex] subscription is holding very old messages. Either it is receiving more messages than it can handle, or it is not processing messages properly. This subscription is read by the student cluster reindexer system, so this means that there is delays in reindexing.\n\n{{#is_alert}}\nTo resolve, investigate why the subscription is backed up, such as workers are not running properly or there's a bug in the reindex logic. If there is a surge of events, it may be fine and we just need to consider scaling up.\n\nPossible causes:\n- some messages may be failing to reindex and then get retried multiple times\n- generic system failure\n\nExample solution when this was backed up: https://github.com/joinhandshake/handshake/pull/30911\n\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{project_id}} - student-reindex] subscription holding old messages alert has recovered\n{{/is_recovery}} @slack-incidents-students",
+    "multi": true,
+    "name": "Pubsub: student-reindex subscription Holding Old Messages",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3600.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_30m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:student-reindex} by {project_id} > 3600",
+    "tags": [
+        "team:student"
+    ],
+    "type": "metric alert"
+}

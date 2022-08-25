@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 15699640,
+    "matching_downtimes": [],
+    "message": "The average database duration is higher than normal, which may indicate high database load, network issues to Postgres, or slow queries being run. Note: Metric math copied from APM graphs.\n\n@slack-incidents",
+    "multi": false,
+    "name": "US High Database Duration",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.2
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_10m):median_3(sum:trace.rack.request.duration.by_service{env:production,service:handshake,sublayer_service:handshake-postgres,region:us-central1}.rollup(sum).fill(zero)) / median_3(sum:trace.rack.request.hits{env:production,service:handshake,region:us-central1}.as_count().rollup(sum).fill(zero)) > 0.2",
+    "tags": [],
+    "type": "query alert"
+}

@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 73581573,
+    "matching_downtimes": [],
+    "message": "Non-alert monitor\n\nThis monitor notifies when the job-digest-to-iterable pubsub subscription has older messages on the subscription. This does not mean that the job has failed. [Pubsub: job-digest-to-iterable subscription is not processing messages](https://app.datadoghq.com/monitors/73581645) will notify when the messages have stopped being processed.\n\nThe two monitors are used in the composite monitor, [Pubsub: job-digest-to-iterable subscription stopped processing old messages](https://app.datadoghq.com/monitors/73581742), which will notify when the messages are present on the subscription AND are not being processed. See this monitor for more info on how to handle incident.",
+    "multi": true,
+    "name": "Pubsub: job-digest-to-iterable subscription has old messages",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 14400.0
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:job-digest-to-iterable} by {project_id} >= 14400",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

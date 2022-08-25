@@ -1,0 +1,41 @@
+{
+    "deleted": null,
+    "id": 70038346,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1158794915,
+            "monitor_id": 70038346,
+            "scope": [
+                "*"
+            ],
+            "start": 1614376596
+        }
+    ],
+    "message": "{{#is_alert}}\n{{event.text}}\n{{/is_alert}}  \n@slack-data-platform-failures",
+    "multi": false,
+    "name": "Composer Failure: {{event.title}}",
+    "options": {
+        "enable_logs_sample": false,
+        "groupby_simple_monitor": true,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "restriction_query": null,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "events(\"-environment:demo -environment:staging -environment:\"uk-staging\" tags:\"team:data\"\").rollup(\"count\").last(\"5m\") >= 1",
+    "tags": [],
+    "type": "event-v2 alert"
+}

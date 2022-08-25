@@ -1,0 +1,531 @@
+{
+    "author_handle": "spencer@joinhandshake.com",
+    "author_name": "Spencer Miskoviak",
+    "created_at": "2019-08-19T18:49:41.437634+00:00",
+    "description": "",
+    "id": "xkr-92t-yib",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-04-27T14:18:38.849850+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "environment",
+            "prefix": "env"
+        },
+        {
+            "default": "students",
+            "name": "user_type",
+            "prefix": "user"
+        }
+    ],
+    "title": "[Frontend] Combine Chained Requests in Student Postings Search",
+    "url": "/dashboard/xkr-92t-yib/frontend-combine-chained-requests-in-student-postings-search",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "FP",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:fmc.handshake.fp.95percentile{$environment,$user_type,connection:4g,experiment:combine-chained-request:off,resource:postings}"
+                                }
+                            ],
+                            "title": "FP - Combine Chained Request Off",
+                            "type": "query_value"
+                        },
+                        "id": 4318268915791050
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:fmc.handshake.fp.95percentile{$environment,$user_type,connection:4g,experiment:combine-chained-request:on,resource:postings}"
+                                }
+                            ],
+                            "title": "FP - Combine Chained Request On",
+                            "type": "query_value"
+                        },
+                        "id": 2245951388538804
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_green",
+                                            "value": 0.0
+                                        },
+                                        {
+                                            "comparator": "<=",
+                                            "palette": "white_on_red",
+                                            "value": 0.0
+                                        }
+                                    ],
+                                    "q": "avg:fmc.handshake.fp.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings}-avg:fmc.handshake.fp.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings}"
+                                }
+                            ],
+                            "title": "FP Difference",
+                            "type": "query_value"
+                        },
+                        "id": 6045111754091968
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "custom_unit": "%",
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "green_on_white",
+                                            "value": 0.0
+                                        },
+                                        {
+                                            "comparator": "<",
+                                            "palette": "red_on_white",
+                                            "value": 0.0
+                                        }
+                                    ],
+                                    "q": "((avg:fmc.handshake.fp.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings}-avg:fmc.handshake.fp.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})/avg:fmc.handshake.fp.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})*100"
+                                }
+                            ],
+                            "title": "FP Difference",
+                            "type": "query_value"
+                        },
+                        "id": 5756984962871866
+                    }
+                ]
+            },
+            "id": 4583224936726472
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "TTI - P95",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:fmc.handshake.tti.95percentile{$environment,$user_type,connection:4g,experiment:combine-chained-request:off,resource:postings}"
+                                }
+                            ],
+                            "title": "TTI - Combine Chained Request Off",
+                            "type": "query_value"
+                        },
+                        "id": 6584603248244594
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:fmc.handshake.tti.95percentile{$environment,$user_type,connection:4g,experiment:combine-chained-request:on,resource:postings}"
+                                }
+                            ],
+                            "title": "TTI - Combine Chained Request On",
+                            "type": "query_value"
+                        },
+                        "id": 7088722796982268
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_green",
+                                            "value": 0.0
+                                        },
+                                        {
+                                            "comparator": "<=",
+                                            "palette": "white_on_red",
+                                            "value": 0.0
+                                        }
+                                    ],
+                                    "q": "avg:fmc.handshake.tti.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings}-avg:fmc.handshake.tti.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings}"
+                                }
+                            ],
+                            "title": "TTI Difference",
+                            "type": "query_value"
+                        },
+                        "id": 5834437442101308
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "custom_unit": "%",
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "green_on_white",
+                                            "value": 0.0
+                                        },
+                                        {
+                                            "comparator": "<",
+                                            "palette": "red_on_white",
+                                            "value": 0.0
+                                        }
+                                    ],
+                                    "q": "((avg:fmc.handshake.tti.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings}-avg:fmc.handshake.tti.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})/avg:fmc.handshake.tti.95percentile{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})*100"
+                                }
+                            ],
+                            "title": "TTI Difference",
+                            "type": "query_value"
+                        },
+                        "id": 3836849590124720
+                    }
+                ]
+            },
+            "id": 2467938460930136
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "TTI -Average",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:fmc.handshake.tti.avg{$environment,$user_type,connection:4g,experiment:combine-chained-request:off,resource:postings}"
+                                }
+                            ],
+                            "title": "TTI - Combine Chained Request Off",
+                            "type": "query_value"
+                        },
+                        "id": 4525661013094578
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "q": "avg:fmc.handshake.tti.avg{$environment,$user_type,connection:4g,experiment:combine-chained-request:on,resource:postings}"
+                                }
+                            ],
+                            "title": "TTI - Combine Chained Request On",
+                            "type": "query_value"
+                        },
+                        "id": 4715401877085500
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_green",
+                                            "value": 0.0
+                                        },
+                                        {
+                                            "comparator": "<=",
+                                            "palette": "white_on_red",
+                                            "value": 0.0
+                                        }
+                                    ],
+                                    "q": "avg:fmc.handshake.tti.avg{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings}-avg:fmc.handshake.tti.avg{env:production,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings}"
+                                }
+                            ],
+                            "title": "TTI Difference",
+                            "type": "query_value"
+                        },
+                        "id": 3215784424348438
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "custom_unit": "%",
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "green_on_white",
+                                            "value": 0.0
+                                        },
+                                        {
+                                            "comparator": "<",
+                                            "palette": "red_on_white",
+                                            "value": 0.0
+                                        }
+                                    ],
+                                    "q": "((avg:fmc.handshake.tti.avg{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings}-avg:fmc.handshake.tti.avg{env:production,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})/avg:fmc.handshake.tti.avg{env:production,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})*100"
+                                }
+                            ],
+                            "title": "TTI Difference",
+                            "type": "query_value"
+                        },
+                        "id": 2267187037960174
+                    }
+                ]
+            },
+            "id": 3604220640895648
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Combine Chained Requests Experiment",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "TTFB Combine Chained Request",
+                            "type": "timeseries"
+                        },
+                        "id": 508202828922694
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "FP Combine Chained Request",
+                            "type": "timeseries"
+                        },
+                        "id": 1130827263148992
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "FCP Combine Chained Request",
+                            "type": "timeseries"
+                        },
+                        "id": 5265762121333370
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user_type,experiment:combine-chained-request:on,resource:postings,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,$user_type,experiment:combine-chained-request:off,resource:postings,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "title": "TTI Combine Chained Request",
+                            "type": "timeseries"
+                        },
+                        "id": 6297302677069346
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:on,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,connection:4g,$user_type,experiment:combine-chained-request:off,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "FID Combine Chained Request",
+                            "type": "timeseries"
+                        },
+                        "id": 1817483194681690
+                    }
+                ]
+            },
+            "id": 1712781620559324
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:fmc.handshake.tti.count{$environment,$user_type,experiment:combine-chained-request:on,resource:postings}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:fmc.handshake.tti.count{$environment,$user_type,experiment:combine-chained-request:off,resource:postings}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "TTI Counts",
+                "type": "timeseries"
+            },
+            "id": 2470902033863198
+        }
+    ]
+}

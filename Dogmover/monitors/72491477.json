@@ -1,0 +1,40 @@
+{
+    "deleted": null,
+    "id": 72491477,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 2181549671,
+            "monitor_id": 72491477,
+            "scope": [
+                "*"
+            ],
+            "start": 1661182134
+        }
+    ],
+    "message": "The Google Cloud Load Balancer (GCLB) (target_proxy_name:{{target_proxy_name}}, project_id:{{project_id}}) has a high 5XX response count. This (probably) is an internal GCP issue.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "High GCLB 5XX Response Count",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 100.0
+        }
+    },
+    "query": "sum(last_1h):sum:gcp.loadbalancing.https.request_count{response_code_class:500,!target_proxy_name:www-production-target-proxy,!target_proxy_name:statuspage-proxy-https,!target_proxy_name:k8s2-ts-d3legey3-ambassador-ambassador-fn82wnhm} by {target_proxy_name,project_id}.as_count() > 100",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

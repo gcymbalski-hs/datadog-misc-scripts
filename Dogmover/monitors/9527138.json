@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 9527138,
+    "matching_downtimes": [],
+    "message": "@slack-incidents",
+    "multi": true,
+    "name": "Sidekiq Default Queue Latency High",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 300.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_5m):max:sidekiq.queue.latency{queue:default,env:production} by {env,region} > 300",
+    "tags": [],
+    "type": "metric alert"
+}

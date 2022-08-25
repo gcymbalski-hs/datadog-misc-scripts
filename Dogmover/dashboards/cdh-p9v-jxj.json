@@ -1,0 +1,395 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-09-13T00:11:12.228692+00:00",
+    "description": "",
+    "id": "cdh-p9v-jxj",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-27T15:39:29.449303+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "handshake-postgres",
+            "name": "service",
+            "prefix": "service"
+        },
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "handshake-production:handshake-charcoal-lemur",
+            "name": "gcp_database",
+            "prefix": "database_id"
+        },
+        {
+            "default": "*",
+            "name": "resource_name",
+            "prefix": "resource_name"
+        }
+    ],
+    "title": "Handshake Database Performance Diagnostics",
+    "url": "/dashboard/cdh-p9v-jxj/handshake-database-performance-diagnostics",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "General",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:gcp.cloudsql.database.cpu.utilization{$gcp_database}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Instance CPU",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 358582197
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:gcp.cloudsql.database.postgresql.num_backends{$gcp_database} by {database}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Instance Connection Count",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 358582040
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "median_3(sum:gcp.cloudsql.database.postgresql.replication.replica_byte_lag{replica_name:handshake-production:handshake-arrogant-ape})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Replication Lag",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4962745495413646
+                    }
+                ]
+            },
+            "id": 3078356966386026
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "APM",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "value": "y = 0.15"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.postgres.query.duration{$service,$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Average Query Duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8340303145539552
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:trace.postgres.query.duration{$service,$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Max Query Duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6585116248994668
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.postgres.query.duration{$service,$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Query Duration Sum",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1592413975230074
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "p50:trace.postgres.query{$env,$service}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p75:trace.postgres.query{$env,$service}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p90:trace.postgres.query{$env,$service}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p95:trace.postgres.query{$env,$service}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Query Duration Percentiles",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 358580544
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:trace.postgres.query.hits{$service,$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Query Hits",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8871185094422242
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:trace.postgres.query.duration{$service,$env}/sum:trace.postgres.query.hits{$service,$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Query Duration / Hits",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2029091703211202
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "top(max:trace.postgres.query.duration{$service,$env} by {resource_name}, 100, 'max', 'desc')",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Top 100 Queries by Max",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 358581242
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "value": "y = 600"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "ewma_3(sum:trace.postgres.query.duration{$service,$env,resource_name:blocked-resource})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Block Resource Max",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5509344022535118
+                    }
+                ]
+            },
+            "id": 4402812193136984
+        }
+    ]
+}

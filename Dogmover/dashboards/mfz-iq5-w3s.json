@@ -1,0 +1,239 @@
+{
+    "author_handle": "bguy@joinhandshake.com",
+    "author_name": "Brett Guy",
+    "created_at": "2020-01-29T22:17:16.411171+00:00",
+    "description": "",
+    "id": "mfz-iq5-w3s",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-03-02T06:27:27.662363+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "emp_name",
+            "prefix": "employer_name"
+        }
+    ],
+    "title": "[Control Center] Engagement Events",
+    "url": "/dashboard/mfz-iq5-w3s/control-center-engagement-events",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.engagements.event{env:production,$emp_name} by {event_type}.as_count().rollup(sum, 60)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Engagement Events by Event Type",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 553160013521948
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:handshake.engagements.event{env:production,$emp_name}.as_count().rollup(avg, 60)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Engagements Per Minute",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3576839595582378
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "q": "top(sum:handshake.engagements.event{env:production,$emp_name} by {employer_name}.as_count(), 25, 'sum', 'desc')"
+                    }
+                ],
+                "title": "Top Engagements By Employer",
+                "type": "toplist"
+            },
+            "id": 5972324506213096
+        },
+        {
+            "definition": {
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "q": "sum:handshake.engagements.event{event_type:application-submitted,env:production,$emp_name}.as_count()"
+                    }
+                ],
+                "title": "Applications Submitted",
+                "type": "query_value"
+            },
+            "id": 3848432348672940
+        },
+        {
+            "definition": {
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "q": "sum:handshake.engagements.event{event_type:event-rsvp,env:production,$emp_name}.as_count()"
+                    }
+                ],
+                "title": "Event RSVP's",
+                "type": "query_value"
+            },
+            "id": 5857666565837476
+        },
+        {
+            "definition": {
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "sum",
+                        "q": "sum:handshake.engagements.event{event_type:career-fair-session-rsvp,env:production,$emp_name}.as_count()"
+                    }
+                ],
+                "title": "Career Fair Session RSVP's",
+                "type": "query_value"
+            },
+            "id": 1639551663311268
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:gcp.pubsub.topic.send_message_operation_count{topic_id:engagement-events}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Pubsub Send Message Op Count",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7909166879863640
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:engagement-events-to-big-query}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Pubsub - Dataflow Subscription Undelivered Messages",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5625904740346102
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:sidekiq.queue.size{queue:low}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sidekiq Queue Size",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 527536163082812
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:sidekiq.queue.latency{queue:low,env:production}.rollup(avg, 300)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Max of sidekiq.queue.latency over queue:low,env:production",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2174719277564120
+        }
+    ]
+}

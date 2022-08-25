@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 71163868,
+    "matching_downtimes": [],
+    "message": "`next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Resource next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook has a high p90 latency on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.8
+        }
+    },
+    "query": "percentile(last_10m):p90:trace.rack.request{env:production,resource_name:next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook,service:handshake} > 1",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook",
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-controller-latency"
+    ],
+    "type": "query alert"
+}

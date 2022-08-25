@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 18787185,
+    "matching_downtimes": [],
+    "message": "Non-alert monitor\n\nThis monitor notifies when the job-digest-to-push-notifications pubsub subscription has older messages on the subscription. This does not mean that the job has failed. [Pubsub: job-digest-to-push-notifications subscription is not processing messages](https://app.datadoghq.com/monitors/30463111) will notify when the messages have stopped being processed.\n\nThe two monitors are used in the composite monitor, [Pubsub: job-digest-to-push-notifications subscription stopped processing old messages](https://app.datadoghq.com/monitors/30463626), which will notify when the messages are present on the subscription AND are not being processed. See this monitor for more info on how to handle incident.",
+    "multi": true,
+    "name": "Pubsub: job-digest-to-push-notifications subscription has old messages",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 100800.0
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:job-digest-push-notifications} by {project_id} >= 100800",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

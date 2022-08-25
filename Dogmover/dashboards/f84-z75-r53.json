@@ -1,0 +1,1367 @@
+{
+    "author_handle": "leah@joinhandshake.com",
+    "author_name": "Leah Kim",
+    "created_at": "2020-12-17T21:27:50.741532+00:00",
+    "description": "",
+    "id": "f84-z75-r53",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2022-07-29T18:36:14.366474+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Squad] Student Engagement overview",
+    "url": "/dashboard/f84-z75-r53/squad-student-engagement-overview",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "Emails",
+                                "expression": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:job-digest-to-mail}"
+                            }
+                        ],
+                        "q": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:job-digest-to-mail}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "Push notifications",
+                                "expression": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:job-digest-push-notifications}"
+                            }
+                        ],
+                        "q": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:job-digest-push-notifications}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "1w"
+                },
+                "title": "Remaining messages to process",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5439655112302728,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 61
+            }
+        },
+        {
+            "definition": {
+                "color": "#000",
+                "font_size": "36",
+                "text": "Job recommendation digests",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 7945313369720588,
+            "layout": {
+                "height": 3,
+                "width": 24,
+                "x": 0,
+                "y": 57
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 0"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1 / (query2 + query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.failure{region:us-central1} by {auth_type}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:handshake.login.success{region:us-central1} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Overall failure percetage",
+                                "formula": "query0 / (query1 + query0)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "avg:handshake.login.failure{region:us-central1}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.login.success{region:us-central1}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "US: Login failure percentage by auth_type",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2935136726773778,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0.08333333333333333,
+                "y": 118
+            }
+        },
+        {
+            "definition": {
+                "color": "#2B13E6",
+                "font_size": "36",
+                "text": "Login",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 2590899551721880,
+            "layout": {
+                "height": 3,
+                "width": 24,
+                "x": 1,
+                "y": 113
+            }
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.pods.running{project:handshake-production} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "1w"
+                },
+                "title": "Pod count for trigger-job-digest cronjob",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8102794176103926,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 61
+            }
+        },
+        {
+            "definition": {
+                "markers": [
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "95"
+                    },
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "99"
+                    },
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "90"
+                    },
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "50"
+                    }
+                ],
+                "requests": [
+                    {
+                        "apm_stats_query": {
+                            "env": "production",
+                            "name": "rack.request",
+                            "primary_tag": "region:*",
+                            "resource": "Next::Student::DashboardsController#student_daily_tasks",
+                            "row_type": "resource",
+                            "service": "handshake"
+                        },
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Latency Distribution for Dashboards#student_daily_tasks",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "distribution",
+                "xaxis": {
+                    "include_zero": true,
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                },
+                "yaxis": {
+                    "include_zero": true,
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4254365270593590,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 7
+            }
+        },
+        {
+            "definition": {
+                "color": "#41c464",
+                "font_size": "auto",
+                "text": "Student Home",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 2872621571357032,
+            "layout": {
+                "height": 6,
+                "width": 24,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "alert_id": "18787185",
+                "time": {
+                    "live_span": "1mo"
+                },
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "alert_graph",
+                "viz_type": "timeseries"
+            },
+            "id": 2117794538636964,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0.08333333333333333,
+                "y": 77
+            }
+        },
+        {
+            "definition": {
+                "alert_id": "30463111",
+                "time": {
+                    "live_span": "1mo"
+                },
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "alert_graph",
+                "viz_type": "timeseries"
+            },
+            "id": 1826975563559482,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 77
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "1st alert `Pubsub: job-digest-to-push-notifications subscription has old messages` is triggered when the oldest message hasn't been processed in 6 hours\n\n2nd alert `Pubsub: job-digest-to-push-notifications subscription is not processing messages` is triggered when pubsub's change is 0 (we want it to be negative as it means that we're processing emails).\n\nWe only care when the 1st alert and 2nd alert are triggered simultaneously as that means there are some stale messages in the pubsub queue that aren't being processed",
+                "font_size": "12",
+                "has_padding": true,
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "top"
+            },
+            "id": 2620607677714286,
+            "layout": {
+                "height": 38,
+                "width": 18,
+                "x": 96,
+                "y": 61
+            }
+        },
+        {
+            "definition": {
+                "markers": [
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "99"
+                    },
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "95"
+                    },
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "90"
+                    },
+                    {
+                        "display_type": "x_axis_percentile",
+                        "value": "50"
+                    }
+                ],
+                "requests": [
+                    {
+                        "apm_stats_query": {
+                            "env": "production",
+                            "name": "rack.request",
+                            "primary_tag": "region:*",
+                            "resource": "Next::Student::EventsController#unified_search",
+                            "row_type": "resource",
+                            "service": "handshake"
+                        },
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Latency Distribution of Events#unified_search",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "distribution",
+                "xaxis": {
+                    "include_zero": true,
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                },
+                "yaxis": {
+                    "include_zero": true,
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2526105334486024,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 7
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            },
+                            {
+                                "formula": "query3"
+                            },
+                            {
+                                "formula": "query4"
+                            },
+                            {
+                                "formula": "query5"
+                            },
+                            {
+                                "formula": "query6"
+                            },
+                            {
+                                "formula": "query7"
+                            },
+                            {
+                                "formula": "query8"
+                            },
+                            {
+                                "formula": "query9"
+                            },
+                            {
+                                "formula": "query10"
+                            },
+                            {
+                                "formula": "query11"
+                            },
+                            {
+                                "formula": "query12"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.student_dashboard.dashboard_payload.timing.median{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.student_dashboard.dashboard_payload.timing.95percentile{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:handshake.student_dashboard.user_favorites.timing.median{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "avg:handshake.student_dashboard.user_favorites.timing.95percentile{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query5",
+                                "query": "avg:handshake.student_dashboard.pins.timing.median{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query6",
+                                "query": "avg:handshake.student_dashboard.pins.timing.95percentile{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query7",
+                                "query": "avg:handshake.student_dashboard.upcoming_virtual_fairs.timing.median{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query8",
+                                "query": "avg:handshake.student_dashboard.upcoming_virtual_fairs.timing.95percentile{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query9",
+                                "query": "avg:handshake.student_dashboard.favorite_jobs.timing.median{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query10",
+                                "query": "avg:handshake.student_dashboard.favorite_jobs.timing.95percentile{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query11",
+                                "query": "avg:handshake.student_dashboard.job_role_suggestions.timing.avg{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query12",
+                                "query": "avg:handshake.student_dashboard.job_role_suggestions.timing.95percentile{env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Dashboard DB Query Timing",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1622884304241780,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 23
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Sent",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Failed",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Already Processed",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Push notification disabled",
+                                "formula": "query4"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.job_recommendation.push_notification_sent{region:us-central1}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:handshake.job_recommendation.push_notification_failed{region:us-central1}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "sum:handshake.job_recommendation.push_notification_already_processed{region:us-central1}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:handshake.job_recommendation.cant_send_push_notification_to_user{region:us-central1}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "Job Digest Push Notifications: Sent vs Failed",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5821797923868612,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0.16666666666666666,
+                "y": 93
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Failed",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Sent",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Already Processed",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Can't find user",
+                                "formula": "query4"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.job_recommendation.email_failed{*}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.job_recommendation.sent{*}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:handshake.job_recommendation.email_already_processed{*}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "avg:handshake.job_recommendation.email_disabled{*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Job Digest Emails: Sent vs Failed",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4765208534600032,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 93
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p50",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "p75",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "p90",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "p95",
+                                "formula": "query4"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p50:trace.rack.request{resource_name:next::student::recommendationcollectionscontroller_index,env:production,service:handshake,region:us-central1}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p75:trace.rack.request{resource_name:next::student::recommendationcollectionscontroller_index,env:production,service:handshake,region:us-central1}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p90:trace.rack.request{resource_name:next::student::recommendationcollectionscontroller_index,env:production,service:handshake,region:us-central1}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "p95:trace.rack.request{resource_name:next::student::recommendationcollectionscontroller_index,env:production,service:handshake,region:us-central1}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Web: Recommendation Collections (REST)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3491553822530908,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 23
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p50",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p50:trace.execute.graphql{env:production,resource:1043734e35cca822,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p75",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p75:trace.execute.graphql{env:production,resource:1043734e35cca822,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p90",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p90:trace.execute.graphql{env:production,resource:1043734e35cca822,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p95",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p95:trace.execute.graphql{env:production,resource:1043734e35cca822,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    }
+                ],
+                "show_legend": false,
+                "title": "GraphQL: recommendationCollectionsByPriority latency",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4214649609969566,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 39
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p50",
+                                "formula": "query6"
+                            },
+                            {
+                                "alias": "p75",
+                                "formula": "query7"
+                            },
+                            {
+                                "alias": "p90",
+                                "formula": "query8"
+                            },
+                            {
+                                "alias": "p95",
+                                "formula": "query9"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query6",
+                                "query": "p50:trace.rack.request{env:production,service:handshake,region:us-central1,resource_name:next::student::mobile::v1::collectionscontroller_index}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query7",
+                                "query": "p75:trace.rack.request{env:production,service:handshake,region:us-central1,resource_name:next::student::mobile::v1::collectionscontroller_index}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query8",
+                                "query": "p90:trace.rack.request{env:production,service:handshake,region:us-central1,resource_name:next::student::mobile::v1::collectionscontroller_index}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query9",
+                                "query": "p95:trace.rack.request{env:production,service:handshake,region:us-central1,resource_name:next::student::mobile::v1::collectionscontroller_index}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Mobile: Recommendation Collections (REST)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 244389750117774,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 39
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 0"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1 / (query2 + query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.failure{region:europe-west2} by {auth_type}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:handshake.login.success{region:europe-west2} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Overall failure percentage",
+                                "formula": "query0 / (query1 + query0)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "avg:handshake.login.failure{region:europe-west2}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.login.success{region:europe-west2}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "UK: Login failure percentage by auth_type",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2543421009470440,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 118
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.attempt{region:us-central1} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US: Login attempts by auth_type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 8113168699166792,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 134
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.attempt{region:europe-west2} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "UK: Login attempts by auth type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 7950569117546394,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 134
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.success{region:us-central1} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "green"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US: Successful logins by auth_type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 1334945555033684,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 150
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.failure{region:us-central1} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "red"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US: Login failures by auth_type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 1337999407409436,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.failure{region:europe-west2} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "red"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "UK: Login failures by auth type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 213789274378490,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.login.success{region:europe-west2} by {auth_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "green"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "UK: Successful logins by auth type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 5278160851657326,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 48,
+                "y": 150
+            }
+        }
+    ]
+}

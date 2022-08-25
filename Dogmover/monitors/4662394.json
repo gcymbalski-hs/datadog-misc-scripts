@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 4662394,
+    "matching_downtimes": [],
+    "message": "[{{database_id.name}} {{project_id.name}}] database is approaching Disk Capacity.\n\n{{#is_alert}}\nTo resolve, make sure autoscaling is working and/or add more nodes.\nhttps://joinhandshake.atlassian.net/wiki/x/4gELmw\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{database_id.name}} {{project_id.name}}] database disk usage alert is off.\n{{/is_recovery}} @slack-incidents",
+    "multi": true,
+    "name": "Database disk usage High",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.95,
+            "warning": 0.9
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):max:gcp.cloudsql.database.disk.utilization{!project_id:handshake-development-204119,!database_id:handshake-production:handshake-charcoal-lemur-reporting-replica,!database_id:handshake-production:handshake-prod-infra-testing,!database_id:handshake-production:handshake-prod-infra-testing-pg11} by {project_id,database_id} > 0.95",
+    "tags": [],
+    "type": "query alert"
+}

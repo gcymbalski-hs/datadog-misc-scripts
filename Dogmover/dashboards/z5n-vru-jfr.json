@@ -1,0 +1,147 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-12-06T00:16:54.739181+00:00",
+    "description": "",
+    "id": "z5n-vru-jfr",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-05-14T16:07:44.397070+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        },
+        {
+            "default": "*",
+            "name": "clustername",
+            "prefix": "cluster-name"
+        }
+    ],
+    "title": "Office Service",
+    "url": "/dashboard/z5n-vru-jfr/office-service",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:content_to_pdf.success{$env,$region,$clustername} by {env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "HTML -> PDF Success Count",
+                "type": "timeseries"
+            },
+            "id": 404849204
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:html_to_pdf.pdfkit_parse_time.95percentile{$env,$region,$clustername}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:html_to_pdf.pdfkit_parse_time.max{$env,$region,$clustername}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:html_to_pdf.pdfkit_parse_time.avg{$env,$region,$clustername}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "HTML -> PDF Avg, 95th Percentile, Max",
+                "type": "timeseries"
+            },
+            "id": 404849205
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:doc_to_pdf.success{$env,$region,$clustername} by {env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Doc -> PDF Success Count",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7714852273126688
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:doc_to_pdf.exception{$env,$region,$clustername} by {env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Doc -> PDF Success Exceptions",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8989709961993962
+        }
+    ]
+}

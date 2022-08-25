@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 65788950,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-emp-lifecycle \n\nError in production from next/employer/self_service/subscription_controller#welcome_plan",
+    "multi": false,
+    "name": "Resource next::employer::selfservice::subscriptioncontroller_welcome_plan has an error on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_5m):sum:trace.rack.request.errors{resource_name:next::employer::selfservice::subscriptioncontroller_welcome_plan,service:handshake,env:production}.as_count() > 0",
+    "tags": [
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-errors",
+        "emp-lifecycle-self-service"
+    ],
+    "type": "query alert"
+}

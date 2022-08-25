@@ -1,0 +1,2700 @@
+{
+    "author_handle": "dweinand@joinhandshake.com",
+    "author_name": "Dan Weinand",
+    "created_at": "2020-12-22T15:34:05.819700+00:00",
+    "description": "managed through the terraform-datadog repo",
+    "id": "zyt-wup-mg3",
+    "is_read_only": true,
+    "layout_type": "ordered",
+    "modified_at": "2021-11-23T23:43:25.626566+00:00",
+    "notify_list": [],
+    "restricted_roles": [
+        "892f99b0-e140-11e8-b198-03eba61f485c"
+    ],
+    "template_variable_presets": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "Employer Productivity Squad Dashboard",
+    "url": "/dashboard/zyt-wup-mg3/employer-productivity-squad-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Most Important Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:careerfairscontroller_schedule}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:careerfairscontroller_schedule}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Virtual Fair Schedule Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6007144602382389
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:careerfairscontroller_schedule}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:careerfairscontroller_schedule}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:careerfairscontroller_schedule}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:careerfairscontroller_schedule}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:careerfairscontroller_schedule}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:careerfairscontroller_schedule}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Virtual Fair Schedule Page Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 5347724642844251
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::employerhostedcontroller_index}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::employerhostedcontroller_index}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Index Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 1902367413311832
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::employerhostedcontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::employerhostedcontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Show Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5953489617913626
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:prospectactionscontroller_authenticate}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:prospectactionscontroller_authenticate}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Prospect Authentication Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 483198191747454
+                    }
+                ]
+            },
+            "id": 8346463772934841
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Virtual Fairs",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:careerfairscontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:careerfairscontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Career Fair Show Page Traffic (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 4225258822712134
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:careerfairscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:careerfairscontroller_show}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:careerfairscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:careerfairscontroller_show}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:careerfairscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:careerfairscontroller_show}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Career Fair Show Page Latency (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 3788786486094194
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:careerfairscontroller_schedule}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:careerfairscontroller_schedule}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Virtual Fair Schedule Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 809449075700132
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:careerfairscontroller_schedule}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:careerfairscontroller_schedule}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:careerfairscontroller_schedule}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:careerfairscontroller_schedule}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:careerfairscontroller_schedule}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:careerfairscontroller_schedule}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Virtual Fair Schedule Page Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 5594607918891085
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Fair Meeting Schedule Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 7660900278357032
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedulescontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedulescontroller_show}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedulescontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedulescontroller_show}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedulescontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedulescontroller_show}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Fair Meeting Schedule Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 1678131107893517
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_create}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_create}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create Fair Meeting Schedules Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5126093284577704
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Fair Meeting Schedules Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5383924347895931
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_meeting_blocks}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_meeting_blocks}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Meeting Block For Employer User Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 3543245286474065
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedulescontroller_meeting_blocks}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedulescontroller_meeting_blocks}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedulescontroller_meeting_blocks}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedulescontroller_meeting_blocks}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedulescontroller_meeting_blocks}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedulescontroller_meeting_blocks}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Meeting Blocks Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 5831530370688690
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_add_group_session}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_add_group_session}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create New Group Session Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 4655152699828268
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingscontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingscontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Manage Group Session Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6889149239388912
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_transfer_meetings}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_transfer_meetings}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Transfer Schedule to a Team Member Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 1699148230219740
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulestudentscreenscontroller_upsert}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulestudentscreenscontroller_upsert}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Editing 1:1 Qualifications Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2544247536697310
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulestudentscreenscontroller_destroy}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulestudentscreenscontroller_destroy}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Removing 1:1 Qualifications Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 3401944041480928
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedulescontroller_remove_team_member_schedule}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedulescontroller_remove_team_member_schedule}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Remove a Team Member's Schedule Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 7684728948372084
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "handshake.meeting_schedule_upsert_worker.perform_time.avg{$env}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Meeting Schedule Upsert Worker Average Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 445355354714957
+                    }
+                ]
+            },
+            "id": 1021516094195074
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Recurring Meeting Schedules",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::recurringcontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::recurringcontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Recurring Meeting Schedule Show Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 766391927947489
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::recurringcontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::recurringcontroller_show}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::recurringcontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::recurringcontroller_show}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::recurringcontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::recurringcontroller_show}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Recurring Meeting Schedule Show Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 5254544178742810
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::recurringcontroller_create}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::recurringcontroller_create}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create Recurring Meeting Schedule Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6741136308495098
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::recurringcontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::recurringcontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Recurring Meeting Schedules Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 4141435541863133
+                    }
+                ]
+            },
+            "id": 4149098955128906
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Virtual Events",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_index}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_index}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Events Index Page Traffic (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 2033621729833450
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:eventscontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:eventscontroller_index}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:eventscontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:eventscontroller_index}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:eventscontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:eventscontroller_index}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Events Index Page Latency (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 153070632341118
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Events Show Page Traffic (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 7980479625171995
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:eventscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:eventscontroller_show}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:eventscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:eventscontroller_show}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:eventscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:eventscontroller_show}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Events Show Page Latency (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 2483780353544572
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_create}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_create}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create Event Traffic (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 1929738550526769
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Event Traffic (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 800361649702582
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_destroy}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_destroy}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Destroy Event Traffic (shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 7380344340475157
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_csv_download}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_csv_download}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Events Download CSV Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8911218660009607
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:eventscontroller_share_preview}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:eventscontroller_share_preview}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Event Share Preview Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8260749435273062
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:eventscontroller_share_preview}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:eventscontroller_share_preview}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:eventscontroller_share_preview}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:eventscontroller_share_preview}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:eventscontroller_share_preview}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:eventscontroller_share_preview}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Event Share Preview Page Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 767593175007876
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerusereventattendeescontroller_index}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerusereventattendeescontroller_index}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Employer Event Attendees Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2960153764674934
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerusereventattendeescontroller_upsert_attendees}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerusereventattendeescontroller_upsert_attendees}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Upsert Employer Event Attendees Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 4303307451510878
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerkiosksettingscontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerkiosksettingscontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Employer Kiosk Setting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5856101423226484
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:employerkiosksettingscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:employerkiosksettingscontroller_show}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:employerkiosksettingscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:employerkiosksettingscontroller_show}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:employerkiosksettingscontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:employerkiosksettingscontroller_show}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Employer Kiosk Setting Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 4218093978231674
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerkiosksettingscontroller_create}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerkiosksettingscontroller_create}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create Employer Kiosk Setting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 4868348548922533
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerkiosksettingscontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerkiosksettingscontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Employer Kiosk Setting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 3573933697279411
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerkiosksettingscontroller_ensure_exist}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerkiosksettingscontroller_ensure_exist}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Ensure Employer Kiosk Setting Exists Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8305125859525263
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerkiosksettingscontroller_look_up}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerkiosksettingscontroller_look_up}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Look Up Employer Kiosk Setting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 3197583829977251
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:attendeescontroller_index}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:attendeescontroller_index}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Attendees Index Traffic (includes HTML & JSON responses, shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 5058184413806414
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:attendeescontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:attendeescontroller_index}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:attendeescontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:attendeescontroller_index}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:attendeescontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:attendeescontroller_index}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Attendees Index Latency (includes HTML & JSON responses, shared with other user types)",
+                            "type": "timeseries"
+                        },
+                        "id": 4946912914125086
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:attendeescontroller_csv_download}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:attendeescontroller_csv_download}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Download Attendees CSV Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 1636946091918616
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:attendeescontroller_resume_download}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:attendeescontroller_resume_download}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Download Attendees Resume Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8602112775966620
+                    }
+                ]
+            },
+            "id": 3621960699065467
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Employer-Hosted Meetings",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::employerhostedcontroller_index}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::employerhostedcontroller_index}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Index Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5805909987490204
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_index}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_index}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_index}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Index Page Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 7872645320055481
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::employerhostedcontroller_show}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::employerhostedcontroller_show}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Show Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8645388571472286
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Show Page Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 5622898560688807
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::candidatescontroller_index}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::candidatescontroller_index}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Candidates Tab Index Traffic (includes HTML & JSON responses)",
+                            "type": "timeseries"
+                        },
+                        "id": 1196898859322258
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::candidatescontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::candidatescontroller_index}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::candidatescontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::candidatescontroller_index}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::candidatescontroller_index}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::candidatescontroller_index}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Candidates Tab Candidates Index Latency (includes HTML & JSON responses)",
+                            "type": "timeseries"
+                        },
+                        "id": 912673001601623
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::publicinvitecontroller_public_invite}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::publicinvitecontroller_public_invite}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Public Invite Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 3595350954830935
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::publicinvitecontroller_public_invite}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::publicinvitecontroller_public_invite}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::publicinvitecontroller_public_invite}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::publicinvitecontroller_public_invite}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::publicinvitecontroller_public_invite}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::publicinvitecontroller_public_invite}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Public Invite Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 1901701706065299
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::employerhostedcontroller_create}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::employerhostedcontroller_create}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create Employer Hosted Meeting Schedule Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5316933198856285
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::employerhostedcontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::employerhostedcontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Employer Hosted Meeting Schedule Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 886552192460467
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::candidatescontroller_csv_download}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::candidatescontroller_csv_download}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Download Candidates CSV Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8325635601644083
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::candidatescontroller_available_candidates}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::candidatescontroller_available_candidates}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Available Candidates Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6861117953007656
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::candidatescontroller_resume_download}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::candidatescontroller_resume_download}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Download Candidates Resumes Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 1657943886196453
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::interviewerscontroller_available_interviewers}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::interviewerscontroller_available_interviewers}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Available Interviewers Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 5803594388504123
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::meetingscontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::meetingscontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Employer Hosted Meeting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8020816569861600
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::meetingscontroller_mark_available}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::meetingscontroller_mark_available}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Mark Employer Hosted Meeting Available Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2624714464839627
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::meetingscontroller_mark_unavailable}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::meetingscontroller_mark_unavailable}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Mark Employer Hosted Meeting Unavailable Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8408752863185136
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::participantscontroller_add_interviewers}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::participantscontroller_add_interviewers}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Add Participants to Employer Hosted Meeting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 1272312115448443
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::participantscontroller_add_candidates}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::participantscontroller_add_candidates}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Add Candidates to Employer Hosted Meeting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 4855481266708262
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::participantscontroller_cancel_participants}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::participantscontroller_cancel_participants}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Cancel Participants for Employer Hosted Meeting Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 7788866720086817
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::publicinvitecontroller_student_sign_up}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::publicinvitecontroller_student_sign_up}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Sign Up From Public Invite Page Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 991932365394691
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Add Interviewers Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6654448025022789
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_add_interviewers}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Add Interviewers Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 5292672602765109
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Remove Interviewers Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2437999366820070
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_remove_interviewers}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Remove Interviewers Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 695696214200196
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Cancel Participants Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 7064490757100523
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::bulkactionscontroller_cancel_participants}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Cancel Participants Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 1922808313068069
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:meetingschedules::participantscontroller_manage_interviewers}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:meetingschedules::participantscontroller_manage_interviewers}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Manage Interviewers Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 4155411306791941
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::participantscontroller_manage_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:meetingschedules::participantscontroller_manage_interviewers}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::participantscontroller_manage_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:meetingschedules::participantscontroller_manage_interviewers}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::participantscontroller_manage_interviewers}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:meetingschedules::participantscontroller_manage_interviewers}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Bulk Cancel Participants Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 1909728878872395
+                    }
+                ]
+            },
+            "id": 5246888558282459
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Prospects",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:prospectactionscontroller_authenticate}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:prospectactionscontroller_authenticate}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Prospect Authentication Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2311287137286674
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P50 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:prospectactionscontroller_authenticate}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.50p{$env,service:handshake,resource_name:prospectactionscontroller_authenticate}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P75 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:prospectactionscontroller_authenticate}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.75p{$env,service:handshake,resource_name:prospectactionscontroller_authenticate}",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "metadata": [
+                                        {
+                                            "alias_name": "P90 Latency",
+                                            "expression": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:prospectactionscontroller_authenticate}"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.duration.by.resource_service.90p{$env,service:handshake,resource_name:prospectactionscontroller_authenticate}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Prospect Authentication Latency",
+                            "type": "timeseries"
+                        },
+                        "id": 8700220871068756
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:prospectactionscontroller_register}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:prospectactionscontroller_register}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Prospect Registration Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 7326932960612903
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:prospectactionscontroller_resend_confirmation}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:prospectactionscontroller_resend_confirmation}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Resent Prospect Confirmation Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 3987724504511834
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:prospectactionscontroller_email_confirmation}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:prospectactionscontroller_email_confirmation}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Prospect Email Confirmation Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 8699595929575487
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "handshake.prospect_creation_service.create.success{$env}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "handshake.prospect_creation_service.create.error{$env}",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "ProspectCreationService Success and Errors",
+                            "type": "timeseries"
+                        },
+                        "id": 8129322539748521
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "handshake.prospects_user.create_user_manually{$env}",
+                                    "style": {
+                                        "palette": "purple"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "ProspectUserCreator Success",
+                            "type": "timeseries"
+                        },
+                        "id": 4982890488236209
+                    }
+                ]
+            },
+            "id": 946324612488414
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Evaluations",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerattendeeevaluationscontroller_show_by_attendee_id}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerattendeeevaluationscontroller_show_by_attendee_id}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Get Employer Attendee Evaluation By Attendee ID Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2889229447741317
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerattendeeevaluationscontroller_create}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerattendeeevaluationscontroller_create}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Create Employer Attendee Evaluation Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 1469100585481873
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerattendeeevaluationscontroller_update}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerattendeeevaluationscontroller_update}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Update Employer Attendee Evaluation Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6940038694882980
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{$env,resource_name:employerattendeeevaluationscontroller_destroy}.as_count()"
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.errors{$env,resource_name:employerattendeeevaluationscontroller_destroy}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Destroy Employer Attendee Evaluation Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 2677700503565393
+                    }
+                ]
+            },
+            "id": 4790440053113950
+        }
+    ]
+}

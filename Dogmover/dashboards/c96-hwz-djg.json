@@ -1,0 +1,231 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-03-28T00:41:39.168042+00:00",
+    "description": "",
+    "id": "c96-hwz-djg",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-21T23:38:53.976681+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "app",
+            "prefix": "app"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "key",
+            "prefix": "key"
+        },
+        {
+            "available_values": [],
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Toggles",
+    "url": "/dashboard/c96-hwz-djg/toggles",
+    "widgets": [
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:handshake.toggles.checks{$env,$app,$key,$region} by {result}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Toggles by Result",
+                "type": "timeseries"
+            },
+            "id": 3295500513201496
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:handshake.toggles.checks{$env,$app,$key,$region} by {key}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Toggles by Key",
+                "type": "timeseries"
+            },
+            "id": 2248630265107922
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.toggles.ld_client_timing.avg{$env,$app,$region} by {app}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:handshake.toggles.ld_client_timing.95percentile{$env,$app,$region} by {app}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "handshake.toggles.ld_client_timing.avg, handshake.toggles.ld_client_timing.95...",
+                "type": "timeseries"
+            },
+            "id": 680731549914580
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.toggles.not_production_ready{$env,$app,$key,$region} by {key}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "Non Production Ready Toggles",
+                "type": "timeseries"
+            },
+            "id": 7712863218467950
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.launch_darkly.client_not_initialized{$env,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "LD Client Returning Defaults (Not Initialized)",
+                "type": "timeseries"
+            },
+            "id": 864392899390972
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            },
+                            {
+                                "formula": "query3"
+                            },
+                            {
+                                "formula": "query4"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.launch_darkly.toggle_count.inactive{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.launch_darkly.toggle_count.archived{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:handshake.launch_darkly.toggle_count.launched{env:production}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "avg:handshake.launch_darkly.toggle_count.all{env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Launch Darkly Toggle Count",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 5183734088563667
+        }
+    ]
+}

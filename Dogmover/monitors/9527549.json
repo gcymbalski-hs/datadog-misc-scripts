@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 9527549,
+    "matching_downtimes": [],
+    "message": "@slack-incidents",
+    "multi": true,
+    "name": "Sidekiq Mailer Queue High Latency",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 300.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_10m):max:sidekiq.queue.latency{queue:mailers} by {env,region} > 300",
+    "tags": [],
+    "type": "metric alert"
+}

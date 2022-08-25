@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 5790856,
+    "matching_downtimes": [],
+    "message": "[{{es-cluster-name}}] Elasticsearch cluster is unhealthy\n\n{{#is_match \"es-cluster-name.name\" \"student\"}}\n@slack-incidents-students\n{{/is_match}}\n\n{{#is_alert}}\nElasticsearch cluster_status is not \"2\", meaning it is not \"Green\". This means not all shards are properly allocated.\n[Runbook](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2802843680/Troubleshooting+Elasticsearch#Alert%3A-Elasticsearch-Cluster-is-unhealthy)\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{es-cluster-name}}] Elasticsearch cluster is healthy\n{{/is_recovery}}",
+    "multi": true,
+    "name": "Elasticsearch Cluster is Unhealthy",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_5m):avg:elasticsearch.cluster_status{!es-cluster-name:staging-main,!es-cluster-name:staging-students,!es-cluster-name:staging-tes,!es-cluster-name:staging-students-shadow,!es-cluster-name:production-students-shadow,!es-cluster-name:production-tes,!es-cluster-name:demo-tes,!es-cluster-name:demo-control-center,!es-cluster-name:staging-control-center,!es-cluster-name:uk-staging-main,!es-cluster-name:uk-staging-students,!es-cluster-name:uk-staging-employers,!es-cluster-name:uk-staging-universities,!es-cluster-name:staging-student-search-engine,!es-cluster-name:staging-universities,!es-cluster-name:demo-universities,!es-cluster-name:uk-production-universities,!es-cluster-name:production-universities} by {es-cluster-name} < 2",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

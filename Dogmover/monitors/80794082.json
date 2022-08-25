@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 80794082,
+    "matching_downtimes": [],
+    "message": "Node utilization is high on production. Consider horizontally or veritically scaling the node pools.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/CE/pages/2822013342/Datadog+-+cluster+name+High+Node+Utilization\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "[production] High Node Utilization",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "warning": 0.8
+        }
+    },
+    "query": "avg(last_1h):count_not_null(max:kubernetes_state.node.status{cluster-name:production} by {node}) / 150 > 0.9",
+    "tags": [
+        "env:production",
+        "maintenance:true",
+        "project:handshake-production",
+        "region:us-central1",
+        "repo:terraform-networking",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

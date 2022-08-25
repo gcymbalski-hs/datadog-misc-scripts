@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 18622261,
+    "matching_downtimes": [],
+    "message": "One or more FDS Emails have been queued for too long. Please see the runbook for more info - [Runbook: Long running FDS Emails](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2424849/General+Runbook+of+Smaller+Incidents#GeneralRunbookofSmallerIncidents-LongrunningFDSEmails) @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Stuck FDS Emails",
+    "options": {
+        "escalation_message": "There are still stuck long-running fds emails. @slack-Main_Account-incidents-edu",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 60,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_45m):sum:handshake.health.queued_email_date_count{env:production} by {region} > 0",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

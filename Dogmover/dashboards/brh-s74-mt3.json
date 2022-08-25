@@ -1,0 +1,147 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2022-03-10T18:41:52.823044+00:00",
+    "description": "",
+    "id": "brh-s74-mt3",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-03-10T18:43:02.497259+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Christopher's Dashboard Thu, Mar 10, 10:41:52 am",
+    "url": "/dashboard/brh-s74-mt3/christophers-dashboard-thu-mar-10-104152-am",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.sidekiq.job.duration{project:handshake-production,service:handshake-sidekiq,resource_name:duplicatecolumn}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Sidekiq Jobs By Duration",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3812457501575972,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 0"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:pgbouncer.pools.sv_active{project:handshake-production,kube_deployment:handshake-charcoal-lemur-pgbouncer,kube_namespace:handshake} by {kube_deployment,cluster-name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query0"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "sum:pgbouncer.databases.pool_size{project:handshake-production,kube_deployment:handshake-charcoal-lemur-pgbouncer,kube_namespace:handshake} by {kube_deployment,cluster-name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Total Server Connections",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5664650245155194,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 3
+            }
+        }
+    ]
+}

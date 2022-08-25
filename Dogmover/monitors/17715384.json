@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 17715384,
+    "matching_downtimes": [],
+    "message": ", @slack-incidents-emp-integ-analytics \n\nThe trust score queue has been above {{threshold}} for the last 24 hours.\nThe current queue size is {{value}}",
+    "multi": false,
+    "name": "Trust Score processing queue has not cleared in 24 hours",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 3600,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": 300,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 720,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 50000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_1d):max:handshake.trust_score_queue.queue_size{env:production} >= 50000",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "query alert"
+}

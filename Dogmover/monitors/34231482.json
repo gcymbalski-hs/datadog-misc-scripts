@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 34231482,
+    "matching_downtimes": [],
+    "message": "The EDU Email Events service is delayed in updating MassEmailCount cache values.\n\nIf this monitor resolves, that means the service is back working on updating MassEmailCount cache values. We should keep a close eye after the monitor resolves and ensure that the lag continues to trend downward.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2144404005/Runbooks+EDU+Email+Events\n\n@slack-incidents-edu",
+    "multi": true,
+    "name": "EDU Email Events RefreshMassEmailCount Lag",
+    "options": {
+        "escalation_message": "Renotification: The EDU Email Events service is still delayed in updating MassEmailCount cache values.\n\n@slack-incidents-edu",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 120,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 1440,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 14400.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):max:edu_email_events.mass_email_counts.refresh_required.lag{*} by {env,region} > 14400",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

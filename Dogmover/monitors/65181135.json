@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 65181135,
+    "matching_downtimes": [],
+    "message": "`next::employer::employerinvitetokenscontroller_index` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Resource next::employer::employerinvitetokenscontroller_index has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.6
+        }
+    },
+    "query": "percentile(last_10m):p90:trace.rack.request{env:production,resource_name:next::employer::employerinvitetokenscontroller_index,service:handshake} > 1",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::employerinvitetokenscontroller_index",
+        "emp-lifecycle",
+        "team:employer"
+    ],
+    "type": "query alert"
+}

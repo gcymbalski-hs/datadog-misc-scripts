@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 31725391,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nSidekiq heavy queue latency is greater than 10 minutes\n{{/is_alert}} \n\n{{#is_warning}}\nSidekiq heavy queue latency is greater than 30 seconds\n{{/is_warning}}  @slack-Main_Account-incidents-edu\n\nThis queue processes User type analysis jobs, which may take some time to complete, but should in general not be queued for very long. Manual intervention (e.g. restarting the app) may be required if it looks like jobs are not processing. See also https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks#EducationIncidentRunbooks-ImporterApp:SidekiqQueueBackedUp",
+    "multi": true,
+    "name": "Importer: High Heavy Queue Latency",
+    "options": {
+        "escalation_message": "Renotification: Sidekiq heavy queue latency is still high.\n\n@slack-Main_Account-incidents-edu",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 600.0,
+            "warning": 30.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):max:importer.sidekiq.queue.latency{app:importer,queue:heavy} by {env,region} > 600",
+    "tags": [
+        "team:university",
+        "service:importer-sidekiq",
+        "env:production"
+    ],
+    "type": "metric alert"
+}

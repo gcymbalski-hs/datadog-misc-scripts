@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 53926129,
+    "matching_downtimes": [],
+    "message": "The disk utilization usage of the Cloud SQL instance handshake-staging:importer-usually-driving-sea is growing at a fast pace. If this is sustained, then the instance may reach it's max capacity soon.",
+    "multi": false,
+    "name": "Cloud SQL instance handshake-staging/handshake-staging:importer-usually-driving-sea is growing at a fast pace",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.7,
+            "critical_recovery": 0.05
+        }
+    },
+    "query": "change(avg(last_1h),last_1h):avg:gcp.cloudsql.database.disk.utilization{instance_id:handshake-staging:importer-usually-driving-sea} > 0.7",
+    "tags": [
+        "env:staging",
+        "project:handshake-staging",
+        "region:us-central1"
+    ],
+    "type": "query alert"
+}

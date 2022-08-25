@@ -1,0 +1,201 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2022-02-23T23:28:05.765057+00:00",
+    "description": null,
+    "id": "fbr-wiy-fkb",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-02-24T19:27:24.748608+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "EXAMPLE - Monthly Platform Dashboard",
+    "url": "/dashboard/fbr-wiy-fkb/example---monthly-platform-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "global_time_target": "0",
+                "show_error_budget": true,
+                "slo_id": "7a1a9aa70d2150b4a862cc20a8c994de",
+                "time_windows": [
+                    "previous_month",
+                    "month_to_date"
+                ],
+                "title": "Availability",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "slo",
+                "view_mode": "overall",
+                "view_type": "detail"
+            },
+            "id": 4367592277631508,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "alias": "p50",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "p75",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "p90",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "p95",
+                                "formula": "query4",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            },
+                            {
+                                "alias": "p99",
+                                "formula": "query5"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p50:trace.rack.request{env:production,region:us-central1} by {service}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p75:trace.rack.request{env:production,region:us-central1} by {service}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p90:trace.rack.request{env:production,region:us-central1} by {service}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "p95:trace.rack.request{env:production,region:us-central1} by {service}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query5",
+                                "query": "p99:trace.rack.request{env:production,region:us-central1} by {service}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Latency by Service",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 2587301052878950,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "alias": "Requests",
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "count:trace.rack.request{env:production,region:us-central1} by {service}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "HTTP Requests by Service",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 2849141043585646,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 6
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1 / query2",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.hits.by_http_status{service:handshake,env:production,region:us-central1} by {http.status_class}.as_count()"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.rack.request.hits.by_http_status{service:handshake,env:production,region:us-central1}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Handshake HTTP Response Codes",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "sunburst"
+            },
+            "id": 1537517802651714,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 6
+            }
+        }
+    ]
+}

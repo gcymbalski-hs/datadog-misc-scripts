@@ -1,0 +1,506 @@
+{
+    "author_handle": "lydia@joinhandshake.com",
+    "author_name": "Lydia Nash",
+    "created_at": "2021-09-30T20:16:43.267689+00:00",
+    "description": "",
+    "id": "ry2-5w3-xpg",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-10-04T15:04:50.201956+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "sept 30 high cpu db incident",
+    "url": "/dashboard/ry2-5w3-xpg/sept-30-high-cpu-db-incident",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\u00a0high cpu 80%\u00a0",
+                        "value": "y = 0.8"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{*,database_id:handshake-production:handshake-charcoal-lemur} by {project_id,database_id}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CPU Utilization - Charcoal Lemur",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 751577174535690,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:gcp.cloudsql.database.postgresql.num_backends{*,database_id:handshake-production:handshake-charcoal-lemur} by {database_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Connection Count",
+                "type": "timeseries"
+            },
+            "id": 7912760104134950,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.sidekiq.job.hits{env:production,region:us-central1,resource:2fafdeeb9c3e8dca,service:handshake-sidekiq}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.sidekiq.job.errors{env:production,region:us-central1,resource:2fafdeeb9c3e8dca,service:handshake-sidekiq}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "EmployerTeam::CampaignMessageWorker Requests and Errors on service handshake-sidekiq in env production",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1174024777915658,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 8,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.hits{env:production,region:us-central1,resource:810cafcd34e3da49,service:handshake}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.errors{env:production,region:us-central1,resource:810cafcd34e3da49,service:handshake}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Mobile::V1::InternalMessagesController#index Requests and Errors on service handshake in env production",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 67882334592836,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "sum:handshake.employers.batched_campaign.campaigns_processed{env:production} by {region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3733058820607976,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.document_updater.upserted{*,*,*,env:production,region:us-central1,*,source:label} by {source,index}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Upserts triggered by Labels by Index on All Clusters",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1932946084700720,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 8,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.hits{env:production,region:us-central1,resource:f1c8b99a4b176874,service:handshake}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries"
+                    },
+                    {
+                        "display_type": "bars",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.errors{env:production,region:us-central1,resource:f1c8b99a4b176874,service:handshake}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Mobile::V1::ConversationsController::show Requests and Errors on service handshake in env production",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 920745027772055,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.hits{env:production,region:us-central1,service:handshake}.as_count()"
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{env:production,region:us-central1,service:handshake}.as_count()",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Requests and Errors on service handshake in env production",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3956322580968818,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query2"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:handshake.mobile.choose_database.main.count{*}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:handshake.mobile.choose_database.replica.count{*}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Primary vs Replica DB at Mobile Endpoints",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2514972700750412,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 8,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\u00a0high cpu 80%\u00a0",
+                        "value": "y = 0.8"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.cpu.utilization{*,database_id:handshake-production:handshake-fluffy-sheep} by {project_id,database_id}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "CPU Utilization - Fluffy Sheep",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5271436942374562,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 6
+            }
+        }
+    ]
+}

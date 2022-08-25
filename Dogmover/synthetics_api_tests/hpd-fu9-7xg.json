@@ -1,0 +1,60 @@
+{
+    "config": {
+        "assertions": [
+            {
+                "operator": "is",
+                "target": 200,
+                "type": "statusCode"
+            },
+            {
+                "operator": "contains",
+                "target": "handshake-ats",
+                "type": "body"
+            },
+            {
+                "operator": "lessThan",
+                "target": 30000,
+                "type": "responseTime"
+            }
+        ],
+        "request": {
+            "headers": {
+                "User-Agent": "Datadog"
+            },
+            "method": "GET",
+            "url": "https://ats.joinhandshake.com/healthz"
+        }
+    },
+    "created_at": "2020-05-21T17:41:01.154409+00:00",
+    "creator": {
+        "email": "eric@joinhandshake.com",
+        "handle": "eric@joinhandshake.com",
+        "name": "Eric Thomas"
+    },
+    "locations": [
+        "aws:us-west-2"
+    ],
+    "message": "{{#is_alert}}\nFailed to load ATS health check at https://ats.joinhandshake.com/healthz\n{{/is_alert}}\n\n@slack-emp-ats-alerts \n\n@pagerduty-ATSApplication ",
+    "modified_at": "2022-08-11T20:54:17.318445+00:00",
+    "monitor_id": 18678231,
+    "name": "[Production] ATS Service check",
+    "options": {
+        "httpVersion": "http1",
+        "min_failure_duration": 300,
+        "min_location_failed": 1,
+        "monitor_options": {
+            "renotify_interval": 0
+        },
+        "tick_every": 3600
+    },
+    "public_id": "hpd-fu9-7xg",
+    "status": "live",
+    "subtype": "http",
+    "tags": [
+        "team:employer",
+        "maintenance:true",
+        "region:us-central1",
+        "env:production"
+    ],
+    "type": "api"
+}

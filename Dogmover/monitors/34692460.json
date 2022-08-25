@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 34692460,
+    "matching_downtimes": [],
+    "message": "Email Event Ingestor is not receiving events from Mailgun in the UK. @slack-incidents-platform-services",
+    "multi": false,
+    "name": "Email Event Ingestor Not Receiving Events",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "critical_recovery": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_14h):avg:mailgun_event_ingestor.delivered{domain:m.joinhandshake.co.uk,env:production}.as_count() < 0.5",
+    "tags": [
+        "team:comms"
+    ],
+    "type": "query alert"
+}

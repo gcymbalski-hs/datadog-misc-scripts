@@ -1,0 +1,42 @@
+{
+    "deleted": null,
+    "id": 77025312,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 2087215349,
+            "monitor_id": 77025312,
+            "scope": [
+                "*"
+            ],
+            "start": 1657833485
+        }
+    ],
+    "message": "Pod {{pod_name.name}} in {{cluster_name.name}} has restarted multiple times in the last five minutes. @slack-Main_Account-incidents-cloud-engineering-beta",
+    "multi": true,
+    "name": "[{{cluster_name.name}}] Kubernetes Pods Restarting",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 5.0,
+            "warning": 3.0
+        },
+        "timeout_h": 0
+    },
+    "query": "change(sum(last_5m),last_5m):exclude_null(avg:kubernetes.containers.restarts{*} by {pod_name,cluster_name,kube_namespace}) > 5",
+    "tags": [
+        "integration:kubernetes"
+    ],
+    "type": "query alert"
+}

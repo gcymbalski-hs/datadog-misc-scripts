@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 63399446,
+    "matching_downtimes": [],
+    "message": "MatchesEmptyStateController has exceeded error threshold {{threshold}}. \n\nFirst triggered at: {{first_triggered_at}} \n\nError count: {{value}}",
+    "multi": false,
+    "name": "MatchesEmptyStateController Errors over Threshold (0)",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_5m):sum:trace.rack.request.errors{env:production,region:us-central1,resource:9a698f83dd9b4116,service:handshake}.as_count() > 0",
+    "tags": [
+        "emp-lifecycle",
+        "team:employer",
+        "MatchesEmptyState"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 9569327,
+    "matching_downtimes": [],
+    "message": "If multiple invalid CAS tickets are encountered, we likely have an SSO integration issue. This monitor can also go off because of expired/identical CAS tickets. These can be identified in Bugsnag (see linked runbook). If there is an integration issue, we can flag the school for Support to reach out to and assist them in resolving their integration issue. \n\nIf the monitor recovers after taking the actions outlined in the linked runbook, the issue has typically been resolved.\n\nFor more information: [Education Incident Runbooks - Invalid CAS Tickets Spike](https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#Invalid-CAS-Tickets-Spike)\n\n@slack-Main_Account-incidents-edu\n\nNOTE: We multiply the denominator by 100 because the sample rate of the numerator is 1 and the sample rate of the denominator is 0.01 in the app.",
+    "multi": false,
+    "name": "SSO: Invalid CAS Tickets Spike",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_10m):sum:handshake.cas.ticket_validation_failure{env:production}.as_count() / (sum:handshake.login.attempt{auth_type:cas,env:production}.as_count() * 100) > 0.1",
+    "tags": [
+        "team:university",
+        "env:production"
+    ],
+    "type": "query alert"
+}

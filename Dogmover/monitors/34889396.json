@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 34889396,
+    "matching_downtimes": [],
+    "message": "The heartbeat metric that is sent directly from the clock process has stopped. This means that clock process is not triggering cron events, which means certain workers will not run. Has the clock process pod crashed or not running?\n\nSee https://app.datadoghq.com/dashboard/jwq-6yu-9tv/sidekiq-workers for more clock and worker details.\n\n[`handshake-clock` production deployment](https://console.cloud.google.com/kubernetes/deployment/europe-west2/uk-production/handshake/handshake-clock/overview?project=handshake-uk-production)\n\n @slack-incidents\n\n{{#is_match \"region.name\" \"europe-\"}}\n@slack-incidents-uk \n{{/is_match}} @slack-incidents-infrastructure @pagerduty-MonolithSharedProduct",
+    "multi": true,
+    "name": "UK Clock Heartbeat Stopped",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 5,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_1m):avg:handshake.clock_heartbeat{env:production,region:europe-west2} by {env,region} < 1",
+    "tags": [
+        "team:platform",
+        "env:production",
+        "maintenance:true",
+        "region:europe-west2"
+    ],
+    "type": "query alert"
+}

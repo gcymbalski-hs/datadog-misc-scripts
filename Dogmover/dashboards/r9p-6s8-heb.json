@@ -1,0 +1,357 @@
+{
+    "author_handle": "dweinand@joinhandshake.com",
+    "author_name": "Dan Weinand",
+    "created_at": "2021-01-07T21:04:46.552003+00:00",
+    "description": "managed through the terraform-datadog repo",
+    "id": "r9p-6s8-heb",
+    "is_read_only": true,
+    "layout_type": "ordered",
+    "modified_at": "2021-11-23T23:43:11.796627+00:00",
+    "notify_list": [],
+    "restricted_roles": [
+        "892f99b0-e140-11e8-b198-03eba61f485c"
+    ],
+    "template_variable_presets": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "Employer Lifecycle Squad Dashboard",
+    "url": "/dashboard/r9p-6s8-heb/employer-lifecycle-squad-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Trust Score",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "change_type": "absolute",
+                                    "compare_to": "month_before",
+                                    "increase_good": true,
+                                    "order_by": "change",
+                                    "order_dir": "desc",
+                                    "q": "top(avg:handshake.health.employers.average_trust_score{$env} by {service}, 10, 'mean', 'desc')",
+                                    "show_present": true
+                                }
+                            ],
+                            "title": "Employers Average Trust Score",
+                            "type": "change"
+                        },
+                        "id": 8496284313555386
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "change_type": "absolute",
+                                    "compare_to": "month_before",
+                                    "increase_good": true,
+                                    "order_by": "change",
+                                    "order_dir": "desc",
+                                    "q": "top(sum:handshake.health.employers.with_trust_score{$env} by {service}, 10, 'mean', 'desc')",
+                                    "show_present": false
+                                }
+                            ],
+                            "title": "Employers without Trust Score Compared to Last Month",
+                            "type": "change"
+                        },
+                        "id": 4637915134551904
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:handshake.health.employers.with_trust_score{$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employers with Trust Score",
+                            "type": "timeseries"
+                        },
+                        "id": 7897748258519444
+                    }
+                ]
+            },
+            "id": 5747909952505727
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Users, Roles, Permission, Global Settings",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:handshake.users.created_by_employer_count{$env}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Sum of Employer Users created",
+                            "type": "timeseries"
+                        },
+                        "id": 7865096236326512
+                    },
+                    {
+                        "definition": {
+                            "autoscale": false,
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "aggregator": "last",
+                                    "q": "avg:handshake.health.employers_without_approval_count{$env}"
+                                }
+                            ],
+                            "title": "Employers Without Approvals",
+                            "type": "query_value"
+                        },
+                        "id": 7030975950727646
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:handshake.health.employers_without_approval_count{$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employers Without Approvals over time",
+                            "type": "timeseries"
+                        },
+                        "id": 2660902376405065
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:handshake.employers.approvals.total_count{$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:handshake.employers.approvals.request_to_post_jobs_count{$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employers Approvals and Request to Post Jobs",
+                            "type": "timeseries"
+                        },
+                        "id": 5063717416442912
+                    },
+                    {
+                        "definition": {
+                            "autoscale": false,
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "aggregator": "max",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "hide_value": false,
+                                            "palette": "white_on_red",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "q": "max:handshake.employers.dynamic_roles.not_enabled{$env}"
+                                }
+                            ],
+                            "title": "Employers With Dynamic Roles Not Enabled",
+                            "type": "query_value"
+                        },
+                        "id": 448973638123402
+                    },
+                    {
+                        "definition": {
+                            "autoscale": false,
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "aggregator": "max",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "hide_value": false,
+                                            "palette": "white_on_red",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "q": "max:handshake.employers.dynamic_roles.not_migrated{$env}"
+                                }
+                            ],
+                            "title": "Employers With Dynamic Roles Not Migrated",
+                            "type": "query_value"
+                        },
+                        "id": 4761322403501075
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:handshake.health.jobs_without_postings_count{$env}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Jobs Without Postings",
+                            "type": "timeseries"
+                        },
+                        "id": 4860999913075809
+                    }
+                ]
+            },
+            "id": 3329609541491305
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Experiments",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "background_color": "blue",
+                            "content": "Experiments Placeholder Widget",
+                            "font_size": "14",
+                            "has_padding": true,
+                            "show_tick": false,
+                            "text_align": "center",
+                            "type": "note"
+                        },
+                        "id": 1221451204610533
+                    },
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "[A-A Experiment Looker Dashboard](https://handshakebi.looker.com/dashboards-next/1277?Date+range+for+experiment+data=after+4+day+ago&Experiment+Name+%28flag+name+in+LD%29=experiment-emp-lifecycle-job-creation-submit-aa&Customer+Stage+C=&FY+21+Segment=)",
+                            "font_size": "14",
+                            "has_padding": true,
+                            "show_tick": false,
+                            "text_align": "center",
+                            "type": "note"
+                        },
+                        "id": 3684995171044457
+                    }
+                ]
+            },
+            "id": 4688366561970571
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Iterable",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:handshake.iterable_queue.queued{$env}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Average Size of Iterable Queue",
+                            "type": "timeseries"
+                        },
+                        "id": 3184575181552668
+                    },
+                    {
+                        "definition": {
+                            "background_color": "yellow",
+                            "content": "Iterable Employer User Placeholder Widget",
+                            "font_size": "14",
+                            "has_padding": true,
+                            "show_tick": false,
+                            "text_align": "center",
+                            "type": "note"
+                        },
+                        "id": 6317177224053554
+                    },
+                    {
+                        "definition": {
+                            "background_color": "orange",
+                            "content": "Iterable Employer Event Placeholder Widget",
+                            "font_size": "14",
+                            "has_padding": true,
+                            "show_tick": false,
+                            "text_align": "center",
+                            "type": "note"
+                        },
+                        "id": 1395125857930512
+                    },
+                    {
+                        "definition": {
+                            "background_color": "purple",
+                            "content": "Iterable Campaign Sends Placeholder Widget",
+                            "font_size": "14",
+                            "has_padding": true,
+                            "show_tick": false,
+                            "text_align": "center",
+                            "type": "note"
+                        },
+                        "id": 4411101251683489
+                    }
+                ]
+            },
+            "id": 8529589729888787
+        }
+    ]
+}

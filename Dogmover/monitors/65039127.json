@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 65039127,
+    "matching_downtimes": [],
+    "message": "`next::employer::jobscontroller_expire` error rate is too high.",
+    "multi": false,
+    "name": "Resource next::employer::jobscontroller_expire has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 30,
+        "renotify_statuses": [
+            "alert"
+        ],
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m):( sum:trace.rack.request.errors{env:production,resource_name:next::employer::jobscontroller_expire,service:handshake}.as_count() / sum:trace.rack.request.hits{env:production,resource_name:next::employer::jobscontroller_expire,service:handshake}.as_count() ) > 0.05",
+    "tags": [
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-errors"
+    ],
+    "type": "query alert"
+}

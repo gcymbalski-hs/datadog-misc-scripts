@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 70038343,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\n\nIt looks like there were no touchpoints available for the matched candidates.\n\n{{event.text}} \n\n{{/is_alert}}  @slack-emp-integ-analytics-bots",
+    "multi": false,
+    "name": "List upload analysis found zero touchpoints \ud83d\ude22",
+    "options": {
+        "enable_logs_sample": false,
+        "escalation_message": "",
+        "groupby_simple_monitor": true,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "restriction_query": null,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "events(\"-env:staging tags:environment status:error \\\"List upload analysis found no candidates using match type\\\"\").rollup(\"count\").last(\"5m\") > 1",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "event-v2 alert"
+}

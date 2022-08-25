@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 28526418,
+    "matching_downtimes": [],
+    "message": "The inflight requests circuit breaker has tripped: https://www.elastic.co/guide/en/elasticsearch/reference/current/circuit-breaker.html\n\nCircuit breakers are designed to deal with situations when request processing needs more memory than available. \nWhat caused this error? Was this a one-time query that we should modify, or one that we run frequently?\n\nWe might need to increase the size of our ES cluster.\n\n@slack-incidents-emp-integ-analytics",
+    "multi": false,
+    "name": "[Marketplace Interactions] Elasticsearch Memory: Inflight Requests Circuit Breaker",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        },
+        "timeout_h": 1
+    },
+    "query": "avg(last_5m):avg:elasticsearch.breakers.inflight_requests.tripped{es-cluster-name:production-marketplace-interactions} > 1",
+    "tags": [],
+    "type": "query alert"
+}

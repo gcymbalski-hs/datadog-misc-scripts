@@ -1,0 +1,465 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2021-01-21T17:41:36.159727+00:00",
+    "description": null,
+    "id": "sri-svw-psy",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-25T21:38:58.701525+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production2",
+            "name": "cluster-name",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "handshake-arrogant-ape-pgbouncer",
+            "name": "kube_deployment",
+            "prefix": "kube_deployment"
+        },
+        {
+            "default": "handshake-arrogant-ape-pgbouncer",
+            "name": "deployment",
+            "prefix": "deployment"
+        }
+    ],
+    "title": "[TMP] Lau's Investigation Board",
+    "url": "/dashboard/sri-svw-psy/tmp-laus-investigation-board",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Node Failure",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:kubernetes.pods.running{$cluster-name,$kube_deployment} by {name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Running Pods",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5109492350345718
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$cluster-name,$kube_deployment} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Running Pods",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6932139932631238
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:kubernetes_state.deployment.replicas_available{$cluster-name,$deployment} by {cluster-name,deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:kubernetes_state.deployment.replicas_unavailable{$cluster-name,$deployment} by {cluster-name,deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Replica Availability",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4499865548602442
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:kubernetes.pods.running{$cluster-name,name:gke-production2-pool-november-2019-f3fd3b4e-8nks}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Running Pods by Node",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 714810131629418
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes_state.nodes.by_condition{$cluster-name,name:gke-production2-pool-november-2019-f3fd3b4e-8nks} by {condition,status}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4905522269494764
+                    }
+                ]
+            },
+            "id": 4287116696449934
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Sidekiq Default",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:kubernetes.pods.running{kube_deployment:handshake-sidekiq-default,project:handshake-staging} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Sidekiq Default Pods",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1105402359741746
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:kubernetes.containers.state.terminated{reason:oomkilled,kube_deployment:handshake-sidekiq-default} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Sidekiq Default Pods OOM",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5957026602519862
+                    }
+                ]
+            },
+            "id": 8779197159432196
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "handshake-charcoal-lemur",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-charcoal-lemur}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "CPU Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1468181694126652
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.memory.usage{database_id:handshake-production:handshake-charcoal-lemur}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "week_before(avg:gcp.cloudsql.database.memory.usage{database_id:handshake-production:handshake-charcoal-lemur})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Memory Usage",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3048490533999036
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-production:handshake-charcoal-lemur}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "week_before(sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-production:handshake-charcoal-lemur})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3854954116519750
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.read_ops_count{database_id:handshake-production:handshake-charcoal-lemur}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "week_before(avg:gcp.cloudsql.database.disk.read_ops_count{database_id:handshake-production:handshake-charcoal-lemur}.as_count())",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Disk Read Ops",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3907157925286978
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.write_ops_count{database_id:handshake-production:handshake-charcoal-lemur}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "week_before(avg:gcp.cloudsql.database.disk.write_ops_count{database_id:handshake-production:handshake-charcoal-lemur}.as_count())",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Disk Write Ops",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7115899446307736
+                    }
+                ]
+            },
+            "id": 1259901073334220
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "deleted": null,
+    "id": 10484952,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1317615578,
+            "monitor_id": 10484952,
+            "scope": [
+                "*"
+            ],
+            "start": 1624292329
+        }
+    ],
+    "message": "Our data pipeline subscriber to update posting quality ratings for job search is not being processed fast enough. Is the worker broken? Too much data to process?\n\n@slack-incidents-students",
+    "multi": true,
+    "name": "Old Posting Quality Updates",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 43200.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:posting-qualities-to-handshake} by {project_id} > 43200",
+    "tags": [
+        "team:student"
+    ],
+    "type": "metric alert"
+}

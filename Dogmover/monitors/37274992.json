@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 37274992,
+    "matching_downtimes": [],
+    "message": "handshake/guidance-* containers in handshake-uk-staging have a lot of restarts. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2295562637/K8+Container+Restarts for help debugging.\n\n@slack-incidents-edu",
+    "multi": true,
+    "name": "Container Restarts for handshake/guidance-* in handshake-uk-staging",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 300,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{project:handshake-uk-staging,kube_namespace:handshake,kube_deployment:guidance-*} by {kube_deployment} > 10",
+    "tags": [
+        "app:guidance",
+        "env:staging",
+        "project:handshake-uk-staging",
+        "region:europe-west2",
+        "team:university"
+    ],
+    "type": "query alert"
+}

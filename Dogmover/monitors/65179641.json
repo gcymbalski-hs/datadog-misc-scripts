@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 65179641,
+    "matching_downtimes": [],
+    "message": "`next::employer::employerglobalsettingscontroller_update` error rate is too high.\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Resource next::employer::employerglobalsettingscontroller_update has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m):(sum:trace.rack.request.errors{env:production,resource_name:next::employer::employerglobalsettingscontroller_update,service:handshake}.as_count() / sum:trace.rack.request.hits{env:production,resource_name:next::employer::employerglobalsettingscontroller_update,service:handshake}.as_count()) > 0.05",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-controller-errors",
+        "resource_name:next::employer::employerglobalsettingscontroller_update"
+    ],
+    "type": "query alert"
+}

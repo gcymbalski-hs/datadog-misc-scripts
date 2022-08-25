@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 6641587,
+    "matching_downtimes": [],
+    "message": "`handshake-redis` 90th percentile latency is too high.\n\nTo troubleshoot, check the `handshake-redis` [service page](/apm/service/handshake-redis/redis.command?env=production) or [recent traces](/apm/traces?service=handshake-redis&name=redis.command&env=production).\n\n@slack-incidents-beta",
+    "multi": true,
+    "name": "Service handshake-redis has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 4.0,
+            "warning": 3.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):p90:trace.redis.command{env:production,service:handshake-redis} by {region} > 4",
+    "tags": [
+        "service:handshake-redis",
+        "env:production"
+    ],
+    "type": "metric alert"
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 70038347,
+    "matching_downtimes": [],
+    "message": "The Insights Billing Budget for {{#is_match \"event.text\" \"us-staging-insights\"}}us-staging-insights{{/is_match}}{{#is_match \"event.text\" \"us-demo-insights\"}}us-demo-insights{{/is_match}}{{#is_match \"event.text\" \"us-production-insights\"}}us-production-insights{{/is_match}}{{#is_match \"event.text\" \"uk-staging-insights\"}}uk-staging-insights{{/is_match}}{{#is_match \"event.text\" \"uk-production-insights\"}}uk-production-insights{{/is_match}} has reached 90% utilization. Work with the Infrastructure team to make sure this cost is ok and/or investigate if this is expected.\n\n@slack-incidents-edu",
+    "multi": false,
+    "name": "Insights: Billing Budget at 90% utilization",
+    "options": {
+        "enable_logs_sample": false,
+        "groupby_simple_monitor": true,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "restriction_query": null,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "events(\"source:my_apps \\\"has reached event-k8zmo5wt@dtdg.co\\\"\").rollup(\"count\").last(\"5m\") > 0",
+    "tags": [
+        "team:university"
+    ],
+    "type": "event-v2 alert"
+}

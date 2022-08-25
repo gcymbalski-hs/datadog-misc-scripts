@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 72491476,
+    "matching_downtimes": [],
+    "message": "There is a high rate of HTTP 429 responses from cluster: {{cluster-name.name}}.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "High Rate Limiting",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 60,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.01
+        }
+    },
+    "query": "min(last_30m):avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_429{*} by {cluster-name}.as_count() / avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_total{*} by {cluster-name}.as_count() > 0.01",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

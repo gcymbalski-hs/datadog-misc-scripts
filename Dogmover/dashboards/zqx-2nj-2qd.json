@@ -1,0 +1,274 @@
+{
+    "author_handle": "ssmith@joinhandshake.com",
+    "author_name": "Sean Smith",
+    "created_at": "2022-03-16T23:15:13.161719+00:00",
+    "description": "",
+    "id": "zqx-2nj-2qd",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-14T17:36:30.357949+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "Sidekiq Query Count",
+    "url": "/dashboard/zqx-2nj-2qd/sidekiq-query-count",
+    "widgets": [
+        {
+            "definition": {
+                "has_search_bar": "always",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "alias": "Min DB Calls",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "max DB calls",
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            },
+                            {
+                                "alias": "avg DB calls",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Total DB calls",
+                                "formula": "query4"
+                            },
+                            {
+                                "alias": "Max-Min Diff",
+                                "formula": "query1 - query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "min:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {worker,queue}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {worker,queue}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {worker,queue}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {worker,queue}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Database Queries by Sidekiq Worker",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 84046869692974,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "has_search_bar": "always",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "alias": "Min DB Calls",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "max DB calls",
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            },
+                            {
+                                "alias": "avg DB calls",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "Total DB calls",
+                                "formula": "query4"
+                            },
+                            {
+                                "alias": "Max-Min Diff",
+                                "formula": "query1 - query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "min:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {queue}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {queue}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "avg:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {queue}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {queue}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Database Queries by Sidekiq Queue",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 3017488765092412,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.sidekiq.workers.query_count{region:us-central1,$env} by {worker,queue}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Database Queries by Sidekiq Worker",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 2386220392105832,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 8
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query2"
+                            },
+                            {
+                                "formula": "query1"
+                            },
+                            {
+                                "formula": "query3"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.sidekiq.workers.query_count{region:us-central1,$env,worker:activitydistributor} by {worker,queue}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:handshake.sidekiq.workers.query_count{region:us-central1,$env,worker:activitydistributor} by {worker,queue}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "min:handshake.sidekiq.workers.query_count{region:us-central1,$env,worker:activitydistributor} by {worker,queue}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Database Queries by Sidekiq Worker",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3744813498774952,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 12
+            }
+        }
+    ]
+}

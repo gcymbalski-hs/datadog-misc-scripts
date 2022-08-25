@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 28537171,
+    "matching_downtimes": [],
+    "message": "Query responses are taking more than a minute on average. Is something wrong with the cluster? Do we have an elevated number of requests?\n\n@slack-incidents-emp-integ-analytics",
+    "multi": false,
+    "name": "[Marketplace Interactions] Elevated Elasticsearch Query Response Time",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        },
+        "timeout_h": 1
+    },
+    "query": "avg(last_5m):avg:elasticsearch.search.query.time{es-cluster-name:production-marketplace-interactions} / avg:elasticsearch.search.query.total{es-cluster-name:production-marketplace-interactions} > 1",
+    "tags": [],
+    "type": "query alert"
+}

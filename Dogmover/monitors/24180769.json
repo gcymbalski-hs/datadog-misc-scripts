@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 24180769,
+    "matching_downtimes": [],
+    "message": "UK `handshake` Apdex deviated too much from its usual value meaning either high error rate or slow page loads.\n\n@slack-incidents @pagerduty-MonolithSharedProduct",
+    "multi": true,
+    "name": "UK Handshake Production Apdex low",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.7,
+            "warning": 0.75
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_15m):avg:trace.rack.request.apdex.by.region_service{service:handshake,env:production,!region:us-central1} by {region} < 0.7",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "maintenance:true",
+        "region:europe-west2"
+    ],
+    "type": "metric alert"
+}

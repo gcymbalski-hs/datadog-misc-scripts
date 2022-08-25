@@ -1,0 +1,136 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-04-13T23:49:35.850955+00:00",
+    "description": null,
+    "id": "kc4-2h4-dpi",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2018-05-09T23:42:40.875801+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "heptio-contour-production",
+            "name": "host",
+            "prefix": "host"
+        },
+        {
+            "default": "*",
+            "name": "status",
+            "prefix": "status"
+        }
+    ],
+    "title": "Contour Ingress Papertrail Metrics",
+    "url": "/dashboard/kc4-2h4-dpi/contour-ingress-papertrail-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:contour.request{$host,$status} by {host,status}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Requests by host and status",
+                "type": "timeseries"
+            },
+            "id": 297597017
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:contour.request{$host,$status} by {host}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Requests by host",
+                "type": "timeseries"
+            },
+            "id": 297600654
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:contour.request{$host,$status} by {status}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Requests by status",
+                "type": "timeseries"
+            },
+            "id": 297600656
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:contour.request{$host,$status,status:400}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "400 Rate",
+                "type": "timeseries"
+            },
+            "id": 303433489
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:contour.request{$host,$status,status:500}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "500 Rate",
+                "type": "timeseries"
+            },
+            "id": 306234885
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:contour.upstream_timeout{$host} by {host}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Sum of contour.upstream_timeout over $host by host",
+                "type": "timeseries"
+            },
+            "id": 305419940
+        }
+    ]
+}

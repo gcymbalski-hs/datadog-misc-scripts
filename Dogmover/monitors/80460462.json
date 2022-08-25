@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 80460462,
+    "matching_downtimes": [],
+    "message": "The pods in deployment messaging-handshake-inbox have a lot of restarts.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n\nNotify: @slack-incidents-platform-services,@slack-incidents-employer-connections-messaging\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nContainer restarts are trending downward for inbox messaging-handshake-inbox.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] Container Restarts for messaging-handshake-inbox",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "max(last_15m):max:kubernetes.containers.restarts{kube_deployment:messaging-handshake-inbox,kube_namespace:handshake} by {project} >= 10",
+    "tags": [
+        "dep_monitor:inbox_pod_restarts",
+        "service:dep",
+        "team:messaging",
+        "team:platform"
+    ],
+    "type": "query alert"
+}

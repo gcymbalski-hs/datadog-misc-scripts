@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 34889090,
+    "matching_downtimes": [],
+    "message": "Worker heartbeats stopped; see https://app.datadoghq.com/dashboard/jwq-6yu-9tv/sidekiq-workers for more clock and worker details (it might be the clock itself!)\n\n@slack-incidents   @pagerduty-MonolithSharedProduct",
+    "multi": true,
+    "name": "UK Worker Heartbeat Stopped",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 10,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_1m):avg:handshake.worker_heartbeat{env:production,region:europe-west2} by {env,region} > 2",
+    "tags": [
+        "env:production",
+        "maintenance:true",
+        "region:europe-west2"
+    ],
+    "type": "query alert"
+}

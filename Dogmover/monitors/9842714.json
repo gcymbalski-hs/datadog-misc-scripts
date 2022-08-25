@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 9842714,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-students",
+    "multi": true,
+    "name": "Student Cluster High Priority Reindexing Delayed",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 300.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_15m):avg:handshake.reindex_stream.delay{priority:high,env:production,cluster:students} by {env,cluster,region} > 300",
+    "tags": [
+        "team:student"
+    ],
+    "type": "metric alert"
+}

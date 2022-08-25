@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 41347094,
+    "matching_downtimes": [],
+    "message": "The memory usage of the Redis instance projects/handshake-demo/locations/us-central1/instances/handshake-app-splendid-squid is growing rapidly. If this is sustained, then the instance may reach it's max capacity soon.\n\n@slack-incidents-infrastructure",
+    "multi": false,
+    "name": "Redis instance handshake-demo/handshake-app-splendid-squid is growing rapidly",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1,
+            "critical_recovery": 0.05
+        }
+    },
+    "query": "change(avg(last_1h),last_1h):avg:gcp.redis.stats.memory.usage_ratio{instance_id:projects/handshake-demo/locations/us-central1/instances/handshake-app-splendid-squid} > 0.1",
+    "tags": [
+        "env:demo",
+        "project:handshake-demo",
+        "region:us-central1"
+    ],
+    "type": "query alert"
+}

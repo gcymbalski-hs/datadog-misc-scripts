@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 63411483,
+    "matching_downtimes": [],
+    "message": "The average Trust Score recently shifted by {{value}}\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": true,
+    "name": "Large Trust Score Average Shift",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        }
+    },
+    "query": "avg(last_5m):abs(top(avg:handshake.health.employers.average_trust_score{env:production} by {service}, 10, 'mean', 'desc') - top(avg:handshake.health.employers.average_trust_score{env:production} by {service}, 10, 'mean', 'desc')) >= 1",
+    "tags": [
+        "team:employer",
+        "emp-lifecycle",
+        "TrustScore"
+    ],
+    "type": "query alert"
+}

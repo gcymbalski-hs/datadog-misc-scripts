@@ -1,0 +1,26 @@
+{
+    "deleted": null,
+    "id": 19232790,
+    "matching_downtimes": [],
+    "message": "`touchpoints-to-elasticsearch` error rate is too high.\n\n@User:scott@joinhandshake.com",
+    "multi": false,
+    "name": "Service touchpoints-to-elasticsearch has a high error rate on env:production",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m): ( sum:trace.pubsub.message.errors{service:touchpoints-to-elasticsearch,env:production}.as_count()/sum:trace.pubsub.message.hits{service:touchpoints-to-elasticsearch,env:production}.as_count() ) > 0.05",
+    "tags": [
+        "service:touchpoints-to-elasticsearch",
+        "env:production"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 74750043,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}Anomaly detected for index {{resource_name.name}}  {{/is_alert}} \n{{#is_alert_recovery}}Anomaly recovered{{/is_alert_recovery}}",
+    "multi": true,
+    "name": "BETA Elasticsearch Latency Anomaly",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_1h"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_12h):anomalies(p50:trace.elasticsearch.query{resource_name:post_handshake-production-*,resource_name:*search} by {resource_name}, 'agile', 2, direction='both', interval=120, alert_window='last_1h', count_default_zero='true', seasonality='weekly') > 1",
+    "tags": [],
+    "type": "query alert"
+}

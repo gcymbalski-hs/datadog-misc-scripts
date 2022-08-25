@@ -1,0 +1,44 @@
+{
+    "deleted": null,
+    "id": 24954385,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1438073210,
+            "monitor_id": 24954385,
+            "scope": [
+                "*"
+            ],
+            "start": 1631112775
+        }
+    ],
+    "message": "`production` error rate is too high.\n @slack-incidents-edu",
+    "multi": true,
+    "name": "Importer: Sidekiq worker {{resource_name.name}}  has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 0.05
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_1h):sum:trace.sidekiq.job.errors{env:production,service:importer-sidekiq,!resource_name:runjob} by {resource_name} / sum:trace.sidekiq.job.hits{env:production,service:importer-sidekiq,!resource_name:runjob} by {resource_name} > 0.05",
+    "tags": [
+        "service:importer-sidekiq",
+        "env:production",
+        "team:university"
+    ],
+    "type": "query alert"
+}

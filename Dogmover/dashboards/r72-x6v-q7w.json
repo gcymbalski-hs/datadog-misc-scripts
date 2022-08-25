@@ -1,0 +1,186 @@
+{
+    "author_handle": "lydia@joinhandshake.com",
+    "author_name": "Lydia Nash",
+    "created_at": "2020-04-28T21:57:30.836179+00:00",
+    "description": "",
+    "id": "r72-x6v-q7w",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-04-15T15:57:01.899817+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "ENV",
+            "prefix": "env"
+        },
+        {
+            "default": "*",
+            "name": "source",
+            "prefix": "source"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Transactional Outbox",
+    "url": "/dashboard/r72-x6v-q7w/transactional-outbox",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Outbox Processesor",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.transactional_outbox_processor.unpublished_outbox_items.count{$ENV,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Unpublished Outbox Items Count ",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2576316242288042
+                    }
+                ]
+            },
+            "id": 5138762007951150
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Outbox Insertions",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.insert_change_into_outbox.count{$ENV,$source,$region} by {source}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Changes Inserted Into Outbox via after_create, after_update, and after_destroy",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7824267755663938
+                    }
+                ]
+            },
+            "id": 4212255619704304
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Pubsub Messages Emitted with Current System",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.publish_changes_to_pubsub.count{$ENV,$source,$region} by {source}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Changes Triggering Pubsub Message via after_commit",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3449280760471572
+                    }
+                ]
+            },
+            "id": 8172054656686294
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\u00a0high cpu 80%\u00a0",
+                        "value": "y = 0.8"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.cloudsql.database.cpu.utilization{*,*} by {project_id,database_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CPU Utilization",
+                "type": "timeseries"
+            },
+            "id": 3648116717368758
+        },
+        {
+            "definition": {
+                "background_color": "transparent",
+                "content": "CPU Utilization is here to track how DB CPU is impacted by making tweaks to the outbox processor sleep and batch size",
+                "font_size": "12",
+                "has_padding": false,
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "top"
+            },
+            "id": 8801288873993844
+        }
+    ]
+}

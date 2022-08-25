@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 41352542,
+    "matching_downtimes": [],
+    "message": "[{{database_id.name}} {{project_id.name}}] database is approaching Disk Capacity.\n\n{{#is_alert}}\nTo resolve, make sure autoscaling is working and/or add more nodes.\nhttps://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601189858/Disk+Usage+High\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{database_id.name}} {{project_id.name}}] database disk usage alert is off.\n{{/is_recovery}} @slack-incidents-students",
+    "multi": true,
+    "name": "handshake-tracking database disk usage high",
+    "options": {
+        "escalation_message": "[{{database_id.name}} {{project_id.name}}] database is approaching Disk Capacity.\n\n{{#is_alert}}\nTo resolve, make sure autoscaling is working and/or add more nodes.\nhttps://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601189858/Disk+Usage+High\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{database_id.name}} {{project_id.name}}] database disk usage alert is off.\n{{/is_recovery}}\n\n@slack-incidents-students",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 1440,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.95,
+            "warning": 0.9
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):max:gcp.cloudsql.database.disk.utilization{database_id IN (handshake-staging:tracking-white-jaguar,handshake-uk-staging:tracking-internal-mole,handshake-demo:tracking-lime-uakari,handshake-uk-production:tracking-pretty-wasp,handshake-production:tracking-white-mandrill)} by {project_id,database_id} > 0.95",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

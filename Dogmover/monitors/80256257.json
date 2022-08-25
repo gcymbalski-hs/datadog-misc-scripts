@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 80256257,
+    "matching_downtimes": [],
+    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents-student\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-Identity\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Record-Changes's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-Identity\n{{/is_match}}\n{{/is_recovery}}",
+    "multi": false,
+    "name": "[handshake-uk-production] Record-Changes Automatic Database Table Partitioning not Running",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 10,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 1440,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0,
+            "critical_recovery": 1.0
+        }
+    },
+    "query": "min(last_5m):avg:postgresql.pg_cron.runs{jobname:pg-partman-maintenance-record-changes,status:succeeded,app in (dd-postgres-record-changes-tight-drake)} <= 0",
+    "tags": [
+        "app:record-changes",
+        "env:production",
+        "maintenance:true",
+        "region:europe-west2"
+    ],
+    "type": "query alert"
+}

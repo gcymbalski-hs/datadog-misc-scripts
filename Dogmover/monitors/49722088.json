@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 49722088,
+    "matching_downtimes": [],
+    "message": "Worker batches are backing up in the indexing system. Manually remove or up the batch size.",
+    "multi": true,
+    "name": "The production Elasticsearch Students Indexer has backed up Worker Batches Awaiting Cleanup",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "renotify_occurrences": null,
+        "renotify_statuses": null,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 750000.0,
+            "warning": 650000.0
+        },
+        "timeout_h": 1
+    },
+    "query": "sum(last_1h):avg:handshake.elasticsearch_indexer.worker_batch.finished.awaiting_cleanup{cluster:students,region:us-central1} by {cluster,env,region,cluster_deployment}.as_count() > 750000",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

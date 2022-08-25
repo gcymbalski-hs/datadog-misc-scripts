@@ -1,0 +1,42 @@
+{
+    "deleted": null,
+    "id": 32037401,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1195266493,
+            "monitor_id": 32037401,
+            "scope": [
+                "*"
+            ],
+            "start": 1616767297
+        }
+    ],
+    "message": "The Sidekiq worker that handles destroying users (DestroyUser) has exhausted its retries. The monitor will recover shortly after it goes off - this does not mean the issue has been resolved and it will require further action (see linked runbook). \n\nFor more information: [Education Incident Runbooks - User Failed to Destroy](https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#User-Failed-to-Destroy-in-Production)\n@slack-Main_Account-incidents-edu",
+    "multi": false,
+    "name": "User Failed to Destroy in Production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):sum:handshake.destroy_user_worker_failure{env:production,region:us-central1}.as_count() > 0",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

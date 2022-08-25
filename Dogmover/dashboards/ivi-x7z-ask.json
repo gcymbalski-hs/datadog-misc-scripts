@@ -1,0 +1,529 @@
+{
+    "author_handle": "gcymbalski@joinhandshake.com",
+    "author_name": "Greg Cymbalski",
+    "created_at": "2022-08-13T00:50:42.767214+00:00",
+    "description": "## Database lock durations and types from query sampling\n\nPlease note that metrics seen here are only retained for 15 DAYS!",
+    "id": "ivi-x7z-ask",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-16T23:42:42.210091+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Database] PostgreSQL Production Waits/Locks",
+    "url": "/dashboard/ivi-x7z-ask/database-postgresql-production-waitslocks",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "avg",
+                                    "metric": "@db.wait_duration"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "host",
+                                        "limit": 10,
+                                        "sort": {
+                                            "aggregation": "avg",
+                                            "metric": "@db.wait_duration",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-production*"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US DB Wait Duration by Host",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 474837015664409,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "avg",
+                                    "metric": "@db.wait_duration"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "host",
+                                        "limit": 10,
+                                        "sort": {
+                                            "aggregation": "avg",
+                                            "metric": "@db.wait_duration",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-uk-production*"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "UK DB Wait Duration by Host",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 8904020771617989,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 5,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "avg",
+                                    "metric": "@db.wait_duration"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "@db.wait_event",
+                                        "limit": 10,
+                                        "sort": {
+                                            "aggregation": "avg",
+                                            "metric": "@db.wait_duration",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "@db.wait_event_type",
+                                        "limit": 10,
+                                        "sort": {
+                                            "aggregation": "avg",
+                                            "metric": "@db.wait_duration",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-production*"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US DB Wait Duration by Wait Event and Type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 5767018646191481,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 0,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "avg",
+                                    "metric": "@db.wait_duration"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "@db.wait_event",
+                                        "limit": 10,
+                                        "sort": {
+                                            "aggregation": "avg",
+                                            "metric": "@db.wait_duration",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "@db.wait_event_type",
+                                        "limit": 10,
+                                        "sort": {
+                                            "aggregation": "avg",
+                                            "metric": "@db.wait_duration",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-uk-production*"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "UK DB Wait Duration by Wait Event and Type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 863066250729944,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 5,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "@db.wait_event",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "@db.wait_event_type",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "host",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-production* @db.wait_event_type:*Lock"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US DB Locks by Wait Event/Type/Host",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 7441553167850198,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 0,
+                "y": 6
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "@db.wait_event",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "@db.wait_event_type",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "host",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-uk-production* @db.wait_event_type:*Lock"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "UK DB Locks by Wait Event/Type/Host",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 6400791081597942,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 5,
+                "y": 6
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count"
+                                },
+                                "data_source": "database_queries",
+                                "group_by": [
+                                    {
+                                        "facet": "@db.wait_event",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "@db.wait_event_type",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    },
+                                    {
+                                        "facet": "host",
+                                        "limit": 5,
+                                        "sort": {
+                                            "aggregation": "count",
+                                            "order": "desc"
+                                        }
+                                    }
+                                ],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "@db.instance:handshake host:*handshake-production* @db.wait_event_type:*Lock"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "US DB Locks by Wait Event/Type/Host",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 641502468679906,
+            "layout": {
+                "height": 3,
+                "width": 5,
+                "x": 0,
+                "y": 9
+            }
+        }
+    ]
+}

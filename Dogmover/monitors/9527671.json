@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 9527671,
+    "matching_downtimes": [],
+    "message": "We are low on Sovren Credits. This is used for parsing data out of Resumes that students upload and powers that feature. \n\nNOTE: This is only for our US account. A separate monitor is used or our EU account monitoring.\n\nhttps://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2424849/General+Runbook+of+Smaller+Incidents#GeneralRunbookofSmallerIncidents-LowSovrenCredits\n @slack-incidents-infrastructure",
+    "multi": true,
+    "name": "Low on Sovren Credits",
+    "options": {
+        "escalation_message": "We are still low on Sovren Credits, we need to buy more.",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 120,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 50000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_1h):max:sovren.remaining_transactions{!region:europe-west2} by {region} < 50000",
+    "tags": [
+        "team:platform"
+    ],
+    "type": "query alert"
+}

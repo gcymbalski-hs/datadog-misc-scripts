@@ -1,0 +1,232 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-02-15T17:46:17.130747+00:00",
+    "description": null,
+    "id": "rd3-h2y-8k4",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2021-01-27T15:39:30.687363+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Deploy: handshake-production",
+    "url": "/dashboard/rd3-h2y-8k4/deploy-handshake-production",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.hits{env:staging,service:handshake}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.errors{env:staging,service:handshake}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "1h"
+                },
+                "title": "Web Hits vs. Errors",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3413700768931109,
+            "layout": {
+                "height": 15,
+                "width": 22,
+                "x": 25,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "p50:trace.rack.request{env:staging,service:handshake}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p75:trace.rack.request{env:staging,service:handshake}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p90:trace.rack.request{env:staging,service:handshake}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Web P50,75,90 Response Time",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 5515001005559126,
+            "layout": {
+                "height": 15,
+                "width": 25,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{env:staging,service:handshake} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.errors{service:handshake-sidekiq,env:staging} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "1d"
+                },
+                "title": "Web and Sidekiq Errors",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 8877950819175221,
+            "layout": {
+                "height": 15,
+                "width": 22,
+                "x": 47,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.hits{env:staging,service:handshake-sidekiq}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.errors{service:handshake-sidekiq,env:staging}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Sidekiq Jobs Hits vs. Errors",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 2673594398790330,
+            "layout": {
+                "height": 15,
+                "width": 21,
+                "x": 69,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "CPU ",
+                                "expression": "sum:kubernetes.cpu.requests{cluster-name:staging}/sum:kubernetes.cpu.capacity{cluster-name:staging}"
+                            }
+                        ],
+                        "q": "sum:kubernetes.cpu.requests{cluster-name:staging}/sum:kubernetes.cpu.capacity{cluster-name:staging}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.requests{cluster-name:staging}/sum:kubernetes.memory.capacity{cluster-name:staging}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Cluster CPU/Memory Requested to Capacity Percent",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 5683814197295544,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 15
+            }
+        }
+    ]
+}

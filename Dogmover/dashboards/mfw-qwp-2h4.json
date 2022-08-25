@@ -1,0 +1,635 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2022-05-13T20:31:57.772515+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "mfw-qwp-2h4",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-06-02T16:48:04.633931+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Monolith Database Connections",
+    "url": "/dashboard/mfw-qwp-2h4/monolith-database-connections",
+    "widgets": [
+        {
+            "definition": {
+                "background_color": "vivid_green",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "UK Production",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "max",
+                                    "value": "y = 400"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-uk-production:handshake-funky-wombat}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Monolith Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": false
+                            }
+                        },
+                        "id": 7109162673792048,
+                        "layout": {
+                            "height": 4,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1 + query2 + query3 + query4 + query5"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_idle{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_used{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_login{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_active{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_tested{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "PGBouncer Connections to handshake-funky-wombat",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 6841549953762804,
+                        "layout": {
+                            "height": 4,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "(query1 + query2 + query3 + query4 + query5) / query6"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_idle{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_used{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_login{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_active{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_tested{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query6",
+                                            "query": "sum:pgbouncer.databases.pool_size{kube_deployment IN (handshake-funky-wombat-pgbouncer,sidekiq-handshake-funky-wombat-pgbouncer,stu-indexer-handshake-funky-wombat-pgbouncer,uni-indexer-handshake-funky-wombat-pgbouncer,emp-indexer-handshake-funky-wombat-pgbouncer)} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Utilization of PGBouncer Connections to handshake-funky-wombat",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 2700653747112790,
+                        "layout": {
+                            "height": 4,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 8819453324887804,
+            "layout": {
+                "height": 1,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "vivid_green",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "US Production",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "max",
+                                    "value": "y = 1000"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-production:handshake-brave-mayfly}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-production:handshake-charcoal-lemur}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "Monolith Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": false
+                            }
+                        },
+                        "id": 7008348702183060,
+                        "layout": {
+                            "height": 4,
+                            "width": 12,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1 + query2 + query3 + query4 + query5"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_idle{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_used{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_login{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_active{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_tested{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "PGBouncer Connections to handshake-brave-mayfly",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 3960786854220348,
+                        "layout": {
+                            "height": 4,
+                            "width": 12,
+                            "x": 0,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1 + query2 + query3 + query4 + query5"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_idle{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_used{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_login{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_active{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_tested{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "PGBouncer Connections to handshake-brave-mayfly",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1373894885383540,
+                        "layout": {
+                            "height": 4,
+                            "width": 12,
+                            "x": 0,
+                            "y": 8
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "max",
+                                    "value": "y = 1"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "(query1 + query2 + query3 + query4 + query5) / query6"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.sv_idle{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:pgbouncer.pools.sv_used{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:pgbouncer.pools.sv_login{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "sum:pgbouncer.pools.sv_active{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "sum:pgbouncer.pools.sv_tested{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query6",
+                                            "query": "sum:pgbouncer.databases.pool_size{kube_deployment IN (handshake-brave-mayfly-pgbouncer,sidekiq-handshake-brave-mayfly-pgbouncer,stu-indexer-handshake-brave-mayfly-pgbouncer,uni-indexer-handshake-brave-mayfly-pgbouncer,emp-indexer-handshake-brave-mayfly-pgbouncer)} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Utilization of PGBouncer Connections to handshake-funky-wombat",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": false
+                            }
+                        },
+                        "id": 8537610280472530,
+                        "layout": {
+                            "height": 4,
+                            "width": 12,
+                            "x": 0,
+                            "y": 12
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-production:handshake-active-sponge}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Monolith Connections - Active Sponge (replica for web)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": false
+                            }
+                        },
+                        "id": 2077782763792002,
+                        "layout": {
+                            "height": 4,
+                            "width": 12,
+                            "x": 0,
+                            "y": 16
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id:handshake-production:handshake-mighty-shrew}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Monolith Connections - Mighty Shrew (replica for background jobs)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": false
+                            }
+                        },
+                        "id": 6843526497062186,
+                        "layout": {
+                            "height": 4,
+                            "width": 12,
+                            "x": 0,
+                            "y": 20
+                        }
+                    }
+                ]
+            },
+            "id": 461582872674880,
+            "layout": {
+                "height": 25,
+                "is_column_break": true,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}

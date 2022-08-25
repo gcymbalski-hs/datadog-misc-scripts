@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 65794374,
+    "matching_downtimes": [],
+    "message": "`employerteam::emptystateimpressionworker` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Resource employerteam::emptystateimpressionworker has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.6
+        }
+    },
+    "query": "percentile(last_10m):p90:trace.sidekiq.job{env:production,resource_name:employerteam::emptystateimpressionworker,service:handshake-sidekiq} > 1",
+    "tags": [
+        "service:handshake-sidekiq",
+        "env:production",
+        "resource_name:employerteam::emptystateimpressionworker",
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-worker-latency"
+    ],
+    "type": "query alert"
+}

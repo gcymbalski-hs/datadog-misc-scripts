@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 79185143,
+    "matching_downtimes": [],
+    "message": "Resources for the [dd-postgres-messaging-prime-lab](https://console.cloud.google.com/kubernetes/deployment/us-central1/production/handshake/dd-postgres-messaging-prime-lab/overview?project=handshake-production) deployment in production were recently modified. The hope is that k8s does not need to restart pods, but this appears to now be happening.\nPlease do the following:\n- If you have permissions, go ahead and [scale down the pods](https://joinhandshake.atlassian.net/wiki/spaces/CE/pages/2462711869/How+to+Manually+Scale+a+Kubernetes+Deployment+or+Pods) to 0 to disable this deployment.\n- Create a PR in ops that scales down the deployment. It will be the same as [this](https://github.com/joinhandshake/ops/pull/3251). Get this merged as soon as possible. Otherwise, when the app deploys our manual scaling down changes will be overwritten.\n\nReach out to Chris Rolfs for help.\n @slack-incidents-platform-services",
+    "multi": false,
+    "name": "Pod restarts are happening for dd-postgres-messaging-prime-lab",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "max(last_5m):avg:kubernetes.containers.restarts{cluster-name:production,kube_deployment:dd-postgres-messaging-prime-lab,pod_name:dd-postgres-messaging-prime-lab-*} > 0",
+    "tags": [],
+    "type": "query alert"
+}

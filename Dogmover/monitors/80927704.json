@@ -1,0 +1,24 @@
+{
+    "deleted": null,
+    "id": 80927704,
+    "matching_downtimes": [],
+    "message": "[{{project_id}} - SendIterableEvent] jobs are erroring at a higher rate than normal \n @slack-incidents-platform-services",
+    "multi": false,
+    "name": "[NMS] SendIterableEvent job errors are high",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 50.0,
+            "warning": 30.0
+        }
+    },
+    "query": "sum(last_30m):(sum:trace.sidekiq.job.errors{resource_name:next::notifications::senditerableevent,env:production}.as_count() / sum:trace.sidekiq.job.hits{resource_name:next::notifications::senditerableevent,env:production}.as_count()) * 100 > 50",
+    "tags": [],
+    "type": "query alert"
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 28658162,
+    "matching_downtimes": [],
+    "message": "The error rate when sending push notifications has increased.\n\n{{#is_alert}}To investigate, check the [push notification delivery dashboard](https://app.datadoghq.com/dashboard/ji5-8b7-bp4/mobile-push-notification-delivery) and [search Bugsnag](https://app.bugsnag.com/handshake/handshake/errors?filters[event.since][0]=all&filters[search][0][type]=eq&filters[search][0][value]=SendPushNotification&filters[error.status][0][type]=eq&filters[error.status][0][value]=open&sort=events) for errors in the `SendPushNotification` worker.\n\nBe aware that push notification sends are bursty, and the count of failed sends could fluctuate significantly depending on the amount of push notifications being sent at a given time.{{/is_alert}} \n\n{{#is_recovery}}\nError rate from sending push notifications has decreased.\n{{/is_recovery}}\n @slack-incidents-students",
+    "multi": false,
+    "name": "Elevated push notification send failure rate",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 100.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_15m):avg:handshake.send_push_notification.firebase_error{env:production}.as_count() > 100",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

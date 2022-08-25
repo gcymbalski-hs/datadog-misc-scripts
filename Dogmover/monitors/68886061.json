@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 68886061,
+    "matching_downtimes": [],
+    "message": "@slack-eng-mobile-bugs an anomaly has been detected on the 5xx HTTP status codes for mobile services",
+    "multi": true,
+    "name": "[iOS] 5xx HTTP Status Error Abnormality Detected",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_15m"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_15m):anomalies(sum:trace.rack.request.hits.by_http_status{env:production,resource_name:next::student::mobile*,http.status_class:5xx} by {http.status_code}.as_count(), 'agile', 2, direction='above', interval=60, alert_window='last_15m', seasonality='hourly', timezone='utc', count_default_zero='true') > 1",
+    "tags": [],
+    "type": "query alert"
+}

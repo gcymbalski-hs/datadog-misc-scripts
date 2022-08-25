@@ -1,0 +1,1644 @@
+{
+    "author_handle": "dweinand@joinhandshake.com",
+    "author_name": "Dan Weinand",
+    "created_at": "2022-03-08T18:58:01.640829+00:00",
+    "description": "Managed through the terraform-datadog repo. Any changes made manually must be copied over to the repo, else the changes will be overridden the next time a terraform plan from said repo is applied.",
+    "id": "2jh-b4v-ueb",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-16T22:31:00.135142+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "available_values": [],
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Session Service",
+    "url": "/dashboard/2jh-b4v-ueb/session-service",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Ambassador Auth API",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:deploy:true,environment:production",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "p99:trace.http.request{$env,service:session-service}, p95:trace.http.request{$env,service:session-service}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "http request duration p99 / p95",
+                            "type": "timeseries"
+                        },
+                        "id": 3776959091886524
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:deploy:true,environment:production",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "max:trace.http.request{$env,service:session-service}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "http request duration max",
+                            "type": "timeseries"
+                        },
+                        "id": 101082193141444
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "p99:trace.postgres.query{$env,service:session-service-postgres}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "DB Query duration p99",
+                            "type": "timeseries"
+                        },
+                        "id": 5178664942800041
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:session_service.auth.attempts{$env}.as_count(), sum:session_service.auth.failed{$env}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Session Service attempts/failed",
+                            "type": "timeseries"
+                        },
+                        "id": 1707741431513920
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:session_service.auth.errored{$env}.as_count()",
+                                    "style": {
+                                        "palette": "red"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Session Service errors",
+                            "type": "timeseries"
+                        },
+                        "id": 1313884939999489
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:session_service.auth.denied{$env}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Session Service denied auth",
+                            "type": "timeseries"
+                        },
+                        "id": 419706942108509
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.ext_authz.denied{$cluster}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_handshake.ext_authz.error{$cluster}.as_count()",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Authz errors/denied",
+                            "type": "timeseries"
+                        },
+                        "id": 3203312204230266
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:session_service.token.none{$env}.as_count(), sum:session_service.token.expired{$env}.as_count(), sum:session_service.token.marshalled{$env}.as_count()",
+                                    "style": {
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Session Service tokens",
+                            "type": "timeseries"
+                        },
+                        "id": 7197743527431440
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:kubernetes.cpu.usage.total{kube_deployment:session-service,$cluster}, sum:kubernetes.cpu.limits{kube_deployment:session-service,$cluster}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Pods CPU",
+                            "type": "timeseries"
+                        },
+                        "id": 3045956263716552
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_3xx{$cluster}.as_count(), avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_4xx{$cluster}.as_count(), avg:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_5xx{$cluster}.as_count()"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Envoy HTTP 3XX, 4XX, 5XX",
+                            "type": "timeseries"
+                        },
+                        "id": 5429667535508688
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:deploy:true,environment:production",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "max:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.internal.upstream_rq_time.95percentile{$cluster}"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Envoy AuthService latency",
+                            "type": "timeseries"
+                        },
+                        "id": 2776195553586238
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:session_service.token.malformed{$env}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:session_service.token.invalid_payload{$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Malformed tokens count",
+                            "type": "timeseries"
+                        },
+                        "id": 1172097668661674
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "value",
+                                "avg",
+                                "sum",
+                                "min",
+                                "max"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:session_service.token.decrypt.success{$env,version:legacy_mobile}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:session_service.token.decrypt.success{$env,version:legacy_web}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "sum:session_service.token.decrypt.success{$env,version:v2}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Succesfully Decrypted Tokens Count",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1595522317525592
+                    }
+                ]
+            },
+            "id": 1666338357423460
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "REST API",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:deploy:true,environment:production",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p99:trace.http.request{$env,service:session-service-rest-api}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "p95:trace.http.request{$env,service:session-service-rest-api}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "http request duration p99 / p95 $env",
+                            "type": "timeseries"
+                        },
+                        "id": 8802920223755738
+                    }
+                ]
+            },
+            "id": 3339113682381514
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "REST API Kubernetes Health",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "max:kubernetes_state.hpa.desired_replicas{$cluster,hpa:session-service-rest-api-autoscaler}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "dashed",
+                                        "palette": "grey"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "max:kubernetes_state.hpa.max_replicas{hpa:session-service-rest-api-autoscaler,$cluster}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "dashed",
+                                        "palette": "warm"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:kubernetes_state.hpa.current_replicas{hpa:session-service-rest-api-autoscaler,$cluster}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "HPA Replicas $cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 1204879176454541
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.cpu.requests{$cluster,kube_deployment:session-service-rest-api}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:kubernetes.cpu.usage.total{$cluster,kube_deployment:session-service-rest-api}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "avg:kubernetes.cpu.limits{$cluster,kube_deployment:session-service-rest-api}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg CPU Usage $cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 4111306392074784
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.memory.requests{$cluster,kube_deployment:session-service-rest-api}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:kubernetes.memory.usage{$cluster,kube_deployment:session-service-rest-api}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "avg:kubernetes.memory.limits{$cluster,kube_deployment:session-service-rest-api}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Avg Memory Usage $cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 2458215505303710
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:kubernetes_state.container.restarts{$cluster,kube_container_name:session-service-rest-api} by {pod}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Container Restarts by Pod $cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 470796651087748
+                    }
+                ]
+            },
+            "id": 14346569637889
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Redis",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:gcp.redis.keyspace.keys{instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "max:gcp.redis.keyspace.keys{instance_id:projects/handshake-staging/locations/us-central1/instances/session-service-expert-impala}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "",
+                            "type": "timeseries"
+                        },
+                        "id": 495350463215014
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:gcp.redis.stats.cpu_utilization{instance_id:projects/handshake-demo/locations/us-central1/instances/session-service-crisp-alpaca OR instance_id:projects/handshake-staging/locations/us-central1/instances/session-service-expert-impala OR instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy OR instance_id:projects/handshake-uk-staging/locations/europe-west2/instances/session-service-gorgeous-jaguar OR instance_id:projects/handshake-uk-production/locations/europe-west2/instances/session-service-selected-tetra} by {instance_id,role,node_id}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "CPU Utilization",
+                            "type": "timeseries"
+                        },
+                        "id": 1195625190806600
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:gcp.redis.stats.network_traffic{instance_id:projects/handshake-demo/locations/us-central1/instances/session-service-crisp-alpaca OR instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy OR instance_id:projects/handshake-staging/locations/us-central1/instances/session-service-expert-impala OR instance_id:projects/handshake-uk-staging/locations/europe-west2/instances/session-service-gorgeous-jaguar OR instance_id:projects/handshake-uk-production/locations/europe-west2/instances/session-service-selected-tetra} by {instance_id,role}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Network Traffic",
+                            "type": "timeseries"
+                        },
+                        "id": 6327789474442126
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "formulas": [
+                                        {
+                                            "formula": "derivative(query1)"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:gcp.redis.keyspace.keys{instance_id:projects/handshake-staging/locations/us-central1/instances/session-service-expert-impala OR instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy OR instance_id:projects/handshake-uk-staging/locations/europe-west2/instances/session-service-gorgeous-jaguar} by {instance_id}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Total Keys Rate of Change",
+                            "type": "timeseries"
+                        },
+                        "id": 1822689055258136
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:session_service_rest_api.redis.session.save.success{$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Session Save $env",
+                            "type": "timeseries"
+                        },
+                        "id": 2758673111435805
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:session_service_rest_api.redis.session.delete.invalid_key{$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "red"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Session Delete $env",
+                            "type": "timeseries"
+                        },
+                        "id": 4823455483372007
+                    }
+                ]
+            },
+            "id": 2630699086394313
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Redis Health",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "alert_id": "45638889",
+                            "title": "Redis CPU Usage",
+                            "type": "alert_graph",
+                            "viz_type": "timeseries"
+                        },
+                        "id": 6122995108698876
+                    },
+                    {
+                        "definition": {
+                            "alert_id": "45638670",
+                            "title": "Redis Memory Usage",
+                            "type": "alert_graph",
+                            "viz_type": "timeseries"
+                        },
+                        "id": 1163671220694521
+                    },
+                    {
+                        "definition": {
+                            "alert_id": "45639398",
+                            "title": "Connections Rejected",
+                            "type": "alert_graph",
+                            "viz_type": "timeseries"
+                        },
+                        "id": 3389981353927717
+                    },
+                    {
+                        "definition": {
+                            "alert_id": "45639485",
+                            "title": "System Memory Usage",
+                            "type": "alert_graph",
+                            "viz_type": "timeseries"
+                        },
+                        "id": 2331399632564333
+                    },
+                    {
+                        "definition": {
+                            "alert_id": "45639595",
+                            "title": "System Memory Overload Duration",
+                            "type": "alert_graph",
+                            "viz_type": "timeseries"
+                        },
+                        "id": 7126075079325929
+                    },
+                    {
+                        "definition": {
+                            "autoscale": false,
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": "<=",
+                                            "hide_value": false,
+                                            "palette": "white_on_green",
+                                            "value": 0
+                                        },
+                                        {
+                                            "comparator": ">",
+                                            "hide_value": false,
+                                            "palette": "white_on_red",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "q": "avg:gcp.redis.stats.memory.system_memory_overload_duration{project_id:handshake-production,*,$region,instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy} by {instance_id}"
+                                }
+                            ],
+                            "title": "System Memory Overload Duration",
+                            "type": "query_value"
+                        },
+                        "id": 5430136978467944
+                    }
+                ]
+            },
+            "id": 729120018015233
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Access Miniservice",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "default_zero(query1)"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.create_session.hits{service:handshake-access,$env}.as_rate()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.create_session.errors{service:handshake-access,$env}.as_rate()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Create Session RPS in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 5512442056717431
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.create_session.errors{service:handshake-access,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.create_session.hits{service:handshake-access,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Create Session Requests & Errors in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 2560758518464026
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "max",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:trace.create_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p50",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p50:trace.create_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p75",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p75:trace.create_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p90",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p90:trace.create_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p95:trace.create_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p99",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p99:trace.create_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Create Session Latency in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 6827015210147367
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "default_zero(query1)"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_session.hits{service:handshake-access,$env}.as_rate()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_session.errors{service:handshake-access,$env}.as_rate()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Delete Session RPS in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 1003528299226260
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_session.errors{service:handshake-access,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_session.hits{service:handshake-access,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Delete Session Requests & Errors in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 3256903756853849
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "max",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:trace.delete_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p50",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p50:trace.delete_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p75",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p75:trace.delete_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p90",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p90:trace.delete_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p95:trace.delete_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p99",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p99:trace.delete_session{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Delete Session Latency in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 6517913517686002
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "default_zero(query1)"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_all_sessions_for_user.hits{service:handshake-access,$env}.as_rate()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_all_sessions_for_user.errors{service:handshake-access,$env}.as_rate()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Delete All For User RPS in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 2836834515725117
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_all_sessions_for_user.errors{service:handshake-access,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.delete_all_sessions_for_user.hits{service:handshake-access,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Delete All For User Requests & Errors in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 6353303602508740
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "max",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:trace.delete_all_sessions_for_user{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p50",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p50:trace.delete_all_sessions_for_user{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p75",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p75:trace.delete_all_sessions_for_user{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p90",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p90:trace.delete_all_sessions_for_user{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p95:trace.delete_all_sessions_for_user{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p99",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p99:trace.delete_all_sessions_for_user{service:handshake-access,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Delete All For User Latency in $env",
+                            "type": "timeseries"
+                        },
+                        "id": 2022343641527986
+                    },
+                    {
+                        "definition": {
+                            "background_color": "white",
+                            "content": "**These metrics come from the Access miniservice**",
+                            "font_size": "14",
+                            "has_padding": true,
+                            "show_tick": false,
+                            "text_align": "left",
+                            "type": "note",
+                            "vertical_align": "top"
+                        },
+                        "id": 342888030718352
+                    }
+                ]
+            },
+            "id": 820029500020646
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 2,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "100 * (query1 / query2)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.postgres.query.hits{env:production,region:us-central1,service:session-service-postgres}.as_count()"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.http.request.hits{env:production,region:us-central1,service:session-service}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Percent of Session Service Requests hitting Postgres",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 5842045838494858
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "value",
+                    "avg",
+                    "sum",
+                    "min",
+                    "max"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query0"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query0",
+                                "query": "sum:trace.http.request.hits{env:production,region:us-central1,service:session-service}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.postgres.query.hits{env:production,region:us-central1,service:session-service-postgres}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Postgres Queries compared to Requests",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3447354945271241
+        }
+    ]
+}

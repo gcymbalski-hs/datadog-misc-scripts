@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 19232845,
+    "matching_downtimes": [],
+    "message": "[{{project_id}} - {{subscription_id}}] dead letter subscription has records. These records failed to process in the `touchpoints-to-elasticsearch` service and are now here. These messages need to be either discarded manually, or a fix needs to be released to then process them.\n\n{{#is_recovery}}\n[{{project_id}} - {{subscription_id}}] subscription backed up alert has recovered\n{{/is_recovery}} @slack-incidents-employers",
+    "multi": true,
+    "name": "Google Pub/Sub Touchpoints Dead Letter has Messages",
+    "options": {
+        "escalation_message": "",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 5.0,
+            "warning": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):max:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:enriched-touchpoints-to-elasticsearch-dead-letter} by {subscription_id,project_id} > 5",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "metric alert"
+}

@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 45639485,
+    "matching_downtimes": [],
+    "message": "System memory usage on the Redis instance {{instance_id.name}} is high. This is very dangerous as it can impact the functionality of Redis as a whole. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2339897456/Redis+-+High+System+Memory to begin investigating.\n @slack-incidents-platform-services",
+    "multi": true,
+    "name": "Session Service Redis High System Memory",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "warning": 0.8
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_1h):max:gcp.redis.stats.memory.system_memory_usage_ratio{instance_id:projects/handshake-demo/locations/us-central1/instances/session-service-crisp-alpaca OR instance_id:projects/handshake-staging/locations/us-central1/instances/session-service-expert-impala OR instance_id:projects/handshake-production/locations/us-central1/instances/session-service-discrete-roughy OR instance_id:projects/handshake-uk-staging/locations/europe-west2/instances/session-service-gorgeous-jaguar OR instance_id:projects/handshake-uk-production/locations/europe-west2/instances/session-service-selected-tetra} by {instance_id} > 0.9",
+    "tags": [
+        "team:platform",
+        "team:iam"
+    ],
+    "type": "query alert"
+}

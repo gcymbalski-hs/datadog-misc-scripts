@@ -1,0 +1,120 @@
+{
+    "author_handle": "ssmith@joinhandshake.com",
+    "author_name": "Sean Smith",
+    "created_at": "2022-05-02T22:25:40.931518+00:00",
+    "description": "",
+    "id": "eti-wrf-mf5",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-05-02T22:44:02.814227+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Sean Sidekiq Tracing",
+    "url": "/dashboard/eti-wrf-mf5/sean-sidekiq-tracing",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query2 - query1",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "sum",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.sidekiq.job.hits{service:handshake-sidekiq,env:production} by {resource_name}.as_count()"
+                            },
+                            {
+                                "aggregator": "sum",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.sidekiq.push.hits{env:production,service:sidekiq-client} by {resource_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "toplist"
+            },
+            "id": 7337650952121664,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "has_search_bar": "auto",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "alias": "Job Run",
+                                "cell_display_mode": "bar",
+                                "conditional_formats": [],
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            },
+                            {
+                                "alias": "Pushed to Sidekiq",
+                                "cell_display_mode": "bar",
+                                "conditional_formats": [],
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "Diff",
+                                "formula": "query2 - query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "sum",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.sidekiq.job.hits{service:handshake-sidekiq,env:production} by {resource_name}.as_count()"
+                            },
+                            {
+                                "aggregator": "sum",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:trace.sidekiq.push.hits{env:production,service:sidekiq-client} by {resource_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 6687557204844314,
+            "layout": {
+                "height": 4,
+                "width": 4,
+                "x": 4,
+                "y": 0
+            }
+        }
+    ]
+}

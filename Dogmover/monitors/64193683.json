@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 64193683,
+    "matching_downtimes": [],
+    "message": "`employerteam::syncjobtoiterable` average latency is too high.\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Resource employerteam::syncjobtoiterable has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.3
+        }
+    },
+    "query": "percentile(last_10m):(p90:trace.sidekiq.job{env:production,resource_name:employerteam::syncjobtoiterable,service:handshake-sidekiq}) > 0.5",
+    "tags": [
+        "service:handshake-sidekiq",
+        "env:production",
+        "resource_name:employerteam::syncjobtoiterable",
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-worker-latency",
+        "Iterable"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,26 @@
+{
+    "deleted": null,
+    "id": 10834911,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nhttps://joinhandshake.atlassian.net/wiki/spaces/PS/pages/2759393285/More+permanent+email+failures+then+deliveries\n1. Check Mailgun status page\n2. Check if there's any high volume email sends that is causing this\n3. Either pause the relevant sidekiq queue or kill the job\n{{/is_alert}} \n{{#is_alert_recovery}}\nEmail error rates have stabilized.\n{{/is_alert_recovery}}  @slack-incidents-platform-services",
+    "multi": true,
+    "name": "Mailgun error rate is high",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 100.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_2h):avg:mailgun.error{app:handshake,env:production} by {region}.as_count() > 100",
+    "tags": [],
+    "type": "query alert"
+}

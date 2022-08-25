@@ -1,0 +1,60 @@
+{
+    "author_handle": "linda@joinhandshake.com",
+    "author_name": "Linda Le",
+    "created_at": "2022-03-10T20:28:32.243557+00:00",
+    "description": "",
+    "id": "erk-d7x-vts",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-03-10T20:34:28.270418+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Linda] EDU Endpoint Audit",
+    "url": "/dashboard/erk-d7x-vts/linda-edu-endpoint-audit",
+    "widgets": [
+        {
+            "definition": {
+                "has_search_bar": "auto",
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "alias": "HITS",
+                                "cell_display_mode": "bar",
+                                "conditional_formats": [],
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 50,
+                                    "order": "asc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "sum",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.rack.request.hits{env:production,region:us*,service:handshake,resource_name:next::edu::*} by {resource_name}.as_count()"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "Least Hits",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 9005333566011734,
+            "layout": {
+                "height": 4,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        }
+    ]
+}

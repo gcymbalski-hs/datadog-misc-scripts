@@ -1,0 +1,21 @@
+{
+    "deleted": null,
+    "id": 70492567,
+    "matching_downtimes": [],
+    "message": "Private location {{location_id.name}} is running an outdated image version. Learn more about the current version in use on your [Private locations page](https://app.datadoghq.com/synthetics/settings/private-locations?id={{location_id.name}}) and upgrade workers to the most recent version of the image by pulling the `gcr.io/datadoghq/synthetics-private-location-worker` image with the `latest` tag.",
+    "multi": true,
+    "name": "[Synthetic Private Locations] {{location_id.name}} uses an outdated image version",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "max(last_15m):sum:synthetics.pl.worker.outdated{*} by {location_id} > 0",
+    "tags": [],
+    "type": "metric alert"
+}

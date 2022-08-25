@@ -1,0 +1,120 @@
+{
+    "author_handle": "samhita@joinhandshake.com",
+    "author_name": "Samhita Karnati",
+    "created_at": "2019-04-12T21:48:07.965673+00:00",
+    "description": "",
+    "id": "3ip-zp8-zmp",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2019-04-15T18:42:54.343109+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "handshake-production",
+            "name": "project_id",
+            "prefix": "project_id"
+        },
+        {
+            "default": "*",
+            "name": "workflow_name",
+            "prefix": "workflow_name"
+        },
+        {
+            "default": "*",
+            "name": "state",
+            "prefix": "state"
+        }
+    ],
+    "title": "Cloud Composer",
+    "url": "/dashboard/3ip-zp8-zmp/cloud-composer",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:gcp.composer.environment.task_queue_length{$project_id} by {queue_name,project_id}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Queue size",
+                "type": "timeseries"
+            },
+            "id": 88687615280850
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.composer.workflow.task.run_count{$project_id,$workflow_name,$state} by {project_id,task_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Task Run Count by workflow",
+                "type": "timeseries"
+            },
+            "id": 2192612235282626
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.composer.workflow.task.run_count{$project_id,$workflow_name,$state} by {state,project_id,task_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Task Run Count by state",
+                "type": "timeseries"
+            },
+            "id": 7560762863706784
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "q": "top(sum:gcp.composer.workflow.run_duration{$project_id,$workflow_name} by {workflow_name,project_id}, 25, 'mean', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Workflow Run Durations",
+                "type": "toplist"
+            },
+            "id": 7580943626737704
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:gcp.composer.workflow.run_count{$project_id,$state} by {workflow_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Workflow Runs by Name",
+                "type": "timeseries"
+            },
+            "id": 1734155054055676
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 70496876,
+    "matching_downtimes": [],
+    "message": "The hourly campaign date retrieval worker is starting later than desired. We hope for this the be started near the beginning of each hour, but it isn't.\n\n**Priority Level: P3**\n\n@slack-incidents-emp-outreach <!subteam^S022HA38ZRA>",
+    "multi": false,
+    "name": "Retrieval Worker is Starting Late",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 1440,
+        "renotify_statuses": [
+            "alert"
+        ],
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0
+        }
+    },
+    "query": "max(last_1h):max:handshake.employers.campaigns.campaign_date_retrieval.start_minute{env:production} > 10",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "query alert"
+}

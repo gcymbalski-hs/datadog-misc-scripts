@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 65037161,
+    "matching_downtimes": [],
+    "message": "`next::employer::jobscontroller_create` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Resource next::employer::jobscontroller_create has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.5,
+            "warning": 1.5
+        }
+    },
+    "query": "percentile(last_10m):p90:trace.rack.request{env:production,resource_name:next::employer::jobscontroller_create,service:handshake} > 2.5",
+    "tags": [
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-latency"
+    ],
+    "type": "query alert"
+}

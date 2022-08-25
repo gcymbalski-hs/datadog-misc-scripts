@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 11186544,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-data",
+    "multi": true,
+    "name": "System lag is high on: {{job_name}}",
+    "options": {
+        "escalation_message": "@slack-incidents-data",
+        "evaluation_delay": 900,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": true,
+        "notify_no_data": false,
+        "renotify_interval": 30,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 900.0,
+            "warning": 600.0
+        },
+        "timeout_h": 1
+    },
+    "query": "avg(last_10m):avg:gcp.dataflow.job.system_lag{!project_id:handshake-development-204119,!project_id:handshake-uk-staging,!project_id:handshake-staging,!job_name:hsn*} by {job_name,region} >= 900",
+    "tags": [],
+    "type": "query alert"
+}

@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 73260077,
+    "matching_downtimes": [],
+    "message": "There are more than 8 commits to the {{repo_name.name}} repository that have not yet been deployed to {{environment.name}}. \n\nWhat to do next:\n\nNavigate to the deployer - https://deployer.handshake-deploy.com/joinhandshake/{{repo_name.name}}/{{environment.name}}\n\nInspect the queue and determine if things are stuck. \n\nIf  there are multiple undeployed commits, the deployer is not locked and there are no deploys in progress, try manually deploying the most recent successful commit.\n\nIf there is a deployment is in progress, but it's been running for more than 20 minutes, it may be stalled out. Try to figure out if it's really stuck, and if so, consider aborting it and retrying.\n     \nIf there is a deployment in progress, and it's been running for less than 16 minutes, chances are good the deployment will succeed and this alert will resolve itself once the queue drops below the alert limit (4 or fewer undeployed commits).\n\n@slack-incidents-dev-experience",
+    "multi": true,
+    "name": "Deployer deployments delayed or stuck {{repo_name.name}}",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "renotify_occurrences": null,
+        "renotify_statuses": null,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 8.0,
+            "critical_recovery": 4.0
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_5m):sum:handshake.deployer.health.undeployed_commits_count{app:handshake-deployer,repo_name:handshake} by {environment,repo_name} > 8",
+    "tags": [
+        "env:internal",
+        "team:devx"
+    ],
+    "type": "query alert"
+}

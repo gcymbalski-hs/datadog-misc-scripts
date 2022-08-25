@@ -1,0 +1,42 @@
+{
+    "deleted": null,
+    "id": 8332218,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1353977727,
+            "monitor_id": 8332218,
+            "scope": [
+                "*"
+            ],
+            "start": 1626360496
+        }
+    ],
+    "message": "@slack-incidents-beta",
+    "multi": false,
+    "name": "High Average Response Time on US Production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 500.0,
+            "warning": 400.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_15m):max:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.avg{project:handshake-production} > 500",
+    "tags": [],
+    "type": "metric alert"
+}

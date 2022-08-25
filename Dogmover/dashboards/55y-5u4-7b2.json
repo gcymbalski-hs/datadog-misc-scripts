@@ -1,0 +1,455 @@
+{
+    "author_handle": "spencer@joinhandshake.com",
+    "author_name": "Spencer Miskoviak",
+    "created_at": "2019-05-17T23:31:29.864694+00:00",
+    "description": "",
+    "id": "55y-5u4-7b2",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-04-27T14:17:22.587899+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "environment",
+            "prefix": "env"
+        }
+    ],
+    "title": "[Frontend] Student Route-Specific Performance",
+    "url": "/dashboard/55y-5u4-7b2/frontend-student-route-specific-performance",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Code Splitting Experiment",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,user:students,experiment:code-splitting:on,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,user:students,experiment:code-splitting:off,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "TTFB Code Splitting",
+                            "type": "timeseries"
+                        },
+                        "id": 508202828922694
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,user:students,experiment:code-splitting:on,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,user:students,experiment:code-splitting:off,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "FP Code Splitting",
+                            "type": "timeseries"
+                        },
+                        "id": 1130827263148992
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,user:students,experiment:code-splitting:on,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,user:students,experiment:code-splitting:off,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "FCP Code Splitting",
+                            "type": "timeseries"
+                        },
+                        "id": 5265762121333370
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,user:students,experiment:code-splitting:on})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,user:students,experiment:code-splitting:off})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "TTI Code Splitting",
+                            "type": "timeseries"
+                        },
+                        "id": 6297302677069346
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:fmc.handshake.tti.count{$environment,user:students,experiment:code-splitting:on}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:fmc.handshake.tti.count{$environment,user:students,experiment:code-splitting:off}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "TTI - Counts",
+                            "type": "timeseries"
+                        },
+                        "id": 5385299658284826
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,user:students,experiment:code-splitting:on,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "autosmooth(avg:fmc.handshake.fid.avg{$environment,user:students,experiment:code-splitting:off,connection:4g})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "FID Code Splitting",
+                            "type": "timeseries"
+                        },
+                        "id": 1817483194681690
+                    }
+                ]
+            },
+            "id": 1712781620559324
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Page Specific",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Overall",
+                            "type": "timeseries"
+                        },
+                        "id": 3818111185867494
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,action:index,resource:dashboard,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,resource:dashboard,action:index,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,resource:dashboard,action:index,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,resource:dashboard,action:index,user:students})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Dashboard (dasbhoard#index)",
+                            "type": "timeseries"
+                        },
+                        "id": 7102312975412682
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,user:students,resource:jobs,action:show})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,user:students,resource:jobs,action:show})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,user:students,resource:jobs,action:show})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,user:students,resource:jobs,action:show})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Job Show (jobs#show)",
+                            "type": "timeseries"
+                        },
+                        "id": 4854901765093408
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(release-stage:$environment.value) \"New Release\" source:bugsnag",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.tti.avg{$environment,action:index,user:students,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fcp.avg{$environment,action:index,user:students,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.fp.avg{$environment,action:index,user:students,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "area",
+                                    "q": "autosmooth(avg:fmc.handshake.ttfb.avg{$environment,action:index,user:students,resource:postings})",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Student Job Search (postings#index)",
+                            "type": "timeseries"
+                        },
+                        "id": 205090288669206
+                    }
+                ]
+            },
+            "id": 3494611483364088
+        }
+    ]
+}

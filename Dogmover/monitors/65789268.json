@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 65789268,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-emp-lifecycle\n\n`next::employer::selfservice::subscriptioncontroller_index` p90 latency is too high.\n\nThe Subscription page is taking too long to respond.\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Resource next::employer::selfservice::subscriptioncontroller_index has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 5.0,
+            "warning": 4.0
+        }
+    },
+    "query": "percentile(last_5m):p90:trace.rack.request{resource_name:next::employer::selfservice::subscriptioncontroller_index,service:handshake,env:production} > 5",
+    "tags": [
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-latency",
+        "emp-lifecycle-self-service"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 28548184,
+    "matching_downtimes": [],
+    "message": "The cluster is over 80% full and needs a storage bump.\nIncrease the cluster size before it is full so that we don't lose any data.\n\n@slack-incidents-emp-integ-analytics",
+    "multi": false,
+    "name": "[Marketplace Interactions] Elasticsearch Cluster Running Out of Space",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.2
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_5m):avg:elasticsearch.fs.total.available_in_bytes{es-cluster-name:production-marketplace-interactions} / avg:elasticsearch.fs.total.total_in_bytes{es-cluster-name:production-marketplace-interactions} < 0.2",
+    "tags": [],
+    "type": "query alert"
+}

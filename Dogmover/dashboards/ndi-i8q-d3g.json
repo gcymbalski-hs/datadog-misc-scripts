@@ -1,0 +1,191 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-08-22T17:35:38.788519+00:00",
+    "description": "",
+    "id": "ndi-i8q-d3g",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-27T15:39:30.036550+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "kubernetes-cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "*",
+            "name": "kubernetes-namespace",
+            "prefix": "kube_namespace"
+        },
+        {
+            "default": "*",
+            "name": "rack-service",
+            "prefix": "service"
+        },
+        {
+            "default": "*",
+            "name": "sidekiq-service",
+            "prefix": "service"
+        },
+        {
+            "default": "*",
+            "name": "service-env",
+            "prefix": "env"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Deploy Board",
+    "url": "/dashboard/ndi-i8q-d3g/deploy-board",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "p50:trace.rack.request{$rack-service,$region,$service-env}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p75:trace.http.request{$rack-service,$region,$service-env}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p90:trace.rack.request{$rack-service,$region,$service-env}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Rack Trace P50,75,90 Response Times",
+                "type": "timeseries"
+            },
+            "id": 347732025
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.hits{$rack-service,$service-env,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{$rack-service,$service-env,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Rack Trace Hit vs. Error Rate",
+                "type": "timeseries"
+            },
+            "id": 347729603
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.hits{$sidekiq-service,$service-env,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.errors{$sidekiq-service,$service-env,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sidekiq Hits vs. Errors",
+                "type": "timeseries"
+            },
+            "id": 347732597
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{$rack-service,$service-env,$region} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.sidekiq.job.errors{$sidekiq-service,$service-env,$region} by {resource_name}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Rack and Sidekiq Errors",
+                "type": "timeseries"
+            },
+            "id": 347732850
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:kubernetes.cpu.usage.total{$kubernetes-cluster,$kubernetes-namespace,$region} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Max CPU by Pod Deployment",
+                "type": "timeseries"
+            },
+            "id": 347729490
+        }
+    ]
+}

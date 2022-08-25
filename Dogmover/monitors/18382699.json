@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 18382699,
+    "matching_downtimes": [],
+    "message": "Requests to create users via the Skilljar API are resulting in a lot of unexpected status codes.\n\nThese requests should return 201 status codes when a Skilljar user is created successfully.\n\nPlease check the runbook on how to debug: https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#Skilljar-user-errors-(i.e.-Triggered:-Skilljar#Index-has-a-high-error-rate-in-production)\n\nPlease note that we should verify that the error here is not stemming from a mishandling of API requests / responses on our side\n\nPlease reach out to Alex if you need help\n@slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Skilljar - User creation requests have a high error rate in {{env.name}}",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1,
+            "warning": 0.05
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):( sum:handshake.skilljar.create_skilljar_user.errors{*} by {env}.as_count() / sum:handshake.skilljar.create_skilljar_user.hits{*} by {env}.as_count() ) > 0.1",
+    "tags": [
+        "service:handshake",
+        "resource_name:skilljarcontroller_index",
+        "team:university"
+    ],
+    "type": "query alert"
+}

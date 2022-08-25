@@ -1,0 +1,248 @@
+{
+    "author_handle": "pierre@joinhandshake.com",
+    "author_name": "Pierre Maris",
+    "created_at": "2021-01-29T22:15:56.233824+00:00",
+    "description": "",
+    "id": "xis-zke-gnv",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-02-01T18:32:07.836462+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "[Student] Mobile sign-in",
+    "url": "/dashboard/xis-zke-gnv/student-mobile-sign-in",
+    "widgets": [
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "metadata": [
+                            {
+                                "alias_name": "Standard auth",
+                                "expression": "avg:handshake.mobile.sign_in.start{$env,auth_type:standard}.as_count()"
+                            },
+                            {
+                                "alias_name": "LDAP",
+                                "expression": "avg:handshake.mobile.sign_in.start{$env,auth_type:ldap}.as_count()"
+                            },
+                            {
+                                "alias_name": "CAS / SAML",
+                                "expression": "avg:handshake.mobile.sign_in.cookie_auth{$env}.as_count()"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.mobile.sign_in.start{$env,auth_type:standard}.as_count(), avg:handshake.mobile.sign_in.start{$env,auth_type:ldap}.as_count(), avg:handshake.mobile.sign_in.cookie_auth{$env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Sign-in attempts",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 978603119814422
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "metadata": [
+                            {
+                                "alias_name": "Invalid email",
+                                "expression": "avg:handshake.mobile.sign_in.failure.invalid_email{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "Invalid token",
+                                "expression": "avg:handshake.mobile.sign_in.failure.invalid_token{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "User is not a student",
+                                "expression": "avg:handshake.mobile.sign_in.failure.not_student{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "User disallowed",
+                                "expression": "avg:handshake.mobile.sign_in.failure.disallowed{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "User disabled",
+                                "expression": "avg:handshake.mobile.sign_in.failure.user_disabled{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "User blocked",
+                                "expression": "avg:handshake.mobile.sign_in.failure.user_blocked{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "User hasn't accepted TOS",
+                                "expression": "avg:handshake.mobile.sign_in.failure.user_hasnt_accepted_tos{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "LDAP failure",
+                                "expression": "avg:handshake.mobile.sign_in.ldap.failed{$env}.as_count()"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.mobile.sign_in.failure.invalid_email{$env}.as_count(), avg:handshake.mobile.sign_in.failure.invalid_token{$env}.as_count(), avg:handshake.mobile.sign_in.failure.not_student{$env}.as_count(), avg:handshake.mobile.sign_in.failure.disallowed{$env}.as_count(), avg:handshake.mobile.sign_in.failure.user_disabled{$env}.as_count(), avg:handshake.mobile.sign_in.failure.user_blocked{$env}.as_count(), avg:handshake.mobile.sign_in.failure.user_hasnt_accepted_tos{$env}.as_count(), avg:handshake.mobile.sign_in.ldap.failed{$env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Sign-in failures",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1691126885838200
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "Standard auth",
+                                "expression": "avg:handshake.mobile.sign_in.start{$env,auth_type:standard}.as_count()/avg:handshake.mobile.sign_in.success{$env,auth_type:standard}.as_count()"
+                            },
+                            {
+                                "alias_name": "CAS / SAML",
+                                "expression": "avg:handshake.mobile.sign_in.cookie_auth{$env}.as_count()/avg:handshake.mobile.sign_in.success{$env,auth_type:cas_or_saml}.as_count()"
+                            },
+                            {
+                                "alias_name": "LDAP",
+                                "expression": "avg:handshake.mobile.sign_in.start{$env,auth_type:ldap}.as_count()/avg:handshake.mobile.sign_in.ldap.success{$env}.as_count()"
+                            }
+                        ],
+                        "q": "avg:handshake.mobile.sign_in.start{$env,auth_type:standard}.as_count()/avg:handshake.mobile.sign_in.success{$env,auth_type:standard}.as_count(), avg:handshake.mobile.sign_in.cookie_auth{$env}.as_count()/avg:handshake.mobile.sign_in.success{$env,auth_type:cas_or_saml}.as_count(), avg:handshake.mobile.sign_in.start{$env,auth_type:ldap}.as_count()/avg:handshake.mobile.sign_in.ldap.success{$env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Success rate by auth type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4939909256674474
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "Success",
+                                "expression": "avg:handshake.mobile.sign_in.ldap.authenticator_start{$env}.as_count()/avg:handshake.mobile.sign_in.ldap.success{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "Failure",
+                                "expression": "avg:handshake.mobile.sign_in.ldap.authenticator_start{$env}.as_count()/avg:handshake.mobile.sign_in.ldap.failed{$env}.as_count()"
+                            },
+                            {
+                                "alias_name": "Waiting for auth to finish",
+                                "expression": "avg:handshake.mobile.sign_in.ldap.authenticator_start{$env}.as_count()/avg:handshake.mobile.sign_in.ldap.waiting{$env}.as_count()"
+                            }
+                        ],
+                        "q": "avg:handshake.mobile.sign_in.ldap.authenticator_start{$env}.as_count()/avg:handshake.mobile.sign_in.ldap.success{$env}.as_count(), avg:handshake.mobile.sign_in.ldap.authenticator_start{$env}.as_count()/avg:handshake.mobile.sign_in.ldap.failed{$env}.as_count(), avg:handshake.mobile.sign_in.ldap.authenticator_start{$env}.as_count()/avg:handshake.mobile.sign_in.ldap.waiting{$env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "LDAP success / failure rates",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7210920151825972
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "on_right_yaxis": false,
+                        "q": "avg:handshake.mobile.sign_in.magic_link{$env} by {app_platform,app_version}.as_count(), avg:handshake.mobile.sign_in.sessions_endpoint{$env} by {app_platform,app_version}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Deprecated sign-in endpoint usage",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 447691378303448
+        }
+    ]
+}

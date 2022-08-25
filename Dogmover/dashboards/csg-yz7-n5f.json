@@ -1,0 +1,256 @@
+{
+    "author_handle": "alin@joinhandshake.com",
+    "author_name": "Amy Lin",
+    "created_at": "2022-03-16T21:34:23.309258+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "csg-yz7-n5f",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-06-17T17:12:18.335684+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[DevX] Deployment Metrics",
+    "url": "/dashboard/csg-yz7-n5f/devx-deployment-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "background_color": "gray",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Overall Deploy Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "custom_links": [],
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "formulas": [
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "events",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "deployer_event:(k8s_rollout_failed OR migrations_failed)"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "title": "Total deploy failures",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 8516230455723912,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "custom_links": [],
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "green_on_white",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "formulas": [
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "events",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "deploy:true environment:production repository:handshake source:my_apps"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "timeseries_background": {
+                                "type": "bars"
+                            },
+                            "title": "Total deploys",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 6966460084854574,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "custom_links": [],
+                            "precision": 2,
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "red_on_white",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "formulas": [
+                                        {
+                                            "formula": "(query2 / query1) * 100"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "events",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "deployer_event:(k8s_rollout_failed OR migrations_failed)"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "events",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "deploy:true environment:production repository:handshake source:my_apps"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "time": {},
+                            "title": "% Failure rate",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 5993194258917732,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 5928652210339388,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "gray",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Deploy Failures",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "query": "deployer_event:k8s_rollout_failed",
+                            "tags_execution": "and",
+                            "title": "Deploy failures (k8s rollout failed)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "event_timeline"
+                        },
+                        "id": 7002248460014002,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "query": "deployer_event:migrations_failed",
+                            "tags_execution": "and",
+                            "title": "Deploy failures (migrations failed)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "event_timeline"
+                        },
+                        "id": 5901593445459326,
+                        "layout": {
+                            "height": 3,
+                            "width": 6,
+                            "x": 6,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 6083791555105278,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 3
+            }
+        }
+    ]
+}

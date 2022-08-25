@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 19436033,
+    "matching_downtimes": [],
+    "message": "Application failed to sync to ATS service in {{env.name}}. \n\nLook in the [Handshake Bugsnag project](https://app.bugsnag.com/handshake/handshake/errors) for more info. Search for ATS to narrow down possibilities.\n\n@slack-emp-ats-errors",
+    "multi": true,
+    "name": "ATS: Application failed to create",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_2h):max:handshake.ats.application_creator_service.failure{*} by {region,env}.as_count() > 10",
+    "tags": [
+        "team:employer"
+    ],
+    "type": "query alert"
+}

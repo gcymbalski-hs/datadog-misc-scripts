@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 65798072,
+    "matching_downtimes": [],
+    "message": "`syncusertoiterable` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Resource syncusertoiterable has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.8
+        }
+    },
+    "query": "percentile(last_10m):p90:trace.sidekiq.job{env:production,resource_name:syncusertoiterable,service:handshake-sidekiq} > 1",
+    "tags": [
+        "service:handshake-sidekiq",
+        "env:production",
+        "resource_name:syncusertoiterable",
+        "emp-lifecycle",
+        "Iterable",
+        "team:employer"
+    ],
+    "type": "query alert"
+}

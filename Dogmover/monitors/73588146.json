@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 73588146,
+    "matching_downtimes": [],
+    "message": "{{database_id.name}} database is approaching CPU Capacity.\n\n  {{#is_alert}}\n  See [Datadog Database Dashboards List](https://app.datadoghq.com/dashboard/lists/manual/65354)\n  {{/is_alert}}\n  {{#is_recovery}}\n  {{database_id.name}} database CPU alert is off.\n  {{/is_recovery}}\n\n  @slack-incidents\n  @pagerduty-MonolithSharedProduct",
+    "multi": true,
+    "name": "[handshake-staging] Handshake Database CPU Load High",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 900,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.8,
+            "critical_recovery": 0.7
+        }
+    },
+    "query": "avg(last_15m):avg:gcp.cloudsql.database.cpu.utilization{database_id in (handshake-staging:handshake-polished-hornet)} by {database_id} > 0.8",
+    "tags": [
+        "app:handshake",
+        "env:staging",
+        "region:us-central1"
+    ],
+    "type": "query alert"
+}

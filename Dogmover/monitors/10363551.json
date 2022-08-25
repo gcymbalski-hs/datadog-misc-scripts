@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 10363551,
+    "matching_downtimes": [],
+    "message": "LDAP auth requests are added to the queue in the order they were made. If a request runs long or times out, it can cause a back up. Stopping the pods, clearing out the queues, and restarting the pods typically resolves the problem (see linked runbook). \n\nIf the monitor recovers after taking the actions outlined in the linked runbook, the issue has been resolved. \n\nFor more information: [Education Incident Runbooks - LDAP Auth Timeout](https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#LDAP-Auth-Timeout)\n\n@slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "SSO: LDAP Auth Timeout",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 35.0,
+            "critical_recovery": 8.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_30m):avg:handshake.backgrounded_auth_finish.return_message_blank{env:production} by {region}.as_count() > 35",
+    "tags": [
+        "team:university",
+        "env:production"
+    ],
+    "type": "query alert"
+}

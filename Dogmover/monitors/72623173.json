@@ -1,0 +1,37 @@
+{
+    "deleted": null,
+    "id": 72623173,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1979031896,
+            "monitor_id": 72623173,
+            "scope": [
+                "*"
+            ],
+            "start": 1653670261
+        }
+    ],
+    "message": "TBD",
+    "multi": true,
+    "name": "[WIP] Query Spike in US Production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 50000.0
+        }
+    },
+    "query": "sum(sum(last_1d),last_1h):avg:postgresql.queries.count{instance_name:handshake-brave-mayfly,!query_signature:efae9c6f9e2afc53,!query_signature:__other__,!query_signature:55dd27b289c91a45,!query_signature:8848056d36aed107,!query_signature:26373edec2392318,!user:uni-indexer@handshake-production.iam,!user:emp-indexer@handshake-production.iam,!user:stu-indexer@handshake-production.iam} by {query}.as_count() > 50000",
+    "tags": [],
+    "type": "query alert"
+}

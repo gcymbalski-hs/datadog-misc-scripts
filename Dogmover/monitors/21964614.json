@@ -1,0 +1,46 @@
+{
+    "deleted": null,
+    "id": 21964614,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1976597477,
+            "monitor_id": 21964614,
+            "scope": [
+                "*"
+            ],
+            "start": 1653581106
+        }
+    ],
+    "message": "Session-Service has 100% utilization of CPU as compared to requested CPU.\n@slack-incidents-prod-infrastructure",
+    "multi": true,
+    "name": "Full CPU Usage on Session-Service",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.9,
+            "warning": 0.8,
+            "warning_recovery": 0.7
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_15m):( avg:kubernetes.cpu.usage.total{kube_service:session-service-api} by {region,project} / 1000000000 ) / avg:kubernetes.cpu.requests{kube_service:session-service-api} by {region,project} > 1",
+    "tags": [
+        "team:platform"
+    ],
+    "type": "query alert"
+}

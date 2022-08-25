@@ -1,0 +1,527 @@
+{
+    "author_handle": "kmeidell@joinhandshake.com",
+    "author_name": "Kelsey Meidell",
+    "created_at": "2020-09-02T22:59:18.051534+00:00",
+    "description": "",
+    "id": "ime-deq-dq4",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-01-27T15:39:26.750196+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Kelsey's Timeboard 2 Sep 2020 16:59",
+    "url": "/dashboard/ime-deq-dq4/kelseys-timeboard-2-sep-2020-1659",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "New group",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "aggregator": "avg",
+                                    "alias": "Hits",
+                                    "limit": 50,
+                                    "order": "desc",
+                                    "q": "avg:trace.rack.request.hits{*} by {resource_name}"
+                                },
+                                {
+                                    "aggregator": "avg",
+                                    "alias": "Errors",
+                                    "q": "avg:trace.rack.request.errors{*} by {resource_name}"
+                                },
+                                {
+                                    "aggregator": "avg",
+                                    "alias": "50p Duration",
+                                    "q": "p50:trace.rack.request{*} by {resource_name}"
+                                },
+                                {
+                                    "aggregator": "avg",
+                                    "alias": "75p Duration",
+                                    "q": "p75:trace.http.request{*} by {resource_name}"
+                                },
+                                {
+                                    "aggregator": "avg",
+                                    "alias": "90p Duration",
+                                    "q": "p90:trace.resque.job{*} by {resource_name}"
+                                }
+                            ],
+                            "title": "Resource Overview",
+                            "type": "query_table"
+                        },
+                        "id": 2743291929211626
+                    }
+                ]
+            },
+            "id": 3735146274485080
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Career Fairs Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{env:production,resource_name:careerfairscontroller_show}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "rum_query": {
+                                        "compute": {
+                                            "aggregation": "count",
+                                            "facet": "count"
+                                        },
+                                        "group_by": [],
+                                        "search": {
+                                            "query": ""
+                                        }
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CareerFairsController Traffic",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3683519107038450
+                    },
+                    {
+                        "definition": {
+                            "autoscale": true,
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "aggregator": "sum",
+                                    "q": "sum:trace.rack.request.errors{env:production,resource_name:careerfairscontroller_show}+sum:trace.rack.request.errors{env:production,resource_name:careerfairscontroller_schedule}+sum:trace.rack.request.errors{env:production,resource_name:careerfairscontroller_meeting_search}"
+                                }
+                            ],
+                            "title": "Sum of trace.rack.request.errors over env:production,resource_name:careerfair...",
+                            "type": "query_value"
+                        },
+                        "id": 2579735741310364
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "p50:trace.rack.request{env:production,resource_name:careerfairscontroller_schedule,service:handshake}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p75:trace.rack.request{env:production,resource_name:careerfairscontroller_schedule,service:handshake}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p90:trace.rack.request{env:production,resource_name:careerfairscontroller_schedule,service:handshake}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CareerFairsController:schedule Duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1382585418310014
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "p50:trace.rack.request{env:production,resource_name:careerfairscontroller_show}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p75:trace.rack.request{env:production,resource_name:careerfairscontroller_show}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p90:trace.rack.request{env:production,resource_name:careerfairscontroller_show}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CareerFairsController:show Duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2790000787998302
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "p50:trace.rack.request{env:production,resource_name:careerfairscontroller_meeting_search} by {region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p75:trace.rack.request{env:production,resource_name:careerfairscontroller_meeting_search} by {region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p90:trace.rack.request{env:production,resource_name:careerfairscontroller_meeting_search} by {region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CareerFairController:meeting_search Duration",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5995154746519096
+                    }
+                ]
+            },
+            "id": 4959353231616766
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Employer Hosted Meetings Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "avg:trace.rack.request.hits{env:production,service:handshake,resource_name:meetingschedules::employerhostedcontroller_show}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "rum_query": {
+                                        "compute": {
+                                            "aggregation": "count",
+                                            "facet": "count"
+                                        },
+                                        "group_by": [],
+                                        "search": {
+                                            "query": ""
+                                        }
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Employer Hosted Meetings Traffic",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 868351019077152
+                    }
+                ]
+            },
+            "id": 3611989189567226
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Virtual Events Metrics",
+                "type": "group",
+                "widgets": []
+            },
+            "id": 592322943267614
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Prospect Confirmation and Activity Metrics",
+                "type": "group",
+                "widgets": []
+            },
+            "id": 4505489733236190
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingparticipantscontroller_cancel,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 4350843797563044
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingparticipantscontroller_create,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 7873732646309484
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingparticipantscontroller_update,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 1171771453610000
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::candidatescontroller_available_candidates,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 1554285446085821
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::employerhostedcontroller_create,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 2214348373925748
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::employerhostedcontroller_edit,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 5079921873576197
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::employerhostedcontroller_index,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 1002694478119596
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::employerhostedcontroller_show,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 1885640235962482
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::employerhostedcontroller_update,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 7979847784262040
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedules::interviewerscontroller_available_interviewers,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 4350550965392648
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedulescontroller_create,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 7161842894874428
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedulescontroller_edit,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 1699512103837723
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedulescontroller_meeting_blocks,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 3043427658056844
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "q": "p50:trace.rack.request{env:production,resource_name:meetingschedulescontroller_show,service:handshake}"
+                    }
+                ],
+                "show_legend": false,
+                "title": "trace.rack.request.duration.by.resource_service.50p with resource_name:meetin...",
+                "type": "timeseries"
+            },
+            "id": 8565536924872238
+        }
+    ]
+}

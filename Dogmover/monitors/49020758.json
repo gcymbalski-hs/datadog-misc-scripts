@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 49020758,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nFor the past 7 days, the number of Job Recommendation Digest Push Notification that have been sent is less than 500.  This could indicate a problem with the job-digest-to-push-notifications PubSub subscription.  It could also indicate that the data we're ingesting from the data platform is malformed. \n{{/is_alert}} \n{{#is_recovery}}\nAt least 20,000 Job Recommendation Digest Push Notifications have been sent.  Please continue to monitor this job until the queue is clear.\n{{/is_recovery}} @slack-incidents-students",
+    "multi": false,
+    "name": "[Beta] No Job Recommendation Digest Push Notifications have been sent",
+    "options": {
+        "escalation_message": "For the past 7 days, the number of Job Recommendation Digest Push Notification that have been sent is less than 500.  This could indicate a problem with the job-digest-to-push-notifications PubSub subscription.  It could also indicate that the data we're ingesting from the data platform is malformed.",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 180,
+        "renotify_occurrences": null,
+        "renotify_statuses": null,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 500.0,
+            "warning_recovery": 20000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_7d):default(sum:handshake.job_recommendation.push_notification_sent{*}.as_count(), 0) < 500",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

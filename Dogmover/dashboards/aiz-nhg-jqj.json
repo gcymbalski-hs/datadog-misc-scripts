@@ -1,0 +1,119 @@
+{
+    "author_handle": "lydia@joinhandshake.com",
+    "author_name": "Lydia Nash",
+    "created_at": "2022-06-10T20:22:24.832213+00:00",
+    "description": "",
+    "id": "aiz-nhg-jqj",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-06-10T20:24:29.042874+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Projected Miniservice Impact on Monolith Database",
+    "url": "/dashboard/aiz-nhg-jqj/projected-miniservice-impact-on-monolith-database",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Session Miniservice",
+                "type": "group",
+                "widgets": []
+            },
+            "id": 8133123704520330,
+            "layout": {
+                "height": 1,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Messaging Miniservice",
+                "type": "group",
+                "widgets": []
+            },
+            "id": 6179733919404548,
+            "layout": {
+                "height": 1,
+                "width": 12,
+                "x": 0,
+                "y": 1
+            }
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Session Service",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2 - query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:postgresql.queries.count{region:us-central1 AND db:handshake AND instance_name:handshake-brave-mayfly AND query_signature:c2bf85eae9aec0a9}.as_count().rollup(10)"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "sum:postgresql.queries.count{region:us-central1 AND db:handshake AND instance_name:handshake-brave-mayfly}.as_count().rollup(10)"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "User Session Requests on Monolith Database",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 6648663601744790,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 5579166596502936,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 2
+            }
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 65791101,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-emp-lifecycle\n\nError in production from next/employer/jobs_controller#upgrade_to_premium\n{{log.attributes.error.message}}",
+    "multi": false,
+    "name": "Resource next::employer::jobscontroller_upgrade_to_premium has an error on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_5m):sum:trace.rack.request.errors{env:production,resource_name:next::employer::jobscontroller_upgrade_to_premium,service:handshake}.as_count() > 0",
+    "tags": [
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-controller-errors",
+        "emp-lifecycle-self-service"
+    ],
+    "type": "query alert"
+}

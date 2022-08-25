@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 21287305,
+    "matching_downtimes": [],
+    "message": "`mailgun-forwarder` 90th percentile latency is too high.\n:jking@joinhandshake.com @slack-incidents-infrastructure",
+    "multi": false,
+    "name": "Service mailgun-forwarder has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.8
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):p90:trace.http.request{env:production,service:mailgun-forwarder} > 1",
+    "tags": [
+        "service:mailgun-forwarder",
+        "env:production"
+    ],
+    "type": "metric alert"
+}

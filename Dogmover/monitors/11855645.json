@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 11855645,
+    "matching_downtimes": [],
+    "message": "Ambassador CPU usage is high (cluster: {{cluster-name.name}}).\n\n[Datadog Kubernetes Pod and Deployments Dashboard](https://app.datadoghq.com/dashboard/5j5-6kj-ngv/kubernetes-pod--deployment-metrics?live=true&tile_size=m&tpl_var_deployment=ambassador-061&tpl_var_namespace=%2A)\n\nConsider:\n- The max number of pods has been reached and this needs to be increased?\n- Pods are in a bad state and need to be restarted?\n- A recent change that needs to be reverted / rolled back?\n\n@slack-incidents \n{{#is_match \"cluster-name.name\" \"uk-\"}}\n@slack-incidents-uk \n{{/is_match}} @slack-incidents-infrastructure",
+    "multi": true,
+    "name": "Ambassador CPU Usage Is High (Cluster: {{cluster-name.name}})",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "warning": 0.8
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):( max:docker.cpu.usage{kube_service:ambassador} by {cluster-name} / max:kubernetes.cpu.limits{kube_service:ambassador} by {cluster-name} ) / 100 > 0.9",
+    "tags": [],
+    "type": "query alert"
+}

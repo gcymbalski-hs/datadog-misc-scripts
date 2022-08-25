@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 24955607,
+    "matching_downtimes": [],
+    "message": "The number of  {{resource_name.name}}  workers exhausting their retries is high in production. @slack-incidents-edu",
+    "multi": true,
+    "name": "Importer: Sidekiq worker  {{resource_name.name}} has a high failure rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "critical_recovery": 0.01
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1h):sum:importer.retries_exhausted.count{env:production} by {worker}.as_count() / sum:trace.sidekiq.job.hits{env:production,service:importer-sidekiq} by {resource_name} > 0.05",
+    "tags": [
+        "env:production",
+        "service:importer-sidekiq"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 9569611,
+    "matching_downtimes": [],
+    "message": "Monitor Stuck Mass Emails at [https://app.joinhandshake.com/admin/object_browser](https://app.joinhandshake.com/admin/object_browser)\n\nA MassEmail must have gotten stuck after 7 attempts. Please see https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2424849/General+Runbook+of+Smaller+Incidents#GeneralRunbookofSmallerIncidents-LongrunningMassEmails @slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "Stuck Mass Emails",
+    "options": {
+        "escalation_message": "There are still stuck long-running mass emails",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 60,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_1h):sum:handshake.health.mass_emails_failed_retries_count{env:production} by {region} > 0",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

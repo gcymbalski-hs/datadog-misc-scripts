@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 9647235,
+    "matching_downtimes": [],
+    "message": "(This monitor belongs to the Employer Discovery Squad and is currently under construction!) The posting expiration summary emails that are sent to employers after a posting expires are delayed for some postings by more than 1 hour.",
+    "multi": true,
+    "name": "Posting Expiration Summaries Delayed",
+    "options": {
+        "escalation_message": "The posting expiration summary emails that are sent to employers after a posting expires are delayed for some postings by more than 1 hour.",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 720,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1d):max:handshake.update_expired_posting_summary_sent.missing_summary_for_contact_job{*} by {env,region}.as_count() > 2000",
+    "tags": [
+        "team:employer",
+        "squad:emp-marketplace"
+    ],
+    "type": "query alert"
+}

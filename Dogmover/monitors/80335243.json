@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 80335243,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-jobs-creation More than {{threshold}} employers were suspended by SIFT in the last 10 minutes. SIFT Dashboard - [HERE](https://console.sift.com/workflows)",
+    "multi": false,
+    "name": "SIFT - Many Employers Suspended",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0
+        }
+    },
+    "query": "sum(last_10m):avg:handshake.jobs.sift.webhook.suspend_employer{*}.as_count() > 10",
+    "tags": [],
+    "type": "query alert"
+}

@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 74618325,
+    "matching_downtimes": [],
+    "message": "{{es-cluster-name}} has unallocated shard replicas\n\n{{#is_match \"es-cluster-name.name\" \"employer\"}}\u00a0slack employer\u00a0{{/is_match}}\n{{#is_match \"es-cluster-name.name\" \"marketplace\"}}\u00a0slack employer\u00a0{{/is_match}}\n{{#is_match \"es-cluster-name.name\" \"universities\"}}\u00a0slack universities\u00a0{{/is_match}}\n{{#is_match \"es-cluster-name.name\" \"student\"}}\u00a0slack students\u00a0{{/is_match}}\n\n{{#is_alert}}\nElasticsearch cluster_status is \"yellow\", meaning some shard replicas are unallocated.\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{es-cluster-name}}] Elasticsearch cluster is healthy\n{{/is_recovery}}",
+    "multi": true,
+    "name": "BETA Elasticsearch Cluster {{es-cluster-name}} has Unallocated Shard Replicas",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0
+        }
+    },
+    "query": "max(last_15m):avg:elasticsearch.cluster_status{es-cluster-name IN (demo-universities,staging-universities,production-universities,uk-staging-universities,uk-production-universities,backup-universities-staging,backup-universities-production,demo-employers,staging-employers,production-employers,uk-staging-employers,uk-production-employers,backup-employers-staging,backup-employers-production,demo-students,staging-students,production-students,uk-staging-students,uk-production-students,backup-student-staging,backup-student-production,production-students-data,staging-students-data,production-employers-data,staging-employers-data,staging-marketplace-interactions,demo-marketplace-interactions,production-marketplace-interactions,uk-staging-marketplace-interactions,uk-production-marketplace-interactions)} by {es-cluster-name} < 2",
+    "tags": [],
+    "type": "query alert"
+}

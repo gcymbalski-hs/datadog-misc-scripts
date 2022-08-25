@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 37776668,
+    "matching_downtimes": [],
+    "message": "Query responses are taking more than a minute on average. Is something wrong with the cluster? Do we have an elevated number of requests? @slack-incidents-students",
+    "multi": false,
+    "name": "[Student Data Pipelines] Elevated Elasticsearch Query Response Time",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:elasticsearch.search.query.time{es-cluster-name:production-students-data} / avg:elasticsearch.search.query.total{es-cluster-name:production-students-data} > 0.05",
+    "tags": [
+        "team:student"
+    ],
+    "type": "metric alert"
+}

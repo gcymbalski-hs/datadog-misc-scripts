@@ -1,0 +1,24 @@
+{
+    "deleted": null,
+    "id": 65835160,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-beta",
+    "multi": true,
+    "name": "[TEST] High Number of Unavailable Pods",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 1800,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5
+        }
+    },
+    "query": "min(last_30m):avg:kubernetes_state.deployment.replicas_unavailable{cluster-name:staging} by {kube_deployment} / avg:kubernetes_state.deployment.replicas_desired{cluster-name:staging} by {kube_deployment} >= 0.5",
+    "tags": [],
+    "type": "query alert"
+}

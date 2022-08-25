@@ -1,0 +1,466 @@
+{
+    "author_handle": "kenon@joinhandshake.com",
+    "author_name": "Kenon Fachon",
+    "created_at": "2022-04-06T18:56:07.730823+00:00",
+    "description": "",
+    "id": "6qb-ga2-git",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-04-12T19:28:37.764669+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "es-cluster-name",
+            "prefix": "es-cluster-name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "node_name",
+            "prefix": "node_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster-id",
+            "prefix": "cluster_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster_deployment",
+            "prefix": "cluster_deployment"
+        }
+    ],
+    "title": "Kenon's Elasticsearch Dashboard",
+    "url": "/dashboard/6qb-ga2-git/kenons-elasticsearch-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "warning dashed",
+                        "label": "Unassigned Shard Replicas",
+                        "value": "y = 1"
+                    },
+                    {
+                        "display_type": "error dashed",
+                        "label": "Unassigned Shard Primaries",
+                        "value": "y = 2"
+                    },
+                    {
+                        "display_type": "ok dashed",
+                        "label": "Healthy",
+                        "value": "y = 0"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.index.health{$es-cluster-name,$cluster-id,$cluster_deployment,index_name:handshake-*} by {index_name}.rollup(max)"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch Index Health",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 3742484107882316,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "queries",
+                                "formula": "ewma_5(per_minute(query1))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.search.query.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "indexings",
+                                "formula": "ewma_5(per_minute(query1))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.indexing.index.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "deletes",
+                                "formula": "ewma_5(per_minute(query1))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.indexing.delete.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of queries/indexes/deletes per minute across all nodes",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2415959777052788,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 4,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "type": "iframe",
+                "url": "https://status.elastic.co/"
+            },
+            "id": 7754038260501314,
+            "layout": {
+                "height": 4,
+                "width": 4,
+                "x": 8,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 5"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "max:elasticsearch.thread_pool.search.queue{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name,es-cluster-name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Max of elasticsearch.thread_pool.search.queue over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 2278163456570184,
+            "layout": {
+                "height": 2,
+                "width": 4,
+                "x": 0,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Indexer Stats",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.document_updater.upserted{*,*,*,*,region:us-central1,$cluster_deployment,*} by {cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Upserted by Cluster",
+                            "type": "timeseries"
+                        },
+                        "id": 691823889920768,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.document_updater.upserted{*,*,*,*,region:us-central1,$cluster_deployment,*} by {source,index}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Upserted by Source and Index",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2110427811147856,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.elasticsearch_indexer.document_update.count{*,*,region:us-central1,$cluster_deployment,*} by {cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.elasticsearch_indexer.document_update.count.high{*,*,region:us-central1,$cluster_deployment,*} by {cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.elasticsearch_indexer.document_update.count.medium{*,*,region:us-central1,$cluster_deployment,*} by {cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.elasticsearch_indexer.document_update.count.low{*,*,region:us-central1,$cluster_deployment,*} by {cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.elasticsearch_indexer.document_update.count.very_low{*,*,region:us-central1,$cluster_deployment,*} by {cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "DocumentUpdate Count (queue) by Priority",
+                            "type": "timeseries"
+                        },
+                        "id": 7992236633257704,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:handshake.elasticsearch_indexer.index_creation.count.not_finished{*,*,*,region:us-central1,$cluster_deployment,*} by {env,cluster,index,region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Not Finished Index Creations",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7747653284535894,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.elasticsearch_indexer.index_creation_item.count.not_finished{*,*,*,region:us-central1,$cluster_deployment,*} by {env,cluster,index,region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Not Finished Index Creation Items",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2260211291701616,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 2
+                        }
+                    }
+                ]
+            },
+            "id": 5950074817847364,
+            "layout": {
+                "height": 5,
+                "is_column_break": true,
+                "width": 12,
+                "x": 0,
+                "y": 4
+            }
+        }
+    ]
+}

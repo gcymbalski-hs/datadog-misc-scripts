@@ -1,0 +1,447 @@
+{
+    "author_handle": "chris@joinhandshake.com",
+    "author_name": "Chris Schmitz",
+    "created_at": "2019-07-25T14:46:19.648128+00:00",
+    "description": "",
+    "id": "vqy-dv6-ava",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-10-07T18:15:04.087502+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "available_values": [],
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "[Product] Student Metrics",
+    "url": "/dashboard/vqy-dv6-ava/product-student-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Service Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "p50:trace.rack.request{$env,$region,service:handshake}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p90:trace.rack.request{$env,$region,service:handshake}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "p95:trace.rack.request{$env,$region,service:handshake}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "App Server Response Times",
+                            "type": "timeseries"
+                        },
+                        "id": 6547669000111086
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.rack.request.duration.by_service{$env,service:handshake,resource_name:applicationscontroller_create,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:trace.rack.request.duration.by_service{$env,service:handshake,resource_name:mobile::v1::applicationscontroller_create,$region}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Application#create Response Times",
+                            "type": "timeseries"
+                        },
+                        "id": 6043808424567012
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:trace.rack.request.errors{$env,service:handshake,$region}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "App Server Request Errors",
+                            "type": "timeseries"
+                        },
+                        "id": 6106825309701822
+                    }
+                ]
+            },
+            "id": 1216766662355834
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Product Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.applications.created_count{$region}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Applications Submitted",
+                            "type": "timeseries"
+                        },
+                        "id": 4033647004182090
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.unactivated_student.student_onboardings_controller.activate{$region}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Activations",
+                            "type": "timeseries"
+                        },
+                        "id": 7478844856131552
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:handshake.login.success{$region}.as_count(), sum:handshake.login.failure{$region}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Login Success vs. Failure",
+                            "type": "timeseries"
+                        },
+                        "id": 1650074159101834
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.login.failure{$region}.as_count()/(sum:handshake.login.success{$region}.as_count()+sum:handshake.login.failure{$region}.as_count())",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Login Failure Rate",
+                            "type": "timeseries"
+                        },
+                        "id": 5483227330178574
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Sent",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "Failed",
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "alias": "Already Processed",
+                                            "formula": "query3"
+                                        },
+                                        {
+                                            "alias": "Can't find user",
+                                            "formula": "query4"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:handshake.job_recommendation.push_notification_sent{$region}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:handshake.job_recommendation.push_notification_failed{$region}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "avg:handshake.job_recommendation.push_notification_already_processed{$region}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "avg:handshake.job_recommendation.cant_send_push_notification_to_user{$region}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "Job Digest Push Notifications: Sent vs Failed",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 646196675106898
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Failed",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "Sent",
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "alias": "Already Processed",
+                                            "formula": "query3"
+                                        },
+                                        {
+                                            "alias": "Can't find user",
+                                            "formula": "query4"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:handshake.job_recommendation.email_failed{*}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:handshake.job_recommendation.sent{*}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "avg:handshake.job_recommendation.email_already_processed{*}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "avg:handshake.job_recommendation.email_disabled{*}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "Job Digest Emails: Sent vs Failed",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 163507525562466
+                    }
+                ]
+            },
+            "id": 6008080254437160
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Inferred Interest",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.student_data_pipelines.search_client.response{status:200,search:combined_interests_search,env:production}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:handshake.student_data_pipelines.search_client.response{status:404,search:combined_interests_search,env:production}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Inferred Interest Search Index Responses",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5510623206736908
+                    }
+                ]
+            },
+            "id": 6318858640032808
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:handshake.applications.created_count{$region}.as_count()/avg:trace.http.request.hits{$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of handshake.applications.created_count over *",
+                "type": "timeseries"
+            },
+            "id": 4976850187960158
+        }
+    ]
+}

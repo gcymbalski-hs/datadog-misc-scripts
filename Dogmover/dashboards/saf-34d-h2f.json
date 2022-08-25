@@ -1,0 +1,126 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2019-03-28T22:45:07.041873+00:00",
+    "description": "",
+    "id": "saf-34d-h2f",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-09-11T18:33:27.732333+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "*",
+            "name": "auth_type",
+            "prefix": "auth_type"
+        },
+        {
+            "default": "us-central1",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Authentication",
+    "url": "/dashboard/saf-34d-h2f/authentication",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:handshake.login.attempt{$env,$auth_type,$region} by {auth_type}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Login Attempt by Type",
+                "type": "timeseries"
+            },
+            "id": 4121030203423720
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:handshake.login.success{$env,$auth_type,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Login Success Sum",
+                "type": "timeseries"
+            },
+            "id": 4271038576673776
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:handshake.login.failure{$env,$auth_type,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:handshake.login.success{$env,$auth_type,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Login Success vs. Failure",
+                "type": "timeseries"
+            },
+            "id": 5793548900716080
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "on_right_yaxis": false,
+                        "q": "sum:handshake.login.failure{*}.as_count()/sum:handshake.login.attempt{*}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Login Failure Percentage",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": false
+                }
+            },
+            "id": 1185309502094932
+        }
+    ]
+}

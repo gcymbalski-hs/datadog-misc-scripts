@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 73282747,
+    "matching_downtimes": [],
+    "message": "Kube State Metrics is reporting 0 healthy pods in {{cluster-name.name}}\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Kube State Metrics",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 20,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_10m):avg:kubernetes.pods.running{kube_deployment:kube-state-metrics} by {cluster-name} <= 0",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

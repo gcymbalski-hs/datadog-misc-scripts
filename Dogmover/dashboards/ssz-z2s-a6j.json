@@ -1,0 +1,755 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2020-12-15T21:09:54.409113+00:00",
+    "description": "",
+    "id": "ssz-z2s-a6j",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-07-23T14:37:17.764795+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variable_presets": [
+        {
+            "name": "Demo",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "handshake-demo"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-demo"
+                }
+            ]
+        },
+        {
+            "name": "Production",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "handshake-production"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-production"
+                }
+            ]
+        },
+        {
+            "name": "Staging",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "handshake-staging"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-staging"
+                }
+            ]
+        },
+        {
+            "name": "UK Production",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "handshake-uk-production"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-uk-production"
+                }
+            ]
+        },
+        {
+            "name": "UK Staging",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "handshake-uk-staging"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-uk-staging"
+                }
+            ]
+        }
+    ],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "default": "*",
+            "name": "project_id",
+            "prefix": "project_id"
+        },
+        {
+            "default": "*",
+            "name": "database_id",
+            "prefix": "database_id"
+        },
+        {
+            "default": "*",
+            "name": "redis_instance_id",
+            "prefix": "instance_id"
+        }
+    ],
+    "title": "Infrastructure Squad Dashboard",
+    "url": "/dashboard/ssz-z2s-a6j/infrastructure-squad-dashboard",
+    "widgets": [
+        {
+            "definition": {
+                "global_time_target": "0",
+                "show_error_budget": true,
+                "slo_id": "7a1a9aa70d2150b4a862cc20a8c994de",
+                "time_windows": [
+                    "7d",
+                    "30d",
+                    "90d"
+                ],
+                "title_align": "left",
+                "title_size": "16",
+                "type": "slo",
+                "view_mode": "overall",
+                "view_type": "detail"
+            },
+            "id": 5051992415289890,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Kubernetes",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "\u00a0production max\u00a0",
+                                    "value": "y = 150"
+                                },
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "\u00a0uk-production max\u00a0",
+                                    "value": "y = 45"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:kubernetes_state.node.status{$project} by {cluster-name,status}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Nodes",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1254349566421642,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "top(sum:kubernetes.containers.state.terminated{$project,reason:oomkilled} by {cluster-name,kube_deployment}, 25, 'sum', 'desc')",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Killed by OOM",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2810162978844290,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "top(query1, 25, 'sum', 'desc')"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:kubernetes.containers.restarts{$project,!cluster-name:internal2} by {cluster-name,kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Container Restarts",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6932626588833566,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 7507826195907990
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Cloud NAT",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "\u00a0production max\u00a0",
+                                    "value": "y = 4096"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:gcp.router.nat.port_usage{$project_id} by {project_id,router_id}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Max Port Usage",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 39223604615340,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:gcp.router.nat.dropped_sent_packets_count{$project_id} by {project_id,router_id,reason}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "max:gcp.router.nat.dropped_received_packets_count{$project_id} by {project_id,router_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Dropped Packets",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5755345263356804,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 8211912373882626
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Cloud SQL (Monolith Only)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(max:gcp.cloudsql.database.cpu.utilization{$project_id,$database_id} by {database_id}, 25, 'max', 'desc')"
+                                }
+                            ],
+                            "title": "Max CPU Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "toplist"
+                        },
+                        "id": 6116994581059558,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.cpu.utilization{$project_id AND database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu,handshake-uk-production:handshake-apt-wahoo,handshake-uk-production:handshake-driving-stallion,handshake-uk-production:handshake-elasticsearch-indexer-intense-tiger,handshake-demo:handshake-cyan-collie,handshake-demo:handshake-miniature-havanese,handshake-demo:handshake-elasticsearch-indexer-mortified-worm,handshake-uk-staging:handshake-crabby-sheep,handshake-uk-staging:handshake-narrow-okapi,handshake-uk-staging:handshake-elasticsearch-indexer-scary-moose,handshake-staging:handshake-lime-cormorant,handshake-staging:handshake-courageous-tarsier,handshake-staging:handshake-elasticsearch-indexer-frightened-rattlesnake) AND $database_id} by {database_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CPU Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4654460643597446,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(max:gcp.cloudsql.database.memory.utilization{$project_id,$database_id} by {database_id}, 25, 'max', 'desc')"
+                                }
+                            ],
+                            "title": "Max Memory Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "toplist"
+                        },
+                        "id": 8462763596616532,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.memory.utilization{$project_id AND database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu,handshake-uk-production:handshake-apt-wahoo,handshake-uk-production:handshake-driving-stallion,handshake-uk-production:handshake-elasticsearch-indexer-intense-tiger,handshake-demo:handshake-cyan-collie,handshake-demo:handshake-miniature-havanese,handshake-demo:handshake-elasticsearch-indexer-mortified-worm,handshake-uk-staging:handshake-crabby-sheep,handshake-uk-staging:handshake-narrow-okapi,handshake-uk-staging:handshake-elasticsearch-indexer-scary-moose,handshake-staging:handshake-lime-cormorant,handshake-staging:handshake-courageous-tarsier,handshake-staging:handshake-elasticsearch-indexer-frightened-rattlesnake) AND $database_id} by {database_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Memory Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6723538246629280,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(max:gcp.cloudsql.database.disk.utilization{$project_id,$database_id} by {database_id}, 25, 'max', 'desc')"
+                                }
+                            ],
+                            "title": "Max Disk Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "toplist"
+                        },
+                        "id": 8216321086154698,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.utilization{$project_id AND database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu,handshake-uk-production:handshake-apt-wahoo,handshake-uk-production:handshake-driving-stallion,handshake-uk-production:handshake-elasticsearch-indexer-intense-tiger,handshake-demo:handshake-cyan-collie,handshake-demo:handshake-miniature-havanese,handshake-demo:handshake-elasticsearch-indexer-mortified-worm,handshake-uk-staging:handshake-crabby-sheep,handshake-uk-staging:handshake-narrow-okapi,handshake-uk-staging:handshake-elasticsearch-indexer-scary-moose,handshake-staging:handshake-lime-cormorant,handshake-staging:handshake-courageous-tarsier,handshake-staging:handshake-elasticsearch-indexer-frightened-rattlesnake) AND $database_id} by {database_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Disk Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7319652006865960,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 2
+                        }
+                    }
+                ]
+            },
+            "id": 4450431967974882,
+            "layout": {
+                "height": 1,
+                "is_column_break": true,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Memorystore",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(max:gcp.redis.stats.memory.usage_ratio{$project_id,$redis_instance_id} by {instance_id}, 25, 'max', 'desc')"
+                                }
+                            ],
+                            "title": "Max Memory Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "toplist"
+                        },
+                        "id": 8944453182467148,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.stats.memory.usage_ratio{$project_id,$redis_instance_id} by {instance_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Memory Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3789786039499854,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "value": "y = 0.8"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.stats.memory.system_memory_usage_ratio{$project_id,$redis_instance_id} by {instance_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "System Memory Usage",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4421041014746042,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "value": "y = 0.8"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.stats.cache_hit_ratio{$project_id,$redis_instance_id} by {instance_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Cache Hit Ratio",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4841564599153266,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 2
+                        }
+                    }
+                ]
+            },
+            "id": 8136947712656394
+        }
+    ]
+}

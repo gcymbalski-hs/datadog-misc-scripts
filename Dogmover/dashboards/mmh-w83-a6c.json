@@ -1,0 +1,104 @@
+{
+    "author_handle": "smcauliffe@joinhandshake.com",
+    "author_name": "Sean McAuliffe",
+    "created_at": "2019-06-17T23:14:39.073051+00:00",
+    "description": "",
+    "id": "mmh-w83-a6c",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-04-12T20:32:04.063629+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "es-cluster-name",
+            "prefix": "es-cluster-name"
+        },
+        {
+            "default": "handshake-staging-student_career_fairs-20210412200748",
+            "name": "index-name",
+            "prefix": "index_name"
+        }
+    ],
+    "title": "[Elasticsearch] Reindex Status",
+    "url": "/dashboard/mmh-w83-a6c/elasticsearch-reindex-status",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.index.docs.count{$es-cluster-name,$index-name} by {index_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Doc count by index",
+                "type": "timeseries"
+            },
+            "id": 682508882267080
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_10(per_minute(sum:elasticsearch.index.docs.count{$es-cluster-name,$index-name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Overall doc rate per minute",
+                "type": "timeseries"
+            },
+            "id": 5731480505790938
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_10(per_minute(sum:elasticsearch.index.docs.count{$es-cluster-name,$index-name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Overall doc rate per minute",
+                "type": "timeseries"
+            },
+            "id": 582792934481406
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_10(per_minute(sum:elasticsearch.index.docs.count{$es-cluster-name,$index-name} by {index_name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Doc rate by index per minute",
+                "type": "timeseries"
+            },
+            "id": 4568831430446648
+        }
+    ]
+}

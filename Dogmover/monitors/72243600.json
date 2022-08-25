@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 72243600,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-emp-lifecycle\n \n Error in production from next/employer/self_service/stripe_webhooks_controller#self_service_payment_webhook",
+    "multi": false,
+    "name": "Resource next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook has an error on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_5m):sum:trace.rack.request.errors{resource_name:next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook,env:production}.as_count() > 0",
+    "tags": [
+        "emp-lifecycle",
+        "emp-lifecycle-self-service",
+        "team:employer",
+        "emp-lfc-controller-errors"
+    ],
+    "type": "query alert"
+}

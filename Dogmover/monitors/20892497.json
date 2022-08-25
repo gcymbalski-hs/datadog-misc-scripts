@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 20892497,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-students\n{{#is_alert}}\nThere is a spike in Student Applications reindex. Please investigate why there is a sudden increase and resolve it.\n{{/is_alert}}",
+    "multi": true,
+    "name": "SearchIndices::StudentApplications reindex upsert spike",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1000000.0,
+            "warning": 500000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):sum:handshake.document_updater.upserted{index:searchindices::studentapplications,cluster:students,env:production} by {index}.as_count() > 1000000",
+    "tags": [
+        "team:student"
+    ],
+    "type": "query alert"
+}

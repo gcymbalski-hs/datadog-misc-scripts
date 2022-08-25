@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 70038341,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\n\n{{event.title}} - {{event.text}}\n\nThis event means that we did not identify the prerequisite data for building monthly analytics digests for Premium Employers.\nIt may mean that the handshake-postgres-to-bigquery data pipeline that copies data to Snowflake did not run or is behind.\n\n**Links**\n\nIn Confluence see Development / Employer Product Development / Embedded Analytics\n\n[Worker](https://github.com/joinhandshake/handshake/blob/master/app/workers/scheduled_employer_analytics_worker.rb)\n\n[Cloud Composer (US Production)](https://console.cloud.google.com/composer/environments?project=handshake-production)\n{{/is_alert}} \n\n @slack-incidents-emp-integ-analytics",
+    "multi": true,
+    "name": "Employer Analytics - Data Readiness Event",
+    "options": {
+        "enable_logs_sample": false,
+        "escalation_message": "",
+        "groupby_simple_monitor": false,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "restriction_query": null,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        },
+        "timeout_h": 0
+    },
+    "query": "events(\"-project:\"handshake-uk-production\" tags:\"env:production\" source:my_apps \\\"Employer Analytics Reports Alert\\\"\").rollup(\"count\").by(\"project\").last(\"5m\") >= 1",
+    "tags": [
+        "team:employer",
+        "feature:employer-analytics"
+    ],
+    "type": "event-v2 alert"
+}

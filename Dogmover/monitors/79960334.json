@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 79960334,
+    "matching_downtimes": [],
+    "message": "Redis instance {{instance_id.name}} is rejecting connections.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Redis Connections Rejected",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 900,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "sum(last_15m):max:gcp.redis.stats.reject_connections_count{!project_id:handshake-development-204119} by {instance_id}.as_count() > 0",
+    "tags": [
+        "repo:terraform-datadog",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

@@ -1,0 +1,221 @@
+{
+    "author_handle": "support-handshake-1",
+    "author_name": "Datadog Support",
+    "created_at": "2021-02-04T15:16:19.745655+00:00",
+    "description": null,
+    "id": "62s-d4i-7az",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2021-02-04T15:19:01.978675+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Datadog Support] Custom Metrics",
+    "url": "/dashboard/62s-d4i-7az/datadog-support-custom-metrics",
+    "widgets": [
+        {
+            "definition": {
+                "sizing": "zoom",
+                "type": "image",
+                "url": "https://imgix.datadoghq.com/img/about/presskit/logo-v/logo_vertical_purple.png"
+            },
+            "id": 391128091292394,
+            "layout": {
+                "height": 14,
+                "width": 14,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "## OVERVIEW\n\n> A custom metric is a single, unique combination of a metric name, host ID and any tags. Datadog charges based on the monthly average of unique custom metrics submitted to the Datadog Infrastructure service per hour.\n\n[Documentation](https://docs.datadoghq.com/account_management/billing/pricing/)",
+                "font_size": "14",
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 6965502459140292,
+            "layout": {
+                "height": 14,
+                "width": 106,
+                "x": 15,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:datadog.estimated_usage.metrics.custom{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Average Custom Metric Usage",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6591565225834754,
+            "layout": {
+                "height": 20,
+                "width": 39,
+                "x": 0,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:datadog.estimated_usage.hosts{*}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "on_right_yaxis": false,
+                        "q": "month_before(avg:datadog.estimated_usage.hosts{*})",
+                        "style": {
+                            "line_type": "dotted",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Estimate Usage per Host",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4918629825438078,
+            "layout": {
+                "height": 20,
+                "width": 40,
+                "x": 40,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "## Custom Metrics Billing\n\nClick [HERE](https://docs.datadoghq.com/account_management/billing/custom_metrics/?tab=countrategauge)\n\n**Note**: To identify the biggest contributors to your custom metric count, check the bottom of your usage page.\n\n## Ways to reduce count/things to check\n\n1. Is this metric being using anywhere (dashboard or monitor)? Ask DD for the unused custom metric report.\n2. Could this be a service check instead of a metric? The name and value suggest it's just a status (0 or 1) so perhaps could be better suited as a check;\n3. Remove or lower cardinality of tags where possible\n4. Is another DD feature providing similar metrics?\n5. Should this be an integration with standard metrics?\n6. Is this a histogram or distribution, which increases count by 5x. [More](https://docs.datadoghq.com/account_management/billing/custom_metrics/?tab=histogram)\n7. Remove host level granularity\n8. Metrics Without Limits beta. Click [HERE](https://www.datadoghq.com/videos/introducing-metrics-without-limits/)\n9. Distribution metrics. Click [HERE](https://docs.datadoghq.com/metrics/distributions/#customize-tagging)",
+                "font_size": "14",
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 7560603511041698,
+            "layout": {
+                "height": 32,
+                "width": 80,
+                "x": 0,
+                "y": 36
+            }
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "forecast(avg:datadog.estimated_usage.metrics.custom{*}, 'seasonal', 1)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Custom Metrics Forecast Estimated",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2394691784563882,
+            "layout": {
+                "height": 20,
+                "width": 40,
+                "x": 81,
+                "y": 15
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "## Metrics on Dashboards Report\n\nSimple console program written in Python 3 that utilizes the datadogpy API library to return a list of places in your account that contains any metric in a series of user provided metrics present on dashboards and/or monitors.\n\nDownload and installation instructions can be found [HERE](https://github.com/DataDog/datadogpy)",
+                "font_size": "14",
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 4918752650253256,
+            "layout": {
+                "height": 32,
+                "width": 41,
+                "x": 81,
+                "y": 36
+            }
+        }
+    ]
+}

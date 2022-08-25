@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 5843110,
+    "matching_downtimes": [],
+    "message": "[{{es-cluster-name}}] Elasticsearch cluster has had high JVM heap growth, indicating a large expensive query. Even if this incident resolves, the query should be researched and fixed to not be as expensive.\n\nNOTE: This is for the student team's cluster, and student team should be messaged to resolve.\n\n{{#is_alert}} Please investigate the slow logs and other metrics to identify the query, and make it more performant. {{/is_alert}}\n\n{{#is_recovery}} [{{es-cluster-name}}] Elasticsearch cluster JVM heap growth has returned to normal. The query that caused the large JVM heap growth should still be identified and fixed, as it can cause issues across the whole cluster and all queries. {{/is_recovery}} @slack-incidents-students @slack-incidents",
+    "multi": false,
+    "name": "High JVM Heap Growth",
+    "options": {
+        "escalation_message": "[{{es-cluster-name}}] Elasticsearch cluster still has high JVM heap growth, indicating a large expensive query, degrading the cluster. Even if this incident resolves, the query should be researched and fixed to not be as expensive.\n\nNOTE: This is for the student team's cluster, and student team should be messaged to resolve.\n\n{{#is_alert}} Please investigate the slow logs and other metrics to identify the query, and make it more performant. {{/is_alert}}",
+        "include_tags": false,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 60,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 6000000.0,
+            "warning": 3000000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):per_second(avg:jvm.mem.pools.old.used{es-cluster-name:production-students}) > 6000000",
+    "tags": [],
+    "type": "query alert"
+}

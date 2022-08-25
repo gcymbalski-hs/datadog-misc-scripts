@@ -1,0 +1,89 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-05-08T03:16:45.574091+00:00",
+    "description": "copying the main app postgres table to Snowflake Warehouse, for BI and Insights\n\nhttps://dbc-bfe09e31-cb35.cloud.databricks.com/#job/2438",
+    "id": "wju-8tn-4rg",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2018-05-12T18:57:50.787215+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": null,
+    "title": "[Data] Insights",
+    "url": "/dashboard/wju-8tn-4rg/data-insights",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:data_pipeline.PostgresToSnowflakeCopyJob.tables_copied.success{*} by {env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "title": "Postgres Table Copy Success (count)",
+                "type": "timeseries"
+            },
+            "id": 305550529
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:data_pipeline.PostgresToSnowflakeCopyJob.tables_copied.exception{*} by {env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "title": "Postgres Table Copy Exceptions (count)",
+                "type": "timeseries"
+            },
+            "id": 305550303
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:data_pipeline.PostgresToSnowflakeCopyJob.runtime_sec{*} by {env}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "cool"
+                        }
+                    }
+                ],
+                "title": "Job RunTime (seconds)",
+                "type": "timeseries"
+            },
+            "id": 305696962
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:data_pipeline.PostgresToSnowflakeCopyJob.snapshot_age_minutes{*} by {env}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Snapshot Age (minutes)",
+                "type": "timeseries"
+            },
+            "id": 307270062
+        }
+    ]
+}

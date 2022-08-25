@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 34231670,
+    "matching_downtimes": [],
+    "message": "`edu_email_events` error rate is too high.\n\nRunbooks: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2144404005/Runbooks+EDU+Email+Events\n\nOnce the monitor resolves we should watch and ensure that the error rate does not spike again\n\n@slack-incidents-edu",
+    "multi": true,
+    "name": "Service edu_email_events has a high error rate on env:production",
+    "options": {
+        "escalation_message": "Renotification: `edu_email_events` error rate is still too high.\n\n@slack-incidents-edu",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.2,
+            "warning": 0.1
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_10m):( sum:trace.rack.request.errors{env:production,service:edu_email_events} by {region}.as_count() / sum:trace.rack.request.hits{env:production,service:edu_email_events} by {region}.as_count() ) > 0.2",
+    "tags": [
+        "env:production",
+        "service:edu_email_events",
+        "team:university"
+    ],
+    "type": "query alert"
+}

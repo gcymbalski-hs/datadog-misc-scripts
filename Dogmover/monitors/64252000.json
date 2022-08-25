@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 64252000,
+    "matching_downtimes": [],
+    "message": "`next::employer::schoolrecommendationscontroller_index` average latency is too high.",
+    "multi": false,
+    "name": "Resource next::employer::schoolrecommendationscontroller_index has a high average latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.5
+        }
+    },
+    "query": "avg(last_10m):( avg:trace.rack.request{env:production,resource_name:next::employer::schoolrecommendationscontroller_index,service:handshake} ) > 1.5",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::schoolrecommendationscontroller_index",
+        "team:employer",
+        "emp-lifecycle",
+        "emp-lfc-controller-latency"
+    ],
+    "type": "query alert"
+}

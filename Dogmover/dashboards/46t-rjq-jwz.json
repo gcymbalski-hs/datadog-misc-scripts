@@ -1,0 +1,1541 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-02-22T16:44:39.147040+00:00",
+    "description": "An overview of your Elasticsearch metrics (cloned)",
+    "id": "46t-rjq-jwz",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-07-29T22:19:51.131439+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variable_presets": [
+        {
+            "name": "Employer Production",
+            "template_variables": [
+                {
+                    "name": "es-cluster-name",
+                    "value": "production-employers"
+                }
+            ]
+        },
+        {
+            "name": "Student production",
+            "template_variables": [
+                {
+                    "name": "es-cluster-name",
+                    "value": "production-students"
+                }
+            ]
+        }
+    ],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "es-cluster-name",
+            "prefix": "es-cluster-name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "node_name",
+            "prefix": "node_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster-id",
+            "prefix": "cluster_name"
+        },
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "cluster_deployment",
+            "prefix": "cluster_deployment"
+        }
+    ],
+    "title": "[Elasticsearch] Cluster Stats Timeboard",
+    "url": "/dashboard/46t-rjq-jwz/elasticsearch-cluster-stats-timeboard",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "queries",
+                                "formula": "ewma_5(per_minute(query1))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.search.query.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "indexings",
+                                "formula": "ewma_5(per_minute(query1))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.indexing.index.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "deletes",
+                                "formula": "ewma_5(per_minute(query1))"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.indexing.delete.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of queries/indexes/deletes per minute across all nodes",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 282233341
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_3(derivative(sum:elasticsearch.search.query.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name,es-cluster-name}))*1000/ewma_3(derivative(sum:elasticsearch.search.query.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name,es-cluster-name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch query time, per query, on each node (ms)",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 290381857
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "max:elasticsearch.thread_pool.index.queue{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "max:elasticsearch.thread_pool.search.queue{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "max:elasticsearch.thread_pool.bulk.queue{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "elasticsearch.thread_pool.index.queue, elasticsearch.thread_pool.search.queue...",
+                "type": "timeseries"
+            },
+            "id": 282218159
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error bold",
+                        "label": "High Memory Pressure",
+                        "value": "y = 75"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:jvm.mem.heap_in_use{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "thin",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "JVM Heap Use percent",
+                "type": "timeseries"
+            },
+            "id": 282218392
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "(derivative(sum:elasticsearch.indexing.index.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})*1000/derivative(sum:elasticsearch.indexing.index.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch indexing time (ms)",
+                "type": "timeseries"
+            },
+            "id": 282216675
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:elasticsearch.active_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}, avg:elasticsearch.relocating_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}, avg:elasticsearch.initializing_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}, avg:elasticsearch.unassigned_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.active_primary_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch shards",
+                "type": "timeseries"
+            },
+            "id": 282216678
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "rate(sum:elasticsearch.docs.count{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {es-cluster-name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch document count growth (per sec)",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 282216673
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.number_of_nodes{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.number_of_data_nodes{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch nodes",
+                "type": "timeseries"
+            },
+            "id": 282216677
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 5"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "max:elasticsearch.thread_pool.search.queue{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name,es-cluster-name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Max of elasticsearch.thread_pool.search.queue over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 289915862
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "top(query1, 10, \"mean\", \"desc\")"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.store.size{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch Node Memory Size",
+                "type": "timeseries"
+            },
+            "id": 282216676
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:elasticsearch.active_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {es-cluster-name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch Active shards by cluster",
+                "type": "timeseries"
+            },
+            "id": 282216679
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.fielddata.size{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Field data size per node",
+                "type": "timeseries"
+            },
+            "id": 282225933
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:jvm.mem.pools.young.used{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "thin",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Young Memory Used/Max",
+                "type": "timeseries"
+            },
+            "id": 282218529
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "((ewma_5(per_minute(sum:jvm.gc.collectors.old.collection_time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name,es-cluster-name}))+ewma_5(per_minute(sum:jvm.gc.collectors.young.collection_time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name,es-cluster-name})))/60)*100",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "JVM GC Time Percentage",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 331920648
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:jvm.mem.pools.old.used{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "thin",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "avg:jvm.mem.pools.old.max{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "thin",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Old Memory Used/Max",
+                "type": "timeseries"
+            },
+            "id": 282218673
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_second(avg:jvm.mem.pools.old.used{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "thin",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Old Memory Used Increase Rate",
+                "type": "timeseries"
+            },
+            "id": 330280266
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "(per_minute(sum:jvm.gc.collectors.young.collection_time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})/60)*100",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Young GC percent per minute",
+                "type": "timeseries"
+            },
+            "id": 282219640
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(sum:jvm.gc.collectors.old.collection_time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Old GC (Units unclear)",
+                "type": "timeseries"
+            },
+            "id": 282220575
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(sum:jvm.gc.collectors.young.collection_time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Young Garbage Collection Time per minute",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5308485724393274
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.indices.segments.doc_values_memory_in_bytes{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Doc values size per node",
+                "type": "timeseries"
+            },
+            "id": 282226055
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:elasticsearch.indices.query_cache.hit_count{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:elasticsearch.indices.query_cache.miss_count{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "ES Query Cache hit vs. miss",
+                "type": "timeseries"
+            },
+            "id": 282226829
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "(derivative(sum:elasticsearch.search.fetch.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})+derivative(sum:elasticsearch.search.query.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}))*1000/derivative(sum:elasticsearch.search.query.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch query + fetch time (ms)",
+                "type": "timeseries"
+            },
+            "id": 282216674
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_5(per_minute(avg:elasticsearch.search.query.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Queries per minute (smoothed)",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 290395810
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.get.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Get time minute by node",
+                "type": "timeseries"
+            },
+            "id": 289922715
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "per_minute(sum:elasticsearch.transport.tx_size{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Transmit Bytes Per Minute",
+                "type": "timeseries"
+            },
+            "id": 290019152
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "per_minute(avg:elasticsearch.indices.translog.operations{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.translog.operations over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 290019803
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.indexing.index.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Indexes per minute",
+                "type": "timeseries"
+            },
+            "id": 290395817
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.merges.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg merge count per minute",
+                "type": "timeseries"
+            },
+            "id": 290058947
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.search.fetch.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Fetches per minute",
+                "type": "timeseries"
+            },
+            "id": 290395838
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.refresh.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Refreshes per minute",
+                "type": "timeseries"
+            },
+            "id": 290395897
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.merges.total.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Average merge time per minute",
+                "type": "timeseries"
+            },
+            "id": 290064532
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.search.fetch.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.search.fetch.time over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 290059064
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "per_minute(query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.search.query.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.search.query.time over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 8714741943029906
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.refresh.total.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.refresh.total.time over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 290066314
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "derivative(sum:elasticsearch.search.fetch.time{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})*1000/derivative(sum:elasticsearch.search.query.total{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch fetch time (ms)",
+                "type": "timeseries"
+            },
+            "id": 290381705
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:elasticsearch.indices.query_cache.hit_count{$node_name,$es-cluster-name,$cluster-id,$cluster_deployment} by {node_name}/(sum:elasticsearch.indices.query_cache.hit_count{$node_name,$es-cluster-name,$cluster-id,$cluster_deployment} by {node_name}+sum:elasticsearch.indices.query_cache.miss_count{$node_name,$es-cluster-name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "query cache hit rate by node",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": false
+                }
+            },
+            "id": 290383913
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:elasticsearch.thread_pool.search.rejected{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Sum of elasticsearch.thread_pool.search.rejected over $cluster by node_name",
+                "type": "timeseries"
+            },
+            "id": 294941903
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.index.store_size{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Store size by index (including replicas)",
+                "type": "timeseries"
+            },
+            "id": 330520329
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.index.primary_store_size{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Store size by index (primary shards only)",
+                "type": "timeseries"
+            },
+            "id": 4743774670894380
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.index.docs.count{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Doc count by index",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 330520336
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_10(per_minute(sum:elasticsearch.index.docs.count{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Doc count rate/minute by index",
+                "type": "timeseries"
+            },
+            "id": 334871767
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.index.docs.deleted{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Deleted docs by index",
+                "type": "timeseries"
+            },
+            "id": 330521653
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "ewma_5(per_minute(avg:elasticsearch.indices.segments.memory_in_bytes{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name}))",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.segments.memory_in_bytes over $es-cluster-name,$...",
+                "type": "timeseries"
+            },
+            "id": 330905290
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.indices.segments.terms_memory_in_bytes{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.segments.terms_memory_in_bytes over $es-cluster-...",
+                "type": "timeseries"
+            },
+            "id": 330905383
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.indices.segments.stored_fields_memory_in_bytes{$es-cluster-name,$cluster-id,$node_name,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.segments.stored_fields_memory_in_bytes over $es-...",
+                "type": "timeseries"
+            },
+            "id": 330905977
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:elasticsearch.indices.segments.stored_fields_memory_in_bytes{$es-cluster-name,$cluster-id,$node_name,$cluster_deployment} by {node_name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.segments.stored_fields_memory_in_bytes over $es-...",
+                "type": "timeseries"
+            },
+            "id": 330916640
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "per_minute(avg:elasticsearch.indices.segments.count{$es-cluster-name,$cluster-id,$node_name,$cluster_deployment} by {node_name,es-cluster-name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.segments.count over $es-cluster-name,$cluster-id...",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1655974941444288
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "max:elasticsearch.index.primary_shards{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Max of elasticsearch.index.primary_shards over $es-cluster-name,$node_name,$c...",
+                "type": "timeseries"
+            },
+            "id": 332006218
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.primaries.search.query.current{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Current Search Queries",
+                "type": "timeseries"
+            },
+            "id": 332915068
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.indices.query_cache.memory_size_in_bytes{$node_name,$es-cluster-name,$cluster-id,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Avg of elasticsearch.indices.query_cache.memory_size_in_bytes over $node_name...",
+                "type": "timeseries"
+            },
+            "id": 334794100
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "per_minute(avg:system.cpu.user{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {name})",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Inprogress: CPU usage",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3920837924055824
+        },
+        {
+            "definition": {
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:elasticsearch.breakers.parent.tripped{$es-cluster-name,$cluster-id,$node_name,$cluster_deployment} by {node_name}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Parent Breaker Tripped",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5861049849028914
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "warning dashed",
+                        "label": "Unassigned Shard Replicas",
+                        "value": "y = 1"
+                    },
+                    {
+                        "display_type": "error dashed",
+                        "label": "Unassigned Shard Primaries",
+                        "value": "y = 2"
+                    },
+                    {
+                        "display_type": "ok dashed",
+                        "label": "Healthy",
+                        "value": "y = 0"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.index.health{$es-cluster-name,$cluster-id,$cluster_deployment,index_name:handshake-*} by {index_name}.rollup(max)"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Elasticsearch Index Health",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 5136854423041000
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:elasticsearch.relocating_shards{$es-cluster-name,$cluster_deployment} by {es-cluster-name}.rollup(max)"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Relocating Shards by Cluster",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 6367179137039196
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1 / query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:elasticsearch.index.primary_store_size{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:elasticsearch.index.docs.count{$es-cluster-name,$node_name,$cluster-id,$cluster_deployment} by {index_name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "Avg size per doc",
+                "type": "timeseries"
+            },
+            "id": 839541055545554
+        }
+    ]
+}

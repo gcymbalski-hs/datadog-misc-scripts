@@ -1,0 +1,137 @@
+{
+    "author_handle": "lovisa@joinhandshake.com",
+    "author_name": "Lovisa Svallingson",
+    "created_at": "2020-03-20T21:23:59.158328+00:00",
+    "description": "",
+    "id": "vha-pgy-ktw",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-03-23T19:35:55.147858+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "handshake-uk-production",
+            "name": "project",
+            "prefix": "project_id"
+        }
+    ],
+    "title": "Insights BigQuery cost",
+    "url": "/dashboard/vha-pgy-ktw/insights-bigquery-cost",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Projects at a glance",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(sum:gcp.bigquery.query.count{*} by {project_id}.as_count(), 10, 'max', 'desc')"
+                                }
+                            ],
+                            "time": {},
+                            "title": "Sum of BigQuery queries per project",
+                            "type": "toplist"
+                        },
+                        "id": 8409321613359712
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(avg:gcp.bigquery.query.execution_times.avg{*} by {project_id}, 10, 'mean', 'desc')"
+                                }
+                            ],
+                            "time": {},
+                            "title": "Average query execution times ",
+                            "type": "toplist"
+                        },
+                        "id": 7741932103144192
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "q": "top(sum:data_pipeline.GCSToBigQuery.tables_copied_to_bigquery.success{*} by {env}, 10, 'mean', 'desc')"
+                                }
+                            ],
+                            "time": {},
+                            "title": "Data pipeline GCSToBigQuery jobs succeeded",
+                            "type": "toplist"
+                        },
+                        "id": 7193176591966818
+                    }
+                ]
+            },
+            "id": 4521627246012782
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Query and storage cost over time",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.bigquery.query.scanned_bytes_billed{$project}, sum:gcp.bigquery.query.scanned_bytes_billed{$project}/1000, sum:gcp.bigquery.query.scanned_bytes_billed{$project}*0.005",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Summed Scanned Bytes/Cost ",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1091295456231486
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.bigquery.storage.uploaded_bytes_billed{$project}, sum:gcp.bigquery.storage.uploaded_bytes_billed{$project}/1000, sum:gcp.bigquery.storage.uploaded_bytes_billed{$project}*0.02",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Uploaded bytes billed/Cost",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8108602010654488
+                    }
+                ]
+            },
+            "id": 6705875258586234
+        }
+    ]
+}

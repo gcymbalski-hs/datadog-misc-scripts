@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 9133316,
+    "matching_downtimes": [],
+    "message": "`handshake` Apdex deviated too much from its usual value.\n\n@slack-incidents @pagerduty-MonolithSharedProduct",
+    "multi": false,
+    "name": "Handshake Demo Apdex Low",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.8,
+            "warning": 0.9
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_15m):avg:trace.rack.request.apdex.by.service{service:handshake,env:demo} < 0.8",
+    "tags": [
+        "service:handshake",
+        "env:demo",
+        "maintenance:true",
+        "region:us-central1"
+    ],
+    "type": "metric alert"
+}

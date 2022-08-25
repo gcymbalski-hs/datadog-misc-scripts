@@ -1,0 +1,42 @@
+{
+    "deleted": null,
+    "id": 33522998,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1361479480,
+            "monitor_id": 33522998,
+            "scope": [
+                "*"
+            ],
+            "start": 1626805632
+        }
+    ],
+    "message": "https://app.datadoghq.com/dashboard/r72-x6v-q7w/transactional-outbox\n\n@slack-Main_Account-incidents-edu",
+    "multi": false,
+    "name": "Outbox publisher has large backlog of items",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 1000.0,
+            "warning": 500.0
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_5m):sum:handshake.transactional_outbox_processor.unpublished_outbox_items.count{env:production,region:us-central1} > 1000",
+    "tags": [],
+    "type": "metric alert"
+}

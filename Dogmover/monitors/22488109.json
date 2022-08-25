@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 22488109,
+    "matching_downtimes": [],
+    "message": "This indicates that the shared buffer in the Postgres instance ({{database_id.name}}) is almost full.\n\nThe used_buffers metric is driven by the pg_buffercache extension, and counts the number of buffers that is used by \"popular\" cached items. This indicates that we may need to expand the memory resources for the instance.\n\n@slack-incidents-beta",
+    "multi": true,
+    "name": "High Utilization of Postgres Shared Buffer",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_1h):avg:postgresql.pgbuffercache.used_buffers{*} by {postgres-instance-name} / avg:postgresql.pgbuffercache.max_buffers{*} by {postgres-instance-name} > 0.9",
+    "tags": [],
+    "type": "query alert"
+}

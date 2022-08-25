@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 8207639,
+    "matching_downtimes": [],
+    "message": "`handshake-elasticsearch` error rate is too high.\n\nTo troubleshoot, check the `handshake-elasticsearch` [service page](/apm/service/handshake-elasticsearch/elasticsearch.query?env=production) or [recent traces](/apm/traces?service=handshake-elasticsearch&name=elasticsearch.query&env=production).\n @slack-Main_Account-incidents-beta",
+    "multi": true,
+    "name": "Service handshake-elasticsearch has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.6,
+            "warning": 0.45
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):( sum:trace.elasticsearch.query.errors{service:handshake-elasticsearch,env:production} by {region} / sum:trace.elasticsearch.query.hits{service:handshake-elasticsearch,env:production} by {region} ) > 0.6",
+    "tags": [
+        "service:handshake-elasticsearch",
+        "env:production"
+    ],
+    "type": "query alert"
+}

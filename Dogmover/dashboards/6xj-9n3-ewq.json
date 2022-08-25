@@ -1,0 +1,202 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2022-05-11T16:15:37.298853+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "6xj-9n3-ewq",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-05-13T21:02:42.645064+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "handshake-staging",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "available_values": [],
+            "default": "handshake-staging:handshake-polished-hornet",
+            "name": "database_id",
+            "prefix": "database_id"
+        }
+    ],
+    "title": "[Staging] High Database Connections",
+    "url": "/dashboard/6xj-9n3-ewq/staging-high-database-connections",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1 + query2 + query3 + query4 + query5"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:pgbouncer.pools.sv_idle{kube_deployment IN (handshake-polished-hornet-pgbouncer,handshake-polished-hornet-web-pgbouncer,sidekiq-handshake-polished-hornet-pgbouncer,stu-indexer-handshake-polished-hornet-pgbouncer,uni-indexer-handshake-polished-hornet-pgbouncer,emp-indexer-handshake-polished-hornet-pgbouncer) AND $project} by {kube_deployment}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "sum:pgbouncer.pools.sv_used{kube_deployment IN (handshake-polished-hornet-pgbouncer,handshake-polished-hornet-web-pgbouncer,sidekiq-handshake-polished-hornet-pgbouncer,stu-indexer-handshake-polished-hornet-pgbouncer,uni-indexer-handshake-polished-hornet-pgbouncer,emp-indexer-handshake-polished-hornet-pgbouncer) AND $project} by {kube_deployment}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "sum:pgbouncer.pools.sv_login{kube_deployment IN (handshake-polished-hornet-pgbouncer,handshake-polished-hornet-web-pgbouncer,sidekiq-handshake-polished-hornet-pgbouncer,stu-indexer-handshake-polished-hornet-pgbouncer,uni-indexer-handshake-polished-hornet-pgbouncer,emp-indexer-handshake-polished-hornet-pgbouncer) AND $project} by {kube_deployment}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "sum:pgbouncer.pools.sv_active{kube_deployment IN (handshake-polished-hornet-pgbouncer,handshake-polished-hornet-web-pgbouncer,sidekiq-handshake-polished-hornet-pgbouncer,stu-indexer-handshake-polished-hornet-pgbouncer,uni-indexer-handshake-polished-hornet-pgbouncer,emp-indexer-handshake-polished-hornet-pgbouncer) AND $project} by {kube_deployment}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query5",
+                                "query": "sum:pgbouncer.pools.sv_tested{kube_deployment IN (handshake-polished-hornet-pgbouncer,handshake-polished-hornet-web-pgbouncer,sidekiq-handshake-polished-hornet-pgbouncer,stu-indexer-handshake-polished-hornet-pgbouncer,uni-indexer-handshake-polished-hornet-pgbouncer,emp-indexer-handshake-polished-hornet-pgbouncer) AND $project} by {kube_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Total PGBouncer Connections to handshake-polished-hornet",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4673832049883042,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:kubernetes.pods.running{kube_deployment:session-service*,$project} by {kube_deployment}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Total PGBouncer Connections to handshake-polished-hornet",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 1289285182075518,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 8
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "max",
+                        "value": "y = 100"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:gcp.cloudsql.database.postgresql.num_backends{*}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Active Connections to handshake-polished-hornet",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": false
+                }
+            },
+            "id": 8193540662137104,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 12
+            }
+        }
+    ]
+}

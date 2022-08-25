@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 71163859,
+    "matching_downtimes": [],
+    "message": "`next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook` error rate is too high.",
+    "multi": false,
+    "name": "Resource next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook has a high error rate on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m):( sum:trace.rack.request.errors{env:production,resource_name:next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook,service:handshake}.as_count() / sum:trace.rack.request.hits{env:production,resource_name:next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook,service:handshake}.as_count() ) > 0.05",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::selfservice::stripewebhookscontroller_self_service_payment_webhook",
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-errors",
+        "emp-lifecycle-self-service"
+    ],
+    "type": "query alert"
+}

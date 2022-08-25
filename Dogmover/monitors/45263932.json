@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 45263932,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nHigh P50 values detected on student cluster resource {{resource_name.name}}  \n\nStudent Query Times: [https://app.datadoghq.com/dashboard/qic-8wr-xag/student-elasticsearch-query-times](https://app.datadoghq.com/dashboard/qic-8wr-xag/student-elasticsearch-query-times)\n\nCluster debugging: [https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/763593036/Elasticsearch+Cluster+Debugging](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/763593036/Elasticsearch+Cluster+Debugging)\n{{/is_alert}} \n\n{{#is_recovery}}\nP50 values have returned to normal range for student cluster resource {{resource_name.name}} \n{{/is_recovery}} \n\n\n@kenon@joinhandshake.com",
+    "multi": true,
+    "name": "Student Elasticsearch Slow queries P99",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0
+        },
+        "timeout_h": 0
+    },
+    "query": "percentile(last_30m):p99:trace.elasticsearch.query{env:production,region:us-central1,resource_name:post_handshake-production-student_*,!resource_name:*_doc/} by {resource_name} > 2",
+    "tags": [
+        "team:student",
+        "service:handshake-elasticsearch"
+    ],
+    "type": "query alert"
+}

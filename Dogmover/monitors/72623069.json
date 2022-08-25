@@ -1,0 +1,38 @@
+{
+    "deleted": null,
+    "id": 72623069,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1989932212,
+            "monitor_id": 72623069,
+            "scope": [
+                "*"
+            ],
+            "start": 1654125047
+        }
+    ],
+    "message": "{{#is_warning}}\n@slack-incidents-database \n\nDatabase CPU is 2x over last week. to investigate:\n\n- Has a new query been introduced? \n\n{{/is_warning}}\n\n{{#is_recovery}}\n@slack-incidents-database \n\nDatabase CPU has recovered\n\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[BETA] Database CPU is 200% Compared to Last Week",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 10.0,
+            "warning": 2.0
+        }
+    },
+    "query": "avg(last_5m):max:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-brave-mayfly} by {database_id} / week_before(max:gcp.cloudsql.database.cpu.utilization{database_id:handshake-production:handshake-brave-mayfly} by {database_id}) > 10",
+    "tags": [],
+    "type": "query alert"
+}

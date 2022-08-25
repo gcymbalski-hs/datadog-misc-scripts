@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 64664274,
+    "matching_downtimes": [],
+    "message": "`next::employer::jobfunctionscontroller_index` average latency is too high.\n\nSee runbooks and next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914",
+    "multi": false,
+    "name": "Resource next::employer::jobfunctionscontroller_index has a high average latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.3
+        }
+    },
+    "query": "avg(last_10m):( avg:trace.rack.request{env:production,resource_name:next::employer::jobfunctionscontroller_index,service:handshake} ) > 0.5",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::jobfunctionscontroller_index",
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-latency"
+    ],
+    "type": "query alert"
+}

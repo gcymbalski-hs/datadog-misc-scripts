@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 62502743,
+    "matching_downtimes": [],
+    "message": "ApplicationPackageWorker document generation has exceeded {{threshold}} ms. in duration. Please check associated Dashboard and logs here: https://app.datadoghq.com/s/d5c071843/wf8-nkb-vca\n \nFirst triggered at: {{first_triggered_at}} \n\nTiming when Triggered: {{value}}\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "ApplicationPackageWorker Generate Document",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 300000.0
+        }
+    },
+    "query": "max(last_5m):avg:handshake.application_package_worker.generate_timing.max{*} > 300000",
+    "tags": [
+        "team:employer",
+        "emp-lifecycle",
+        "ApplicationPackageWorker"
+    ],
+    "type": "query alert"
+}

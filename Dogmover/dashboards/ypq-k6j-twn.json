@@ -1,0 +1,590 @@
+{
+    "author_handle": "marc@joinhandshake.com",
+    "author_name": "Marc Chung",
+    "created_at": "2019-03-22T19:20:52.394780+00:00",
+    "description": "",
+    "id": "ypq-k6j-twn",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2020-10-21T20:07:25.633008+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "handshake-production",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "default": "handshake-production",
+            "name": "project_id",
+            "prefix": "project_id"
+        }
+    ],
+    "title": "Mailgun Ingestor",
+    "url": "/dashboard/ypq-k6j-twn/mailgun-ingestor",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:mailgun_event_ingestor.requests{$env}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of mailgun_event_ingestor.requests over $env",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 5651221593438910
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "avg:gcp.pubsub.topic.send_message_operation_count{topic_id:mailgun-events,$project_id}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Avg of gcp.pubsub.topic.send_message_operation_count over topic_id:mailgun-ev...",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3241965097330124
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Traffic to production",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_total{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Avg of envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_t...",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5800402464846356
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_time.avg{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_time.median{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_time.95percentile{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_time.avg...",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 264423979271308
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_5xx{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.external.upstream_rq_5xx{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "envoy.cluster.cluster_mailgun_event_ingestor_service_t_0.upstream_rq_5xx, env...",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3872951742636262
+                    }
+                ]
+            },
+            "id": 8624629711568434
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Traffic to production2",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_total{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Avg of envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_t...",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6709053252744322
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_time.avg{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_time.median{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_time.95percentile{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_time.avg...",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6171305728564402
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_4xx{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_5xx{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_4xx, env...",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2516803560548902
+                    }
+                ]
+            },
+            "id": 1384212324434754
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Old Graphs",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:data_pipeline.MailgunEventsIngestor_3600.num_events_processed.total{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Number of events processed",
+                            "type": "timeseries"
+                        },
+                        "id": 8981351808749112
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.m.joinhandshake.com.num_api_calls{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.joinhandshake.com.num_api_calls{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.notifications.joinhandshake.com.num_api_calls{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.mail.joinhandshake.com.num_api_calls{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "# of API calls",
+                            "type": "timeseries"
+                        },
+                        "id": 1862420279978316
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.num_events_processed.clicked{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "purple"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.num_events_processed.opened{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.num_events_processed.unsubscribed{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "orange"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.num_events_processed.bounced{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "grey"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_3600.num_events_processed.dropped{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Hourly number of events processed per event type",
+                            "type": "timeseries"
+                        },
+                        "id": 1268727011610674
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_180.num_events_processed.opened{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_180.num_events_processed.clicked{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_180.num_events_processed.bounced{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_180.num_events_processed.unsubscribed{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:data_pipeline.MailgunEventsIngestor_180.num_events_processed.dropped{*}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "data_pipeline.MailgunEventsIngestor_180.num_events_processed.opened, data_pip...",
+                            "type": "timeseries"
+                        },
+                        "id": 3088621893933976
+                    }
+                ]
+            },
+            "id": 4406796038897664
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun_event_ingestor.clicked{*}.as_count()"
+                    }
+                ],
+                "title": "mailgun_event_ingestor.clicked",
+                "type": "timeseries"
+            },
+            "id": 3697546066517393
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun_event_ingestor.delivered{*}.as_count()"
+                    }
+                ],
+                "title": "mailgun_event_ingestor.delivered",
+                "type": "timeseries"
+            },
+            "id": 1878695806416764
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun_event_ingestor.opened{*}.as_count()"
+                    }
+                ],
+                "title": "mailgun_event_ingestor.opened",
+                "type": "timeseries"
+            },
+            "id": 1710699335432129
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun_event_ingestor.permanent_fail{*}.as_count()"
+                    }
+                ],
+                "title": "mailgun_event_ingestor.permanent_fail",
+                "type": "timeseries"
+            },
+            "id": 5632197760500103
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun_event_ingestor.temporary_fail{*}.as_count()"
+                    }
+                ],
+                "title": "mailgun_event_ingestor.temporary_fail",
+                "type": "timeseries"
+            },
+            "id": 1588625617304279
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "avg:mailgun_event_ingestor.unsubscribed{*}.as_count()"
+                    }
+                ],
+                "title": "mailgun_event_ingestor.unsubscribed",
+                "type": "timeseries"
+            },
+            "id": 571383266161448
+        }
+    ]
+}

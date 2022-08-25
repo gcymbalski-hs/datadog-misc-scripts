@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 69335396,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-students the iOS binary size has increased anomalously.",
+    "multi": true,
+    "name": "iOS App Binary Too Big",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_15m"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_15m):anomalies(avg:mobile.app.binary.size{*} by {branch}, 'basic', 2, direction='both', interval=60, alert_window='last_15m', count_default_zero='true') > 1",
+    "tags": [],
+    "type": "query alert"
+}

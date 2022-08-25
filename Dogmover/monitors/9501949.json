@@ -1,0 +1,43 @@
+{
+    "deleted": null,
+    "id": 9501949,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 811291811,
+            "monitor_id": 9501949,
+            "scope": [
+                "*"
+            ],
+            "start": 1588011365
+        }
+    ],
+    "message": "@slack-incidents-data",
+    "multi": true,
+    "name": "Composer Task Failure",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 0.1
+        },
+        "timeout_h": 0
+    },
+    "query": "max(last_1h):max:gcp.composer.workflow.run_count{state:failed} by {project_id,workflow_name} > 0.1",
+    "tags": [
+        "team:data"
+    ],
+    "type": "metric alert"
+}

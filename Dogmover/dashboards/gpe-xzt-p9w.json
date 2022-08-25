@@ -1,0 +1,1633 @@
+{
+    "author_handle": "pierre@joinhandshake.com",
+    "author_name": "Pierre Maris",
+    "created_at": "2020-11-19T18:34:53.857487+00:00",
+    "description": "",
+    "id": "gpe-xzt-p9w",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2021-11-17T22:27:52.440653+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
+    "title": "Student GraphQL performance",
+    "url": "/dashboard/gpe-xzt-p9w/student-graphql-performance",
+    "widgets": [
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "REST",
+                                "expression": "p50:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake}"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "p50:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "GraphQL",
+                                "expression": "p50:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "p50:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 263071097846571,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "q": "(p50:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake} - p50:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql})"
+                    }
+                ],
+                "title": "Average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 4734708272340964,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 49,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "auto",
+                "text": "(Web) Employer recommendations",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 3027961647489136,
+            "layout": {
+                "height": 3,
+                "width": 47,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "auto",
+                "text": "(Mobile) Employer search",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 2717265894803212,
+            "layout": {
+                "height": 3,
+                "width": 46,
+                "x": 0,
+                "y": 54
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "q": "(p50:trace.rack.request{$env,resource:67028c751294d815,service:handshake} - p50:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql})"
+                    }
+                ],
+                "title": "Average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 7682044695784622,
+            "layout": {
+                "height": 15,
+                "width": 45,
+                "x": 49,
+                "y": 58
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "REST",
+                                "expression": "p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}"
+                            },
+                            {
+                                "alias_name": "GraphQL",
+                                "expression": "p50:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}, p50:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7620404482423038,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 112
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "auto",
+                "text": "(Web) Create employer favorite",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 4405728960466070,
+            "layout": {
+                "height": 3,
+                "width": 47,
+                "x": 0,
+                "y": 108
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "q": "(p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake} - p50:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql})"
+                    }
+                ],
+                "title": "Average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 7034840556002742,
+            "layout": {
+                "height": 15,
+                "width": 45,
+                "x": 49,
+                "y": 112
+            }
+        },
+        {
+            "definition": {
+                "legend_size": "0",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "REST",
+                                "expression": "p50:trace.rack.request{$env,resource:b2c0f921d47f09c5,service:handshake}"
+                            },
+                            {
+                                "alias_name": "GraphQL",
+                                "expression": "p50:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "q": "p50:trace.rack.request{$env,resource:b2c0f921d47f09c5,service:handshake}, p50:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6984220016172980,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "auto",
+                "text": "(Web) Delete employer favorite",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 3072026641085706,
+            "layout": {
+                "height": 3,
+                "width": 47,
+                "x": 0,
+                "y": 162
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "q": "((100 * (p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake} - p50:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql})) / p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake})"
+                    }
+                ],
+                "title": "Percent average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 5071039977224766,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 96,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "q": "((100 * (p50:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake} - p50:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql})) / p50:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake})"
+                    }
+                ],
+                "title": "Percent average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 7318897411350686,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 98,
+                "y": 4
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "formulas": [
+                            {
+                                "formula": "((100 * (query1 - query2)) / query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p50:trace.rack.request{$env,resource:67028c751294d815,service:handshake}"
+                            },
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p50:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Precent average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 7848146159955920,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 96,
+                "y": 58
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "q": "((100 * (p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake} - p50:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql})) / p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake})"
+                    }
+                ],
+                "title": "Percent average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 6057265285204914,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 96,
+                "y": 112
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "aggregator": "avg",
+                        "q": "(p50:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake} - p50:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql})"
+                    }
+                ],
+                "title": "Average response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 7144173560675638,
+            "layout": {
+                "height": 15,
+                "width": 45,
+                "x": 49,
+                "y": 166
+            }
+        },
+        {
+            "definition": {
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "REST",
+                                "expression": "p50:trace.rack.request{$env,resource:67028c751294d815,service:handshake}"
+                            },
+                            {
+                                "alias_name": "GraphQL",
+                                "expression": "p50:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            }
+                        ],
+                        "q": "p50:trace.rack.request{$env,resource:67028c751294d815,service:handshake}, p50:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 3897509243104288,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 58
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "REST",
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "GraphQL",
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "P99 response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4673661878957392,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 20
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "(query1 - query2)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "P99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 8801131313456742,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 49,
+                "y": 20
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "formulas": [
+                            {
+                                "formula": "((100 * (query1 - query2)) / query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:ff7f06c8e22220fa,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Percent p99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 8495753557143286,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 98,
+                "y": 20
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "REST",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "GraphQL",
+                                "formula": "query2"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:67028c751294d815,service:handshake}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "P99 response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7546154741242718,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 74
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "(query1 - query2)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:67028c751294d815,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "P99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 1792677574868300,
+            "layout": {
+                "height": 15,
+                "width": 45,
+                "x": 49,
+                "y": 74
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<=",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "formulas": [
+                            {
+                                "formula": "((100 * (query1 - query2)) / query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:67028c751294d815,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "Precent p99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 3893888949131326,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 96,
+                "y": 74
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "REST",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "GraphQL",
+                                "formula": "query2"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "P99 response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6740431062433990,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 128
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "(query1 - query2)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "P99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 5474273395901108,
+            "layout": {
+                "height": 15,
+                "width": 45,
+                "x": 49,
+                "y": 128
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "formulas": [
+                            {
+                                "formula": "((100 * (query1 - query2)) / query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Percent p99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 508464870191034,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 96,
+                "y": 128
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "REST",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "GraphQL",
+                                "formula": "query2"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:b2c0f921d47f09c5,service:handshake}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "P99 response time comparison for GraphQL vs. REST",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 423254877932580,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 182
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 0,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "(query1 - query2)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "P99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 2309277731011344,
+            "layout": {
+                "height": 15,
+                "width": 45,
+                "x": 49,
+                "y": 182
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "custom_unit": "%",
+                "precision": 0,
+                "requests": [
+                    {
+                        "conditional_formats": [
+                            {
+                                "comparator": ">",
+                                "palette": "white_on_green",
+                                "value": 25
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "white_on_red",
+                                "value": -25
+                            },
+                            {
+                                "comparator": ">",
+                                "palette": "black_on_light_green",
+                                "value": 0
+                            },
+                            {
+                                "comparator": "<",
+                                "palette": "black_on_light_red",
+                                "value": 0
+                            }
+                        ],
+                        "formulas": [
+                            {
+                                "formula": "((100 * (query1 - query2)) / query1)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.rack.request{$env,resource:43e3207c0d59592e,service:handshake}"
+                            },
+                            {
+                                "aggregator": "percentile",
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "title": "Percent p99 response time improvement for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 5997338418247114,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 96,
+                "y": 182
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "P95",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "P99",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "P50",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "P90",
+                                "formula": "query4"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p95:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p50:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "p90:trace.execute.graphql{$env,resource:bd61949fde26a68e,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Average response times for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4640291712724374,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 36
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "p99",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "p50",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "p90",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "p95",
+                                "formula": "query4"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p50:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p90:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "p95:trace.execute.graphql{$env,resource:a5eb0258d38f6c89,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response times for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 6376684949956248,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 90
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "P99",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "P95",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "P90",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "P50",
+                                "formula": "query4"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p99:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p95:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p90:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "p50:trace.execute.graphql{$env,resource:6fb6ecefecea2854,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response times for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 7494571642550554,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0,
+                "y": 144
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "value": "y = 1"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "P50",
+                                "formula": "query2"
+                            },
+                            {
+                                "alias": "P90",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "P95",
+                                "formula": "query3"
+                            },
+                            {
+                                "alias": "P99",
+                                "formula": "query4"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "p50:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p90:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query3",
+                                "query": "p95:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query4",
+                                "query": "p99:trace.execute.graphql{$env,resource:e094865b15c0edd2,service:student-graphql}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Average response times for GraphQL",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2591908127436328,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 0.08333333333333348,
+                "y": 198
+            }
+        }
+    ]
+}

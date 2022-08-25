@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 65173780,
+    "matching_downtimes": [],
+    "message": "`next::employer::eventscontroller_edit` p90 latency is too high.\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Resource next::employer::eventscontroller_edit has a high p90 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0,
+            "warning": 1.0
+        }
+    },
+    "query": "percentile(last_10m):(p90:trace.rack.request{env:production,resource_name:next::employer::eventscontroller_edit,service:handshake}) > 2",
+    "tags": [
+        "service:handshake",
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-controller-latency",
+        "resource_name:next::employer::eventscontroller_edit"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,828 @@
+{
+    "author_handle": "joel@joinhandshake.com",
+    "author_name": "Joel Kin",
+    "created_at": "2021-01-13T22:36:58.294577+00:00",
+    "description": "## Title\n\nDescribe this dashboard. Add links to other dashboards, monitors, wikis,  and docs to help your teammates. Markdown is supported.\n\n- [This might link to a dashboard](#)\n- [This might link to a wiki](#)",
+    "id": "fyn-eyi-sd4",
+    "is_read_only": false,
+    "layout_type": "free",
+    "modified_at": "2022-04-27T14:16:47.636641+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "Student Mobile (Deprecated)",
+    "url": "/dashboard/fyn-eyi-sd4/student-mobile-deprecated",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:trace.rack.request.hits{env:production,resource_name:next::student::mobile::v2::signincontroller_create} by {http.status_code}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "50 * query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:trace.rack.request.duration{resource_name:next::student::mobile::v2::signincontroller_create,env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "HTTP Status and Duration on Sign-In",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4206115956081963,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 21,
+                "y": 48
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "Tracks performance alongside requests in order to:\n\n1. See if performance scales non-linearly\n2. Spot unusual spikes in sign-ins\n\n(`401`s should \u2248 `200`s as unauthorized users sign in.)",
+                "font_size": "14",
+                "show_tick": true,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 8694776259600992,
+            "layout": {
+                "height": 24,
+                "width": 18,
+                "x": 70,
+                "y": 44
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:trace.rack.request.hits{env:production,resource_name:next::student::mobile::v1::conversationscontroller_show} by {http.status_code}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "50 * query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:trace.rack.request.duration{resource_name:next::student::mobile::v1::conversationscontroller_show,env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "HTTP Status and Duration on Conversation List",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 33769487724874,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 20,
+                "y": 68
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "Tracks performance alongside requests in order to help isolate unexpected latency spikes. We know the conversation list can be an expensive API, and have done server-side and client-side work to mitigate this.",
+                "font_size": "14",
+                "show_tick": true,
+                "text_align": "left",
+                "tick_edge": "right",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 3293026790452464,
+            "layout": {
+                "height": 24,
+                "width": 18,
+                "x": 1,
+                "y": 68
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:trace.rack.request.hits.by_http_status{resource_name:next::student::mobile::v2::signincontroller_create,env:staging} by {http.status_code}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {
+                    "live_span": "1d"
+                },
+                "title": "Sign-In Attempts on Staging Today",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 2605352121118087,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 20,
+                "y": 31
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "We once shipped a bug that caused users of the production app to try to sign in to our staging environment. A spike here, particularly with a non-`200` status, might indicate we did it again.",
+                "font_size": "14",
+                "show_tick": true,
+                "text_align": "left",
+                "tick_edge": "right",
+                "tick_pos": "50%",
+                "type": "note"
+            },
+            "id": 156264540286885,
+            "layout": {
+                "height": 24,
+                "width": 18,
+                "x": 0.08333333333333304,
+                "y": 28
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.cloudconvert_v2.fetch_pdf.start{env:production,upload_source:mobile} by {content_type}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "PDF conversions by content type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 8765360092672260,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 19,
+                "y": 118
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "vertical",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.cloudconvert_v2.fetch_pdf.start{env:production,upload_source:mobile}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "on_right_yaxis": false,
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:handshake.uploads.worker_retry{env:production,upload_source:mobile}.as_count()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:handshake.uploads.worker_permanent_failure{env:production,upload_source:mobile}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "PDF Uploads and Failures",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4900012040015261,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 19,
+                "y": 135
+            }
+        },
+        {
+            "definition": {
+                "query": "iOS status:error source:bugsnag",
+                "tags_execution": "and",
+                "time": {},
+                "title": "Crashes from Bugsnag",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 6520909317890961,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 20,
+                "y": 85
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "Crashes imported from Bugsnag. A spike here indicates that we've shipped a regression.",
+                "font_size": "14",
+                "has_padding": true,
+                "show_tick": true,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "center"
+            },
+            "id": 2393182795160053,
+            "layout": {
+                "height": 24,
+                "width": 18,
+                "x": 68,
+                "y": 77
+            }
+        },
+        {
+            "definition": {
+                "query": "iOS \"New release\" -100.0.0 source:bugsnag",
+                "tags_execution": "and",
+                "time": {},
+                "title": "App Store Releases",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_timeline"
+            },
+            "id": 900236592588832,
+            "layout": {
+                "height": 9,
+                "width": 47,
+                "x": 20,
+                "y": 98
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "Correlate App Store releases with Bugsnag crashes, above, to see if we've released anything terrible lately.",
+                "font_size": "14",
+                "has_padding": true,
+                "show_tick": true,
+                "text_align": "left",
+                "tick_edge": "right",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "center"
+            },
+            "id": 7282021972833847,
+            "layout": {
+                "height": 24,
+                "width": 18,
+                "x": 1,
+                "y": 94
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:circleci.finished_builds.count{*} by {outcome}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "circle ci builds",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 1481599064874271,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 92,
+                "y": 10
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "WIP",
+                "font_size": "36",
+                "has_padding": true,
+                "show_tick": false,
+                "text_align": "center",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "center"
+            },
+            "id": 758803269497065,
+            "layout": {
+                "height": 7,
+                "width": 12,
+                "x": 92,
+                "y": 2
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 2,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:circleci.completed_build_time.avg{*}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "circle ci avg build time",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 7288822398966952,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 92,
+                "y": 26
+            }
+        },
+        {
+            "definition": {
+                "autoscale": true,
+                "precision": 2,
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:circleci.completed_build_time.avg{job_name:beta_release}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "circle ci beta release avg build time",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_value"
+            },
+            "id": 662996235312693,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 92,
+                "y": 43
+            }
+        },
+        {
+            "definition": {
+                "event_size": "s",
+                "query": "iOS source:bugsnag",
+                "tags_execution": "and",
+                "time": {},
+                "title": "Bugsnag events",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "event_stream"
+            },
+            "id": 8669724013827448,
+            "layout": {
+                "height": 38,
+                "width": 47,
+                "x": 92,
+                "y": 68
+            }
+        },
+        {
+            "definition": {
+                "custom_links": [
+                    {
+                        "label": "Time to Ready Dashboard",
+                        "link": "https://app.datadoghq.com/dashboard/ynb-s7y-2xy?from_ts=1643129488389&to_ts=1643734288389&live=true"
+                    }
+                ],
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "\"4.10\" release",
+                        "value": "y = 9700"
+                    },
+                    {
+                        "display_type": "warning dashed",
+                        "label": "Q1 Goal",
+                        "value": "y = 6000"
+                    },
+                    {
+                        "display_type": "ok dashed",
+                        "label": "\"2022\" Goal",
+                        "value": "y = 2000"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "cutoff_max(query1, 20000)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:fmc.ios_student.ttr.95percentile{resource:app,env:production}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Application TTR (p95 cutoff 20s)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 634883547052269,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 19,
+                "y": 151
+            }
+        },
+        {
+            "definition": {
+                "custom_links": [
+                    {
+                        "label": "Time to Ready Dashboard",
+                        "link": "https://app.datadoghq.com/dashboard/ynb-s7y-2xy?from_ts=1643129488389&to_ts=1643734288389&live=true"
+                    }
+                ],
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [
+                    {
+                        "display_type": "error dashed",
+                        "label": "Q4 2021 Baseline",
+                        "value": "y = 6130"
+                    },
+                    {
+                        "display_type": "warning dashed",
+                        "label": "Q1 Goal",
+                        "value": "y = 3000"
+                    },
+                    {
+                        "display_type": "ok dashed",
+                        "label": "\"2022\" Goal",
+                        "value": "y = 1000"
+                    }
+                ],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "formula": "cutoff_max(query1, 20005)"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:fmc.ios_student.ttr.avg{env:production,resource:home}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Home (avg p95 cutoff 20s)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries",
+                "yaxis": {
+                    "include_zero": true,
+                    "label": "",
+                    "max": "auto",
+                    "min": "auto",
+                    "scale": "linear"
+                }
+            },
+            "id": 4593380824702885,
+            "layout": {
+                "height": 15,
+                "width": 47,
+                "x": 19,
+                "y": 167
+            }
+        },
+        {
+            "definition": {
+                "background_color": "vivid_pink",
+                "content": "New flashier dashboard! https://app.datadoghq.com/dashboard/k9f-b5v-xxp/student-mobile-cloned?from_ts=1643564257631&to_ts=1643737057631&live=true",
+                "font_size": "14",
+                "has_padding": true,
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "top"
+            },
+            "id": 2760869429574332,
+            "layout": {
+                "height": 14,
+                "width": 69,
+                "x": 6,
+                "y": 2
+            }
+        }
+    ]
+}

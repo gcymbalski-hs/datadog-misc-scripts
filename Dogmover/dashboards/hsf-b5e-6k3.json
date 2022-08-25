@@ -1,0 +1,1219 @@
+{
+    "author_handle": "clau@joinhandshake.com",
+    "author_name": "Chris Lau",
+    "created_at": "2020-10-26T23:36:32.383644+00:00",
+    "description": "",
+    "id": "hsf-b5e-6k3",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2021-04-16T16:35:07.564969+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variable_presets": [
+        {
+            "name": "Production",
+            "template_variables": [
+                {
+                    "name": "project",
+                    "value": "handshake-production"
+                },
+                {
+                    "name": "project_id",
+                    "value": "handshake-production"
+                }
+            ]
+        }
+    ],
+    "template_variables": [
+        {
+            "default": "handshake-production",
+            "name": "project",
+            "prefix": "project"
+        },
+        {
+            "default": "handshake-production",
+            "name": "project_id",
+            "prefix": "project_id"
+        }
+    ],
+    "title": "Handshake Migration",
+    "url": "/dashboard/hsf-b5e-6k3/handshake-migration",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Health",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$project,kube_deployment:redis-proxy-handshake} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$project,kube_deployment:redis-proxy-handshake-cache} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$project,kube_deployment:redis-proxy-handshake-background-jobs} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Redis Proxy",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5673396630438652
+                    }
+                ]
+            },
+            "id": 1021504362674988
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Ambassador",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_total{$project} by {cluster-name}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_total{$project} by {cluster-name}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_total{$project} by {cluster-name}.as_count()+sum:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_total{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Requests",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 338935191266378
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_5xx{$project}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_5xx{$project}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_5xx{$project}.as_count()+sum:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_5xx{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "5XXs",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5816075964302490
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_2xx{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_3xx{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_4xx{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "HTTP Responses from Old Cluster",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6119777989095888
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.avg{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.max{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.median{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Request Times from Old Cluster",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6384282189212940
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_2xx{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_3xx{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_5xx{$project} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "HTTP Responses from New Cluster",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2909944352254694
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_time.avg{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_time.max{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_time.median{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Request Times from New Cluster",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3412814716182906
+                    }
+                ]
+            },
+            "id": 4648660906045160
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "503s",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_503{$project}.as_count(), avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_503{$project}.as_count(), avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_503{$project}.as_count()+avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_rq_503{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Handshake 503s",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5703442342724242
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_cx_connect_fail{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_cx_connect_fail{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Upstream Connection Failures",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5696229827104942
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_cx_connect_timeout{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:envoy.cluster.cluster_handshake_web_service_tf_handshake.upstream_cx_connect_fail{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Upstream Connection Timeout",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2001677377559568
+                    }
+                ]
+            },
+            "id": 3236283163183126
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Kubernetes",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes_state.node.status{$project} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "All Nodes",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 798942548895124
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:kubernetes.pods.running{$project,kube_deployment:handshake-web} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Web Pods",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2512592958290760
+                    }
+                ]
+            },
+            "id": 5756612178472238
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Sidekiq",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:sidekiq.queue.size{$project} by {queue}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Queue Size",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7691186072186566
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:sidekiq.queue.latency{$project} by {queue}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Queue Latency",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1966336557297822
+                    }
+                ]
+            },
+            "id": 8742460397885722
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Elasticsearch Indexers",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:student-reindex,$project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{$project_id,subscription_id:employer-reindex-green}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:university-reindex,$project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Unacked Messages",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5859869128731660
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "legend_size": "0",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.oldest_unacked_message_age_by_region{subscription_id:student-reindex,$project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.oldest_unacked_message_age_by_region{$project_id,subscription_id:employer-reindex-green}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.pubsub.subscription.oldest_unacked_message_age_by_region{subscription_id:university-reindex,$project_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Oldest Unacked Message",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4258360646317752
+                    }
+                ]
+            },
+            "id": 2030463895357146
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Transactional Outbox",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.transactional_outbox_processor.unpublished_outbox_items.count{$project}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Unpublished Items",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4276372063238480
+                    },
+                    {
+                        "definition": {
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:handshake.transactional_outbox_processor.pubsub_batches.count{$project}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "PubSub Batch Count",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7838028506644354
+                    }
+                ]
+            },
+            "id": 1054912738656946
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Redis",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.stats.cpu_utilization{project_id:handshake-production AND instance_id IN (projects/handshake-production/locations/us-central1/instances/handshake,projects/handshake-production/locations/us-central1/instances/handshake-background-jobs,projects/handshake-production/locations/us-central1/instances/handshake-cache-simple-snake)} by {instance_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CPU Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 1388397413531962
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.clients.connected{project_id:handshake-production AND instance_id IN (projects/handshake-production/locations/us-central1/instances/handshake,projects/handshake-production/locations/us-central1/instances/handshake-background-jobs,projects/handshake-production/locations/us-central1/instances/handshake-cache-simple-snake)} by {instance_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 7400716393463400
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.redis.clients.blocked{project_id:handshake-production AND instance_id IN (projects/handshake-production/locations/us-central1/instances/handshake,projects/handshake-production/locations/us-central1/instances/handshake-background-jobs,projects/handshake-production/locations/us-central1/instances/handshake-cache-simple-snake)} by {instance_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Clients Blocked",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 650327723628970
+                    }
+                ]
+            },
+            "id": 7990437314722940
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "PostgreSQL (handshake-production only)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.cpu.utilization{database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu)} by {database_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "CPU Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4247814408534318
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.memory.usage{database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu)} by {database_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Memory Usage",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5824212241962258
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:gcp.cloudsql.database.postgresql.num_backends{database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu)} by {database_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8745610826773328
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:gcp.cloudsql.database.disk.read_ops_count{database_id IN (handshake-production:handshake-charcoal-lemur,handshake-production:handshake-arrogant-ape,handshake-production:handshake-elasticsearch-indexer-nervous-kudu)} by {database_id}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Read Ops",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8832569854297472
+                    }
+                ]
+            },
+            "id": 5011378680754866
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "PGBouncer (production only)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:pgbouncer.pools.cl_active{kube_namespace:handshake,cluster-name:production} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Active Clients",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 5290864016027042
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:pgbouncer.pools.cl_waiting{kube_namespace:handshake,cluster-name:production} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Waiting Clients",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2109253971203674
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.sv_idle{kube_namespace:handshake,cluster-name:production} by {cluster-name,kube_deployment}/sum:pgbouncer.databases.max_connections{kube_namespace:handshake,cluster-name:production} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "% of Idle Server Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 883134541174328
+                    }
+                ]
+            },
+            "id": 3976041436949808
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "PGBouncer (production2 only)",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:pgbouncer.pools.cl_active{kube_namespace:handshake,cluster-name:production2} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Active Clients",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2998353143624950
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "q": "sum:pgbouncer.pools.cl_waiting{kube_namespace:handshake,cluster-name:production2} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Waiting Clients",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6717307222532348
+                    },
+                    {
+                        "definition": {
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:pgbouncer.pools.sv_idle{kube_namespace:handshake,cluster-name:production2} by {cluster-name,kube_deployment}/sum:pgbouncer.databases.max_connections{kube_namespace:handshake,cluster-name:production2} by {cluster-name,kube_deployment}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "% of Idle Server Connections",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4082014147441720
+                    }
+                ]
+            },
+            "id": 650593079307578
+        }
+    ]
+}

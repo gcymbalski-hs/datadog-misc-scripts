@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 10182743,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-students",
+    "multi": true,
+    "name": "Student Cluster Reindexing Large High Priority Queue",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_5m):avg:handshake.reindex_stream.queue_size.5min{env:production,cluster:students} by {env,cluster,region} > 10000",
+    "tags": [
+        "team:student"
+    ],
+    "type": "metric alert"
+}

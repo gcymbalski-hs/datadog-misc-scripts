@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 9648214,
+    "matching_downtimes": [],
+    "message": "There was a SAML SSO validation of error code 4. This is a special type of error that means something more serious is wrong (compared to a standard login error). \n\nWe should determine whether this is due to a mismatch in the school's SSO settings or if it's a widespread issue. If the monitor recovers after taking action, the issue has likely been resolved. \n\nFor more information: [Education Incident Runbooks - SSO: SAML Validation Error](https://joinhandshake.atlassian.net/wiki/spaces/EPD/pages/865566925/Education+Incident+Runbooks#SSO:-SAML-Validation-Error)\n\n@slack-Main_Account-incidents-edu",
+    "multi": true,
+    "name": "SSO: SAML Validation Error",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 50.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):max:handshake.sso_errors{error_code:4,error_type:saml,env:production} by {region}.as_count() > 50",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

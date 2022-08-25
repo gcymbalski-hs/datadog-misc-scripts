@@ -1,0 +1,41 @@
+{
+    "deleted": null,
+    "id": 22180456,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 1974947763,
+            "monitor_id": 22180456,
+            "scope": [
+                "*"
+            ],
+            "start": 1653521251
+        }
+    ],
+    "message": "There is a high rate of HTTP 429 responses from cluster: {{cluster-name.name}}.\n\n@slack-incidents-prod-infrastructure",
+    "multi": true,
+    "name": "High Rate of HTTP 429 Responses",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {
+            "*": null
+        },
+        "thresholds": {
+            "critical": 0.01
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_30m):avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_429{*} by {cluster-name}.as_count() / avg:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_total{*} by {cluster-name}.as_count() > 0.01",
+    "tags": [],
+    "type": "query alert"
+}

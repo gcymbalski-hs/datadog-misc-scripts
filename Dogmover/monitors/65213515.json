@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 65213515,
+    "matching_downtimes": [],
+    "message": "`distributejobpostings` error rate is too high.",
+    "multi": false,
+    "name": "Resource distributejobpostings has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m):( sum:trace.sidekiq.job.errors{env:production,resource_name:distributejobpostings,service:handshake-sidekiq}.as_count() / sum:trace.sidekiq.job.hits{env:production,resource_name:distributejobpostings,service:handshake-sidekiq}.as_count() ) > 0.05",
+    "tags": [
+        "service:handshake-sidekiq",
+        "env:production",
+        "resource_name:distributejobpostings",
+        "emp-lifecycle",
+        "team:employer",
+        "emp-lfc-worker-errors"
+    ],
+    "type": "query alert"
+}

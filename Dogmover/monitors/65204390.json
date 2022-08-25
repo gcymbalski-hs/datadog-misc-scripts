@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 65204390,
+    "matching_downtimes": [],
+    "message": "`next::employer::employmenttypescontroller_index` 90th percentile latency is too high.",
+    "multi": false,
+    "name": "Resource next::employer::employmenttypescontroller_index has a high p90 latency on env:production",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "warning": 0.8
+        }
+    },
+    "query": "avg(last_10m):p90:trace.rack.request{env:production,resource_name:next::employer::employmenttypescontroller_index,service:handshake} > 1",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::employer::employmenttypescontroller_index"
+    ],
+    "type": "metric alert"
+}

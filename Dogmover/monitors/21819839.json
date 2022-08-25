@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 21819839,
+    "matching_downtimes": [],
+    "message": "@slack-incidents-platform-services",
+    "multi": true,
+    "name": "Session-service 5XX Rate High",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.3,
+            "warning": 0.2
+        },
+        "timeout_h": 0
+    },
+    "query": "min(last_10m):sum:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_5xx{*} by {cluster-name}.as_rate() > 0.3",
+    "tags": [
+        "team:iam",
+        "team:platform"
+    ],
+    "type": "query alert"
+}

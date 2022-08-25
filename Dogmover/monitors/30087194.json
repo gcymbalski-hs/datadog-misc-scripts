@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 30087194,
+    "matching_downtimes": [],
+    "message": "There has been a spike in redirected requests in US Production, meaning users are being redirected to the login page and cannot access the app. @slack-incidents",
+    "multi": false,
+    "name": "Spike in Redirected Requests in US Production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1m):sum:trace.rack.request.hits{service:handshake,http.status_code:302,env:production,region:us-central1}.as_count() > 10000",
+    "tags": [],
+    "type": "query alert"
+}

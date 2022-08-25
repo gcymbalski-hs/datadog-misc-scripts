@@ -1,0 +1,284 @@
+{
+    "author_handle": "rtrame@joinhandshake.com",
+    "author_name": "Rob Trame",
+    "created_at": "2018-08-17T18:23:58.038672+00:00",
+    "description": "Vital stats for monitoring deploys to production.",
+    "id": "58q-kyy-qn5",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-04-27T14:17:13.595543+00:00",
+    "notify_list": [],
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        },
+        {
+            "default": "handshake",
+            "name": "service",
+            "prefix": "service"
+        },
+        {
+            "default": "*",
+            "name": "region",
+            "prefix": "region"
+        }
+    ],
+    "title": "Deploy Tracking (Production)",
+    "url": "/dashboard/58q-kyy-qn5/deploy-tracking-production",
+    "widgets": [
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "p50:trace.rack.request{$env,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p75:trace.rack.request{$env,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p90:trace.rack.request{$env,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p95:trace.rack.request{$env,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "p99:trace.rack.request{$env,$region,$service}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "max:trace.rack.request{$env,$region,$service}.rollup(max)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Latency by Service",
+                "type": "timeseries"
+            },
+            "id": 345436608
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "sum:trace.rack.request.duration.by_service{$env,$service,$region} by {sublayer_service}.rollup(sum).fill(zero)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Time Spent by Service",
+                "type": "timeseries"
+            },
+            "id": 345437347
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.apdex.by.service{$env,$service,$region} by {sublayer_service}.rollup(sum).fill(zero)",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Apdex Score",
+                "type": "timeseries"
+            },
+            "id": 345437836
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.hits{env:production,service:handshake,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:trace.rack.request.errors{env:production,service:handshake,$region}.as_count()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "warm"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Total Requests",
+                "type": "timeseries"
+            },
+            "id": 345440320
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "q": "sum:trace.rack.request.errors{$env,$service,$region} by {resource_name}.as_rate()",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Error Rate",
+                "type": "timeseries"
+            },
+            "id": 345440336
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "q": "top(avg:trace.rack.request.duration.by_service{$env,$service,$region} by {resource_name}, 5, 'mean', 'desc')",
+                        "style": {
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Request Duration by Service",
+                "type": "toplist"
+            },
+            "id": 345443148
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes.cpu.usage.total{cluster-name:production,$region} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "CPU Usage by Service",
+                "type": "timeseries"
+            },
+            "id": 345447333
+        },
+        {
+            "definition": {
+                "events": [
+                    {
+                        "q": "tags:\"release-stage:production\" \"New release in production\" source:bugsnag",
+                        "tags_execution": "and"
+                    }
+                ],
+                "legend_size": "0",
+                "requests": [
+                    {
+                        "display_type": "area",
+                        "q": "avg:kubernetes.memory.usage{cluster-name:production,$region} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Memory Usage by Service",
+                "type": "timeseries"
+            },
+            "id": 345447380
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 21287327,
+    "matching_downtimes": [],
+    "message": "`mailgun-forwarder` error rate is too high.\n:jking@joinhandshake.com @slack-incidents-infrastructure",
+    "multi": false,
+    "name": "Service mailgun-forwarder has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_10m):( sum:trace.http.request.errors{service:mailgun-forwarder,env:production}.as_count() / sum:trace.http.request.hits{service:mailgun-forwarder,env:production}.as_count() ) > 0.05",
+    "tags": [
+        "service:mailgun-forwarder",
+        "env:production"
+    ],
+    "type": "query alert"
+}

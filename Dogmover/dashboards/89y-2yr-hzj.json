@@ -1,0 +1,660 @@
+{
+    "author_handle": "jordon@joinhandshake.com",
+    "author_name": "Jordon Dornbos",
+    "created_at": "2019-01-31T19:37:14.517004+00:00",
+    "description": "",
+    "id": "89y-2yr-hzj",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-08-10T15:22:22.042909+00:00",
+    "notify_list": [],
+    "reflow_type": "auto",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        }
+    ],
+    "title": "[Load Balancer] Ambassador",
+    "url": "/dashboard/89y-2yr-hzj/load-balancer-ambassador",
+    "widgets": [
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "General",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "min:envoy.server.live{$cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Uptime",
+                            "type": "timeseries"
+                        },
+                        "id": 2153929236595610
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:envoy.cluster_manager.active_clusters{$cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Active Clusters",
+                            "type": "timeseries"
+                        },
+                        "id": 5526083663037162
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [
+                                {
+                                    "display_type": "error dashed",
+                                    "label": "y = 20",
+                                    "value": "y = 20"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "min:envoy.server.days_until_first_cert_expiring{$cluster} by {cluster-name}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "First Cert Expiring",
+                            "type": "timeseries"
+                        },
+                        "id": 2700212895145912
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:envoy.http.ingress_http.no_route{$cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Unknown Routes",
+                            "type": "timeseries"
+                        },
+                        "id": 6932635240916320
+                    }
+                ]
+            },
+            "id": 6589311838906414
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "All Requests",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.http.ingress_http.downstream_rq_total{$cluster}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Total Downstream Responses",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6639205313697190
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:envoy.http.ingress_http.downstream_rq_2xx{$cluster}.as_count(), sum:envoy.http.ingress_http.downstream_rq_3xx{$cluster}.as_count(), sum:envoy.http.ingress_http.downstream_rq_4xx{$cluster}.as_count(), sum:envoy.http.ingress_http.downstream_rq_5xx{$cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Downstream Response Codes",
+                            "type": "timeseries"
+                        },
+                        "id": 3879731943080502
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_total{$cluster}.as_count(), sum:envoy.cluster.cluster_frontend_metrics_collector_servi_0.upstream_rq_total{$cluster}.as_count(), sum:envoy.cluster.cluster_mailgun_event_ingestor_service_m_0.upstream_rq_total{$cluster}.as_count(), sum:envoy.cluster.cluster_student_backend_web_service_student_backend.upstream_rq_total{$cluster}.as_count(), sum:envoy.cluster.cluster_extauth_session_service_api_session_service_3000.upstream_rq_total{$cluster}.as_count(), sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_total{$cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Downstream Services",
+                            "type": "timeseries"
+                        },
+                        "id": 5152596376134752
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:envoy.http.ingress_http.downstream_rq_time.avg{$cluster}, sum:envoy.http.ingress_http.downstream_rq_time.max{$cluster}, sum:envoy.http.ingress_http.downstream_rq_time.median{$cluster}, sum:envoy.http.ingress_http.downstream_rq_time.95percentile{$cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Downstream Response Time Breakdown",
+                            "type": "timeseries"
+                        },
+                        "id": 3488396184419652
+                    }
+                ]
+            },
+            "id": 6106074229130858
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Handshake Requests",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(\"deploy:true\" AND \"environment:production\")",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_2xx{$cluster}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_3xx{$cluster}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_4xx{$cluster}.as_count(), sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_5xx{$cluster}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Downstream Response Codes",
+                            "type": "timeseries"
+                        },
+                        "id": 2384238716035998
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(\"deploy:true\" AND \"environment:production\")",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        },
+                                        {
+                                            "formula": "query4"
+                                        },
+                                        {
+                                            "formula": "query5"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_503{$cluster}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "max:envoy.cluster.cluster_handshake_web_admin_service_handshake.upstream_rq_503{$cluster}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "max:envoy.cluster.cluster_handshake_web_edu_service_handshake.upstream_rq_503{$cluster}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query4",
+                                            "query": "max:envoy.cluster.cluster_handshake_web_emp_service_handshake.upstream_rq_503{$cluster}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query5",
+                                            "query": "max:envoy.cluster.cluster_handshake_web_stu_service_handshake.upstream_rq_503{$cluster}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "503 Response Max (Handshake)",
+                            "type": "timeseries"
+                        },
+                        "id": 3004868185585244
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(\"deploy:true\" AND \"environment:production\")",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.avg{$cluster}, sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.median{$cluster}, sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.95percentile{$cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Downstream Response Time Breakdown",
+                            "type": "timeseries"
+                        },
+                        "id": 8574147003078862
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "markers": [
+                                {
+                                    "display_type": "error bold",
+                                    "value": "y = 30000"
+                                },
+                                {
+                                    "display_type": "warning dashed",
+                                    "value": "y = 15000"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "max:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.max{$cluster}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Downstream Response Time Max",
+                            "type": "timeseries"
+                        },
+                        "id": 4975101549077774
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_cx_connect_timeout{$cluster} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Upstream Connect Timeouts",
+                            "type": "timeseries"
+                        },
+                        "id": 8023669070981698
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "q": "sum:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_timeout{$cluster} by {cluster-name}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Upstream Request Timeouts",
+                            "type": "timeseries"
+                        },
+                        "id": 6436230071031990
+                    }
+                ]
+            },
+            "id": 6318805211891012
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Deployment Metrics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(\"deploy:true\" AND \"environment:production\")",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.cpu.usage.total{kube_deployment:ambassador-084,$cluster}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average CPU Usage",
+                            "type": "timeseries"
+                        },
+                        "id": 3670438527653604
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.memory.usage{kube_deployment:ambassador-084,$cluster}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Memory Usage",
+                            "type": "timeseries"
+                        },
+                        "id": 7241254006629434
+                    },
+                    {
+                        "definition": {
+                            "events": [
+                                {
+                                    "q": "tags:(\"deploy:true\" AND \"environment:production\")",
+                                    "tags_execution": "and"
+                                }
+                            ],
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.network.rx_bytes{$cluster,kube_deployment:ambassador-084}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:kubernetes.network.tx_bytes{$cluster,kube_deployment:ambassador-084}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Average Network Usage",
+                            "type": "timeseries"
+                        },
+                        "id": 2381247701298900
+                    }
+                ]
+            },
+            "id": 1849015794441924
+        },
+        {
+            "definition": {
+                "layout_type": "ordered",
+                "title": "Synthetics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "area",
+                                    "q": "sum:synthetics.http.response{*} by {status_code}.as_count()",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Synthetic Response Codes",
+                            "type": "timeseries"
+                        },
+                        "id": 6659087281539618
+                    },
+                    {
+                        "definition": {
+                            "legend_layout": "auto",
+                            "legend_size": "0",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "q": "avg:synthetics.http.response.time{*} by {check_id}",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Synthetic Response Times",
+                            "type": "timeseries"
+                        },
+                        "id": 6080402612825978
+                    }
+                ]
+            },
+            "id": 8469614931046164
+        }
+    ]
+}

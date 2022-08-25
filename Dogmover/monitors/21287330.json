@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 21287330,
+    "matching_downtimes": [],
+    "message": "`mailgun-forwarder` average latency is too high.\n:jking@joinhandshake.com @slack-incidents-infrastructure",
+    "multi": false,
+    "name": "Service mailgun-forwarder has a high average latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.3
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):( sum:trace.http.request.duration{service:mailgun-forwarder,env:production}.rollup(sum).fill(zero) / sum:trace.http.request.hits{service:mailgun-forwarder,env:production}.rollup(sum).fill(zero) ) > 0.5",
+    "tags": [
+        "service:mailgun-forwarder",
+        "env:production"
+    ],
+    "type": "query alert"
+}

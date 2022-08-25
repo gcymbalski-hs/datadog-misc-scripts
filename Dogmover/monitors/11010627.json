@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 11010627,
+    "matching_downtimes": [],
+    "message": "{{#is_match \"cluster.name\" \"students\"}}\n@slack-incidents-students \n{{/is_match}}\n\n{{#is_match \"region.name\" \"europe-\"}}\n@slack-incidents-uk \n{{/is_match}}",
+    "multi": true,
+    "name": "Elasticsearch Indexer Medium Priority Document Updates Delayed",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 600000.0
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_15m):avg:handshake.elasticsearch_indexer.delay.total.avg{env:production,priority:medium,!cluster:universities,!cluster:employers} by {env,cluster,region} > 600000",
+    "tags": [
+        "team:student"
+    ],
+    "type": "metric alert"
+}

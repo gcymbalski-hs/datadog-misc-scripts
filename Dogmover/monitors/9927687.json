@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 9927687,
+    "matching_downtimes": [],
+    "message": "A Dataproc master node {{ instance_name }} in {{ project }} has been running for over 24 hours and its Dataproc cluster probably should be deleted by now. It may not have auto deletion properly configured. This instance is wasting money, and should be deleted. The job should be configured to auto delete.\n\n@slack-incidents-data",
+    "multi": true,
+    "name": "Dataproc Node Not Deleted",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 86400.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):cumsum(sum:gcp.gce.instance.uptime{dataproc-role:master} by {instance_name,project}) > 86400",
+    "tags": [
+        "team:data"
+    ],
+    "type": "query alert"
+}

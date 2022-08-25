@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 45825651,
+    "matching_downtimes": [],
+    "message": "Failed demo school seeds are retried and retries have now been exhausted. This monitor resolving doesn't mean the issue is fixed. The on call engineer should create a school in demo to test seeding. A resolution for this problem typically requires action from the on-call engineer. Unless these jobs have been repeatedly interrupted by deploy rollouts (more likely during business hours) This means something is preventing seeds from being run and something needs to be fixed. Reach out to Alex or a tech lead if help is needed\n\nFor more information: [Education Incident Runbooks](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks) @slack-Main_Account-incidents-edu",
+    "multi": false,
+    "name": "Demo School Seeds Retries Exhausted",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_5m):avg:handshake.create_demo_school_worker.retries_exhausted{*}.as_count() > 0.1",
+    "tags": [
+        "team:university"
+    ],
+    "type": "query alert"
+}

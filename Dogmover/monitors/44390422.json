@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 44390422,
+    "matching_downtimes": [],
+    "message": "handshake-web pods in handshake-demo are restarting a lot. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2295562637/K8+Container+Restarts for help debugging.\n\n@slack-incidents-infrastructure",
+    "multi": true,
+    "name": "handshake-web pods restarting in handshake-demo",
+    "options": {
+        "include_tags": true,
+        "locked": false,
+        "new_group_delay": 300,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_30m):max:kubernetes.containers.restarts{project:handshake-demo,kube_deployment:handshake-web} by {cluster-name} > 10",
+    "tags": [
+        "env:demo",
+        "project:handshake-demo",
+        "region:us-central1"
+    ],
+    "type": "query alert"
+}

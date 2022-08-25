@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 65798493,
+    "matching_downtimes": [],
+    "message": "`syncpostingstoiterable` average latency is too high.",
+    "multi": false,
+    "name": "Resource syncpostingstoiterable has a high average latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.3
+        }
+    },
+    "query": "avg(last_10m):( avg:trace.sidekiq.job{env:production,resource_name:syncpostingstoiterable,service:handshake-sidekiq} ) > 0.5",
+    "tags": [
+        "service:handshake-sidekiq",
+        "env:production",
+        "resource_name:syncpostingstoiterable",
+        "team:employer",
+        "emp-lifecycle",
+        "Iterable"
+    ],
+    "type": "query alert"
+}

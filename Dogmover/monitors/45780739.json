@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 45780739,
+    "matching_downtimes": [],
+    "message": "The session-service-rest-api horizontal pod autoscaler (HPA) is close to max capacity. Refer to https://joinhandshake.atlassian.net/l/c/LFs2MYSW.\n@slack-incidents-platform-services",
+    "multi": true,
+    "name": "session-service-rest-api HPA near max in handshake-production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "critical_recovery": 0.8,
+            "warning": 0.8,
+            "warning_recovery": 0.7
+        }
+    },
+    "query": "avg(last_30m):max:kubernetes_state.hpa.current_replicas{project:handshake-production,hpa:session-service-rest-api-autoscaler} by {cluster-name} / max:kubernetes_state.hpa.max_replicas{project:handshake-production,hpa:session-service-rest-api-autoscaler} by {cluster-name} > 0.9",
+    "tags": [
+        "env:production",
+        "project:handshake-production",
+        "region:us-central1",
+        "team:iam"
+    ],
+    "type": "query alert"
+}

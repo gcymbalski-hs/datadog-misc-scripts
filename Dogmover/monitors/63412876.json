@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 63412876,
+    "matching_downtimes": [],
+    "message": "Iterable Event queue size is currently {{value}}.\n \nThe queue went over 250k {{triggered_duration_sec}} seconds ago.\n\nPlease check associated Dashboard and logs here: https://app.datadoghq.com/s/d5c071843/wf8-nkb-vca\n\nSee/edit next steps here: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps",
+    "multi": false,
+    "name": "Average Iterable Event Queue Size",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 250000.0,
+            "warning": 200000.0
+        }
+    },
+    "query": "avg(last_5m):avg:handshake.iterable.event_queue_size{app:handshake} > 250000",
+    "tags": [
+        "team:employer",
+        "emp-lifecycle",
+        "Iterable"
+    ],
+    "type": "query alert"
+}

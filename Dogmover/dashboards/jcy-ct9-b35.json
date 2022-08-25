@@ -1,0 +1,93 @@
+{
+    "author_handle": "scott@joinhandshake.com",
+    "author_name": "Scott Ringwelski",
+    "created_at": "2018-05-24T00:10:06.998103+00:00",
+    "description": null,
+    "id": "jcy-ct9-b35",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2018-05-24T20:20:41.000988+00:00",
+    "notify_list": null,
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "default": "*",
+            "name": "cluster",
+            "prefix": "cluster-name"
+        },
+        {
+            "default": "*",
+            "name": "namespace",
+            "prefix": "kube_namespace"
+        },
+        {
+            "default": "*",
+            "name": "deployment",
+            "prefix": "kube_deployment"
+        }
+    ],
+    "title": "Kubernetes Usage vs Request",
+    "url": "/dashboard/jcy-ct9-b35/kubernetes-usage-vs-request",
+    "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.cpu.usage.total{$cluster,$deployment} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "metadata": [
+                            {
+                                "alias_name": "requests_normalized",
+                                "expression": "sum:kubernetes.cpu.requests{$cluster,$deployment} by {kube_deployment}*1000000000"
+                            }
+                        ],
+                        "q": "sum:kubernetes.cpu.requests{$cluster,$deployment} by {kube_deployment}, sum:kubernetes.cpu.requests{$cluster,$deployment} by {kube_deployment}*1000000000",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "CPU usage vs requests",
+                "type": "timeseries"
+            },
+            "id": 311589836
+        },
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.usage{$cluster,$deployment} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    },
+                    {
+                        "display_type": "line",
+                        "q": "sum:kubernetes.memory.requests{$cluster,$deployment} by {kube_deployment}",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "title": "Memory usage vs requests",
+                "type": "timeseries"
+            },
+            "id": 311593058
+        }
+    ]
+}
