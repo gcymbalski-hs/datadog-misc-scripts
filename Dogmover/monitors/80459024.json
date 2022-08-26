@@ -18,10 +18,9 @@
     "multi": true,
     "name": "[DEP] Subscription hsn-handshake-identity: Undelivered Events Are Too High",
     "options": {
-        "escalation_message": "",
         "evaluation_delay": 300,
         "include_tags": true,
-        "new_group_delay": 60,
+        "new_host_delay": 300,
         "notify_audit": false,
         "notify_no_data": false,
         "renotify_interval": 240,
@@ -31,10 +30,10 @@
         },
         "thresholds": {
             "critical": 1000.0,
-            "critical_recovery": 750.0
+            "critical_recovery": 0.0
         }
     },
-    "query": "avg(last_1h):avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:hsn-handshake-identity} by {project_id} > 1000",
+    "query": "max(last_1h):avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:hsn-handshake-identity} by {project_id} > 1000",
     "tags": [
         "dep_monitor:undelivered_events_too_high",
         "service:dep",

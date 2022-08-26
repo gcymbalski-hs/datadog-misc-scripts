@@ -6,7 +6,7 @@
     "id": "xuc-vv8-sfc",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-24T17:26:41.733518+00:00",
+    "modified_at": "2022-08-24T22:01:34.457691+00:00",
     "notify_list": [],
     "reflow_type": "auto",
     "restricted_roles": [],
@@ -1514,7 +1514,7 @@
             "definition": {
                 "layout_type": "ordered",
                 "show_title": true,
-                "title": "NOT CURRENTLY LIVE: Job Auto Approvals",
+                "title": "Job Auto Approvals",
                 "type": "group",
                 "widgets": [
                     {
@@ -1525,8 +1525,7 @@
                                 {
                                     "formulas": [
                                         {
-                                            "alias": "Total Auto Approved",
-                                            "formula": "query2 - query1"
+                                            "formula": "query2"
                                         }
                                     ],
                                     "queries": [
@@ -1534,19 +1533,13 @@
                                             "aggregator": "sum",
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "sum:handshake.posting_auto_approve_service.total_schools_processed{$env}.as_count()"
-                                        },
-                                        {
-                                            "aggregator": "sum",
-                                            "data_source": "metrics",
-                                            "name": "query1",
-                                            "query": "sum:handshake.posting_auto_approve_service.postings_rejected{$env}.as_count()"
+                                            "query": "sum:handshake.distribute_job_postings_for_job.auto_approvals{$env,approved_via:setting_service}.as_count()"
                                         }
                                     ],
                                     "response_format": "scalar"
                                 }
                             ],
-                            "title": "Total Auto Approved - Number not accurate until post-launch",
+                            "title": "Total Auto Approved (by auto approval settings)",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "query_value"
@@ -1617,7 +1610,7 @@
                                     "formulas": [
                                         {
                                             "alias": "Throughput",
-                                            "formula": "query1"
+                                            "formula": "autosmooth(query1)"
                                         }
                                     ],
                                     "queries": [
@@ -1639,7 +1632,7 @@
                                     "formulas": [
                                         {
                                             "alias": "Last week",
-                                            "formula": "week_before(query0)"
+                                            "formula": "autosmooth(week_before(query0))"
                                         }
                                     ],
                                     "queries": [
@@ -1678,7 +1671,7 @@
                             "legend_layout": "auto",
                             "requests": [
                                 {
-                                    "display_type": "line",
+                                    "display_type": "bars",
                                     "formulas": [
                                         {
                                             "alias": "Average Time",
@@ -1701,6 +1694,7 @@
                                 }
                             ],
                             "show_legend": true,
+                            "time": {},
                             "title": "Average completion time (in MS) for PostingAutoApprovedService",
                             "title_align": "left",
                             "title_size": "16",
@@ -1768,7 +1762,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "Job Postings Worker Total Time",
                             "title_align": "left",
                             "title_size": "16",
@@ -1802,19 +1795,15 @@
                                             "formula": "query1"
                                         },
                                         {
-                                            "alias": "Total Schools Processed",
+                                            "alias": "Total Auto Approved (by service ONLY)",
                                             "formula": "query2"
-                                        },
-                                        {
-                                            "alias": "Total Auto Approved",
-                                            "formula": "query2 - query1"
                                         }
                                     ],
                                     "queries": [
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "sum:handshake.posting_auto_approve_service.postings_rejected{$env}.as_count()"
+                                            "query": "sum:handshake.posting_auto_approve_service.auto_approve_rejections{$env}.as_count()"
                                         },
                                         {
                                             "data_source": "metrics",
@@ -1831,7 +1820,7 @@
                                 }
                             ],
                             "show_legend": true,
-                            "title": "Total Schools Process vs Total Auto Approved",
+                            "title": "Total Rejected and Approved (accurate post Aug 24)",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "timeseries"
@@ -1878,6 +1867,47 @@
                             "type": "timeseries"
                         },
                         "id": 2992764846924554
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:handshake.distribute_job_postings_for_job.auto_approvals{$env} by {approved_via}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Auto Approved Postings (all origins)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 7709338008986922
                     }
                 ]
             },

@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 81146030,
+    "matching_downtimes": [],
+    "message": "{{database_id.name}} database is approaching Disk Capacity.\n\n  {{#is_alert}}\n  To resolve, make sure autoscaling is working and/or add more nodes. https://joinhandshake.atlassian.net/wiki/x/4gELmw\n  {{/is_alert}}\n  {{#is_recovery}}\n  {{database_id.name}} database Disk Usage alert is off.\n  {{/is_recovery}}\n\n  @slack-incidents-edu\n  @pagerduty-MonolithEDUProduct",
+    "multi": true,
+    "name": "[handshake-staging] Guidance Database Disk Usage High",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.95,
+            "critical_recovery": 0.9
+        }
+    },
+    "query": "max(last_1h):max:gcp.cloudsql.database.disk.utilization{database_id in (handshake-staging:true)} by {database_id} > 0.95",
+    "tags": [
+        "app:guidance",
+        "env:staging",
+        "maintenance:true",
+        "region:us-central1"
+    ],
+    "type": "query alert"
+}

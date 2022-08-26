@@ -6,7 +6,7 @@
     "id": "2fu-dbs-8pk",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-11T15:05:18.500199+00:00",
+    "modified_at": "2022-08-25T16:04:46.633682+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -57,12 +57,12 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-outbox-publisher} by {kube_deployment}"
+                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-outbox-publisher,$env,$project} by {kube_deployment}"
                                         },
                                         {
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "avg:kubernetes_state.deployment.replicas_desired{project:$project.value,kube_deployment:*-outbox-publisher} by {kube_deployment}"
+                                            "query": "avg:kubernetes_state.deployment.replicas_desired{project:$project.value,kube_deployment:*-outbox-publisher,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -109,12 +109,12 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-inbox} by {kube_deployment}"
+                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-inbox,$env,$project} by {kube_deployment}"
                                         },
                                         {
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "avg:kubernetes_state.deployment.replicas_desired{project:$project.value,kube_deployment:*-inbox} by {kube_deployment}"
+                                            "query": "avg:kubernetes_state.deployment.replicas_desired{project:$project.value,kube_deployment:*-inbox,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -161,7 +161,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-outbox-publisher} by {kube_deployment}"
+                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-outbox-publisher,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -208,7 +208,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-inbox} by {kube_deployment}"
+                                            "query": "avg:kubernetes_state.deployment.replicas_available{project:$project.value,kube_deployment:*-inbox,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -255,7 +255,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "max:kubernetes.memory.usage_pct{project:$project.value,kube_deployment:*-outbox-publisher} by {kube_deployment}"
+                                            "query": "max:kubernetes.memory.usage_pct{project:$project.value,kube_deployment:*-outbox-publisher,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -302,7 +302,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "max:kubernetes.memory.usage_pct{project:$project.value,kube_deployment:*-inbox} by {kube_deployment}"
+                                            "query": "max:kubernetes.memory.usage_pct{project:$project.value,kube_deployment:*-inbox,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -352,12 +352,12 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "max:kubernetes.cpu.usage.total{project:$project.value,kube_deployment:*-outbox-publisher} by {kube_deployment}"
+                                            "query": "max:kubernetes.cpu.usage.total{project:$project.value,kube_deployment:*-outbox-publisher,$env,$project} by {kube_deployment}"
                                         },
                                         {
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "max:kubernetes.cpu.limits{project:$project.value,kube_deployment:*-outbox-publisher} by {kube_deployment}"
+                                            "query": "max:kubernetes.cpu.limits{project:$project.value,kube_deployment:*-outbox-publisher,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -407,12 +407,12 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "max:kubernetes.cpu.usage.total{project:$project.value,kube_deployment:*-inbox} by {kube_deployment}"
+                                            "query": "max:kubernetes.cpu.usage.total{project:$project.value,kube_deployment:*-inbox,$env,$project} by {kube_deployment}"
                                         },
                                         {
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "max:kubernetes.cpu.limits{project:$project.value,kube_deployment:*-inbox} by {kube_deployment}"
+                                            "query": "max:kubernetes.cpu.limits{project:$project.value,kube_deployment:*-inbox,$env,$project} by {kube_deployment}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -480,7 +480,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:DEP.outbox_publisher_processor.unpublished_outbox_items.oldest_age{env:$env.value} by {service}"
+                                            "query": "avg:DEP.outbox_publisher_processor.unpublished_outbox_items.oldest_age{env:$env.value,$env,$project} by {service}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -492,7 +492,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "Oldest Unpublished Item Age (sec)",
                             "title_align": "left",
                             "title_size": "16",
@@ -528,7 +527,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "sum:DEP.outbox_publisher_processor.pubsub_publish.succeeded.count{project:$project.value} by {service}.as_count()"
+                                            "query": "sum:DEP.outbox_publisher_processor.pubsub_publish.succeeded.count{project:$project.value,$env,$project} by {service}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -575,7 +574,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:DEP.outbox_publisher_processor.unpublished_outbox_items.count{project:$project.value} by {service}"
+                                            "query": "avg:DEP.outbox_publisher_processor.unpublished_outbox_items.count{project:$project.value,$env,$project} by {service}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -622,7 +621,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:postgresql.dep_outbox.publish_latency.95percentile{project:$project.value} by {app}"
+                                            "query": "avg:postgresql.dep_outbox.publish_latency.95percentile{project:$project.value,$env,$project} by {app}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -685,7 +684,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.pubsub.topic.send_request_count{project_id:$project.value,topic_id:hsn-*} by {topic_id,response_code}.as_count()"
+                                            "query": "avg:gcp.pubsub.topic.send_request_count{project_id:$project.value,topic_id:hsn-*,$env,$project} by {topic_id,response_code}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -728,7 +727,7 @@
                                             "aggregator": "avg",
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.pubsub.topic.message_sizes.samplecount{project_id:$project.value,topic_id:hsn-*} by {topic_id}.as_count()"
+                                            "query": "avg:gcp.pubsub.topic.message_sizes.samplecount{project_id:$project.value,topic_id:hsn-*,$env,$project} by {topic_id}.as_count()"
                                         }
                                     ],
                                     "response_format": "scalar"
@@ -755,7 +754,7 @@
                 "is_column_break": true,
                 "width": 12,
                 "x": 0,
-                "y": 0
+                "y": 14
             }
         },
         {
@@ -788,7 +787,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{project_id:$project.value,subscription_id:hsn-*} by {subscription_id,project_id}"
+                                            "query": "avg:gcp.pubsub.subscription.num_unacked_messages_by_region{project_id:$project.value,subscription_id:hsn-*,$env,$project} by {subscription_id,project_id}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -832,7 +831,7 @@
                                             "aggregator": "avg",
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "max:gcp.pubsub.subscription.oldest_unacked_message_age{project_id:$project.value,subscription_id:hsn-*} by {subscription_id}"
+                                            "query": "max:gcp.pubsub.subscription.oldest_unacked_message_age{project_id:$project.value,subscription_id:hsn-*,$env,$project} by {subscription_id}"
                                         }
                                     ],
                                     "response_format": "scalar"
@@ -858,7 +857,7 @@
                 "height": 3,
                 "width": 12,
                 "x": 0,
-                "y": 3
+                "y": 17
             }
         },
         {
@@ -891,7 +890,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:DEP.inbox.processed_event.count{env:$env.value} by {service}.as_count()"
+                                            "query": "avg:DEP.inbox.processed_event.count{env:$env.value,$env,$project} by {service}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -938,7 +937,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:DEP.inbox.ignored_event.count{env:$env.value} by {service}.as_count()"
+                                            "query": "avg:DEP.inbox.ignored_event.count{env:$env.value,$env,$project} by {service}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -985,7 +984,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:DEP.inbox.listen.timing.95percentile{subscription:hsn-*,$env} by {subscription}"
+                                            "query": "avg:DEP.inbox.event.timing.95percentile{$env,$project} by {event_type}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -997,12 +996,13 @@
                                 }
                             ],
                             "show_legend": true,
-                            "title": "p95 Time to Handle Event",
+                            "time": {},
+                            "title": "Event handler timing - P95",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "timeseries"
                         },
-                        "id": 6719966436279348,
+                        "id": 8129507461586020,
                         "layout": {
                             "height": 2,
                             "width": 4,
@@ -1017,7 +1017,7 @@
                 "height": 3,
                 "width": 12,
                 "x": 0,
-                "y": 6
+                "y": 20
             }
         }
     ]

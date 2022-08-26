@@ -6,7 +6,7 @@
     "id": "dhw-u9r-gbw",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-24T15:12:16.145092+00:00",
+    "modified_at": "2022-08-25T17:31:00.638658+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -381,6 +381,11 @@
                                             "cell_display_mode": "bar",
                                             "conditional_formats": [],
                                             "formula": "query4"
+                                        },
+                                        {
+                                            "cell_display_mode": "bar",
+                                            "conditional_formats": [],
+                                            "formula": "query5"
                                         }
                                     ],
                                     "queries": [
@@ -424,6 +429,17 @@
                                                 "resource_name"
                                             ],
                                             "name": "query4",
+                                            "operation_name": "inbox_hsn_handshake_notifications_consumer",
+                                            "service": "handshake-notifications",
+                                            "stat": "latency_p99"
+                                        },
+                                        {
+                                            "data_source": "apm_resource_stats",
+                                            "env": "production",
+                                            "group_by": [
+                                                "resource_name"
+                                            ],
+                                            "name": "query5",
                                             "operation_name": "inbox_hsn_handshake_notifications_consumer",
                                             "service": "handshake-notifications",
                                             "stat": "latency_max"
@@ -687,6 +703,11 @@
                                             "cell_display_mode": "bar",
                                             "conditional_formats": [],
                                             "formula": "query4"
+                                        },
+                                        {
+                                            "cell_display_mode": "bar",
+                                            "conditional_formats": [],
+                                            "formula": "query5"
                                         }
                                     ],
                                     "queries": [
@@ -730,6 +751,17 @@
                                                 "resource_name"
                                             ],
                                             "name": "query4",
+                                            "operation_name": "inbox_hsn_messaging_notifications_consumer",
+                                            "service": "handshake-notifications",
+                                            "stat": "latency_p99"
+                                        },
+                                        {
+                                            "data_source": "apm_resource_stats",
+                                            "env": "production",
+                                            "group_by": [
+                                                "resource_name"
+                                            ],
+                                            "name": "query5",
                                             "operation_name": "inbox_hsn_messaging_notifications_consumer",
                                             "service": "handshake-notifications",
                                             "stat": "latency_max"
@@ -1179,6 +1211,65 @@
                 "widgets": [
                     {
                         "definition": {
+                            "requests": [
+                                {
+                                    "formulas": [
+                                        {
+                                            "alias": "p95",
+                                            "formula": "query1",
+                                            "limit": {
+                                                "count": 500,
+                                                "order": "desc"
+                                            }
+                                        },
+                                        {
+                                            "alias": "p50",
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "alias": "Count",
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "aggregator": "avg",
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:DEP.inbox.event.timing.95percentile{service:notifications} by {event_type}"
+                                        },
+                                        {
+                                            "aggregator": "avg",
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:DEP.inbox.event.timing.median{service:notifications} by {event_type}"
+                                        },
+                                        {
+                                            "aggregator": "avg",
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "avg:DEP.inbox.event.timing.count{service:notifications} by {event_type}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "time": {},
+                            "title": "Inbox Event Timing",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_table"
+                        },
+                        "id": 2393912555140350,
+                        "layout": {
+                            "height": 3,
+                            "width": 12,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
                             "legend_columns": [
                                 "avg",
                                 "min",
@@ -1219,16 +1310,16 @@
                         "id": 3432680506605760,
                         "layout": {
                             "height": 2,
-                            "width": 4,
+                            "width": 12,
                             "x": 0,
-                            "y": 0
+                            "y": 3
                         }
                     }
                 ]
             },
             "id": 8121333315283908,
             "layout": {
-                "height": 3,
+                "height": 6,
                 "width": 12,
                 "x": 0,
                 "y": 20
@@ -1445,7 +1536,7 @@
                 "is_column_break": true,
                 "width": 12,
                 "x": 0,
-                "y": 23
+                "y": 26
             }
         },
         {
@@ -1588,7 +1679,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "CreateInAppNotification Error Rate",
                             "title_align": "left",
                             "title_size": "16",
@@ -1735,7 +1825,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "SendIterableEvent Error Rate",
                             "title_align": "left",
                             "title_size": "16",
@@ -1850,7 +1939,7 @@
                 "height": 7,
                 "width": 12,
                 "x": 0,
-                "y": 28
+                "y": 31
             }
         },
         {
@@ -1889,6 +1978,11 @@
                                             "cell_display_mode": "bar",
                                             "conditional_formats": [],
                                             "formula": "query4"
+                                        },
+                                        {
+                                            "cell_display_mode": "bar",
+                                            "conditional_formats": [],
+                                            "formula": "query5"
                                         }
                                     ],
                                     "queries": [
@@ -1934,6 +2028,17 @@
                                             "name": "query4",
                                             "operation_name": "iterable.request",
                                             "service": "handshake-notifications",
+                                            "stat": "latency_p99"
+                                        },
+                                        {
+                                            "data_source": "apm_resource_stats",
+                                            "env": "production",
+                                            "group_by": [
+                                                "resource_name"
+                                            ],
+                                            "name": "query5",
+                                            "operation_name": "iterable.request",
+                                            "service": "handshake-notifications",
                                             "stat": "latency_max"
                                         }
                                     ],
@@ -1960,7 +2065,7 @@
                 "height": 3,
                 "width": 12,
                 "x": 0,
-                "y": 35
+                "y": 38
             }
         }
     ]

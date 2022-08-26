@@ -6,7 +6,7 @@
     "id": "5qy-rfa-if4",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-18T22:38:55.580449+00:00",
+    "modified_at": "2022-08-24T18:09:02.613460+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -14,6 +14,44 @@
     "title": "Monolith Postgres Replication Lag",
     "url": "/dashboard/5qy-rfa-if4/monolith-postgres-replication-lag",
     "widgets": [
+        {
+            "definition": {
+                "requests": [
+                    {
+                        "formulas": [
+                            {
+                                "formula": "query1",
+                                "limit": {
+                                    "count": 500,
+                                    "order": "desc"
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "aggregator": "avg",
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.cloudsql.database.replication.replica_lag{project_id:handshake-uk-staging} by {replica,database_id}"
+                            }
+                        ],
+                        "response_format": "scalar"
+                    }
+                ],
+                "time": {},
+                "title": "",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "query_table"
+            },
+            "id": 2601284336666913,
+            "layout": {
+                "height": 2,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
         {
             "definition": {
                 "background_color": "vivid_green",
@@ -91,7 +129,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-staging:handshake-*} by {database_id}"
+                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-staging:handshake-*,!database_id:handshake-staging:handshake-rational-kite} by {database_id}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -123,7 +161,7 @@
                 "height": 5,
                 "width": 12,
                 "x": 0,
-                "y": 0
+                "y": 2
             }
         },
         {
@@ -203,7 +241,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-uk-staging:handshake-*,!replica_purpose:data} by {database_id}"
+                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-uk-staging:handshake-*,!replica_purpose:data,replica:true} by {database_id}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -235,7 +273,7 @@
                 "height": 5,
                 "width": 12,
                 "x": 0,
-                "y": 5
+                "y": 7
             }
         },
         {
@@ -315,7 +353,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-demo:handshake-*} by {database_id}"
+                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-demo:handshake-*,!database_id:handshake-demo:handshake-emerging-humpback} by {database_id}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -347,7 +385,7 @@
                 "height": 5,
                 "width": 12,
                 "x": 0,
-                "y": 10
+                "y": 12
             }
         },
         {
@@ -427,7 +465,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-uk-production:handshake-*,!replica_purpose:data} by {database_id}"
+                                            "query": "avg:gcp.cloudsql.database.replication.replica_lag{database_id:handshake-uk-production:handshake-*,!replica_purpose:data,replica:true} by {database_id}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -459,7 +497,7 @@
                 "height": 5,
                 "width": 12,
                 "x": 0,
-                "y": 15
+                "y": 17
             }
         },
         {
@@ -551,7 +589,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "Replication Lag - handshake-production:handshake-*",
                             "title_align": "left",
                             "title_size": "16",
@@ -572,7 +609,7 @@
                 "height": 5,
                 "width": 12,
                 "x": 0,
-                "y": 20
+                "y": 22
             }
         }
     ]

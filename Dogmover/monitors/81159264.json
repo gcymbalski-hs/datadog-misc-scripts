@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 81159264,
+    "matching_downtimes": [],
+    "message": "There are events in the system that could not be published to Google Pub/Sub.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/HEeNG0Aa\n\nNotify: @slack-incidents-platform-services\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nEvent failed to publish counts are tending downward for access.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] Service access: Event Failed to Publish",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 30.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_15m):max:DEP.outbox_publisher_processor.pubsub_publish.failed.count{service:access} by {project} > 30",
+    "tags": [
+        "dep_monitor:failed_to_publish",
+        "repo:terraform-access",
+        "service:dep",
+        "team:iam",
+        "team:platform",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

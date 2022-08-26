@@ -6,7 +6,7 @@
     "id": "pqa-jpc-tgz",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-02-11T18:54:01.757362+00:00",
+    "modified_at": "2022-08-24T17:51:45.139408+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -104,7 +104,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "RPS in $env",
                             "title_align": "left",
                             "title_size": "16",
@@ -253,7 +252,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "P95 Latency in $env",
                             "title_align": "left",
                             "title_size": "16",
@@ -476,7 +474,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "P95 Latency in $env Auth::Saml::Sessions#create",
                             "title_align": "left",
                             "title_size": "16",
@@ -2346,7 +2343,7 @@
             },
             "id": 962380293505615,
             "layout": {
-                "height": 1,
+                "height": 8,
                 "width": 12,
                 "x": 0,
                 "y": 17
@@ -2744,16 +2741,93 @@
                             "x": 4,
                             "y": 2
                         }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:gcp.cloudsql.database.memory.utilization{database_id:handshake-production:access-sure-troll}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query0"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "avg:gcp.cloudsql.database.memory.utilization{database_id:handshake-uk-production:access-enormous-grubworm}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "Prod Memory Utilization",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6328180482291274,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 2
+                        }
                     }
                 ]
             },
             "id": 6642534883740089,
             "layout": {
-                "height": 1,
+                "height": 5,
                 "is_column_break": true,
                 "width": 12,
                 "x": 0,
-                "y": 18
+                "y": 25
             }
         },
         {
@@ -2761,63 +2835,105 @@
                 "requests": [
                     {
                         "display_type": "line",
-                        "metadata": [
+                        "formulas": [
                             {
-                                "alias_name": "p50",
-                                "expression": "p50:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                                "alias": "p50",
+                                "formula": "query1"
                             }
                         ],
-                        "q": "p50:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p50:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                            }
+                        ],
+                        "response_format": "timeseries"
                     },
                     {
                         "display_type": "line",
-                        "metadata": [
+                        "formulas": [
                             {
-                                "alias_name": "p75",
-                                "expression": "p75:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                                "alias": "p75",
+                                "formula": "query1"
                             }
                         ],
-                        "q": "p75:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p75:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                            }
+                        ],
+                        "response_format": "timeseries"
                     },
                     {
                         "display_type": "line",
-                        "metadata": [
+                        "formulas": [
                             {
-                                "alias_name": "p90",
-                                "expression": "p90:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                                "alias": "p90",
+                                "formula": "query1"
                             }
                         ],
-                        "q": "p90:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p90:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                            }
+                        ],
+                        "response_format": "timeseries"
                     },
                     {
                         "display_type": "line",
-                        "metadata": [
+                        "formulas": [
                             {
-                                "alias_name": "p95",
-                                "expression": "p95:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                                "alias": "p95",
+                                "formula": "query1"
                             }
                         ],
-                        "q": "p95:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p95:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                            }
+                        ],
+                        "response_format": "timeseries"
                     },
                     {
                         "display_type": "line",
-                        "metadata": [
+                        "formulas": [
                             {
-                                "alias_name": "p99",
-                                "expression": "p99:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                                "alias": "p99",
+                                "formula": "query1"
                             }
                         ],
-                        "q": "p99:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                            }
+                        ],
+                        "response_format": "timeseries"
                     },
                     {
                         "display_type": "line",
-                        "metadata": [
+                        "formulas": [
                             {
-                                "alias_name": "max",
-                                "expression": "max:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                                "alias": "max",
+                                "formula": "query1"
                             }
                         ],
-                        "q": "max:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "max:trace.http.request{env:staging,resource:6432caeab8e8bf13,service:session-service-rest-api}"
+                            }
+                        ],
+                        "response_format": "timeseries"
                     }
                 ],
                 "show_legend": false,
