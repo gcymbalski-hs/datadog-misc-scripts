@@ -37,6 +37,14 @@ class Alert
     /(@pagerduty-[[:word:]]*)/.match(message).to_a.uniq.join("\n")
   end
 
+  def terraform?
+    if tags.any?{|tag| tag == 'terraform:true'}
+      true
+    else
+      false
+    end
+  end
+
   def environments()
     envs = tags.select{|tag| tag =~ /env:/}.collect{|x| x.split(':')[1]}
     if message =~ /production/i
@@ -62,7 +70,7 @@ class Alert
   end
 
   def summarize()
-    [alert_id, name, environments, teams, runbooks, alerts, pages, resource_name, message, query]
+    [alert_id, name, environments, teams, runbooks, alerts, pages, resource_name, terraform?, message, query]
   end
 end
 
@@ -70,13 +78,15 @@ alert_defs = Dir.children('.').filter{|c| c =~ /.*\.json$/ && File.stat(c).file?
 
 alerts = alert_defs.collect{|alert_def| Alert.new(File.read(alert_def))}.sort_by(&:alert_id)
 
+binding.pry if ENV['DEBUG'] == 'true'
+
 Spreadsheet.client_encoding = 'UTF-8'
 
 book = Spreadsheet::Workbook.new
 
 sheet1 = book.create_worksheet(name: 'Datadog Alert Summary')
 
-sheet1.row(0).concat(['Datadog Alert ID', 'Alert name', 'Environments (from message, tags)', 'Teams (from tags)', 'Runbooks/links', 'Alert channel(s)', 'Paging channel(s)', 'Resource name(s)', 'Alert message (may be parsed)', 'Alert query'])
+sheet1.row(0).concat(['Datadog Alert ID', 'Alert name', 'Environments (from message, tags)', 'Teams (from tags)', 'Runbooks/links', 'Alert channel(s)', 'Paging channel(s)', 'Resource name(s)', 'Terraformed?', 'Alert message (may be parsed)', 'Alert query'])
 
 alerts.each_with_index do |alert, i|
   sheet1.row(i+1).concat alert.summarize
