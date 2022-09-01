@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 81666594,
+    "matching_downtimes": [],
+    "message": "Events are not being published via the outbox processor to Google Pub/Sub.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/kWSPQuG7\n\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nEvent failed to publish counts are tending downward for identity.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] Service identity: Too Many Unpublished Outbox Items",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1000.0,
+            "critical_recovery": 750.0
+        }
+    },
+    "query": "avg(last_15m):max:DEP.outbox_publisher_processor.unpublished_outbox_items.count{service:identity} by {project} > 1000",
+    "tags": [
+        "dep_monitor:unpublished_outbox_items",
+        "repo:terraform-web",
+        "service:dep",
+        "team:identity",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

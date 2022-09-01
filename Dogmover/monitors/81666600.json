@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 81666600,
+    "matching_downtimes": [],
+    "message": "Not enough pods in deployment guidance-outbox-publisher are available.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n\nNotify: @slack-incidents-platform-services,@slack-incidents-edu\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nPods for guidance-outbox-publisher are becoming available.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] High Number of Unavailable Pods for guidance-outbox-publisher",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.99,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:guidance-outbox-publisher} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:guidance-outbox-publisher} by {project} > 0.99",
+    "tags": [
+        "dep_monitor:outbox_pods_unavailable",
+        "repo:terraform-web",
+        "service:dep",
+        "team:university",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

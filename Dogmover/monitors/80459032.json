@@ -16,15 +16,16 @@
         "silenced": {},
         "thresholds": {
             "critical": 250.0,
-            "critical_recovery": 62.5
+            "critical_recovery": 187.5
         }
     },
-    "query": "max(last_15m):max:DEP.inbox.rejected_event.count{subscription:hsn-messaging-handshake} by {project} > 250",
+    "query": "avg(last_15m):max:DEP.inbox.rejected_event.count{subscription:hsn-messaging-handshake} by {project} > 250",
     "tags": [
         "dep_monitor:too_many_rejected_events",
+        "repo:terraform-web",
         "service:dep",
         "team:messaging",
-        "team:platform"
+        "terraform:true"
     ],
     "type": "query alert"
 }

@@ -1,0 +1,26 @@
+{
+    "deleted": null,
+    "id": 81271521,
+    "matching_downtimes": [],
+    "message": "This monitor is only a proof of concept. The threshold is set in such a way that it cannot trigger. The only possible way for this to trigger is by receiving no data.",
+    "multi": true,
+    "name": "[Testing monitor] No Redis metrics from GCP",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 60,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": -5.0,
+            "warning": -1.0
+        }
+    },
+    "query": "avg(last_30m):avg:gcp.redis.stats.cpu_utilization{*} by {project_id} < -5",
+    "tags": [],
+    "type": "query alert"
+}

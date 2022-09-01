@@ -16,15 +16,16 @@
         "silenced": {},
         "thresholds": {
             "critical": 1000.0,
-            "critical_recovery": 0.0
+            "critical_recovery": 750.0
         }
     },
-    "query": "max(last_1h):avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:hsn-guidance-handshake} by {project_id} > 1000",
+    "query": "avg(last_1h):avg:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:hsn-guidance-handshake} by {project_id} > 1000",
     "tags": [
         "dep_monitor:undelivered_events_too_high",
+        "repo:terraform-web",
         "service:dep",
-        "team:platform",
-        "team:university"
+        "team:university",
+        "terraform:true"
     ],
     "type": "query alert"
 }

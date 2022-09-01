@@ -15,15 +15,17 @@
         "require_full_window": true,
         "silenced": {},
         "thresholds": {
-            "critical": 60.0,
-            "critical_recovery": 45.0
+            "critical": 20.0,
+            "critical_recovery": 15.0
         }
     },
-    "query": "max(last_1h):gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-handshake-handshake} by {project_id} > 60",
+    "query": "avg(last_1h):avg:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-handshake-handshake} by {project_id} > 20",
     "tags": [
         "dep_monitor:oldest_event_exceeds_age",
+        "repo:terraform-web",
         "service:dep",
-        "team:platform"
+        "team:employer",
+        "terraform:true"
     ],
     "type": "query alert"
 }

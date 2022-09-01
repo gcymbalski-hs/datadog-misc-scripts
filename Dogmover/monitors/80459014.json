@@ -19,11 +19,13 @@
             "critical_recovery": 5.0
         }
     },
-    "query": "max(last_15m):max:kubernetes.containers.restarts{kube_deployment:handshake-handshake-inbox,kube_namespace:handshake} by {project} >= 10",
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{kube_deployment:handshake-handshake-inbox,kube_namespace:handshake} by {project} >= 10",
     "tags": [
         "dep_monitor:inbox_pod_restarts",
+        "repo:terraform-web",
         "service:dep",
-        "team:platform"
+        "team:employer",
+        "terraform:true"
     ],
     "type": "query alert"
 }

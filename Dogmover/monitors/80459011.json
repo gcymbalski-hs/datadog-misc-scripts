@@ -19,12 +19,13 @@
             "critical_recovery": 0.25
         }
     },
-    "query": "avg(last_15m):avg:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:guidance-handshake-inbox} by {project} / avg:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:guidance-handshake-inbox} by {project} > 0.5",
+    "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:guidance-handshake-inbox} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:guidance-handshake-inbox} by {project} > 0.5",
     "tags": [
         "dep_monitor:inbox_pods_unavailable",
+        "repo:terraform-web",
         "service:dep",
-        "team:platform",
-        "team:university"
+        "team:university",
+        "terraform:true"
     ],
     "type": "query alert"
 }

@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 81479034,
+    "matching_downtimes": [],
+    "message": "Beta release has failed @slack-eng-mobile-bugs",
+    "multi": true,
+    "name": "iOS Beta Release",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        }
+    },
+    "query": "sum(last_10m):sum:circleci.finished_builds.count{job_name:beta_release,outcome:success} by {outcome}.as_count() / (sum:circleci.finished_builds.count{job_name:beta_release,outcome:failed*} by {outcome}.as_count() + sum:circleci.finished_builds.count{job_name:beta_release,outcome:success} by {outcome}.as_count()) < 1",
+    "tags": [],
+    "type": "query alert"
+}

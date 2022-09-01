@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 80459004,
     "matching_downtimes": [],
-    "message": "Not enough pods in deployment identity-handshake-inbox are available.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n\nNotify: @slack-incidents-platform-services,@slack-incidents-students\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nPods for identity-handshake-inbox are becoming available.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "Not enough pods in deployment identity-handshake-inbox are available.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nPods for identity-handshake-inbox are becoming available.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
     "multi": true,
     "name": "[DEP] High Number of Unavailable Pods for identity-handshake-inbox",
     "options": {
@@ -19,12 +19,13 @@
             "critical_recovery": 0.25
         }
     },
-    "query": "avg(last_15m):avg:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:identity-handshake-inbox} by {project} / avg:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:identity-handshake-inbox} by {project} > 0.5",
+    "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:identity-handshake-inbox} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:identity-handshake-inbox} by {project} > 0.5",
     "tags": [
         "dep_monitor:inbox_pods_unavailable",
+        "repo:terraform-web",
         "service:dep",
         "team:identity",
-        "team:platform"
+        "terraform:true"
     ],
     "type": "query alert"
 }
