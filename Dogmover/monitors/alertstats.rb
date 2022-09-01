@@ -26,15 +26,15 @@ class Alert
   end
 
   def runbooks()
-    URI.extract(message).filter{|u| u =~ /^http/}.collect{|u| u.gsub(/\)/, '')}.join("\n")
+    URI.extract(message).filter{|u| u =~ /^http/}.collect{|u| u.gsub(/\)/, '')}.uniq.join("\n")
   end
 
   def alerts()
-    /@slack-[\S]*/.match(message).to_a.join("\n")
+    /(@slack-[[:word:]]*)/.match(message).to_a.uniq.join("\n")
   end
 
   def pages()
-    /@pagerduty-[\S]*/.match(message).to_a.join("\n")
+    /(@pagerduty-[[:word:]]*)/.match(message).to_a.uniq.join("\n")
   end
 
   def environments()
@@ -42,11 +42,15 @@ class Alert
     if message =~ /production/i
       envs << 'production'
     end
-    envs.uniq.join("\n")
+    if envs.empty?
+      'any (potentially)'
+    else
+      envs.uniq.join("\n")
+    end
   end
   
   def teams()
-    tags.select{|tag| tag =~ /team:/}.collect{|x| x.split(':')[1]}.join("\n")
+    tags.select{|tag| tag =~ /team:/}.collect{|x| x.split(':')[1]}.uniq.join("\n")
   end
 
   def query()
@@ -54,7 +58,7 @@ class Alert
   end
  
   def resource_name
-    /resource_name:[\w:]*/.match(query).to_a.collect{|x| x.gsub(/resource_name:/, '')}.join("\n")
+    /(resource_name:[\w:]*)/.match(query).to_a.collect{|x| x.gsub(/resource_name:/, '')}.uniq.join("\n")
   end
 
   def summarize()
