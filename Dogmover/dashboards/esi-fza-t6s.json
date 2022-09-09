@@ -6,7 +6,7 @@
     "id": "esi-fza-t6s",
     "is_read_only": false,
     "layout_type": "free",
-    "modified_at": "2022-08-23T17:21:39.215375+00:00",
+    "modified_at": "2022-09-07T20:03:34.379244+00:00",
     "notify_list": [],
     "restricted_roles": [],
     "template_variables": [],
@@ -125,8 +125,8 @@
             "layout": {
                 "height": 21,
                 "width": 72,
-                "x": 73,
-                "y": 197
+                "x": 0,
+                "y": 222
             }
         },
         {
@@ -165,8 +165,8 @@
             "layout": {
                 "height": 21,
                 "width": 72,
-                "x": 0,
-                "y": 197
+                "x": 73,
+                "y": 222
             }
         },
         {
@@ -889,8 +889,8 @@
             "layout": {
                 "height": 24,
                 "width": 72,
-                "x": 0,
-                "y": 171
+                "x": 73,
+                "y": 197
             }
         },
         {
@@ -1084,6 +1084,147 @@
                 "type": "timeseries"
             },
             "id": 2344910972040260,
+            "layout": {
+                "height": 24,
+                "width": 72,
+                "x": 0,
+                "y": 197
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "(default_zero(query2) / query1) * 100"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count",
+                                    "interval": 86400000
+                                },
+                                "data_source": "ci_pipelines",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query2",
+                                "search": {
+                                    "query": "ci_level:pipeline @ci.pipeline.name:handshake @git.branch:main @ci.status:error"
+                                }
+                            },
+                            {
+                                "compute": {
+                                    "aggregation": "count",
+                                    "interval": 86400000
+                                },
+                                "data_source": "ci_pipelines",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "ci_level:pipeline @ci.pipeline.name:handshake @git.branch:main"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "red"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "title": "Handshake Pipeline Daily Failure Rate",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 595891768117068,
+            "layout": {
+                "height": 24,
+                "width": 72,
+                "x": 0,
+                "y": 171
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "formula": "(query2 / query1) * 100 * 1000"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "compute": {
+                                    "aggregation": "count",
+                                    "interval": 86400000
+                                },
+                                "data_source": "ci_tests",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query2",
+                                "search": {
+                                    "query": "test_level:test @test.status:fail @git.branch:main"
+                                }
+                            },
+                            {
+                                "compute": {
+                                    "aggregation": "count",
+                                    "interval": 86400000
+                                },
+                                "data_source": "ci_tests",
+                                "group_by": [],
+                                "indexes": [
+                                    "*"
+                                ],
+                                "name": "query1",
+                                "search": {
+                                    "query": "test_level:test @git.branch:main"
+                                }
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "palette": "red"
+                        }
+                    }
+                ],
+                "show_legend": false,
+                "time": {},
+                "title": "Handshake Test Daily Failure Rate (x1000)",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 587924163603088,
             "layout": {
                 "height": 24,
                 "width": 72,

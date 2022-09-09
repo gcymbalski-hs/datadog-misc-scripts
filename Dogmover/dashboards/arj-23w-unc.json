@@ -6,7 +6,7 @@
     "id": "arj-23w-unc",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-07-13T23:24:51.882727+00:00",
+    "modified_at": "2022-09-07T16:16:09.231383+00:00",
     "notify_list": [],
     "reflow_type": "auto",
     "restricted_roles": [],
@@ -137,7 +137,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "avg:kubernetes.memory.usage{$project,$deployment,$kube_namespace,kube_container_name:pgbouncer,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:kubernetes.memory.usage{$project,$deployment,$kube_namespace,kube_container_name:pgbouncer,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -166,7 +173,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "sum:pgbouncer.stats.bytes_sent_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.stats.bytes_sent_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -175,7 +189,14 @@
                                 },
                                 {
                                     "display_type": "line",
-                                    "q": "sum:pgbouncer.stats.bytes_received_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.stats.bytes_received_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -221,7 +242,8 @@
                             "markers": [
                                 {
                                     "display_type": "error dashed",
-                                    "value": "y = 0"
+                                    "label": "max",
+                                    "value": "y = 1"
                                 }
                             ],
                             "requests": [
@@ -520,7 +542,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "sum:pgbouncer.pools.cl_active{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.cl_active{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -556,7 +585,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "avg:pgbouncer.pools.cl_active{$deployment,$kube_namespace,$project,$cluster-name} by {name}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:pgbouncer.pools.cl_active{$deployment,$kube_namespace,$project,$cluster-name} by {name}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -585,7 +621,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "sum:pgbouncer.pools.cl_waiting{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:pgbouncer.pools.cl_waiting{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -614,7 +657,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "max:pgbouncer.pools.maxwait{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:pgbouncer.pools.maxwait{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -652,7 +702,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "avg:pgbouncer.stats.queries_per_second{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:pgbouncer.stats.queries_per_second{$project,$deployment,$kube_namespace,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -680,7 +737,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "avg:pgbouncer.stats.transactions_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:pgbouncer.stats.transactions_per_second{$deployment,$kube_namespace,$project,$cluster-name} by {kube_deployment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",

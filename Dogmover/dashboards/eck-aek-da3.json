@@ -6,7 +6,7 @@
     "id": "eck-aek-da3",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-25T16:42:43.722564+00:00",
+    "modified_at": "2022-09-08T17:18:03.456157+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -588,9 +588,6 @@
                                     "formulas": [
                                         {
                                             "formula": "query1"
-                                        },
-                                        {
-                                            "formula": "query1 * 1000"
                                         }
                                     ],
                                     "queries": [
@@ -609,7 +606,7 @@
                                 }
                             ],
                             "show_legend": true,
-                            "title": "Oldest Unpublished Item Age (sec)",
+                            "title": "Oldest Unpublished Item Age",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "timeseries"
@@ -748,7 +745,7 @@
                                 }
                             ],
                             "show_legend": true,
-                            "title": "Publish Latency (p95) (ms)",
+                            "title": "Publish Latency (p95)",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "timeseries"
@@ -891,6 +888,61 @@
                             "height": 2,
                             "width": 4,
                             "x": 0,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "default_zero(query1)"
+                                        },
+                                        {
+                                            "formula": "default_zero(query2)"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:DEP.outbox_publisher_processor.pubsub_publish.error.update_event_as_published.count{project:$project.value} by {service}.as_count()"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:DEP.outbox_publisher_processor.pubsub_publish.error.update_event_as_published.count{project:$project.value} by {service}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Errors after Publishing",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1273575781928061,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
                             "y": 4
                         }
                     }
@@ -1442,7 +1494,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "p95 Time to Handle Event By Event Type",
                             "title_align": "left",
                             "title_size": "16",

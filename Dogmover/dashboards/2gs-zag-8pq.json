@@ -6,11 +6,18 @@
     "id": "2gs-zag-8pq",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-25T17:41:33.702574+00:00",
+    "modified_at": "2022-09-07T16:44:00.968624+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
-    "template_variables": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "production",
+            "name": "env",
+            "prefix": "env"
+        }
+    ],
     "title": "Access SAML",
     "url": "/dashboard/2gs-zag-8pq/access-saml",
     "widgets": [
@@ -43,7 +50,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "sum:handshake.login.failure{auth_type:access_saml,institution_type:employer}.as_count()"
+                                            "query": "sum:handshake.login.failure{auth_type:access_saml,institution_type:employer,$env}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -90,7 +97,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "sum:handshake.login.success{auth_type:access_saml,institution_type:employer}.as_count()"
+                                            "query": "sum:handshake.login.success{auth_type:access_saml,institution_type:employer,$env}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -154,7 +161,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "sum:handshake.login.failure{auth_type:access_saml,institution_type:school}.as_count()"
+                                            "query": "sum:handshake.login.failure{auth_type:access_saml,institution_type:school,$env}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -201,7 +208,7 @@
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "sum:handshake.login.success{auth_type:access_saml,institution_type:school}.as_count()"
+                                            "query": "sum:handshake.login.success{auth_type:access_saml,institution_type:school,$env}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -225,108 +232,224 @@
                             "x": 4,
                             "y": 0
                         }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:access.saml.edu_shadow_auth.success{$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Shadow Auth Success",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 5152758032281096,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:access.saml.edu_shadow_auth.failure{$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Shadow Auth Failures",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 26989543955185,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p50"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p50",
+                                            "query": "p50:trace.rack.request{resource:38533e1225778d68,service:handshake,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p75"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p75",
+                                            "query": "p75:trace.rack.request{resource:38533e1225778d68,service:handshake,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p90",
+                                            "query": "p90:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p95",
+                                            "query": "p95:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p99",
+                                            "query": "p99:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                },
+                                {
+                                    "display_type": "line",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "max",
+                                            "query": "max:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries"
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Legacy saml_consume latency",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 8704119211676519,
+                        "layout": {
+                            "height": 3,
+                            "width": 12,
+                            "x": 0,
+                            "y": 4
+                        }
                     }
                 ]
             },
             "id": 8246751186838902,
             "layout": {
-                "height": 3,
+                "height": 8,
+                "is_column_break": true,
                 "width": 12,
                 "x": 0,
                 "y": 3
-            }
-        },
-        {
-            "definition": {
-                "legend_columns": [
-                    "avg",
-                    "min",
-                    "max",
-                    "value",
-                    "sum"
-                ],
-                "legend_layout": "auto",
-                "requests": [
-                    {
-                        "display_type": "line",
-                        "queries": [
-                            {
-                                "data_source": "metrics",
-                                "name": "p50",
-                                "query": "p50:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
-                            }
-                        ],
-                        "response_format": "timeseries"
-                    },
-                    {
-                        "display_type": "line",
-                        "queries": [
-                            {
-                                "data_source": "metrics",
-                                "name": "p75",
-                                "query": "p75:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
-                            }
-                        ],
-                        "response_format": "timeseries"
-                    },
-                    {
-                        "display_type": "line",
-                        "queries": [
-                            {
-                                "data_source": "metrics",
-                                "name": "p90",
-                                "query": "p90:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
-                            }
-                        ],
-                        "response_format": "timeseries"
-                    },
-                    {
-                        "display_type": "line",
-                        "queries": [
-                            {
-                                "data_source": "metrics",
-                                "name": "p95",
-                                "query": "p95:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
-                            }
-                        ],
-                        "response_format": "timeseries"
-                    },
-                    {
-                        "display_type": "line",
-                        "queries": [
-                            {
-                                "data_source": "metrics",
-                                "name": "p99",
-                                "query": "p99:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
-                            }
-                        ],
-                        "response_format": "timeseries"
-                    },
-                    {
-                        "display_type": "line",
-                        "queries": [
-                            {
-                                "data_source": "metrics",
-                                "name": "max",
-                                "query": "max:trace.rack.request{env:production,resource:38533e1225778d68,service:handshake}"
-                            }
-                        ],
-                        "response_format": "timeseries"
-                    }
-                ],
-                "show_legend": false,
-                "time": {},
-                "title": "Legacy saml_consume latency",
-                "title_align": "left",
-                "title_size": "16",
-                "type": "timeseries"
-            },
-            "id": 8704119211676519,
-            "layout": {
-                "height": 2,
-                "width": 4,
-                "x": 0,
-                "y": 0
             }
         }
     ]

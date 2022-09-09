@@ -1,0 +1,1275 @@
+{
+    "author_handle": "randerson@joinhandshake.com",
+    "author_name": "Rob Anderson",
+    "created_at": "2022-08-26T20:59:27.307198+00:00",
+    "description": "# Developer Experience Team Dashboard V2",
+    "id": "f7i-gq5-5up",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-09-02T20:36:53.705634+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [],
+    "title": "[Team] Developer Experience",
+    "url": "/dashboard/f7i-gq5-5up/team-developer-experience",
+    "widgets": [
+        {
+            "definition": {
+                "background_color": "white",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "On-Call Helper",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "custom_links": [
+                                {
+                                    "label": "View deployer for {{repo_name.value}}:{{environment.value}}",
+                                    "link": "https://deployer.handshake-deploy.com/joinhandshake/{{repo_name.value}}/{{environment.value}}"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "white_on_yellow",
+                                            "value": 5
+                                        },
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "white_on_red",
+                                            "value": 8
+                                        },
+                                        {
+                                            "comparator": "<",
+                                            "palette": "white_on_green",
+                                            "value": 3
+                                        }
+                                    ],
+                                    "formulas": [
+                                        {
+                                            "formula": "query1",
+                                            "limit": {
+                                                "count": 10,
+                                                "order": "desc"
+                                            }
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "aggregator": "last",
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:handshake.deployer.health.undeployed_commits_count{app:handshake-deployer,repo_name:handshake} by {repo_name,environment}"
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "time": {
+                                "live_span": "15m"
+                            },
+                            "title": "Deployer - All Currently Undeployed Handshake Commits (latest fetch)",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "toplist"
+                        },
+                        "id": 6261740711000880,
+                        "layout": {
+                            "height": 6,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "type": "iframe",
+                            "url": "https://app.datadoghq.com/ci/pipeline-executions?query=ci_level%3Apipeline%20%40ci.pipeline.name%3Ahandshake%20%40git.branch%3Amain&cols=%40ci.status%2C%40ci.pipeline.id%2C%40git.commit.message&index=cipipeline&start=1661544381000&end=1661551581000&paused=false"
+                        },
+                        "id": 406467365849588,
+                        "layout": {
+                            "height": 6,
+                            "width": 8,
+                            "x": 4,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 1096662872719990,
+            "layout": {
+                "height": 7,
+                "width": 12,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "type": "iframe",
+                "url": "https://handshakebi.looker.com/embed/looks/5272"
+            },
+            "id": 292824942894516,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "type": "iframe",
+                "url": "https://handshakebi.looker.com/embed/looks/5461"
+            },
+            "id": 3455812104572272,
+            "layout": {
+                "height": 4,
+                "width": 6,
+                "x": 6,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "vivid_green",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "CI Build Statistics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "median",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 50,
+                                                    "sort": {
+                                                        "aggregation": "median",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "cipipeline"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @git.branch:main @ci.status:success ci_partial_retry:false"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {
+                                "live_span": "1mo"
+                            },
+                            "title": "Median Daily Build Time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4868303977521475,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Total Handshake Builds",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "Main Branch Handshake Builds",
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.pipeline.name:handshake"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.pipeline.name:handshake @git.branch:main"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Handshake builds over time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4177857702700898,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "avg",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "avg",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                },
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "avg",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake @ci.job.name:\":docker: Build Production\""
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Build Production Average",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 927600184379424,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "vertical",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "median",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 50,
+                                                    "sort": {
+                                                        "aggregation": "median",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @git.branch:main ci_partial_retry:false @ci.pipeline.name:handshake @ci.status:success"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "min",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 50,
+                                                    "sort": {
+                                                        "aggregation": "min",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:pipeline @git.branch:main ci_partial_retry:false @ci.pipeline.name:handshake @ci.status:success"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "pc90",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 50,
+                                                    "sort": {
+                                                        "aggregation": "pc90",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query3",
+                                            "search": {
+                                                "query": "ci_level:pipeline @git.branch:main ci_partial_retry:false @ci.pipeline.name:handshake @ci.status:success"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Median vs Min vs P90 Daily Pipeline Time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8882850678745968,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 0,
+                            "y": 3
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "Total Handshake Builds",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "Main Branch Handshake Builds",
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.pipeline.name:handshake"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:pipeline @ci.pipeline.name:handshake @git.branch:main"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Handshake builds per day",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 2446309829430668,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 4,
+                            "y": 3
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "pc75",
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "pc75",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                },
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "pc75",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake @ci.job.name:\":docker: Build Integration Dockerfile\""
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Build Integration Dockerfile P75",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3322653931989732,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 8,
+                            "y": 3
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "avg",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "avg",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake* @ci.job.name:(\":react: | Run Frontend Jest Tests\" OR \":rspec:\" OR \":rspec: System Specs\")"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "pc98",
+                                                "interval": 86400000,
+                                                "metric": "@duration"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "pc98",
+                                                        "metric": "@duration",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake* @ci.job.name:(\":react: | Run Frontend Jest Tests\" OR \":rspec:\" OR \":rspec: System Specs\")"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Median vs P98 Daily Job Status Time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3209246886960854,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 0,
+                            "y": 6
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "avg",
+                                                "metric": "@ci.queue_time"
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.pipeline.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "avg",
+                                                        "metric": "@ci.queue_time",
+                                                        "order": "desc"
+                                                    }
+                                                },
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "avg",
+                                                        "metric": "@ci.queue_time",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake @ci.job.name:\":docker: Build Frontend\""
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Docker Queue Time",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 6573652812593912,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 8,
+                            "y": 6
+                        }
+                    }
+                ]
+            },
+            "id": 7535274687005946,
+            "layout": {
+                "height": 1,
+                "width": 12,
+                "x": 0,
+                "y": 11
+            }
+        },
+        {
+            "definition": {
+                "background_color": "vivid_blue",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Deployment Statistics",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:handshake.deployer.health.undeployed_commits_count{app:handshake-deployer,repo_name:handshake} by {repo_name,environment}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "Deployer - Undeployed Handshake Commits",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 3119552046051738,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 3204914642861208,
+            "layout": {
+                "height": 4,
+                "width": 12,
+                "x": 0,
+                "y": 12
+            }
+        },
+        {
+            "definition": {
+                "background_color": "vivid_pink",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Quality",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 1800000
+                                            },
+                                            "data_source": "ci_tests",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@test.name",
+                                                    "limit": 25,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "test_level:test @test.status:fail @git.branch:main"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {
+                                "live_span": "4h"
+                            },
+                            "title": "Past 4 Hours of Test Failures on Main",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 2344910972040260,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "markers": [],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@ci.job.name",
+                                                    "limit": 5,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                },
+                                                {
+                                                    "facet": "@ci.status",
+                                                    "limit": 5,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake* @ci.job.name:(\":react: | Run Frontend Jest Tests\" OR \":rspec:\" OR \":rspec: System Specs\") @ci.status:error"
+                                            }
+                                        },
+                                        {
+                                            "compute": {
+                                                "aggregation": "count",
+                                                "interval": 86400000
+                                            },
+                                            "data_source": "ci_pipelines",
+                                            "group_by": [],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query2",
+                                            "search": {
+                                                "query": "ci_level:job @git.branch:main @ci.pipeline.name:handshake* @ci.job.name:(\":react: | Run Frontend Jest Tests\" OR \":rspec:\" OR \":rspec: System Specs\") @ci.status:error"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Test Errors on Main",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries",
+                            "yaxis": {
+                                "include_zero": true,
+                                "label": "",
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 4251408944267044,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "requests": [
+                                {
+                                    "formulas": [
+                                        {
+                                            "formula": "query1",
+                                            "limit": {
+                                                "count": 10,
+                                                "order": "desc"
+                                            }
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "compute": {
+                                                "aggregation": "count"
+                                            },
+                                            "data_source": "ci_tests",
+                                            "group_by": [
+                                                {
+                                                    "facet": "@test.name",
+                                                    "limit": 10,
+                                                    "sort": {
+                                                        "aggregation": "count",
+                                                        "order": "desc"
+                                                    }
+                                                }
+                                            ],
+                                            "indexes": [
+                                                "*"
+                                            ],
+                                            "name": "query1",
+                                            "search": {
+                                                "query": "test_level:test @test.status:fail @git.branch:main"
+                                            }
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "title": "Top Failing Tests on Main",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "toplist"
+                        },
+                        "id": 1237944579793140,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 8,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "type": "iframe",
+                            "url": "https://handshakebi.looker.com/embed/looks/6218"
+                        },
+                        "id": 7572650292789590,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 0,
+                            "y": 3
+                        }
+                    },
+                    {
+                        "definition": {
+                            "type": "iframe",
+                            "url": "https://handshakebi.looker.com/embed/looks/6567"
+                        },
+                        "id": 640474436953868,
+                        "layout": {
+                            "height": 3,
+                            "width": 4,
+                            "x": 4,
+                            "y": 3
+                        }
+                    }
+                ]
+            },
+            "id": 8797668169788612,
+            "layout": {
+                "height": 1,
+                "is_column_break": true,
+                "width": 12,
+                "x": 0,
+                "y": 16
+            }
+        },
+        {
+            "definition": {
+                "background_color": "vivid_orange",
+                "layout_type": "ordered",
+                "show_title": true,
+                "title": "Security",
+                "type": "group",
+                "widgets": [
+                    {
+                        "definition": {
+                            "type": "iframe",
+                            "url": "https://handshakebi.looker.com/embed/looks/5462"
+                        },
+                        "id": 1927987590227082,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    {
+                        "definition": {
+                            "type": "iframe",
+                            "url": "https://handshakebi.looker.com/embed/looks/5463"
+                        },
+                        "id": 8998323567555168,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 0
+                        }
+                    }
+                ]
+            },
+            "id": 2386561566978408,
+            "layout": {
+                "height": 3,
+                "width": 12,
+                "x": 0,
+                "y": 17
+            }
+        }
+    ]
+}

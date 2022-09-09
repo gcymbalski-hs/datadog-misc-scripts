@@ -6,7 +6,7 @@
     "id": "nmj-5gu-yqa",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-08-24T21:47:20.059544+00:00",
+    "modified_at": "2022-09-06T16:31:32.797135+00:00",
     "notify_list": [],
     "reflow_type": "auto",
     "restricted_roles": [],
@@ -140,18 +140,26 @@
                                         },
                                         {
                                             "formula": "query2"
+                                        },
+                                        {
+                                            "formula": "query3"
                                         }
                                     ],
                                     "queries": [
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:gcp.bigquery.slots.allocated{*}"
+                                            "query": "max:gcp.bigquery.slots.allocated{$project}"
                                         },
                                         {
                                             "data_source": "metrics",
                                             "name": "query2",
-                                            "query": "avg:gcp.bigquery.slots.total_available{*}"
+                                            "query": "max:gcp.bigquery.slots.total_available{$project}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "max:gcp.bigquery.slots.capacity_committed{$project}"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -163,12 +171,54 @@
                                 }
                             ],
                             "show_legend": true,
+                            "time": {},
                             "title": "Slots - Allocated vs Available",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "timeseries"
                         },
                         "id": 3949351163908750
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:gcp.bigquery.query.scanned_bytes{$project} by {project_id}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "title": "BQ Scanned Bytes",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 3941276071142594
                     }
                 ]
             },
@@ -448,7 +498,6 @@
                                 }
                             ],
                             "show_legend": true,
-                            "time": {},
                             "title": "Cloud Function P95 Execution Times",
                             "title_align": "left",
                             "title_size": "16",

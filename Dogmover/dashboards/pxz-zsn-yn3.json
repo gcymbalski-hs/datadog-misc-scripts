@@ -1,0 +1,173 @@
+{
+    "author_handle": "tpiscitell@joinhandshake.com",
+    "author_name": "Tom Piscitell",
+    "created_at": "2022-09-01T18:34:25.550076+00:00",
+    "description": "",
+    "id": "pxz-zsn-yn3",
+    "is_read_only": false,
+    "layout_type": "ordered",
+    "modified_at": "2022-09-02T19:24:37.065824+00:00",
+    "notify_list": [],
+    "reflow_type": "fixed",
+    "restricted_roles": [],
+    "template_variables": [
+        {
+            "available_values": [],
+            "default": "*",
+            "name": "project_id",
+            "prefix": "project_id"
+        }
+    ],
+    "title": "Cloud Armor",
+    "url": "/dashboard/pxz-zsn-yn3/cloud-armor",
+    "widgets": [
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "markers": [],
+                "requests": [
+                    {
+                        "display_type": "bars",
+                        "formulas": [
+                            {
+                                "alias": "Allowed",
+                                "formula": "query1"
+                            },
+                            {
+                                "alias": "Blocked",
+                                "formula": "query2",
+                                "style": {
+                                    "palette": "warm",
+                                    "palette_index": 5
+                                }
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.networksecurity.https.request_count{$project_id,blocked:false}.as_rate()"
+                            },
+                            {
+                                "data_source": "metrics",
+                                "name": "query2",
+                                "query": "avg:gcp.networksecurity.https.request_count{$project_id,blocked:true}.as_rate()"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "dog_classic"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "time": {},
+                "title": "Total Requests",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4938912344691732,
+            "layout": {
+                "height": 3,
+                "width": 8,
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "background_color": "white",
+                "content": "# Request Rate\nRequest rate cannot be calculated in DataDog. They can been seen in the GCP Console:\n* [US Production Cloud Armor Dashboard](https://console.cloud.google.com/monitoring/dashboards/resourceList/network_security_policy?project=handshake-production&timeDomain=1d)\n* [UK Production Cloud Armor Dashboard](https://console.cloud.google.com/monitoring/dashboards/resourceList/network_security_policy?project=handshake-uk-production&timeDomain=1d)",
+                "font_size": "14",
+                "has_padding": true,
+                "show_tick": false,
+                "text_align": "left",
+                "tick_edge": "left",
+                "tick_pos": "50%",
+                "type": "note",
+                "vertical_align": "top"
+            },
+            "id": 4234249875137504,
+            "layout": {
+                "height": 3,
+                "width": 4,
+                "x": 8,
+                "y": 0
+            }
+        },
+        {
+            "definition": {
+                "color": "#4d4d4d",
+                "font_size": "auto",
+                "text": "Placeholder for blocked requests graph. \nWaiting for GCP Logging Metrics to trigger",
+                "text_align": "left",
+                "type": "free_text"
+            },
+            "id": 2688939268272258,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 0,
+                "y": 3
+            }
+        },
+        {
+            "definition": {
+                "legend_columns": [
+                    "avg",
+                    "min",
+                    "max",
+                    "value",
+                    "sum"
+                ],
+                "legend_layout": "auto",
+                "requests": [
+                    {
+                        "display_type": "line",
+                        "formulas": [
+                            {
+                                "alias": "Security Rules",
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:gcp.logging.user.cloudarmor.previewed_requests.security{$project_id}"
+                            }
+                        ],
+                        "response_format": "timeseries",
+                        "style": {
+                            "line_type": "solid",
+                            "line_width": "normal",
+                            "palette": "purple"
+                        }
+                    }
+                ],
+                "show_legend": true,
+                "title": "Previewed Requests by Rule Type",
+                "title_align": "left",
+                "title_size": "16",
+                "type": "timeseries"
+            },
+            "id": 4533970137799088,
+            "layout": {
+                "height": 3,
+                "width": 6,
+                "x": 6,
+                "y": 3
+            }
+        }
+    ]
+}

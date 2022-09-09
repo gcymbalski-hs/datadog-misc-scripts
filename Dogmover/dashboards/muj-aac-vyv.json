@@ -6,11 +6,13 @@
     "id": "muj-aac-vyv",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2021-03-29T10:13:42.851779+00:00",
+    "modified_at": "2022-08-30T21:45:39.204961+00:00",
     "notify_list": [],
+    "reflow_type": "auto",
     "restricted_roles": [],
     "template_variables": [
         {
+            "available_values": [],
             "default": "production",
             "name": "env",
             "prefix": "env"
@@ -40,7 +42,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "max:importer.orphaned_analyzers{$env}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:importer.orphaned_analyzers{$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -49,7 +58,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "importer.orphaned_analyzers",
                             "type": "timeseries",
                             "yaxis": {
@@ -77,7 +85,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "max:importer.sidekiq.queue.latency{app:importer,$env}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:importer.sidekiq.queue.latency{app:importer,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -86,7 +101,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "importer.sidekiq.queue.latency",
                             "type": "timeseries",
                             "yaxis": {
@@ -114,7 +128,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "max:importer.sidekiq.queue.latency{app:importer,$env}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:importer.sidekiq.queue.latency{app:importer,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -123,7 +144,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "importer.sidekiq.queue.latency - default queue",
                             "type": "timeseries",
                             "yaxis": {
@@ -151,7 +171,14 @@
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "max:importer.sidekiq.queue.size{app:importer,$env}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:importer.sidekiq.queue.size{app:importer,$env}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -160,7 +187,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "importer.sidekiq.queue.size",
                             "type": "timeseries",
                             "yaxis": {
@@ -185,11 +211,25 @@
                 "widgets": [
                     {
                         "definition": {
-                            "legend_size": "0",
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
                             "requests": [
                                 {
                                     "display_type": "line",
-                                    "q": "avg:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_time.95percentile{project:handshake-production}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_time.95percentile{project:handshake-production}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -198,7 +238,14 @@
                                 },
                                 {
                                     "display_type": "line",
-                                    "q": "avg:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_time.median{project:handshake-production}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_time.median{project:handshake-production}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -207,7 +254,14 @@
                                 },
                                 {
                                     "display_type": "line",
-                                    "q": "avg:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_time.avg{project:handshake-production}",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "avg:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_time.avg{project:handshake-production}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -215,53 +269,9 @@
                                     }
                                 }
                             ],
-                            "show_legend": false,
+                            "show_legend": true,
+                            "time": {},
                             "title": "Traffic Timings to production",
-                            "type": "timeseries",
-                            "yaxis": {
-                                "include_zero": true,
-                                "label": "",
-                                "max": "auto",
-                                "min": "auto",
-                                "scale": "linear"
-                            }
-                        },
-                        "id": 5976373499033508
-                    },
-                    {
-                        "definition": {
-                            "legend_size": "0",
-                            "requests": [
-                                {
-                                    "display_type": "line",
-                                    "q": "avg:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_time.95percentile{project:handshake-production}",
-                                    "style": {
-                                        "line_type": "solid",
-                                        "line_width": "normal",
-                                        "palette": "dog_classic"
-                                    }
-                                },
-                                {
-                                    "display_type": "line",
-                                    "q": "avg:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_time.median{project:handshake-production}",
-                                    "style": {
-                                        "line_type": "solid",
-                                        "line_width": "normal",
-                                        "palette": "dog_classic"
-                                    }
-                                },
-                                {
-                                    "display_type": "line",
-                                    "q": "avg:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_time.avg{project:handshake-production}",
-                                    "style": {
-                                        "line_type": "solid",
-                                        "line_width": "normal",
-                                        "palette": "dog_classic"
-                                    }
-                                }
-                            ],
-                            "show_legend": false,
-                            "title": "Traffic Timings to production2",
                             "type": "timeseries",
                             "yaxis": {
                                 "include_zero": true,
@@ -275,12 +285,20 @@
                     },
                     {
                         "definition": {
+                            "legend_layout": "auto",
                             "legend_size": "0",
                             "requests": [
                                 {
                                     "display_type": "line",
                                     "on_right_yaxis": false,
-                                    "q": "sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_total{project:handshake-production}.as_count()",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_total{project:handshake-production}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -290,7 +308,14 @@
                                 {
                                     "display_type": "line",
                                     "on_right_yaxis": false,
-                                    "q": "sum:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_total{project:handshake-production}.as_count()",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_total{project:handshake-production}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -298,7 +323,7 @@
                                     }
                                 }
                             ],
-                            "show_legend": false,
+                            "show_legend": true,
                             "title": "Request Total",
                             "type": "timeseries",
                             "yaxis": {
@@ -313,12 +338,20 @@
                     },
                     {
                         "definition": {
+                            "legend_layout": "auto",
                             "legend_size": "0",
                             "requests": [
                                 {
                                     "display_type": "area",
                                     "on_right_yaxis": false,
-                                    "q": "sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_4xx{project:handshake-production}.as_count()",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_4xx{project:handshake-production}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -328,7 +361,14 @@
                                 {
                                     "display_type": "area",
                                     "on_right_yaxis": false,
-                                    "q": "sum:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_4xx{project:handshake-production}.as_count()",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_4xx{project:handshake-production}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -336,7 +376,7 @@
                                     }
                                 }
                             ],
-                            "show_legend": false,
+                            "show_legend": true,
                             "title": "Total 4XX Requests",
                             "type": "timeseries",
                             "yaxis": {
@@ -351,12 +391,20 @@
                     },
                     {
                         "definition": {
+                            "legend_layout": "auto",
                             "legend_size": "0",
                             "requests": [
                                 {
                                     "display_type": "area",
                                     "on_right_yaxis": false,
-                                    "q": "sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_5xx{project:handshake-production}.as_count()",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.cluster.cluster_importer_web_service_importer.upstream_rq_5xx{project:handshake-production}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -366,7 +414,14 @@
                                 {
                                     "display_type": "area",
                                     "on_right_yaxis": false,
-                                    "q": "sum:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_5xx{project:handshake-production}.as_count()",
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:envoy.cluster.cluster_importer_web_service_tf_importer.upstream_rq_5xx{project:handshake-production}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
                                     "style": {
                                         "line_type": "solid",
                                         "line_width": "normal",
@@ -374,7 +429,7 @@
                                     }
                                 }
                             ],
-                            "show_legend": false,
+                            "show_legend": true,
                             "title": "Total 5XX Requests",
                             "type": "timeseries",
                             "yaxis": {
@@ -401,21 +456,44 @@
                     "sum"
                 ],
                 "legend_layout": "auto",
-                "legend_size": "0",
                 "markers": [],
                 "requests": [
                     {
                         "display_type": "line",
-                        "q": "sum:trace.sidekiq.job.errors{$env}.as_count()",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.sidekiq.job.errors{service:importer-sidekiq,$env}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
                         "style": {
                             "line_type": "solid",
                             "line_width": "normal",
-                            "palette": "dog_classic"
+                            "palette": "red"
                         }
                     },
                     {
                         "display_type": "line",
-                        "q": "sum:trace.sidekiq.job.hits{$env}.as_count()",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "sum:trace.sidekiq.job.hits{service:importer-sidekiq,$env}.as_count()"
+                            }
+                        ],
+                        "response_format": "timeseries",
                         "style": {
                             "line_type": "solid",
                             "line_width": "normal",
@@ -425,7 +503,7 @@
                 ],
                 "show_legend": false,
                 "time": {},
-                "title": "trace.sidekiq.job.errors, trace.sidekiq.job.hits",
+                "title": "Sidekiq Hits vs Errors",
                 "type": "timeseries",
                 "yaxis": {
                     "include_zero": true,
@@ -447,12 +525,18 @@
                     "sum"
                 ],
                 "legend_layout": "auto",
-                "legend_size": "0",
                 "markers": [],
                 "requests": [
                     {
                         "display_type": "line",
-                        "q": "p99:trace.sidekiq.job{service:importer-sidekiq,$env}",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p99:trace.sidekiq.job{service:importer-sidekiq,$env}"
+                            }
+                        ],
+                        "response_format": "timeseries",
                         "style": {
                             "line_type": "solid",
                             "line_width": "normal",
@@ -461,7 +545,14 @@
                     },
                     {
                         "display_type": "line",
-                        "q": "p95:trace.sidekiq.job{service:importer-sidekiq,$env}",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p95:trace.sidekiq.job{service:importer-sidekiq,$env}"
+                            }
+                        ],
+                        "response_format": "timeseries",
                         "style": {
                             "line_type": "solid",
                             "line_width": "normal",
@@ -470,7 +561,14 @@
                     },
                     {
                         "display_type": "line",
-                        "q": "p75:trace.sidekiq.job{service:importer-sidekiq,$env}",
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "p75:trace.sidekiq.job{service:importer-sidekiq,$env}"
+                            }
+                        ],
+                        "response_format": "timeseries",
                         "style": {
                             "line_type": "solid",
                             "line_width": "normal",
@@ -480,7 +578,7 @@
                 ],
                 "show_legend": false,
                 "time": {},
-                "title": "trace.sidekiq.job.duration.by.service.99p, trace.sidekiq.job.duration.by.serv...",
+                "title": "Average Job Durations (p99, p95, p75)",
                 "type": "timeseries",
                 "yaxis": {
                     "include_zero": true,
@@ -502,13 +600,23 @@
                     "sum"
                 ],
                 "legend_layout": "auto",
-                "legend_size": "0",
                 "markers": [],
                 "requests": [
                     {
                         "display_type": "area",
-                        "on_right_yaxis": false,
-                        "q": "avg:trace.sidekiq.job.duration.by_service{cluster-name:production2} by {sublayer_service}",
+                        "formulas": [
+                            {
+                                "formula": "query1"
+                            }
+                        ],
+                        "queries": [
+                            {
+                                "data_source": "metrics",
+                                "name": "query1",
+                                "query": "avg:trace.sidekiq.job.duration{service:importer-sidekiq,$env} by {resource_name}"
+                            }
+                        ],
+                        "response_format": "timeseries",
                         "style": {
                             "line_type": "solid",
                             "line_width": "normal",
@@ -518,7 +626,7 @@
                 ],
                 "show_legend": false,
                 "time": {},
-                "title": "[production2] average job duration by service",
+                "title": "Average Job Duration by Job",
                 "type": "timeseries",
                 "yaxis": {
                     "include_zero": true,
@@ -529,44 +637,6 @@
                 }
             },
             "id": 5515717003257670
-        },
-        {
-            "definition": {
-                "legend_columns": [
-                    "avg",
-                    "min",
-                    "max",
-                    "value",
-                    "sum"
-                ],
-                "legend_layout": "auto",
-                "legend_size": "0",
-                "markers": [],
-                "requests": [
-                    {
-                        "display_type": "area",
-                        "on_right_yaxis": false,
-                        "q": "avg:trace.sidekiq.job.duration.by_service{cluster-name:production2} by {sublayer_service}",
-                        "style": {
-                            "line_type": "solid",
-                            "line_width": "normal",
-                            "palette": "dog_classic"
-                        }
-                    }
-                ],
-                "show_legend": false,
-                "time": {},
-                "title": "[production2] average job duration by service",
-                "type": "timeseries",
-                "yaxis": {
-                    "include_zero": true,
-                    "label": "",
-                    "max": "auto",
-                    "min": "auto",
-                    "scale": "linear"
-                }
-            },
-            "id": 5551458966033318
         }
     ]
 }
