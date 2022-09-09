@@ -19,7 +19,7 @@
             "critical_recovery": 225.0
         }
     },
-    "query": "avg(last_1h):avg:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-handshake-guidance} by {project_id} > 300",
+    "query": "avg(last_1h):median_3(avg:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-handshake-guidance} by {project_id}) > 300",
     "tags": [
         "dep_monitor:oldest_event_exceeds_age",
         "repo:terraform-web",

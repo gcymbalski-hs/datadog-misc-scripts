@@ -1,0 +1,20 @@
+{
+    "deleted": null,
+    "id": 83997086,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\\n\n    Demographic Data unrecoverable errors are high\\n\\nPlease view \\n\n    - [logs](https://console.cloud.google.com/functions/details/us-central1/demographic_data?env=gen1&project=handshake-production&tab=logs) and \\n\n    - [metrics](https://console.cloud.google.com/functions/details/us-central1/demographic_data?env=gen1&project=handshake-production&tab=metrics)\\n\n    for this function and determine what next steps should be. \\n@slack-data-platform-failures \\n\n  {{/is_alert}} \\n\\n{{#is_recovery}}\\nUn recoverable errors have recovered\\n@slack-data-platform-failures \\n{{/is_recovery}}",
+    "multi": false,
+    "name": "Demographic Data CF Errors are high",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 60,
+        "require_full_window": true,
+        "silenced": {}
+    },
+    "query": "change(sum(last_1h),last_5m):sum:cloud_functions.demographic_data.un_recoverable_errors{function_name:demographic_data,project_id:handshake-production*}.as_count() > 20",
+    "tags": [],
+    "type": "query alert"
+}

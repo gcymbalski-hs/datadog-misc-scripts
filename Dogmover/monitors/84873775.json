@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 84873775,
+    "matching_downtimes": [],
+    "message": "After a finite number of retry attempts, The events are being moved to dead letter Queue.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/P06b5E2q\n\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n\n{{#is_alert}}\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nCount for events moved to Dead Letter Queue is trending downward for hsn-identity-handshake.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-identity-handshake: Events moved to Dead Letter Queue",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_1h):min:gcp.pubsub.subscription.dead_letter_message_count{subscription_id:hsn-identity-handshake} by {project_id} > 1",
+    "tags": [
+        "dep_monitor:events_moved_to_dead_letter_topic",
+        "repo:terraform-web",
+        "service:dep",
+        "team:identity",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

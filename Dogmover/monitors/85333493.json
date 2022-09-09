@@ -1,0 +1,24 @@
+{
+    "deleted": null,
+    "id": 85333493,
+    "matching_downtimes": [],
+    "message": "Double check Sift rules and automations [https://console.sift.com/workflows](https://console.sift.com/workflows) @slack-sift-notifications",
+    "multi": false,
+    "name": "Sift Employer Suspensions - elevated rate",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 20.0,
+            "warning": 10.0
+        }
+    },
+    "query": "sum(last_5m):avg:handshake.jobs.sift.webhook.suspend_employer{env:production}.as_count() > 20",
+    "tags": [],
+    "type": "query alert"
+}

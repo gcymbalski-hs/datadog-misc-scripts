@@ -1,0 +1,25 @@
+{
+    "deleted": null,
+    "id": 84839658,
+    "matching_downtimes": [],
+    "message": "`handshake` error rate is too high.",
+    "multi": false,
+    "name": "Service handshake has a high error rate on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m): ( sum:trace.rack.request.errors{env:production,service:handshake}.as_count() / sum:trace.rack.request.hits{env:production,service:handshake}.as_count() ) > 0.05",
+    "tags": [
+        "service:handshake",
+        "env:production"
+    ],
+    "type": "query alert"
+}

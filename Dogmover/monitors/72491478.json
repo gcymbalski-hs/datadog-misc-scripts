@@ -7,10 +7,11 @@
     "name": "High CPU Usage on handshake-web",
     "options": {
         "include_tags": true,
-        "new_host_delay": 300,
+        "new_group_delay": 60,
         "no_data_timeframe": 30,
         "notify_audit": false,
         "notify_no_data": true,
+        "renotify_interval": 0,
         "require_full_window": true,
         "silenced": {},
         "thresholds": {
@@ -18,11 +19,11 @@
             "warning": 0.8
         }
     },
-    "query": "avg(last_15m):( avg:kubernetes.cpu.usage.total{kube_deployment:handshake-web*} by {cluster-location,project,kube_deployment} / 1000000000 ) / avg:kubernetes.cpu.limits{kube_deployment:handshake-web*} by {cluster-location,project,kube_deployment} > 0.9",
+    "query": "avg(last_15m):(avg:kubernetes.cpu.usage.total{kube_deployment:handshake-web} by {cluster-location,project,kube_deployment} / 1000000000) / avg:kubernetes.cpu.limits{kube_deployment:handshake-web} by {cluster-location,project,kube_deployment} > 0.9",
     "tags": [
         "repo:terraform-datadog",
         "team:cloud-engineering",
         "terraform:true"
     ],
-    "type": "metric alert"
+    "type": "query alert"
 }

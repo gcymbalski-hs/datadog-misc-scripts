@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 84839630,
+    "matching_downtimes": [],
+    "message": "`handshake` throughput deviated too much from its usual value.",
+    "multi": false,
+    "name": "Service handshake has an abnormal change in throughput on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_15m"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_4h):anomalies(sum:trace.rack.request.hits{env:production,service:handshake}, 'agile', 3, direction='both', alert_window='last_15m', interval=60, count_default_zero='true') >= 1",
+    "tags": [
+        "service:handshake",
+        "env:production"
+    ],
+    "type": "query alert"
+}

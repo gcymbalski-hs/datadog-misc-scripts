@@ -1,0 +1,25 @@
+{
+    "deleted": null,
+    "id": 84531425,
+    "matching_downtimes": [],
+    "message": "Test monitor to measure SLO for all inboxes in DEP. - Omar\n\nhttps://joinhandshake.atlassian.net/browse/DE-260\n\n@omar@joinhandshake.com",
+    "multi": true,
+    "name": "[DEP-TEST] hsn-*: Undelivered Events Are Too High",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1000.0
+        }
+    },
+    "query": "avg(last_1h):avg:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:hsn-*,project_id:handshake-production} by {subscription_id} > 1000",
+    "tags": [],
+    "type": "query alert"
+}

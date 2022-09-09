@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 84535495,
+    "matching_downtimes": [],
+    "message": "Test monitor to measure SLO for all inboxes in DEP. - Omar\n\nhttps://joinhandshake.atlassian.net/browse/DE-260\n\n@omar@joinhandshake.com",
+    "multi": true,
+    "name": "[DEP-TEST] High Number of Unavailable Pods for All Inboxes",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5
+        }
+    },
+    "query": "avg(last_15m):avg:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:*-inbox} by {kube_deployment} / avg:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:*-inbox} by {kube_deployment} > 0.5",
+    "tags": [],
+    "type": "query alert"
+}
