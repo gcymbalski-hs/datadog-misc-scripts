@@ -6,7 +6,7 @@
     "id": "g3s-mmk-pt9",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-09-09T20:53:10.431250+00:00",
+    "modified_at": "2022-09-09T21:53:03.800061+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -1115,7 +1115,7 @@
             },
             "id": 2056226559174136,
             "layout": {
-                "height": 1,
+                "height": 3,
                 "width": 12,
                 "x": 0,
                 "y": 2
@@ -2871,7 +2871,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 3
+                "y": 5
             }
         },
         {
@@ -3893,7 +3893,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 4
+                "y": 6
             }
         },
         {
@@ -5167,7 +5167,7 @@
                 "height": 11,
                 "width": 12,
                 "x": 0,
-                "y": 5
+                "y": 7
             }
         },
         {
@@ -5466,7 +5466,7 @@
                                         "operation_name": "rack.request",
                                         "primary_tag_name": "region",
                                         "primary_tag_value": "$region",
-                                        "resource_name": "Next::Student::SchoolsController#show",
+                                        "resource_name": "Next::Student::Journeys::Api::StudentJourneysController#index",
                                         "service": "handshake",
                                         "stat": "latency_distribution"
                                     },
@@ -5475,7 +5475,7 @@
                             ],
                             "show_legend": false,
                             "time": {},
-                            "title": "(Distribution) schools#show",
+                            "title": "(Distribution) student_journeys#index",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "distribution",
@@ -5499,15 +5499,455 @@
                             "x": 0,
                             "y": 2
                         }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p95",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "p90",
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "alias": "p50",
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "on_right_yaxis": true,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p95:trace.rack.request{resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake,env:$env.value,region:$region.value}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "p90:trace.rack.request{resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake,env:$env.value,region:$region.value}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "p50:trace.rack.request{resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake,env:$env.value,region:$region.value}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "dotted",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "average",
+                                            "formula": "query0"
+                                        },
+                                        {
+                                            "alias": "max",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query0",
+                                            "query": "avg:trace.rack.request{resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake,env:$env.value,region:$region.value}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:trace.rack.request{resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake,env:$env.value,region:$region.value}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "thick",
+                                        "palette": "cool"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "(Latency) student_journeys#index",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1110012936427428,
+                        "layout": {
+                            "height": 2,
+                            "width": 3,
+                            "x": 3,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "autoscale": false,
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "aggregator": "sum",
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "count:trace.rack.request{env:$env.value,region:$region.value,resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "time": {},
+                            "timeseries_background": {
+                                "type": "bars",
+                                "yaxis": {
+                                    "include_zero": false
+                                }
+                            },
+                            "title": "(Hits) student_journeys#index",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 1774779099354412,
+                        "layout": {
+                            "height": 2,
+                            "width": 2,
+                            "x": 6,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "total hits",
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "count:trace.rack.request{env:$env.value,region:$region.value,resource_name:next::student::journeys::api::studentjourneyscontroller_index,service:handshake}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "thick",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "(Hits) student_journeys#index",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 2304323840831498,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 2
+                        }
+                    },
+                    {
+                        "definition": {
+                            "markers": [
+                                {
+                                    "display_type": "x_axis_percentile",
+                                    "value": "99"
+                                },
+                                {
+                                    "display_type": "x_axis_percentile",
+                                    "value": "90"
+                                },
+                                {
+                                    "display_type": "x_axis_percentile",
+                                    "value": "50"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "query": {
+                                        "data_source": "apm_resource_stats",
+                                        "env": "$env",
+                                        "group_by": [],
+                                        "name": "query1",
+                                        "operation_name": "execute.graphql",
+                                        "primary_tag_name": "region",
+                                        "primary_tag_value": "$region",
+                                        "resource_name": "GetHandpickedEmployerCollectionsSchoolShow",
+                                        "service": "student-graphql",
+                                        "stat": "latency_distribution"
+                                    },
+                                    "request_type": "histogram"
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "GraphQL: recommendationCollectionsByPriority distribution",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "distribution",
+                            "xaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            },
+                            "yaxis": {
+                                "include_zero": true,
+                                "max": "auto",
+                                "min": "auto",
+                                "scale": "linear"
+                            }
+                        },
+                        "id": 8821664159630456,
+                        "layout": {
+                            "height": 2,
+                            "width": 3,
+                            "x": 0,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "p50",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "p90",
+                                            "formula": "query2"
+                                        },
+                                        {
+                                            "alias": "p95",
+                                            "formula": "query3"
+                                        }
+                                    ],
+                                    "on_right_yaxis": true,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "p50:trace.execute.graphql{resource:cc8b690c735223eb,service:student-graphql,env:$env.value,region:$region.value}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "p90:trace.execute.graphql{resource:cc8b690c735223eb,service:student-graphql,env:$env.value,region:$region.value}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query3",
+                                            "query": "p95:trace.execute.graphql{resource:cc8b690c735223eb,service:student-graphql,env:$env.value,region:$region.value}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "dotted",
+                                        "line_width": "normal",
+                                        "palette": "warm"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "alias": "max",
+                                            "formula": "query1"
+                                        },
+                                        {
+                                            "alias": "average",
+                                            "formula": "query2"
+                                        }
+                                    ],
+                                    "on_right_yaxis": false,
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "max:trace.execute.graphql{resource:cc8b690c735223eb,service:student-graphql,env:$env.value,region:$region.value}"
+                                        },
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query2",
+                                            "query": "avg:trace.execute.graphql{resource:cc8b690c735223eb,service:student-graphql,env:$env.value,region:$region.value}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "thick",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "GraphQL: GetHandpickedEmployerCollectionsSchoolShow latency",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 7132603463272860,
+                        "layout": {
+                            "height": 2,
+                            "width": 3,
+                            "x": 3,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "autoscale": false,
+                            "precision": 0,
+                            "requests": [
+                                {
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "aggregator": "sum",
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "count:trace.execute.graphql{env:$env.value,region:$region.value,resource:cc8b690c735223eb,service:student-graphql}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "scalar"
+                                }
+                            ],
+                            "time": {},
+                            "timeseries_background": {
+                                "type": "bars",
+                                "yaxis": {
+                                    "include_zero": false
+                                }
+                            },
+                            "title": "(Hits) GetHandpickedEmployerCollectionsSchoolShow",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "query_value"
+                        },
+                        "id": 998294172108674,
+                        "layout": {
+                            "height": 2,
+                            "width": 2,
+                            "x": 6,
+                            "y": 4
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "horizontal",
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "count:trace.execute.graphql{env:$env.value,region:$region.value,resource:cc8b690c735223eb,service:student-graphql}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "thick",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": true,
+                            "time": {},
+                            "title": "(Hits) GetHandpickedEmployerCollectionsSchoolShow",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 4958632962794190,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 4
+                        }
                     }
                 ]
             },
             "id": 5612558172572946,
             "layout": {
-                "height": 5,
+                "height": 7,
                 "width": 12,
                 "x": 0,
-                "y": 16
+                "y": 18
             }
         },
         {
@@ -5524,7 +5964,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 21
+                "y": 25
             }
         },
         {
@@ -7187,7 +7627,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 22
+                "y": 26
             }
         },
         {
@@ -7675,7 +8115,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 23
+                "y": 27
             }
         },
         {
@@ -9244,7 +9684,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 24
+                "y": 28
             }
         },
         {
@@ -9544,7 +9984,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 25
+                "y": 29
             }
         },
         {
@@ -9681,7 +10121,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 26
+                "y": 30
             }
         }
     ]

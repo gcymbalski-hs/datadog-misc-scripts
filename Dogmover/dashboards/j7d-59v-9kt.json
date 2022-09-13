@@ -6,7 +6,7 @@
     "id": "j7d-59v-9kt",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-09-09T21:13:11.438866+00:00",
+    "modified_at": "2022-09-12T16:53:02.809969+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -40,13 +40,12 @@
                                             "aggregator": "avg",
                                             "data_source": "metrics",
                                             "name": "query1",
-                                            "query": "avg:trace.rack.request.duration{* AND service:handshake AND resource_name IN (next::edu::skillscontroller_index,next::student::skillscontroller_index,next::student::skillscontroller_create,next::student::skillscontroller_destroy,next::student::skilloptionscontroller_index,next::student::skilloptionscontroller_unified_search,next::employer::skillscontroller_index,next::edu::parsededucationscontroller_destroy,next::edu::parsedworkexperiencescontroller_destroy,next::student::parsedskillscontroller_destroy,next::student::parsededucationscontroller_destroy,next::student::parsedworkexperiencescontroller_destroy,next::student::mobile::v2::skillscontroller_suggested)} by {resource_name}"
+                                            "query": "avg:trace.rack.request.duration{* AND service:handshake AND resource_name IN (next::edu::skillscontroller_index,next::student::skillscontroller_index,next::student::skillscontroller_create,next::student::skillscontroller_destroy,next::student::skilloptionscontroller_index,next::student::skilloptionscontroller_unified_search,next::employer::skillscontroller_index,next::edu::parsededucationscontroller_destroy,next::edu::parsedworkexperiencescontroller_destroy,next::student::parsedskillscontroller_destroy,next::student::parsededucationscontroller_destroy,next::student::parsedworkexperiencescontroller_destroy,next::student::mobile::v2::skillscontroller_suggested,next::student::userscontroller_approve_all_parsed_items,next::student::userscontroller_decline_all_parsed_skills)} by {resource_name}"
                                         }
                                     ],
                                     "response_format": "scalar"
                                 }
                             ],
-                            "time": {},
                             "title": "Slowest endpoints on Skills",
                             "title_align": "left",
                             "title_size": "16",
@@ -130,7 +129,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::Skills#index Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -197,7 +195,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::Skills#create Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -264,7 +261,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::Skills#destroy Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -607,7 +603,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::SkillOptions#index Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -674,7 +669,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::SkillOptions#unified_search Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -741,7 +735,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::ParsedSkills#destroy Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -1092,7 +1085,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::ParsedWorkExperiences#destroy Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -1159,7 +1151,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::ParsedEducations#destroy Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -1226,7 +1217,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::Mobile::V2::Skills#suggested Requests & Errors",
                             "title_align": "left",
                             "title_size": "16",
@@ -1579,7 +1569,6 @@
                                 }
                             ],
                             "show_legend": false,
-                            "time": {},
                             "title": "Next::Student::Mobile::V2::Skills#index Latency",
                             "title_align": "left",
                             "title_size": "16",
@@ -1592,12 +1581,466 @@
                             "x": 8,
                             "y": 10
                         }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.rack.request.hits{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.rack.request.errors{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Next::Student::Users#approve_all_parsed_items Requests & Errors",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 209868372167534,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 12
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.rack.request.hits{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.rack.request.errors{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "title": "Next::Student::Users#decline_all_parsed_skills Requests & Errors",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 7467080102229852,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 12
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "watchdog",
+                                    "label": "Jul 27, 12:50 - 15:10",
+                                    "time": "1658940600 < t < 1658949000",
+                                    "value": "y > 0"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p50"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p50",
+                                            "query": "p50:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p75"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p75",
+                                            "query": "p75:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p90"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p90",
+                                            "query": "p90:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p95"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p95",
+                                            "query": "p95:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p99"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p99",
+                                            "query": "p99:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "max"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "max",
+                                            "query": "max:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_approve_all_parsed_items}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Next::Student::Users#approve_all_parsed_items Latency",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 1896893457684664,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 0,
+                            "y": 14
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "markers": [
+                                {
+                                    "display_type": "watchdog",
+                                    "label": "Jul 27, 12:50 - 15:10",
+                                    "time": "1658940600 < t < 1658949000",
+                                    "value": "y > 0"
+                                }
+                            ],
+                            "requests": [
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p50"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p50",
+                                            "query": "p50:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p75"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p75",
+                                            "query": "p75:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p90"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p90",
+                                            "query": "p90:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p95"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p95",
+                                            "query": "p95:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "p99"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "p99",
+                                            "query": "p99:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "line",
+                                    "formulas": [
+                                        {
+                                            "formula": "max"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "max",
+                                            "query": "max:trace.rack.request{env:production,service:handshake,resource_name:next::student::userscontroller_decline_all_parsed_skills}"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Next::Student::Users#decline_all_parsed_skills Latency",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 6255342584727826,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 4,
+                            "y": 14
+                        }
                     }
                 ]
             },
             "id": 1240949103114714,
             "layout": {
-                "height": 13,
+                "height": 17,
                 "width": 12,
                 "x": 0,
                 "y": 4
@@ -2535,7 +2978,7 @@
                 "height": 9,
                 "width": 12,
                 "x": 0,
-                "y": 17
+                "y": 21
             }
         },
         {
@@ -2713,7 +3156,7 @@
                 "height": 3,
                 "width": 12,
                 "x": 0,
-                "y": 26
+                "y": 30
             }
         },
         {

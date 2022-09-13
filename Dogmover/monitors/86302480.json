@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 86302480,
+    "matching_downtimes": [],
+    "message": "[{{cluster_name.name}}] No idle connections in pgbouncer deployment {{kube_deployment.name}} for the last 5 mins. \nThis could mean that the pgbouncer pods have gotten into a bad state.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601713670/\n\nNotify: @incidents-infrastructure",
+    "multi": true,
+    "name": "[PGBouncer] Idle Connections Are Not Available",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0,
+            "critical_recovery": 0.5
+        }
+    },
+    "query": "avg(last_5m):max:pgbouncer.pools.sv_idle{*} by {cluster_name, kube_deployment} <= 0",
+    "tags": [
+        "maintenance:true",
+        "repo:terraform-datadog",
+        "service:pgbouncer",
+        "team:cloud-engineering",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

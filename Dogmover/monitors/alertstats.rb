@@ -45,6 +45,11 @@ class Alert
     end
   end
 
+  def product_area
+    # note that this is not tracked in a way that we can easily reference for now
+    return ''
+  end
+
   def environments()
     envs = tags.select{|tag| tag =~ /env:/}.collect{|x| x.split(':')[1]}
     if message =~ /production/i
@@ -70,7 +75,7 @@ class Alert
   end
 
   def summarize()
-    [alert_id, name, environments, teams, runbooks, alerts, pages, resource_name, terraform?, message, query]
+    [alert_id, '', product_area, name, environments, teams, tags.join("\n"), runbooks, alerts, pages, resource_name, terraform?, message, query]
   end
 end
 
@@ -84,12 +89,39 @@ Spreadsheet.client_encoding = 'UTF-8'
 
 book = Spreadsheet::Workbook.new
 
-sheet1 = book.create_worksheet(name: 'Datadog Alert Summary')
+categories = %w{Employer University Student Platform Identity Cloud-Engineering DevX Messaging Stragglers}
 
-sheet1.row(0).concat(['Datadog Alert ID', 'Alert name', 'Environments (from message, tags)', 'Teams (from tags)', 'Runbooks/links', 'Alert channel(s)', 'Paging channel(s)', 'Resource name(s)', 'Terraformed?', 'Alert message (may be parsed)', 'Alert query'])
+total = 0
 
-alerts.each_with_index do |alert, i|
-  sheet1.row(i+1).concat alert.summarize
+categories.each do |category|
+  sheet = book.create_worksheet(name: category)
+
+  match_criteria = case category.downcase
+                   when 'platform'
+                     %w{platform iam data notifications}
+                   when 'stragglers'
+                     ['']
+                   else
+                     [category.downcase]
+                   end
+
+  sheet.row(0).concat(['Datadog Alert ID', 'New owner', 'Product Area', 'Alert name', 'Environments (from message, tags)', 'Teams (from tags)', 'Raw tags', 'Runbooks/links', 'Alert channel(s)', 'Paging channel(s)', 'Resource name(s)', 'Terraformed?', 'Alert message (may be parsed)', 'Alert query'])
+
+  category_alerts = alerts.select do |alert|
+    match_criteria.any? do |c|
+      alert.teams.match?(/#{c}/)
+    end
+  end
+
+  # pigeonhole alerts to one area
+  alerts = alerts - category_alerts
+
+  category_alerts.each_with_index do |alert, i|
+    sheet.row(i+1).concat alert.summarize
+  end
+  puts "Processed #{category_alerts.count} alerts in #{category}"
+  total = total + category_alerts.count
 end
 
+puts "Processed #{total} alerts"
 book.write('./datadog-alert-summary.xls')

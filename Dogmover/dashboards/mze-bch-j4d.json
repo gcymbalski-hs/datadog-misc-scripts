@@ -6,7 +6,7 @@
     "id": "mze-bch-j4d",
     "is_read_only": false,
     "layout_type": "ordered",
-    "modified_at": "2022-09-09T21:28:49.072689+00:00",
+    "modified_at": "2022-09-09T21:33:13.766985+00:00",
     "notify_list": [],
     "reflow_type": "fixed",
     "restricted_roles": [],
@@ -47,11 +47,6 @@
                     },
                     {
                         "definition": {
-                            "events": [
-                                {
-                                    "q": "[{\"type\":\"bars\",\"q\":\"sum:trace.rack.request.hits{env:production,resource:a730d37bb3248869,service:handshake}.as_count()\"},{\"type\":\"bars\",\"q\":\"sum:trace.rack.request.errors{env:production,resource:a730d37bb3248869,service:handshake}.as_count()\",\"style\":{\"palette\":\"warm\"}}]"
-                                }
-                            ],
                             "legend_columns": [
                                 "avg",
                                 "min",
@@ -65,12 +60,7 @@
                                     "display_type": "bars",
                                     "formulas": [
                                         {
-                                            "alias": "show",
                                             "formula": "query1"
-                                        },
-                                        {
-                                            "alias": "update",
-                                            "formula": "query2"
                                         }
                                     ],
                                     "queries": [
@@ -78,11 +68,6 @@
                                             "data_source": "metrics",
                                             "name": "query1",
                                             "query": "sum:trace.rack.request.hits{resource:e2c0c6432d70cbf9,service:handshake,$env}.as_count()"
-                                        },
-                                        {
-                                            "data_source": "metrics",
-                                            "name": "query2",
-                                            "query": "sum:trace.rack.request.hits{service:handshake,$env,resource_name:next::student::userscontroller_update}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -96,25 +81,14 @@
                                     "display_type": "bars",
                                     "formulas": [
                                         {
-                                            "alias": "show_errors",
                                             "formula": "query1"
-                                        },
-                                        {
-                                            "alias": "update_errors",
-                                            "formula": "query2"
                                         }
                                     ],
-                                    "on_right_yaxis": true,
                                     "queries": [
                                         {
                                             "data_source": "metrics",
                                             "name": "query1",
                                             "query": "sum:trace.rack.request.errors{resource:e2c0c6432d70cbf9,service:handshake,$env}.as_count()"
-                                        },
-                                        {
-                                            "data_source": "metrics",
-                                            "name": "query2",
-                                            "query": "sum:trace.rack.request.errors{service:handshake,$env,resource_name:next::student::userscontroller_update}.as_count()"
                                         }
                                     ],
                                     "response_format": "timeseries",
@@ -124,12 +98,13 @@
                                 }
                             ],
                             "show_legend": false,
-                            "title": "Requests and Errors on Next::Student::Users#show & update",
+                            "time": {},
+                            "title": "Next::Student::UserController#show hits and errors",
                             "title_align": "left",
                             "title_size": "16",
                             "type": "timeseries"
                         },
-                        "id": 5016291256612728,
+                        "id": 358126167921536,
                         "layout": {
                             "height": 2,
                             "width": 4,
@@ -307,6 +282,73 @@
                             "legend_layout": "auto",
                             "requests": [
                                 {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.rack.request.hits{resource:a730d37bb3248869,service:handshake,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "line_type": "solid",
+                                        "line_width": "normal",
+                                        "palette": "dog_classic"
+                                    }
+                                },
+                                {
+                                    "display_type": "bars",
+                                    "formulas": [
+                                        {
+                                            "formula": "query1"
+                                        }
+                                    ],
+                                    "queries": [
+                                        {
+                                            "data_source": "metrics",
+                                            "name": "query1",
+                                            "query": "sum:trace.rack.request.errors{resource:a730d37bb3248869,service:handshake,$env}.as_count()"
+                                        }
+                                    ],
+                                    "response_format": "timeseries",
+                                    "style": {
+                                        "palette": "warm"
+                                    }
+                                }
+                            ],
+                            "show_legend": false,
+                            "time": {},
+                            "title": "Next::Student::UsersController#update hits and errors",
+                            "title_align": "left",
+                            "title_size": "16",
+                            "type": "timeseries"
+                        },
+                        "id": 2985062711296976,
+                        "layout": {
+                            "height": 2,
+                            "width": 4,
+                            "x": 8,
+                            "y": 1
+                        }
+                    },
+                    {
+                        "definition": {
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "legend_layout": "auto",
+                            "requests": [
+                                {
                                     "display_type": "line",
                                     "formulas": [
                                         {
@@ -449,8 +491,8 @@
                         "layout": {
                             "height": 2,
                             "width": 4,
-                            "x": 8,
-                            "y": 1
+                            "x": 0,
+                            "y": 3
                         }
                     },
                     {
@@ -518,7 +560,7 @@
                         "layout": {
                             "height": 2,
                             "width": 4,
-                            "x": 0,
+                            "x": 4,
                             "y": 3
                         }
                     },
@@ -666,7 +708,7 @@
                         "layout": {
                             "height": 2,
                             "width": 4,
-                            "x": 4,
+                            "x": 8,
                             "y": 3
                         }
                     },
@@ -2571,7 +2613,7 @@
             },
             "id": 3382505418581486,
             "layout": {
-                "height": 1,
+                "height": 15,
                 "is_column_break": true,
                 "width": 12,
                 "x": 0,
@@ -3548,7 +3590,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 21
+                "y": 35
             }
         },
         {
@@ -4494,7 +4536,7 @@
                 "height": 1,
                 "width": 12,
                 "x": 0,
-                "y": 22
+                "y": 36
             }
         },
         {
@@ -4610,68 +4652,15 @@
                             "x": 4,
                             "y": 0
                         }
-                    },
-                    {
-                        "definition": {
-                            "requests": [
-                                {
-                                    "display_type": "bars",
-                                    "formulas": [
-                                        {
-                                            "formula": "query1"
-                                        }
-                                    ],
-                                    "queries": [
-                                        {
-                                            "data_source": "metrics",
-                                            "name": "query1",
-                                            "query": "sum:trace.rack.request.hits{env:production,resource:e2c0c6432d70cbf9,service:handshake}.as_count()"
-                                        }
-                                    ],
-                                    "response_format": "timeseries"
-                                },
-                                {
-                                    "display_type": "bars",
-                                    "formulas": [
-                                        {
-                                            "formula": "query1"
-                                        }
-                                    ],
-                                    "queries": [
-                                        {
-                                            "data_source": "metrics",
-                                            "name": "query1",
-                                            "query": "sum:trace.rack.request.errors{env:production,resource:e2c0c6432d70cbf9,service:handshake}.as_count()"
-                                        }
-                                    ],
-                                    "response_format": "timeseries",
-                                    "style": {
-                                        "palette": "warm"
-                                    }
-                                }
-                            ],
-                            "show_legend": false,
-                            "title": "",
-                            "title_align": "left",
-                            "title_size": "16",
-                            "type": "timeseries"
-                        },
-                        "id": 358126167921536,
-                        "layout": {
-                            "height": 2,
-                            "width": 4,
-                            "x": 0,
-                            "y": 2
-                        }
                     }
                 ]
             },
             "id": 2502536074678356,
             "layout": {
-                "height": 5,
+                "height": 3,
                 "width": 12,
                 "x": 0,
-                "y": 23
+                "y": 37
             }
         }
     ]
