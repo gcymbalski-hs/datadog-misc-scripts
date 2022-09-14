@@ -30,11 +30,11 @@ class Alert
   end
 
   def alerts()
-    /(@slack-[[:word:]]*)/.match(message).to_a.uniq.join("\n")
+    message.scan(/(@slack(?:-[[:word:]]*)*)/).flatten.uniq.join("\n")
   end
 
   def pages()
-    /(@pagerduty-[[:word:]]*)/.match(message).to_a.uniq.join("\n")
+    message.scan(/(@pagerduty(?:-[[:word:]]*)*)/).flatten.uniq.join("\n")
   end
 
   def terraform?
