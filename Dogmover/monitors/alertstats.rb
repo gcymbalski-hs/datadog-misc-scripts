@@ -1,83 +1,9 @@
 require 'json'
 require 'uri'
-require 'csv'
 require 'pry'
 require 'spreadsheet'
 
-class Alert
-  attr_reader :alert_object
-  attr_reader :alert_id
-
-  def initialize(alert_raw_json)
-    @alert_object = JSON.parse(alert_raw_json)
-    @alert_id = @alert_object['id']
-  end
-
-  def name()
-    @alert_object['name']
-  end
-
-  def message()
-    @alert_object['message']
-  end
-
-  def tags()
-    @alert_object['tags']
-  end
-
-  def runbooks()
-    URI.extract(message).filter{|u| u =~ /^http/}.collect{|u| u.gsub(/\)/, '')}.uniq.join("\n")
-  end
-
-  def alerts()
-    message.scan(/(@slack(?:-[[:word:]]*)*)/).flatten.uniq.join("\n")
-  end
-
-  def pages()
-    message.scan(/(@pagerduty(?:-[[:word:]]*)*)/).flatten.uniq.join("\n")
-  end
-
-  def terraform?
-    if tags.any?{|tag| tag == 'terraform:true'}
-      true
-    else
-      false
-    end
-  end
-
-  def product_area
-    # note that this is not tracked in a way that we can easily reference for now
-    return ''
-  end
-
-  def environments()
-    envs = tags.select{|tag| tag =~ /env:/}.collect{|x| x.split(':')[1]}
-    if message =~ /production/i
-      envs << 'production'
-    end
-    if envs.empty?
-      'any (potentially)'
-    else
-      envs.uniq.join("\n")
-    end
-  end
-  
-  def teams()
-    tags.select{|tag| tag =~ /team:/}.collect{|x| x.split(':')[1]}.uniq.join("\n")
-  end
-
-  def query()
-    @alert_object['query']
-  end
- 
-  def resource_name
-    /(resource_name:[\w:]*)/.match(query).to_a.collect{|x| x.gsub(/resource_name:/, '')}.uniq.join("\n")
-  end
-
-  def summarize()
-    [alert_id, '', product_area, name, environments, teams, tags.join("\n"), runbooks, alerts, pages, resource_name, terraform?, message, query]
-  end
-end
+require './lib/alerts.rb'
 
 alert_defs = Dir.children('.').filter{|c| c =~ /.*\.json$/ && File.stat(c).file? }
 
