@@ -7,44 +7,97 @@ require 'datadog_api_client'
 
 require './lib/alerts.rb'
 
+DEBUG=ENV['DEBUG'] == 'true'
+
+REALLY_UPDATE_DATADOG = ENV['DRY_RUN'] == 'false'
+
 DatadogAPIClient.configure do |config|
   config.debugging = true if ENV['DEBUG'] == 'true'
 end
 
 local_alert_defs = Dir.children('.').filter{|c| c =~ /.*\.json$/ && File.stat(c).file? }
-local_alerts = local_alert_defs.collect{|alert_def| Alert.new(File.read(alert_def))}.sort_by(&:alert_id)
+local_alerts = local_alert_defs.collect do |alert_def|
+  Alert.new(File.read(alert_def))
+end.sort_by(&:alert_id)
 
 # completely ignore the default 'ntp' alert that datadog generated
 local_alerts = local_alerts.select{|alert| alert.alert_id != 3618226}
 
 # exported from the google sheet that EMs have been putting new mappings into
 exported_workbook = RubyXL::Parser.parse("./current-alert-status-10312022.xlsx")
-workbook_alerts = local_alerts.collect{|alert| get_alert_from_workbook(alert.alert_id, exported_workbook)}.compact
+workbook_alerts = local_alerts.collect do |alert|
+  get_alert_from_workbook(alert.alert_id, exported_workbook)
+end.compact
 
-# find alerts that may have changed since our original export and the workbook today
-alerts_with_changes       = get_all_alert_diffs(local_alerts, workbook_alerts).compact
+puts "Amount of alerts found in workbook: #{workbook_alerts.count}"
+
+workbook_consistent = local_alerts.any? do |local_alert|
+  workbook_alert = get_alert(local_alert.alert_id, workbook_alerts)
+  if ! workbook_alert
+    # no matching alert- that's fine
+    true
+  elsif workbook_alert.message == local_alert.message && \
+      workbook_alert.query == local_alert.query && \
+      workbook_alert.name == local_alert.name
+    true
+  else
+    false
+  end
+end
+
+if workbook_consistent
+  puts "Found no changes to messages, queries, or names in workbook. Good."
+else
+  puts "Found deltas in messages/queries/names; we only want to update notification channels, baling out"
+  exit 1
+end
+
+puts "Reprocessing alerts with data from latest workbook..."
+workbook_alerts.each{|x| x.reprocess_alert}
+
+puts "Excluding alerts that do not have diffs from the desired and actual state..."
+workbook_alerts.reject!{|x| ! alert_diff(x.alert_id, local_alerts, workbook_alerts)}
+puts "Initial amount of alerts that will need to be updated: #{workbook_alerts.count}"
+
+puts "Complete set of new alert owners: "
+new_alert_owners = workbook_alerts.collect{|x| "#{x.new_team} - #{x.new_squad}"}.compact.uniq
+puts new_alert_owners.join("\n")
+puts ''
+
+puts "Raw owner names that still need to be mapped to teams/squads:"
+owners_that_need_remapping = workbook_alerts.collect do |x|
+  if x.new_team.nil? && x.raw_new_owner
+    x.raw_new_owner.downcase
+  end
+end.compact.uniq
+
+puts owners_that_need_remapping.join("\n")
 
 # find alerts that may be missing entirely from the workbook that existed during the original export
 missing_alerts            = get_missing_alerts(local_alerts, workbook_alerts)
 
-# find alerts that we will NOT need to manage since they are handled with terraform
-terraform_alerts          = local_alerts.collect{|alert| alert.alert_id if alert.terraform?}.compact
-
 # find alerts with a nil value for 'new owner' - probably already owned
 alerts_with_no_new_owner = workbook_alerts.select{|alert| alert.new_team.nil?}
 completely_unowned       = alerts_with_no_new_owner.select{|alert| ! alert.tags.any?{|t| t =~ /team/}}.compact
+
 # complete list of team tags from the 'alerts with no "new" owner' set:
 # alerts_with_no_new_owner.collect{|x| x.tags.select{|t| t =~ /team/}}.flatten.uniq
-# => ["team:platform", "team:iam", "team:data", "team:notifications", "team:devx", "team:cloud-engineering", "team:messaging"]
+# ["team:platform", "team:iam", "team:data", "team:notifications", "team:devx", "team:cloud-engineering", "team:messaging"]
 #   these look safe to me
-puts "Size of completely unowned alerts set: #{completely_unowned.count}"
+completely_unowned_log = "./completely_unowned.log"
+puts "Amount of completely unowned alerts (i.e. no team tag) set: #{completely_unowned.count}"
+puts "Writing set of unowned alerts to #{completely_unowned_log}"
+File.write(completely_unowned_log, completely_unowned.collect{|x| x.alert_id}.join("\n"))
+puts ''
 
 # set of alerts we've been asked to remove entirely
 alerts_to_remove = workbook_alerts.select{|x| x.to_delete == true}
-puts "Alerts requested to be deleted: #{alerts_to_remove.collect{|x| x.alert_id}.join(', ')}"
-
-# complete set of new owners
-new_alert_owners = workbook_alerts.collect{|x| x.new_team.downcase if x.new_team}.compact.uniq.count
+alerts_to_remove_ids = alerts_to_remove.collect{|x| x.alert_id}
+delete_request_log = "./to_delete.log"
+puts "Amount of alerts requested to be deleted: #{alerts_to_remove_ids.count}"
+puts "Writing delete-able alert set to #{delete_request_log}"
+File.write(delete_request_log, alerts_to_remove.collect{|x| x.alert_id}.join("\n"))
+puts ''
 
 # alerts that are still set to a 'shared' owner
 shared_alerts    = workbook_alerts.select do |x|
@@ -54,12 +107,55 @@ shared_alerts    = workbook_alerts.select do |x|
     nil
   end
 end
+shared_ids = shared_alerts.collect{|x| x.alert_id}
+shared_alert_log = "./shared_alerts.log"
+puts "Size of 'shared' unowned alerts set: #{shared_ids.count}"
+puts "Writing shared unowned alert set to #{shared_alert_log}"
+File.write(shared_alert_log, shared_alerts.collect{|x| x.alert_id}.join("\n"))
+puts ''
 
-puts "Size of 'shared' unowned alerts set: #{shared_alerts.count}"
-puts "'Shared' alert IDs to be pared down: #{shared_alerts.collect{|x| x.alert_id}.join(', ')}"
+# terraform-managed alerts that will need updates
+terraform_fixup_log = "./to_fix_in_terraform.log"
+puts "Writing terraform-managed alert IDs with requested changes to #{terraform_fixup_log}"
+File.write(terraform_fixup_log, workbook_alerts.collect{|x| x.terraform?}.join("\n"))
+puts ''
 
-puts "Raw owner names that still need to be mapped to teams/squads:"
-puts workbook_alerts.collect{|x| x.raw_new_owner.downcase if ( x.new_team.nil? && x.raw_new_owner ) }.compact.uniq.join("\n")
+# alerts with multiple slack channel pairings that are both not terraformed 
+# and also do not reference the deprecated UK alerts channel
+non_terraform_non_uk_multialerts = local_alerts.select do |x|
+    x.alerts.count > 1
+  end.select do |x|
+    x.message =~ /{{/
+  end.select do |x|
+    ! (x.message =~ /slack-incidents-uk/)
+  end.select do |x|
+    ! x.terraform?
+  end
+
+multialertcount = non_terraform_non_uk_multialerts.count
+multialert_ids   = non_terraform_non_uk_multialerts.collect{|x| x.alert_id}
+
+puts "Size of set of alerts that target multiple slack channels (excluding UK or terraform-managed): #{multialertcount}"
+multi_fixup_log     = "./multi_alert_channels_to_fix_manually.txt"
+puts "Writing alerts that need manual adjustments to #{multi_fixup_log}"
+File.write(multi_fixup_log, multialert_ids.join("\n"))
+puts ''
+
+puts "Finalizing the set of alerts to update..."
+
+puts "Excluding the small amount of alerts that will need manual editing (the multi-alert set from above)"
+workbook_alerts.reject!{|x| multialert_ids.include?(x.alert_id)}
+
+puts "Excluding terraform alerts..."
+workbook_alerts.reject!{|x| x.terraform? }
+
+puts "Excluding 'shared' alerts that need more help..."
+workbook_alerts.reject!{|x| shared_ids.include?(x.alert_id)}
+
+puts "Excluding set of alerts that people wanted to delete..."
+workbook_alerts.reject!{|x| alerts_to_remove_ids.include?(x.alert_id)}
+
+puts "Final amount of alerts to update: #{workbook_alerts.count}"
 
 binding.pry
 

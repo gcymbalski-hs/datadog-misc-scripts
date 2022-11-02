@@ -1,6 +1,8 @@
 require 'json'
 require 'uri'
 
+DEBUG = ENV['DEBUG'] == true
+
 class Alert
   attr_reader :alert_object
   attr_reader :name
@@ -16,7 +18,8 @@ class Alert
   attr_reader :channels_consistent
   attr_reader :raw_new_owner
   attr_reader :to_delete
-  attr_reader :new_slack_channel
+  attr_reader :new_alert_channel
+  attr_reader :new_pagerduty_service
 
   def initialize(alert_source)
     if alert_source.class == String
@@ -38,14 +41,8 @@ class Alert
                        alert_object[6].value.nil? ) ? [] : alert_object[6].value.split("\n")
       @message      = alert_object[12].value
       @query        = alert_object[13].value
-      @alerts       = (alert_object[8].nil? || \
-                       alert_object[8].value.nil? ) ? [] : alert_object[8].value.split("\n")
-      @pages        = (alert_object[9].nil? || \
-                       alert_object[9].value.nil?) ? [] : alert_object[9].value.split("\n")
-      @channels_consistent = test_consistent_channels
-      if @channels_consistent == false
-        puts "#{@alert_id}: Found inconsistent alerting channels" if ENV['DEBUG'] == 'true'
-      end
+      @alerts       = parse_slack_channels
+      @pages        = parse_pagerduty_service
       find_new_slack_channel
     end
   end
@@ -144,7 +141,7 @@ class Alert
     # let's not change anything yet if this alert currently doesn't go to slack
     return if @alerts.empty?
     current_last_slack_channel = @alerts.last
-    @new_slack_channel = case @new_team
+    proposed_slack_channel = case @new_team
         when 'jobs'
           'incidents-jobs'
         when 'spark-engagement'
@@ -198,14 +195,46 @@ class Alert
           puts "Unknown team passed in: #{new_team}"
           nil
         end
+    @new_alert_channel = "@slack-#{proposed_slack_channel}"
   end
 
-  def append_new_slack_channel
-    if new_slack_channel = find_new_slack_channel
-      @new_message = \
-        @message.gsub(/#{current_last_slack_channel}/, "#{current_last_slack_channel} @slack-#{new_slack_channel}")
-        @message = @new_message
+  def reprocess_alert
+    if @alerts.include?(@new_alert_channel)
+      puts "#{@alert_id}: New alert channel already included, skipping"
+      return
     end
+    case @alerts.count
+    when 0
+      puts "#{@alert_id}: Not taking action on Slack mappings due to no previous mapping" if DEBUG
+    when 1
+      puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack mappings" if DEBUG
+      reprocess_slack_mappings
+    else
+      puts "#{@alert_id}: Not processing due to multiple Slack channel targets, please reprocess manually" if DEBUG
+    end
+    reprocess_tags
+  end
+
+  def reprocess_slack_mappings
+    # this channel is deprecated but lives on in some places- not cleaning that up right now
+    without_uk = @alerts.reject{|x| x == '@slack-incidents-uk' }
+    if without_uk.count == 1
+      # note that *every* alert with multiple slack channel mappings uses a comma to separate them
+      #   (except when things are separated by a conditional)
+      # a side effect is that we always know that our 'new' slack channel is always the second one
+      @original_message = @message
+      @message          = @message.sub(/#{without_uk.first}/, "#{without_uk.first},#{@new_alert_channel}")
+      # update alert metadata in memory
+      @alerts = parse_slack_channels
+    else
+      puts "#{@alert_id}: Not taking action due to invalid count of current channels" if DEBUG
+      nil
+    end
+  end
+
+  def reprocess_tags
+    # placeholder - not doing this yet!
+    true
   end
 
   def find_new_pagerduty_service
@@ -215,15 +244,19 @@ class Alert
   end
 
   def parse_slack_channels
-    @message.scan(/(@slack(?:-[[:word:]]*)*)/).flatten.uniq
+    channels = @message.scan(/(@slack(?:-[[:word:]]*)*)/).flatten
+    if channels.uniq.count != channels.count
+      puts "#{@alert_id}: WARNING: Duplicate slack channel mappings found"
+    end
+    channels.uniq
   end
 
   def parse_pagerduty_service
-    @message.scan(/(@pagerduty(?:-[[:word:]]*)*)/).flatten.uniq
-  end
-
-  def test_consistent_channels()
-    parse_slack_channels == @alerts && parse_pagerduty_service == @pages
+    pages = @message.scan(/(@pagerduty(?:-[[:word:]]*)*)/).flatten
+    if pages.uniq.count != pages.count
+      puts "#{@alert_id}: WARNING: Duplicate pagerduty service mappings found"
+    end
+    pages.uniq
   end
 
   def runbooks()
@@ -235,7 +268,7 @@ class Alert
       true
     else
       if @tags.any?{|tag| tag =~ /repo:terraform/ }
-        puts "#{@alert_id}: Found terraform repo tag #{@tags.select{|tag| tag =~/repo:terraform/}.first} but not 'terraform:true', assuming terraform" if ENV['DEBUG'] == 'true'
+        puts "#{@alert_id}: Found terraform repo tag #{@tags.select{|tag| tag =~/repo:terraform/}.first} but not 'terraform:true', assuming terraform" if DEBUG
         true
       else
         false
@@ -269,7 +302,7 @@ class Alert
 end
 
 def get_alert_from_workbook(alert_id, workbook)
-  puts "#{alert_id}: Finding alert in workbook" if ENV['DEBUG'] == 'true'
+  puts "#{alert_id}: Finding alert in workbook" if DEBUG
   categories = %w{Employer University Student Platform Identity Cloud-Engineering DevX Messaging Stragglers}
   target_row = nil
   categories.each do |category|
@@ -282,13 +315,13 @@ def get_alert_from_workbook(alert_id, workbook)
     if rows.empty?
       nil
     else
-      puts "#{alert_id}: Found alert in category #{category}" if ENV['DEBUG'] == 'true'
+      puts "#{alert_id}: Found alert in category #{category}" if DEBUG
       target_row = rows.first
       break
     end
   end
   if target_row.nil?
-    puts "#{alert_id}: Did not find a match for alert in any worksheet" if ENV['DEBUG'] == 'true'
+    puts "#{alert_id}: Did not find a match for alert in any worksheet" if DEBUG
     return nil
   else
     return Alert.new(target_row)
@@ -305,45 +338,41 @@ end
 def alert_diff(alert_id, json_alerts, workbook_alerts)
   json_alert      = get_alert(alert_id, json_alerts)
   workbook_alert  = get_alert(alert_id, workbook_alerts)
-
+  
   if workbook_alert.nil?
-    puts "#{alert_id}: No matching alert found in workbook- probably deleted intentionally" if ENV['DEBUG'] == 'true'
+    puts "#{alert_id}: No matching alert found in workbook- probably deleted intentionally" if DEBUG
     return nil
   end
 
   diff = false
-  if ! json_alert.name == workbook_alert.name
+  if json_alert.name != workbook_alert.name
     diff = true
   end
-  if ! json_alert.message == workbook_alert.message
+  if json_alert.message != workbook_alert.message
     diff = true
   end
-  if ! json_alert.tags == workbook_alert.tags
+  if json_alert.tags != workbook_alert.tags
     diff = true
   end
-  if ! json_alert.query == workbook_alert.query
+  if json_alert.query != workbook_alert.query
     diff = true
   end
-  if ! json_alert.alerts == workbook_alert.alerts
+  if json_alert.alerts != workbook_alert.alerts
     diff = true
   end
-  if ! json_alert.pages == workbook_alert.pages
+  if json_alert.pages != workbook_alert.pages
     diff = true
   end
-  if diff
-    if ENV['DEBUG'] == 'true'
-      puts "#{alert_id}: Differences found between original and new alert configuration!"
-      pp json_alert
-      pp workbook_alert
-    end
-    return alert_id
-  else
-    return nil
+  if diff && DEBUG
+    puts "#{alert_id}: Differences found between original and new alert configuration!"
+    pp json_alert
+    pp workbook_alert
   end
+  return diff
 end
 
 def get_all_alert_diffs(json_alerts, workbook_alerts)
-  json_alerts.collect do |alert|
+  json_alerts.select do |alert|
     alert_diff(alert.alert_id, json_alerts, workbook_alerts)
   end
 end
