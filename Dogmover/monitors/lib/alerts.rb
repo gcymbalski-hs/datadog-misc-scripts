@@ -34,8 +34,8 @@ class Alert
     elsif alert_source.class == RubyXL::Row
       alert_object = alert_source
       @alert_id     = Integer(alert_object[0].value)
-      find_new_owner(alert_object[1].nil? ? nil : alert_object[1].value)
       @product_area = alert_object[2].nil? ? nil : alert_object[2].value
+      find_new_owner(alert_object[1].nil? ? nil : alert_object[1].value)
       @name         = alert_object[3].nil? ? nil : alert_object[3].value
       @tags         = (alert_object[6].nil? || \
                        alert_object[6].value.nil? ) ? [] : alert_object[6].value.split("\n")
@@ -55,6 +55,7 @@ class Alert
       raw_owner.gsub!(/&/, 'and')
       raw_owner.gsub!(/&/, 'and')
       # filter out the junk
+      product_area = @product_area.downcase if @product_area
       raw_team_guess = raw_owner.split('/').first.split('>').first.strip.downcase
       raw_squad_guess = raw_owner.split('/').last.split('>').last.strip.downcase
       if raw_squad_guess == raw_team_guess
@@ -64,6 +65,9 @@ class Alert
       when 'delete'
         @to_delete  = true
         @new_team   = 'delete'
+      when /monolith/
+        @new_team   = 'shared-monolith'
+        @new_squad  = nil
       when 'data'
         @new_team   = 'data'
         @new_squad  = nil
@@ -83,12 +87,14 @@ class Alert
       when /integration/
         @new_team   = 'talent-evolution'
         @new_squad  = 'analytics and integrations'
-      when /^talent/
+      when /^talent/ || /^te/
         @new_team   = 'talent-evolution'
-        @new_squad  = raw_squad_guess
-      when /^te/
-        @new_team   = 'talent-evolution'
-        @new_squad  = raw_squad_guess
+        @new_squad  = case product_area
+                      when 'a&i'
+                        'analytics and integrations'
+                      else
+                        raw_squad_guess
+                      end
       when /^se /
         @new_team   = 'spark-engagement'
         @new_squad  = raw_owner.split(' ').last.strip.downcase
@@ -142,6 +148,8 @@ class Alert
     return if @alerts.empty?
     current_last_slack_channel = @alerts.last
     proposed_slack_channel = case @new_team
+        when 'shared-monilith'
+          'incidents'
         when 'jobs'
           'incidents-jobs'
         when 'spark-engagement'
@@ -168,7 +176,7 @@ class Alert
           when 'skills'
             'incidents-te-skills'
           else
-            puts "Unknown squad passed in for #{new_team}"
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}"
             nil
           end
         when 'platform-services'
@@ -192,10 +200,10 @@ class Alert
         when 'data'
           'incidents-data'
         else
-          puts "Unknown team passed in: #{new_team}"
+          puts "#{@alert_id}: Unknown team passed in: #{new_team}"
           nil
         end
-    @new_alert_channel = "@slack-#{proposed_slack_channel}"
+    @new_alert_channel = "@slack-#{proposed_slack_channel}" if proposed_slack_channel
   end
 
   def reprocess_alert
@@ -246,7 +254,7 @@ class Alert
   def parse_slack_channels
     channels = @message.scan(/(@slack(?:-[[:word:]]*)*)/).flatten
     if channels.uniq.count != channels.count
-      puts "#{@alert_id}: WARNING: Duplicate slack channel mappings found"
+      puts "#{@alert_id}: WARNING: Duplicate slack channel mappings found" if DEBUG
     end
     channels.uniq
   end
@@ -254,7 +262,7 @@ class Alert
   def parse_pagerduty_service
     pages = @message.scan(/(@pagerduty(?:-[[:word:]]*)*)/).flatten
     if pages.uniq.count != pages.count
-      puts "#{@alert_id}: WARNING: Duplicate pagerduty service mappings found"
+      puts "#{@alert_id}: WARNING: Duplicate pagerduty service mappings found" if DEBUG
     end
     pages.uniq
   end

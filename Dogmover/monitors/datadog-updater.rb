@@ -7,7 +7,8 @@ require 'datadog_api_client'
 
 require './lib/alerts.rb'
 
-DEBUG=ENV['DEBUG'] == 'true'
+DEBUG = ENV['DEBUG'] == 'true'
+PRY   = ENV['PRY'] == 'true'
 
 REALLY_UPDATE_DATADOG = ENV['DRY_RUN'] == 'false'
 
@@ -31,21 +32,26 @@ end.compact
 
 puts "Amount of alerts found in workbook: #{workbook_alerts.count}"
 
-workbook_consistent = local_alerts.any? do |local_alert|
+inconsistent_alerts = []
+workbook_inconsistent = local_alerts.any? do |local_alert|
   workbook_alert = get_alert(local_alert.alert_id, workbook_alerts)
   if ! workbook_alert
     # no matching alert- that's fine
-    true
+    false
   elsif workbook_alert.message == local_alert.message && \
       workbook_alert.query == local_alert.query && \
-      workbook_alert.name == local_alert.name
-    true
+      workbook_alert.name == local_alert.name && \
+      workbook_alert.tags == local_alert.tags
+    false
   else
+    puts "#{local_alert.alert_id}: inconsistent query/name/tags between curent alerts and worksheet"
+    inconsistent_alerts << local_alert.alert_id
+    binding.pry if PRY
     false
   end
 end
 
-if workbook_consistent
+if workbook_inconsistent
   puts "Found no changes to messages, queries, or names in workbook. Good."
 else
   puts "Found deltas in messages/queries/names; we only want to update notification channels, baling out"
@@ -55,12 +61,14 @@ end
 puts "Reprocessing alerts with data from latest workbook..."
 workbook_alerts.each{|x| x.reprocess_alert}
 
+binding.pry if PRY
+
 puts "Excluding alerts that do not have diffs from the desired and actual state..."
 workbook_alerts.reject!{|x| ! alert_diff(x.alert_id, local_alerts, workbook_alerts)}
 puts "Initial amount of alerts that will need to be updated: #{workbook_alerts.count}"
 
 puts "Complete set of new alert owners: "
-new_alert_owners = workbook_alerts.collect{|x| "#{x.new_team} - #{x.new_squad}"}.compact.uniq
+new_alert_owners = workbook_alerts.collect{|x| "#{[x.new_team,x.new_squad].join(' - ')}"}.compact.uniq.sort
 puts new_alert_owners.join("\n")
 puts ''
 
@@ -85,7 +93,7 @@ completely_unowned       = alerts_with_no_new_owner.select{|alert| ! alert.tags.
 # ["team:platform", "team:iam", "team:data", "team:notifications", "team:devx", "team:cloud-engineering", "team:messaging"]
 #   these look safe to me
 completely_unowned_log = "./completely_unowned.log"
-puts "Amount of completely unowned alerts (i.e. no team tag) set: #{completely_unowned.count}"
+puts "Amount of completely unowned alerts (including no team tag) set: #{completely_unowned.count}"
 puts "Writing set of unowned alerts to #{completely_unowned_log}"
 File.write(completely_unowned_log, completely_unowned.collect{|x| x.alert_id}.join("\n"))
 puts ''
@@ -157,7 +165,7 @@ workbook_alerts.reject!{|x| alerts_to_remove_ids.include?(x.alert_id)}
 
 puts "Final amount of alerts to update: #{workbook_alerts.count}"
 
-binding.pry
+binding.pry if PRY
 
 exit
 
