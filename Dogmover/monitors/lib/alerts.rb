@@ -1,7 +1,9 @@
 require 'json'
 require 'uri'
 
-DEBUG = ENV['DEBUG'] == true
+DEBUG             = ENV['DEBUG'] == true
+SLACK_REGEXP      = /(@slack(?:-[[:word:]]*)*)/
+PAGERDUTY_REGEXP  = /(@pagerduty(?:-[[:word:]]*)*)/
 
 class Alert
   attr_reader :alert_object
@@ -21,7 +23,7 @@ class Alert
   attr_reader :new_alert_channel
   attr_reader :new_pagerduty_service
 
-  def initialize(alert_source)
+  def initialize(alert_source, original_alert=nil)
     if alert_source.class == String
       alert_object = JSON.parse(alert_source)
       @alert_id = alert_object['id']
@@ -30,26 +32,86 @@ class Alert
       @message  = alert_object['message']
       @query    = alert_object['query']
       @alerts   = parse_slack_channels
-      @pages    = parse_pagerduty_service
+      @pages    = parse_pagerduty_services
     elsif alert_source.class == RubyXL::Row
       alert_object = alert_source
       @alert_id     = Integer(alert_object[0].value)
       @product_area = alert_object[2].nil? ? nil : alert_object[2].value
-      find_new_owner(alert_object[1].nil? ? nil : alert_object[1].value)
+      @raw_new_owner = alert_object[1].nil? ? nil : alert_object[1].value
       @name         = alert_object[3].nil? ? nil : alert_object[3].value
-      @tags         = (alert_object[6].nil? || \
-                       alert_object[6].value.nil? ) ? [] : alert_object[6].value.split("\n")
-      @message      = alert_object[12].value
-      @query        = alert_object[13].value
+      if original_alert.nil?
+        puts "#{@alert_id}: Must pass in original alert (i.e. the real source of truth for everything)" if DEBUG
+      end
+      @name         = original_alert.name
+      @tags         = original_alert.tags
+      @message      = original_alert.message
+      @query        = original_alert.query
       @alerts       = parse_slack_channels
-      @pages        = parse_pagerduty_service
-      find_new_slack_channel
+      @pages        = parse_pagerduty_services
+      find_new_owner
+      find_new_slack_channel unless new_team == 'delete'
     end
   end
 
-  def find_new_owner(raw_owner)
-    @raw_new_owner = raw_owner 
+  def find_new_owner
+    raw_owner = @raw_new_owner
+    if raw_owner.nil? && @tags
+      # attempt to infer this from team tags
+      team_tags = @tags.select{|t| t =~ /^team:/}.collect{|t| t.split(':').last}
+      squad_tags = @tags.select{|t| t =~ /^squad:/}.collect{|t| t.split(':').last}
+      # filter out the 'overloaded' uses of the team tag
+      team_tags.reject! do |team|
+        team.downcase =~ /university|student|employer/
+      end
+      if team_tags.count == 0
+        puts "#{@alert_id}: No new owner nor team tags, unable to guess" if DEBUG
+        nil
+      else
+        if team_tags.count > 1
+          puts "#{@alert_id}: Multiple team tags found, guessing..." if DEBUG
+        end
+        if team_tags.include?('data')
+          team_guess  = 'data'
+        end
+        if team_tags.include?('platform')
+          team_guess  = 'platform-services'
+        end
+        if team_tags.include?('notifications')
+          team_guess  = 'platform-services'
+          squad_guess = 'notifications'
+        end
+        if team_tags.include?('devx')
+          team_guess  = 'infrastructure'
+          squad_guess = 'devx'
+        end
+        if team_tags.include?('iam')
+          team_guess  = 'platform-services'
+          squad_guess = 'access-and-admin'
+        end
+        if team_tags.include?('cloud-engineering')
+          team_guess  = 'infrastructure'
+          squad_guess = 'cloud-engineering'
+        end
+        if team_tags.include?('messaging')
+          team_guess  = 'spark-engagement'
+          squad_guess = 'messaging'
+        end
+        if team_guess.nil?
+          team_guess = team_tags.first
+        end
+        puts "#{@alert_id}: Guessing team tag #{team_guess}" if DEBUG
+        raw_owner = team_guess
+        if squad_guess.nil? && squad_tags.first
+          squad_guess = squad_tags.first.split(':').last
+          puts "#{@alert_id}: Found squad tag #{squad_guess}" if DEBUG
+        else
+          puts "#{@alert_id}: Guessing squad #{squad_guess}" if DEBUG
+        end 
+        raw_owner = "#{team_guess} > #{squad_guess}" if squad_guess
+      end
+    end
     if raw_owner.nil?
+      # if we still couldn't find anything, oof
       nil
     else
       raw_owner.gsub!(/&/, 'and')
@@ -87,11 +149,23 @@ class Alert
       when /integration/
         @new_team   = 'talent-evolution'
         @new_squad  = 'analytics and integrations'
-      when /^talent/ || /^te/
+      when /^talent/
         @new_team   = 'talent-evolution'
         @new_squad  = case product_area
                       when 'a&i'
                         'analytics and integrations'
+                      when /guidance/
+                        'guidance'
+                      else
+                        raw_squad_guess
+                      end
+      when /^te /
+        @new_team   = 'talent-evolution'
+        @new_squad  = case product_area
+                      when 'a&i'
+                        'analytics and integrations'
+                      when /guidance/
+                        'guidance'
                       else
                         raw_squad_guess
                       end
@@ -110,7 +184,7 @@ class Alert
       when /search/
         @new_team   = 'infrastructure'
         @new_squad  = 'search-technologies'
-      when /^ce/
+      when /^ce/ || /cloud-engineering/
         @new_team   = 'infrastructure'
         @new_squad  = 'cloud-engineering'
       when 'devx'
@@ -128,14 +202,12 @@ class Alert
       when 'dep'
         @new_team   = 'platform-services'
         @new_squad  = 'domain events'
-      when 'live connections'
-        @new_team   = 'live-connections'
-        @new_squad  = nil
       when /humans/
         @new_team   = 'humans'
         @new_squad  = raw_squad_guess
       else
-        nil
+        @new_team   = raw_team_guess if raw_team_guess
+        @new_squad  = raw_squad_guess if raw_squad_guess
       end
       @new_team = @new_team.gsub(/ /, '-') if @new_team
       @new_squad = @new_squad.gsub(/ /, '-') if @new_squad
@@ -199,16 +271,20 @@ class Alert
           end
         when 'data'
           'incidents-data'
+        when 'shared-monolith'
+          'incidents'
         else
-          puts "#{@alert_id}: Unknown team passed in: #{new_team}"
+          puts "#{@alert_id}: Unknown team passed in: #{new_team}" if DEBUG
+          binding.pry if PRY
           nil
         end
     @new_alert_channel = "@slack-#{proposed_slack_channel}" if proposed_slack_channel
   end
 
+  # add our new datadog/pagerduty notifications
   def reprocess_alert
     if @alerts.include?(@new_alert_channel)
-      puts "#{@alert_id}: New alert channel already included, skipping"
+      puts "#{@alert_id}: New alert channel already included, skipping" if DEBUG
       return
     end
     case @alerts.count
@@ -240,6 +316,11 @@ class Alert
     end
   end
 
+  def reprocess_pagerduty_mappings
+    # placeholder - not doing this yet!
+    true
+  end
+
   def reprocess_tags
     # placeholder - not doing this yet!
     true
@@ -252,15 +333,15 @@ class Alert
   end
 
   def parse_slack_channels
-    channels = @message.scan(/(@slack(?:-[[:word:]]*)*)/).flatten
+    channels = @message.scan(SLACK_REGEXP).flatten
     if channels.uniq.count != channels.count
       puts "#{@alert_id}: WARNING: Duplicate slack channel mappings found" if DEBUG
     end
     channels.uniq
   end
 
-  def parse_pagerduty_service
-    pages = @message.scan(/(@pagerduty(?:-[[:word:]]*)*)/).flatten
+  def parse_pagerduty_services
+    pages = @message.scan(PAGERDUTY_REGEXP).flatten
     if pages.uniq.count != pages.count
       puts "#{@alert_id}: WARNING: Duplicate pagerduty service mappings found" if DEBUG
     end
@@ -282,6 +363,38 @@ class Alert
         false
       end
     end
+  end
+
+  def alerts_in_conditionals?
+    # check to see if our alerting channels are completely outside weird conditionals (safe to auto-change)
+    # - completely ignore the '@slack-incidents-uk' string
+    cleaned_message = @message.gsub(/@slack-incidents-uk/,'')
+    if @alerts.reject{|a| a == '@slack-incidents-uk'}.count > 0
+      cleaned_message.index(SLACK_REGEXP) < last_conditional_end_index
+    else
+      false
+    end
+  end
+
+  def pages_in_conditionals?
+    # check to see if our paging channels are completely outside weird conditionals (safe to auto-change)
+    # - completely ignore the '@slack-incidents-uk' string
+    cleaned_message = @message.gsub(/@slack-incidents-uk/,'')
+    if @pages.count > 0
+      @message.index(PAGERDUTY_REGEXP) < last_conditional_end_index
+    else
+      false
+    end
+  end
+
+  def last_conditional_end_index
+    # - completely ignore the '@slack-incidents-uk' string
+    cleaned_message = @message.gsub(/@slack-incidents-uk/,'')
+    i = 0
+    while next_index = cleaned_message.index(/}}/,i)
+      i = next_index + 1
+    end
+    i
   end
 
   def environments()
@@ -309,7 +422,7 @@ class Alert
   end
 end
 
-def get_alert_from_workbook(alert_id, workbook)
+def get_alert_from_workbook(alert_id, workbook, original_alert=nil)
   puts "#{alert_id}: Finding alert in workbook" if DEBUG
   categories = %w{Employer University Student Platform Identity Cloud-Engineering DevX Messaging Stragglers}
   target_row = nil
@@ -332,7 +445,7 @@ def get_alert_from_workbook(alert_id, workbook)
     puts "#{alert_id}: Did not find a match for alert in any worksheet" if DEBUG
     return nil
   else
-    return Alert.new(target_row)
+    return Alert.new(target_row, original_alert)
   end
 end
 

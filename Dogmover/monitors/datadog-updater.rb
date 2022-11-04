@@ -27,7 +27,7 @@ local_alerts = local_alerts.select{|alert| alert.alert_id != 3618226}
 # exported from the google sheet that EMs have been putting new mappings into
 exported_workbook = RubyXL::Parser.parse("./current-alert-status-10312022.xlsx")
 workbook_alerts = local_alerts.collect do |alert|
-  get_alert_from_workbook(alert.alert_id, exported_workbook)
+  get_alert_from_workbook(alert.alert_id, exported_workbook, alert)
 end.compact
 
 puts "Amount of alerts found in workbook: #{workbook_alerts.count}"
@@ -46,16 +46,12 @@ workbook_inconsistent = local_alerts.any? do |local_alert|
   else
     puts "#{local_alert.alert_id}: inconsistent query/name/tags between curent alerts and worksheet"
     inconsistent_alerts << local_alert.alert_id
+    workbook_alert.update_message_from(local_alert)
+    workbook_alert.update_query_from(local_alert)
+    workbook_alert.update_tags_from(local_alert)
     binding.pry if PRY
-    false
+    true
   end
-end
-
-if workbook_inconsistent
-  puts "Found no changes to messages, queries, or names in workbook. Good."
-else
-  puts "Found deltas in messages/queries/names; we only want to update notification channels, baling out"
-  exit 1
 end
 
 puts "Reprocessing alerts with data from latest workbook..."
@@ -63,12 +59,10 @@ workbook_alerts.each{|x| x.reprocess_alert}
 
 binding.pry if PRY
 
-puts "Excluding alerts that do not have diffs from the desired and actual state..."
-workbook_alerts.reject!{|x| ! alert_diff(x.alert_id, local_alerts, workbook_alerts)}
-puts "Initial amount of alerts that will need to be updated: #{workbook_alerts.count}"
-
-puts "Complete set of new alert owners: "
-new_alert_owners = workbook_alerts.collect{|x| "#{[x.new_team,x.new_squad].join(' - ')}"}.compact.uniq.sort
+puts ''
+puts 'SANITY CHECKS'
+puts 'Complete set of new alert owners: '
+new_alert_owners = workbook_alerts.collect{|x| "#{[x.new_team,x.new_squad].join(' > ')}"}.compact.uniq.sort
 puts new_alert_owners.join("\n")
 puts ''
 
@@ -95,22 +89,20 @@ completely_unowned       = alerts_with_no_new_owner.select{|alert| ! alert.tags.
 completely_unowned_log = "./completely_unowned.log"
 puts "Amount of completely unowned alerts (including no team tag) set: #{completely_unowned.count}"
 puts "Writing set of unowned alerts to #{completely_unowned_log}"
-File.write(completely_unowned_log, completely_unowned.collect{|x| x.alert_id}.join("\n"))
-puts ''
+File.write(completely_unowned_log, completely_unowned.collect{|x| "#{x.alert_id} - #{x.name}"}.join("\n"))
 
 # set of alerts we've been asked to remove entirely
 alerts_to_remove = workbook_alerts.select{|x| x.to_delete == true}
 alerts_to_remove_ids = alerts_to_remove.collect{|x| x.alert_id}
-delete_request_log = "./to_delete.log"
+delete_request_log = './to_delete.log'
 puts "Amount of alerts requested to be deleted: #{alerts_to_remove_ids.count}"
 puts "Writing delete-able alert set to #{delete_request_log}"
-File.write(delete_request_log, alerts_to_remove.collect{|x| x.alert_id}.join("\n"))
-puts ''
+File.write(delete_request_log, alerts_to_remove.collect{|x| "#{x.alert_id} - #{x.name}"}.join("\n"))
 
 # alerts that are still set to a 'shared' owner
 shared_alerts    = workbook_alerts.select do |x|
-  if x.raw_new_owner
-    x.raw_new_owner.downcase =~ /shared/ || x.raw_new_owner.downcase =~ /service owner/
+  if x.new_team
+    x.new_team == 'shared-monolith' || x.new_team == 'service-owner'
   else
     nil
   end
@@ -119,39 +111,44 @@ shared_ids = shared_alerts.collect{|x| x.alert_id}
 shared_alert_log = "./shared_alerts.log"
 puts "Size of 'shared' unowned alerts set: #{shared_ids.count}"
 puts "Writing shared unowned alert set to #{shared_alert_log}"
-File.write(shared_alert_log, shared_alerts.collect{|x| x.alert_id}.join("\n"))
+File.write(shared_alert_log, shared_alerts.collect{|x| "#{x.alert_id} - #{[x.new_team, x.new_squad].join('>')} - #{x.name}"}.compact.join("\n"))
+puts 'END OF SANITY CHECKS'
 puts ''
+
+puts "Excluding alerts that do not have diffs from the desired and actual state..."
+workbook_alerts.reject!{|x| ! alert_diff(x.alert_id, local_alerts, workbook_alerts)}
+
+puts "Initial amount of alerts that will need to be updated: #{workbook_alerts.count}"
 
 # terraform-managed alerts that will need updates
 terraform_fixup_log = "./to_fix_in_terraform.log"
-puts "Writing terraform-managed alert IDs with requested changes to #{terraform_fixup_log}"
-File.write(terraform_fixup_log, workbook_alerts.collect{|x| x.terraform?}.join("\n"))
+puts "Writing terraform-managed alerts that will need updates to #{terraform_fixup_log}"
+File.write(terraform_fixup_log, workbook_alerts.collect{|x| "#{x.alert_id} - #{[x.new_team, x.new_squad].join('>')} - #{x.name}" if x.terraform?}.compact.join("\n"))
 puts ''
 
-# alerts with multiple slack channel pairings that are both not terraformed 
+# alerts with multiple slack channel pairings with potential conditionals that are both not terraformed 
 # and also do not reference the deprecated UK alerts channel
-non_terraform_non_uk_multialerts = local_alerts.select do |x|
-    x.alerts.count > 1
+# (same should be done for paging channels)
+non_terraform_non_uk_multialerts = workbook_alerts.select do |x|
+    x.alerts.reject{|x| x == '@slack-incidents-uk' }.count > 1
   end.select do |x|
-    x.message =~ /{{/
-  end.select do |x|
-    ! (x.message =~ /slack-incidents-uk/)
+    x.alerts_in_conditionals?
   end.select do |x|
     ! x.terraform?
   end
 
 multialertcount = non_terraform_non_uk_multialerts.count
-multialert_ids   = non_terraform_non_uk_multialerts.collect{|x| x.alert_id}
+multialert_ids  = non_terraform_non_uk_multialerts.collect{|x| x.alert_id}
 
 puts "Size of set of alerts that target multiple slack channels (excluding UK or terraform-managed): #{multialertcount}"
 multi_fixup_log     = "./multi_alert_channels_to_fix_manually.txt"
 puts "Writing alerts that need manual adjustments to #{multi_fixup_log}"
-File.write(multi_fixup_log, multialert_ids.join("\n"))
+File.write(multi_fixup_log, non_terraform_non_uk_multialerts.collect{|x| "#{x.alert_id} - #{[x.new_team, x.new_squad].join('>')} - #{x.name}"}.compact.join("\n"))
 puts ''
 
 puts "Finalizing the set of alerts to update..."
 
-puts "Excluding the small amount of alerts that will need manual editing (the multi-alert set from above)"
+puts "Excluding alerts that can not be programmatically updated (from the multi-alert set above)..."
 workbook_alerts.reject!{|x| multialert_ids.include?(x.alert_id)}
 
 puts "Excluding terraform alerts..."
