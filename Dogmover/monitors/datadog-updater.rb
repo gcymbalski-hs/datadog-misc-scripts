@@ -32,6 +32,7 @@ end.sort_by(&:alert_id)
 local_alerts = local_alerts.select{|alert| alert.alert_id != 3618226}
 
 latest_exported_workbook = "./current-alert-status-10312022.xlsx"
+
 input_workbook = latest_exported_workbook
 
 if ENV['TEST'] == 'true'
@@ -40,6 +41,7 @@ if ENV['TEST'] == 'true'
   input_workbook = test_workbook
 end
 
+puts "Using input workbook #{input_workbook}"
 # exported from the google sheet that EMs have been putting new mappings into
 exported_workbook = RubyXL::Parser.parse(input_workbook)
 
@@ -54,7 +56,7 @@ if TEAM_TO_PROCESS.nil? || TEAM_TO_PROCESS.empty?
   puts "Was not requested to update only a specific team's alerts, proceeding with all"
 else
   puts "Requested updates only for team #{TEAM_TO_PROCESS}"
-  workbook_alerts.reject!{|x| ! x.new_team == TEAM_TO_PROCESS }
+  workbook_alerts.reject!{|x| x.new_team != TEAM_TO_PROCESS }
 end
 
 puts "Amount of relevant alerts found in workbook: #{workbook_alerts.count}"
@@ -193,7 +195,7 @@ workbook_alerts.reject!{|x| x.to_delete == true }
 puts "Final amount of alerts to update: #{workbook_alerts.count}"
 
 def report_diff(spreadsheet, workbook_name, new_alert_configs, old_alert_configs)
-  output_sheet = spreadsheet.create_worksheet(name: 'Terraform Alerts to Fix')
+  output_sheet = spreadsheet.create_worksheet(name: workbook_name)
   new_message_col_name = if workbook_name =~ /terraform|multi/
                            'Proposed New Message (SUGGESTION ONLY)'
                          else
@@ -288,8 +290,16 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
         end
         sleep 1
       elsif REALLY_UPDATE_DATADOG == false
-        puts "#{alert_id}: Not updating, dry run" if DEBUG
-        status = "Dry run, not updated"
+        # dry run- validate
+        old_alert_live.message=new_message
+        if monitor_client.validate_monitor(old_alert_live.to_body)
+          puts "#{alert_id}: Validated successfully, not saving changes due to dry run mode, dry run" if DEBUG
+          status = "Validated successfully in dry run mode"
+        else
+          puts "#{alert_id}: Alert failed validation in dry run mode" if DEBUG
+          status = "Failed validation in dry run mode"
+          binding.pry if (DEBUG && PRY)
+        end
         sleep 1
       end
     rescue Interrupt, Errno::EPIPE
@@ -297,15 +307,14 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
       break
       raise Interrupt
 	rescue DatadogAPIClient::APIError => e
-	  binding.pry if (DEBUG && PRY)
 	  if e.to_s =~ /HTTP status code: 404/
 		puts "#{alert_id}: Unable to update alert, not found; skipping"
         status = "Alert not able to be updated, was deleted"
 	  else
         puts "#{alert_id}: Unknown error when updating; skipping"
         status = "Unknown error when updating: #{e}"
-        binding.pry if (DEBUG && PRY)
 	  end
+      binding.pry if (DEBUG && PRY)
     ensure
       puts "#{alert_id}: Status updated in workbook" if DEBUG
       output_sheet.row(i+1).concat [alert_id, status, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
