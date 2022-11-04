@@ -20,7 +20,7 @@ START_TIME = Time.now.strftime("%Y-%m-%d-%H%M%S")
 REALLY_UPDATE_DATADOG = ENV['DRY_RUN'] == 'false'
 
 DatadogAPIClient.configure do |config|
-  config.debugging = true if ENV['DEBUG'] == 'true'
+  config.debugging = true if ENV['DATADOG_DEBUG'] == 'true'
 end
 
 local_alert_defs = Dir.children('.').filter{|c| c =~ /.*\.json$/ && File.stat(c).file? }
@@ -31,13 +31,33 @@ end.sort_by(&:alert_id)
 # completely ignore the default 'ntp' alert that datadog generated
 local_alerts = local_alerts.select{|alert| alert.alert_id != 3618226}
 
+latest_exported_workbook = "./current-alert-status-10312022.xlsx"
+input_workbook = latest_exported_workbook
+
+if ENV['TEST'] == 'true'
+  test_alert_ids = [102037107]
+  test_workbook = "test-alert-status.xlsx" 
+  input_workbook = test_workbook
+end
+
 # exported from the google sheet that EMs have been putting new mappings into
-exported_workbook = RubyXL::Parser.parse("./current-alert-status-10312022.xlsx")
+exported_workbook = RubyXL::Parser.parse(input_workbook)
+
 workbook_alerts = local_alerts.collect do |alert|
   get_alert_from_workbook(alert.alert_id, exported_workbook, alert)
 end.compact
 
-puts "Amount of alerts found in workbook: #{workbook_alerts.count}"
+workbook_alerts.reject!{|x| ! test_alert_ids.include?(x.alert_id)} if ENV['TEST'] == 'true'
+
+TEAM_TO_PROCESS = ENV['TEAM']
+if TEAM_TO_PROCESS.nil? || TEAM_TO_PROCESS.empty?
+  puts "Was not requested to update only a specific team's alerts, proceeding with all"
+else
+  puts "Requested updates only for team #{TEAM_TO_PROCESS}"
+  workbook_alerts.reject!{|x| ! x.new_team == TEAM_TO_PROCESS }
+end
+
+puts "Amount of relevant alerts found in workbook: #{workbook_alerts.count}"
 
 inconsistent_alerts = []
 workbook_inconsistent = local_alerts.any? do |local_alert|
@@ -81,6 +101,7 @@ owners_that_need_remapping = workbook_alerts.collect do |x|
 end.compact.uniq
 
 puts owners_that_need_remapping.join("\n")
+
 
 # find alerts that may be missing entirely from the workbook that existed during the original export
 missing_alerts            = get_missing_alerts(local_alerts, workbook_alerts)
@@ -194,23 +215,78 @@ def report_diff(spreadsheet, workbook_name, new_alert_configs, old_alert_configs
     update_pagerduty  = false
     original_message  = old_alert.message
     new_message       = new_alert.message
-    output_sheet.row(i).concat [alert_id, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
+    output_sheet.row(i+1).concat [alert_id, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
   end
 end
 
-
 Spreadsheet.client_encoding = 'UTF-8'
 report_workbook = Spreadsheet::Workbook.new
+report_workbook_file = if TEAM_TO_PROCESS.nil? || TEAM_TO_PROCESS.empty?
+                         "./report-update-summary-#{START_TIME}.xls"
+                       else
+                         "./report-update-summary-#{START_TIME}-#{TEAM_TO_PROCESS}.xls"
+                       end
+
 report_diff(report_workbook, 'Alerts that will be Automatically Changed', workbook_alerts, local_alerts)
 report_diff(report_workbook, 'Terraform Alerts to Fix',  terraform_alerts, local_alerts)
 report_diff(report_workbook, 'Multi-Channel Alerts to Fix',  non_terraform_non_uk_multialerts, local_alerts)
 report_diff(report_workbook, 'Alerts to Remove',  alerts_to_remove, local_alerts)
 report_diff(report_workbook, 'Shared Alerts - No Updates', shared_alerts, local_alerts)
 report_diff(report_workbook, 'Completely Unowned Alerts - No Updates', completely_unowned, local_alerts)
-report_workbook.write("./report-update-summary-#{START_TIME}.xls")
+report_workbook.write(report_workbook_file)
+puts "Wrote summary of updates to happen to #{report_workbook_file}"
+
+puts 'Complete set of teams that will be processed:'
+new_alert_owners = workbook_alerts.collect{|x| x.new_team}.compact.uniq.sort
+puts new_alert_owners.join("\n")
+puts ''
+
+def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, monitor_client)
+  output_sheet = report_workbook.create_worksheet(name: 'Alerts that have been updated')
+  output_sheet.row(0).concat(['Datadog Alert ID', 'Status', 'New Team', 'New Squad', 'Alert Name', 'New Alert Slack Channel', 'New Pagerduty Service', 'Update Slack?', 'Update Pagerduty?', 'Original Message', 'New Message'])
+  workbook_alerts.each_with_index do |new_alert, i|
+    alert_id          = new_alert.alert_id
+    old_alert         = get_alert(alert_id, local_alerts)
+    # check old alert against LIVE API
+    old_alert_live    = Alert.new(monitor_client.get_monitor(alert_id))
+    live_diff = alert_diff(alert_id, [old_alert], [old_alert_live])
+    new_team          = new_alert.new_team
+    new_squad         = new_alert.new_squad
+    alert_name        = new_alert.name
+    new_slack_channel = new_alert.new_slack_channel
+    new_pagerduty_service = new_alert.new_pagerduty_service
+    # as of nov. 1
+    update_slack      = true
+    update_pagerduty  = false
+    original_message  = old_alert.message
+    new_message       = new_alert.message
+
+    if ! live_diff
+      # safe to proceed!
+      puts = "#{alert_id}: No diffs between original and live alert, updateable" if DEBUG
+
+      if REALLY_UPDATE_DATADOG == true
+
+
+        status = "updated"
+      else
+        puts "#{alert_id}: Not updating, dry run" if DEBUG
+      end
+    else
+      puts "#{alert_id}: Live differences detected, needs reprocessing" if DEBUG
+      status = "Live differences, needs reprocessing"
+    end
+    output_sheet.row(i+1).concat [alert_id, status, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
+    sleep 1
+  end
+end
+
+puts "Attempting Datadog updates..."
+monitor_client = DatadogAPIClient::V1::MonitorsAPI.new
+report_workbook.write(report_workbook_file)
+attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, monitor_client)
 
 binding.pry if PRY
 
 exit
 
-monitor_client = DatadogAPIClient::V1::MonitorsAPI.new

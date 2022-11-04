@@ -36,9 +36,8 @@ class Alert
     elsif alert_source.class == RubyXL::Row
       alert_object = alert_source
       @alert_id     = Integer(alert_object[0].value)
-      @product_area = alert_object[2].nil? ? nil : alert_object[2].value
       @raw_new_owner = alert_object[1].nil? ? nil : alert_object[1].value
-      @name         = alert_object[3].nil? ? nil : alert_object[3].value
+      @product_area = alert_object[2].nil? ? nil : alert_object[2].value
       if original_alert.nil?
         puts "#{@alert_id}: Must pass in original alert (i.e. the real source of truth for everything)" if DEBUG
       end
@@ -50,6 +49,15 @@ class Alert
       @pages        = parse_pagerduty_services
       find_new_owner
       find_new_slack_channel unless new_team == 'delete'
+    elsif alert_source.class == DatadogAPIClient::V1::Monitor
+      alert_object  = alert_source
+      @alert_id     = alert_source.id
+      @name         = alert_source.name
+      @tags         = alert_object.tags
+      @message      = alert_object.message
+      @query        = alert_object.query
+      @alerts       = parse_slack_channels
+      @pages        = parse_pagerduty_services
     end
   end
 
@@ -432,7 +440,7 @@ def get_alert_from_workbook(alert_id, workbook, original_alert=nil)
   categories.each do |category|
     sheet = workbook[category]
     rows = sheet.select do |row| 
-      if ! row[0].nil?
+      if ! (row[0].nil? || row[0].value.nil?)
         row[0].value != 'Datadog Alert ID' && Integer(row[0].value) == alert_id
       end
     end
