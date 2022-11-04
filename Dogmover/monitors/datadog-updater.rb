@@ -248,45 +248,74 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
     alert_id          = new_alert.alert_id
     old_alert         = get_alert(alert_id, local_alerts)
     # check old alert against LIVE API
-    old_alert_live    = Alert.new(monitor_client.get_monitor(alert_id))
-    live_diff = alert_diff(alert_id, [old_alert], [old_alert_live])
-    new_team          = new_alert.new_team
-    new_squad         = new_alert.new_squad
-    alert_name        = new_alert.name
-    new_slack_channel = new_alert.new_slack_channel
-    new_pagerduty_service = new_alert.new_pagerduty_service
-    # as of nov. 1
-    update_slack      = true
-    update_pagerduty  = false
-    original_message  = old_alert.message
-    new_message       = new_alert.message
-
-    if ! live_diff
-      # safe to proceed!
-      puts = "#{alert_id}: No diffs between original and live alert, updateable" if DEBUG
-
-      if REALLY_UPDATE_DATADOG == true
-
-
-        status = "updated"
-      else
-        puts "#{alert_id}: Not updating, dry run" if DEBUG
+    begin
+      old_alert_live    = Alert.new(monitor_client.get_monitor(alert_id))
+      live_diff         = alert_diff(alert_id, [old_alert], [old_alert_live])
+      new_team          = new_alert.new_team
+      new_squad         = new_alert.new_squad
+      alert_name        = new_alert.name
+      new_slack_channel = new_alert.new_slack_channel
+      new_pagerduty_service = new_alert.new_pagerduty_service
+      # as of nov. 1
+      update_slack      = true
+      update_pagerduty  = false
+      original_message  = old_alert.message
+      new_message       = new_alert.message
+	rescue => e
+	  case e
+	  when DatadogAPIClient::APIError
+		if e.to_s =~ /HTTP status code: 404/
+		  puts "#{alert_id}: Unable to find monitor, skipping"
+          status = "Alert missing from Datadog"
+		else
+		  puts "#{alert_id}: Unknown failure retrieving alert from Datadog"
+          status = "Unknown failure retrieving alert from Datadog: #{e}"
+		end
       end
-    else
-      puts "#{alert_id}: Live differences detected, needs reprocessing" if DEBUG
-      status = "Live differences, needs reprocessing"
     end
-    output_sheet.row(i+1).concat [alert_id, status, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
-    sleep 1
+	begin
+      if live_diff
+        puts "#{alert_id}: Live differences detected, needs reprocessing" if DEBUG
+        status = "Live differences, needs reprocessing"
+      elsif REALLY_UPDATE_DATADOG == true
+        # here is where the real update happens
+		monitor_client.get_monitor(alert_id)
+        puts "#{alert_id}: Alert successfully updated live" if DEBUG
+        status = "Updated successfully"
+        sleep 1
+      elsif REALLY_UPDATE_DATADOG == false
+        puts "#{alert_id}: Not updating, dry run" if DEBUG
+        status = "Dry run, not updated"
+        sleep 5
+      end
+    rescue Interrupt, Errno::EPIPE
+      puts "Hit control-c or broke pipe, adding status to spreadsheet and safely stopping"
+      break
+      raise Interrupt
+	rescue DatadogAPIClient::APIError => e
+	  binding.pry if (DEBUG && PRY)
+	  if e.to_s =~ /HTTP status code: 404/
+		puts "#{alert_id}: Unable to update alert, not found; skipping"
+        status = "Alert not able to be updated, was deleted"
+	  else
+        puts "#{alert_id}: Unknown error when updating; skipping"
+        status = "Unknown error when updating: #{e}"
+	  end
+    ensure
+      puts "#{alert_id}: Status updated in workbook" if DEBUG
+      output_sheet.row(i+1).concat [alert_id, status, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
+    end
   end
 end
 
-puts "Attempting Datadog updates..."
-monitor_client = DatadogAPIClient::V1::MonitorsAPI.new
-report_workbook.write(report_workbook_file)
-attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, monitor_client)
-
-binding.pry if PRY
+begin
+  puts "Attempting Datadog updates- control-c is safe to use"
+  monitor_client = DatadogAPIClient::V1::MonitorsAPI.new
+  attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, monitor_client)
+  puts "Work done, writing report to #{report_workbook_file}"
+ensure
+  report_workbook.write(report_workbook_file)
+  puts "Status written, work done"
+end
 
 exit
-
