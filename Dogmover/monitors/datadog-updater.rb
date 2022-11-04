@@ -76,15 +76,13 @@ workbook_inconsistent = local_alerts.any? do |local_alert|
     workbook_alert.update_message_from(local_alert)
     workbook_alert.update_query_from(local_alert)
     workbook_alert.update_tags_from(local_alert)
-    binding.pry if PRY
+    binding.pry if (DEBUG && PRY)
     true
   end
 end
 
 puts "Reprocessing alerts with data from latest workbook..."
 workbook_alerts.each{|x| x.reprocess_alert}
-
-binding.pry if PRY
 
 puts ''
 puts 'SANITY CHECKS'
@@ -248,9 +246,11 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
     alert_id          = new_alert.alert_id
     old_alert         = get_alert(alert_id, local_alerts)
     # check old alert against LIVE API
+    live_diff = true
     begin
-      old_alert_live    = Alert.new(monitor_client.get_monitor(alert_id))
-      live_diff         = alert_diff(alert_id, [old_alert], [old_alert_live])
+      original_message  = old_alert.message
+      old_alert_live    = monitor_client.get_monitor(alert_id)
+      live_update_safe  = ! alert_diff(alert_id, [old_alert], [Alert.new(old_alert_live)])
       new_team          = new_alert.new_team
       new_squad         = new_alert.new_squad
       alert_name        = new_alert.name
@@ -259,34 +259,38 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
       # as of nov. 1
       update_slack      = true
       update_pagerduty  = false
-      original_message  = old_alert.message
       new_message       = new_alert.message
-	rescue => e
-	  case e
-	  when DatadogAPIClient::APIError
-		if e.to_s =~ /HTTP status code: 404/
-		  puts "#{alert_id}: Unable to find monitor, skipping"
-          status = "Alert missing from Datadog"
-		else
-		  puts "#{alert_id}: Unknown failure retrieving alert from Datadog"
-          status = "Unknown failure retrieving alert from Datadog: #{e}"
-		end
+	rescue DatadogAPIClient::APIError => e
+      case e.to_s
+	  when /HTTP status code: 404/
+		puts "#{alert_id}: Unable to find monitor, skipping"
+        status = "Alert missing from Datadog"
+	  else
+		puts "#{alert_id}: Unknown failure retrieving alert from Datadog"
+        status = "Unknown failure retrieving alert from Datadog: #{e}"
       end
     end
 	begin
-      if live_diff
+      if (! live_update_safe) || (original_message != old_alert_live.message)
         puts "#{alert_id}: Live differences detected, needs reprocessing" if DEBUG
         status = "Live differences, needs reprocessing"
       elsif REALLY_UPDATE_DATADOG == true
         # here is where the real update happens
-		monitor_client.get_monitor(alert_id)
-        puts "#{alert_id}: Alert successfully updated live" if DEBUG
-        status = "Updated successfully"
+        old_alert_live.message=new_message
+        if monitor_client.validate_monitor(old_alert_live.to_body)
+          monitor_client.update_monitor(alert_id, old_alert_live.to_body)
+          puts "#{alert_id}: Alert successfully updated live" if DEBUG
+          status = "Updated successfully"
+        else
+          puts "#{alert_id}: Alert failed validation, not updating live" if DEBUG
+          status = "Failed validation, update not saved"
+          binding.pry if (DEBUG && PRY)
+        end
         sleep 1
       elsif REALLY_UPDATE_DATADOG == false
         puts "#{alert_id}: Not updating, dry run" if DEBUG
         status = "Dry run, not updated"
-        sleep 5
+        sleep 1
       end
     rescue Interrupt, Errno::EPIPE
       puts "Hit control-c or broke pipe, adding status to spreadsheet and safely stopping"
@@ -300,6 +304,7 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
 	  else
         puts "#{alert_id}: Unknown error when updating; skipping"
         status = "Unknown error when updating: #{e}"
+        binding.pry if (DEBUG && PRY)
 	  end
     ensure
       puts "#{alert_id}: Status updated in workbook" if DEBUG
