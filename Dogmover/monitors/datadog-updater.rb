@@ -1,14 +1,21 @@
 require 'json'
 require 'uri'
 require 'pry'
+
+# needed for parsing our input spreadsheet
 require 'rubyXL'
 require 'rubyXL/convenience_methods'
+
+# significantly more straightforward way of writing new spreadsheets
+require 'spreadsheet'
+
 require 'datadog_api_client'
 
 require './lib/alerts.rb'
 
 DEBUG = ENV['DEBUG'] == 'true'
 PRY   = ENV['PRY'] == 'true'
+START_TIME = Time.now.strftime("%Y-%m-%d-%H%M%S")
 
 REALLY_UPDATE_DATADOG = ENV['DRY_RUN'] == 'false'
 
@@ -123,7 +130,8 @@ puts "Initial amount of alerts that will need to be updated: #{workbook_alerts.c
 # terraform-managed alerts that will need updates
 terraform_fixup_log = "./to_fix_in_terraform.log"
 puts "Writing terraform-managed alerts that will need updates to #{terraform_fixup_log}"
-File.write(terraform_fixup_log, workbook_alerts.collect{|x| "#{x.alert_id} - #{[x.new_team, x.new_squad].join('>')} - #{x.name}" if x.terraform?}.compact.join("\n"))
+terraform_alerts = workbook_alerts.select{|x| x.terraform?}
+File.write(terraform_fixup_log, terraform_alerts.collect{|x| "#{x.alert_id} - #{[x.new_team, x.new_squad].join('>')} - #{x.name}"}.compact.join("\n"))
 puts ''
 
 # alerts with multiple slack channel pairings with potential conditionals that are both not terraformed 
@@ -160,7 +168,46 @@ workbook_alerts.reject!{|x| shared_ids.include?(x.alert_id)}
 puts "Excluding set of alerts that people wanted to delete..."
 workbook_alerts.reject!{|x| alerts_to_remove_ids.include?(x.alert_id)}
 
+puts "Excluding alerts meant for deletion..."
+workbook_alerts.reject!{|x| x.to_delete == true }
+
 puts "Final amount of alerts to update: #{workbook_alerts.count}"
+
+def report_diff(spreadsheet, workbook_name, new_alert_configs, old_alert_configs)
+  output_sheet = spreadsheet.create_worksheet(name: 'Terraform Alerts to Fix')
+  new_message_col_name = if workbook_name =~ /terraform|multi/
+                           'Proposed New Message (SUGGESTION ONLY)'
+                         else
+                           'New Message'
+                         end
+  output_sheet.row(0).concat(['Datadog Alert ID', 'New Team', 'New Squad', 'Alert Name', 'New Alert Slack Channel', 'New Pagerduty Service', 'Update Slack?', 'Update Pagerduty?', 'Original Message', new_message_col_name])
+  new_alert_configs.each_with_index do |new_alert, i|
+    alert_id          = new_alert.alert_id
+    old_alert         = get_alert(alert_id, old_alert_configs)
+    new_team          = new_alert.new_team
+    new_squad         = new_alert.new_squad
+    alert_name        = new_alert.name
+    new_slack_channel = new_alert.new_slack_channel
+    new_pagerduty_service = new_alert.new_pagerduty_service
+    # as of nov. 1
+    update_slack      = true
+    update_pagerduty  = false
+    original_message  = old_alert.message
+    new_message       = new_alert.message
+    output_sheet.row(i).concat [alert_id, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
+  end
+end
+
+
+Spreadsheet.client_encoding = 'UTF-8'
+report_workbook = Spreadsheet::Workbook.new
+report_diff(report_workbook, 'Alerts that will be Automatically Changed', workbook_alerts, local_alerts)
+report_diff(report_workbook, 'Terraform Alerts to Fix',  terraform_alerts, local_alerts)
+report_diff(report_workbook, 'Multi-Channel Alerts to Fix',  non_terraform_non_uk_multialerts, local_alerts)
+report_diff(report_workbook, 'Alerts to Remove',  alerts_to_remove, local_alerts)
+report_diff(report_workbook, 'Shared Alerts - No Updates', shared_alerts, local_alerts)
+report_diff(report_workbook, 'Completely Unowned Alerts - No Updates', completely_unowned, local_alerts)
+report_workbook.write("./report-update-summary-#{START_TIME}.xls")
 
 binding.pry if PRY
 

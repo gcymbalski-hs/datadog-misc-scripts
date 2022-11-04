@@ -20,7 +20,7 @@ class Alert
   attr_reader :channels_consistent
   attr_reader :raw_new_owner
   attr_reader :to_delete
-  attr_reader :new_alert_channel
+  attr_reader :new_slack_channel
   attr_reader :new_pagerduty_service
 
   def initialize(alert_source, original_alert=nil)
@@ -248,7 +248,7 @@ class Alert
           when 'skills'
             'incidents-te-skills'
           else
-            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}"
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
             nil
           end
         when 'platform-services'
@@ -278,12 +278,15 @@ class Alert
           binding.pry if PRY
           nil
         end
-    @new_alert_channel = "@slack-#{proposed_slack_channel}" if proposed_slack_channel
+    if @new_slack_channel.nil?
+      puts "#{@alert_id}: Could not find a new Slack channelf for alert" if DEBUG
+    end
+    @new_slack_channel = "@slack-#{proposed_slack_channel}" if proposed_slack_channel
   end
 
   # add our new datadog/pagerduty notifications
   def reprocess_alert
-    if @alerts.include?(@new_alert_channel)
+    if @alerts.include?(@new_slack_channel)
       puts "#{@alert_id}: New alert channel already included, skipping" if DEBUG
       return
     end
@@ -307,7 +310,7 @@ class Alert
       #   (except when things are separated by a conditional)
       # a side effect is that we always know that our 'new' slack channel is always the second one
       @original_message = @message
-      @message          = @message.sub(/#{without_uk.first}/, "#{without_uk.first},#{@new_alert_channel}")
+      @message          = @message.sub(/#{without_uk.first}/, "#{without_uk.first},#{@new_slack_channel}")
       # update alert metadata in memory
       @alerts = parse_slack_channels
     else
@@ -485,7 +488,7 @@ def alert_diff(alert_id, json_alerts, workbook_alerts)
     diff = true
   end
   if diff && DEBUG
-    puts "#{alert_id}: Differences found between original and new alert configuration!"
+    puts "#{alert_id}: Differences found between original and new alert configuration!" 
     pp json_alert
     pp workbook_alert
   end
