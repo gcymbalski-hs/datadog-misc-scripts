@@ -335,15 +335,28 @@ class Alert
       @message          = @message.sub(/#{without_uk.first}/, "#{without_uk.first},#{@new_slack_channel}")
       # update alert metadata in memory
       @alerts = parse_slack_channels
-    else
+      true
+    elsif without_uk.count > 1
       puts "#{@alert_id}: Not taking action due to invalid count of current channels" if DEBUG
       false
+    else
+      true
     end
   end
 
   def reprocess_pagerduty_mappings
-    # placeholder - not doing this yet!
-    true
+    if @pages.count == 1
+      first_page = @pages.first
+      @original_message = @message
+      @message = @message.sub(/#{first_page}/, @new_pagerduty_service)
+      @pages = parse_pagerduty_services
+      true
+    elsif @pages.count > 1
+      puts "#{@alert_id}: Found multiple Pagerduty mappings, worth investigating manually"
+      false
+    else
+      true
+    end
   end
 
   def reprocess_tags
