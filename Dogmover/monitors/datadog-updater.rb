@@ -248,7 +248,8 @@ puts ''
 def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, monitor_client)
   output_sheet = report_workbook.create_worksheet(name: 'Alerts that have been updated')
   output_sheet.row(0).concat(['Datadog Alert ID', 'Status', 'New Team', 'New Squad', 'Alert Name', 'New Alert Slack Channel', 'New Pagerduty Service', 'Update Slack?', 'Update Pagerduty?', 'Original Message', 'New Message'])
-  workbook_alerts.each_with_index do |new_alert, i|
+  i = 1
+  workbook_alerts.each do |new_alert|
     alert_id          = new_alert.alert_id
     old_alert         = get_alert(alert_id, local_alerts)
     # check old alert against LIVE API
@@ -324,7 +325,8 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
       binding.pry if (DEBUG && PRY)
     ensure
       puts "#{alert_id}: Status updated in workbook" if DEBUG
-      output_sheet.row(i+1).concat [alert_id, status, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
+      output_sheet.row(i).concat [alert_id, status, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
+      i = i+1
     end
   end
 end
