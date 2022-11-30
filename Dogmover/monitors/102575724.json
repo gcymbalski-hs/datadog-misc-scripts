@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 102575724,
+    "matching_downtimes": [],
+    "message": "Handshake apdex deviated too much from its usual value meaning either high error rate or slow page loads.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/CE/pages/2902688056/Handshake+Monolith+Apdex+Low\n\n{{#is_match \"env.name\" \"production\"}}\n{{#is_alert}} @slack-incident-cloud-engineering, @pagerduty-CloudEngineering{{/is_alert}}\n{{#is_alert_recovery}} @slack-incident-cloud-engineering, @pagerduty-CloudEngineering{{/is_alert_recovery}}\n{{/is_match}}\n\n{{#is_match \"env.name\" \"demo\"}}\n{{#is_alert}} @slack-incident-cloud-engineering{{/is_alert}}\n{{#is_alert_recovery}} @slack-incident-cloud-engineering{{/is_alert_recovery}}\n{{/is_match}}",
+    "multi": true,
+    "name": "Handshake Monolith Apdex low",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 900,
+        "new_host_delay": 300,
+        "no_data_timeframe": 120,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.75,
+            "warning": 0.85
+        }
+    },
+    "query": "avg(last_15m):avg:trace.rack.request.apdex.by.region_service{service:handshake,!env:staging} by {env,region} < 0.75",
+    "tags": [
+        "app:monolith",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

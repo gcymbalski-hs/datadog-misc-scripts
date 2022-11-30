@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 102547141,
+    "matching_downtimes": [],
+    "message": "@slack-eng-mobile-bugs an anomaly has been detected on logins to Staging",
+    "multi": true,
+    "name": "[iOS] Staging Login Abnormality Detected",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_15m"
+        },
+        "thresholds": {
+            "critical": 0.3,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_15m):anomalies(sum:trace.rack.request.hits.by_http_status{resource_name:next::student::mobile::v2::signincontroller_create,env:staging} by {http.status_code}.as_count(), 'agile', 2, direction='both', interval=60, alert_window='last_15m', seasonality='hourly', timezone='utc', count_default_zero='true') >= 0.3",
+    "tags": [],
+    "type": "query alert"
+}

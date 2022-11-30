@@ -1,0 +1,37 @@
+{
+    "deleted": null,
+    "id": 102762912,
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": 1670089451,
+            "groups": [],
+            "id": 2464801720,
+            "monitor_id": 102762912,
+            "scope": [
+                "*"
+            ],
+            "start": 1669484651
+        }
+    ],
+    "message": "@slack-eng-mobile-bugs",
+    "multi": false,
+    "name": "[iOS] School Search Traffic on Staging is higher than usual",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {
+            "*": 1670089451
+        },
+        "thresholds": {
+            "critical": 20.0
+        }
+    },
+    "query": "sum(last_5m):sum:trace.rack.request.hits.by_http_status{resource_name:next::student::mobile::v2::schoolscontroller_index,env:staging}.as_count() > 20",
+    "tags": [],
+    "type": "query alert"
+}

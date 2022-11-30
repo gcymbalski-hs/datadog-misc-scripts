@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 103521576,
+    "matching_downtimes": [],
+    "message": "The average database duration is higher than normal, which may indicate high database load, \nnetwork issues to Postgres, or slow queries being run. Note: Metric math copied from APM graphs.\n\n@slack-incident-cloud-engineering",
+    "multi": false,
+    "name": "US Postgres High Database Duration",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.2
+        }
+    },
+    "query": "sum(last_10m):median_3(sum:trace.rack.request.duration.by_service{env:production,service:handshake,sublayer_service:handshake-postgres,region:us-central1}.rollup(sum).fill(zero)) / median_3(sum:trace.rack.request.hits{env:production,service:handshake,region:us-central1}.as_count().rollup(sum).fill(zero)) > 0.2",
+    "tags": [
+        "app:postgres",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

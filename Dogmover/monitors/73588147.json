@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 73588147,
     "matching_downtimes": [],
-    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-MonolithSharedProduct\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Handshake's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-MonolithSharedProduct\n{{/is_match}}\n{{/is_recovery}}",
+    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-CloudEngineering\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Handshake's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-CloudEngineering\n{{/is_match}}\n{{/is_recovery}}",
     "multi": false,
     "name": "[handshake-staging] Handshake Automatic Database Table Partitioning not Running",
     "options": {
@@ -11,6 +11,7 @@
         "no_data_timeframe": 10,
         "notify_audit": false,
         "notify_no_data": true,
+        "renotify_interval": 1440,
         "require_full_window": false,
         "silenced": {},
         "thresholds": {
@@ -22,7 +23,11 @@
     "tags": [
         "app:handshake",
         "env:staging",
-        "region:us-central1"
+        "maintenance:true",
+        "region:us-central1",
+        "repo:terraform-web/handshake",
+        "squad:cloud engineering",
+        "team:cloud engineering"
     ],
     "type": "query alert"
 }

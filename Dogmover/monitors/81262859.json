@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 81262859,
     "matching_downtimes": [],
-    "message": "The pods in deployment handshake-hsn-outbox-publisher have a lot of restarts.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n\nNotify: @slack-incidents-platform-services,@slack-incidents\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nContainer restarts are trending downward for handshake-hsn-outbox-publisher.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThe pods in deployment handshake-hsn-outbox-publisher have a lot of restarts.\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n{{/is_alert}}\n{{#is_recovery}}\nContainer restarts are trending downward for handshake-hsn-outbox-publisher.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
     "name": "[DEP] Container Restarts for handshake-hsn-outbox-publisher",
     "options": {
@@ -22,6 +22,7 @@
     "query": "avg(last_15m):max:kubernetes.containers.restarts{kube_deployment:handshake-hsn-outbox-publisher,kube_namespace:handshake} by {project} >= 10",
     "tags": [
         "dep_monitor:outbox_pod_restarts",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "terraform:true"

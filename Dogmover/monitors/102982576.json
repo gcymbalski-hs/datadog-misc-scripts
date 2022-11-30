@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 102982576,
+    "matching_downtimes": [],
+    "message": "The connection count for our primary Redis instance in {{env.name}} is low. Verify that the correct\nURL from Memorystore is set as REDIS_URL and that the service can be connected to successfully.\n\n\n{{#is_alert}}\n{{#is_match \"project_id.name\" \"handshake-production\" \"handshake-uk-production\"}}\nPager: @slack-incidents-cloud-engineering\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\n{{#is_match \"project_id.name\" \"handshake-production\" \"handshake-uk-production\"}}\nPager: @slack-incidents-cloud-engineering\n{{/is_match}}\n{{/is_recovery}}",
+    "multi": false,
+    "name": "Redis Connection Count Low",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 900,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 100.0
+        }
+    },
+    "query": "avg(last_5m):sum:gcp.redis.clients.connected{project_id:handshake-uk-production, project_id:handshake-production} < 100",
+    "tags": [
+        "app:redis",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

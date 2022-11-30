@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 96343106,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}Too many login errors for schools using Access SAML{{/is_alert}}\n{{#is_warning}}Too many login errors for schools using Access SAML.{{/is_warning}}\n\n @slack-incidents-platform-services",
+    "multi": false,
+    "name": "Student Access SAML Monitor",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 50.0
+        }
+    },
+    "query": "sum(last_5m):avg:handshake.login.failure{env:production,institution_type:school*}.as_count() > 50",
+    "tags": [],
+    "type": "query alert"
+}

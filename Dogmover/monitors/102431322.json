@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 102431322,
+    "matching_downtimes": [],
+    "message": "Non-alert monitor\n\nThis monitor notifies when the hsn-handshake-skills pubsub subscription has old domain events.\n\nThe two monitors are used in the composite monitor \"[DEP] Subscription hsn-handshake-skills: Undelivered Events Are Too High\" which will notify when the events are present on the subscription AND are not being processed. See that monitor for more info on how to handle incident.",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-handshake-skills: Has old domain events",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 600.0,
+            "critical_recovery": 450.0
+        }
+    },
+    "query": "min(last_15m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-handshake-skills} by {project_id} >= 600",
+    "tags": [
+        "dep_monitor:undelivered_events_too_high",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "terraform:true",
+        "squad:skills",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

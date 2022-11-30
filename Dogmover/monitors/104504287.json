@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 104504287,
+    "matching_downtimes": [],
+    "message": "`# next::student::skills::api::canonicalskillscontroller_index` error rate is too high.\n\nCheck APM, traces, and Bugnsag to investigate the issue. Runbook reference: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2668101914/Common+Errors+-+Runbooks+and+Next+Steps\n\n@slack-incidents-te-skills",
+    "multi": false,
+    "name": "Resource next::student::skills::api::canonicalskillscontroller_index has a high error rate on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.05,
+            "warning": 0.01
+        }
+    },
+    "query": "sum(last_10m):(sum:trace.rack.request.errors{env:production,resource_name:next::student::skills::api::canonicalskillscontroller_index,service:handshake}.as_count() / sum:trace.rack.request.hits{env:production,resource_name:next::student::skills::api::canonicalskillscontroller_index,service:handshake}.as_count()) > 0.05",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "skills-controller-errors",
+        "squad:skills",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 92380545,
+    "matching_downtimes": [],
+    "message": "CDN high 4xx response count\n\nThe Google Cloud Load Balancer (GCLB) in front of our CDN has a high 4xx response count. This may mean that assets are missing from the storage bucket.\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/574160927/High+GCLB+CDN+4xx+Rate\n\n@slack-incident-cloud-engineering",
+    "multi": false,
+    "name": "CDN high 4xx response count in handshake-staging",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 250.0
+        }
+    },
+    "query": "sum(last_5m):sum:gcp.loadbalancing.https.request_count{response_code_class:400,project_id:handshake-staging,target_proxy_name:handshake-staging-cdn-lb-target-proxy,kube_deployment:handshake-web}.as_count() > 250",
+    "tags": [
+        "app:handshake-web",
+        "env:staging",
+        "project:handshake-staging",
+        "region:us-central1",
+        "repo:terraform-web",
+        "squad:cloud-engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

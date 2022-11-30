@@ -2,12 +2,12 @@
     "deleted": null,
     "id": 72491480,
     "matching_downtimes": [],
-    "message": "Certificate is expiring within {{threshold}} days on {{cluster-name.name}}.\n\n@slack-incidents-cloud-engineering\n\n{{#is_match \"cluster-name.name\" \"production\"}}\n{{#is_alert}} @pagerduty-NetworkingKubernetesIngressInfra  {{/is_alert}}\n{{#is_alert_recovery}} @pagerduty-NetworkingKubernetesIngressInfra  {{/is_alert_recovery}}\n{{/is_match}}",
+    "message": "Certificate is expiring within {{threshold}} days on {{cluster-name.name}}.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/CE/pages/2902196714/Expiring+SSL+Certificates\n\n@slack-incidents-cloud-engineering\n{{#is_match \"cluster-name.name\" \"production\"}}\n{{#is_alert}} @pagerduty-CloudEngineering{{/is_alert}}\n{{#is_alert_recovery}} @pagerduty-CloudEngineering{{/is_alert_recovery}}\n{{/is_match}}",
     "multi": true,
     "name": "Expiring SSL Certificate",
     "options": {
         "include_tags": true,
-        "new_host_delay": 300,
+        "new_host_delay": 900,
         "no_data_timeframe": 120,
         "notify_audit": false,
         "notify_no_data": true,
@@ -20,8 +20,10 @@
     },
     "query": "min(last_1h):min:envoy.server.days_until_first_cert_expiring{*} by {cluster-name} < 14",
     "tags": [
+        "app:kubernetes",
         "repo:terraform-datadog",
-        "team:cloud-engineering",
+        "squad:cloud_engineering",
+        "team:infrastructure",
         "terraform:true"
     ],
     "type": "metric alert"

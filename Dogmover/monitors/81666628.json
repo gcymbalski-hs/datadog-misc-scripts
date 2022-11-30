@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 81666628,
     "matching_downtimes": [],
-    "message": "There are events in the system that not being processed and being rejected.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/v1SJR1GG\n\nNotify: @slack-incidents-platform-services,@slack-incidents-notifications\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nEvent rejection counts are trending downward for hsn-handshake-notifications.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThere are events in the system that not being processed and being rejected.\nRunbook: https://joinhandshake.atlassian.net/l/cp/v1SJR1GG\n{{/is_alert}}\n{{#is_recovery}}\nEvent rejection counts are trending downward for hsn-handshake-notifications.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services,@slack-incidents-notifications\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
     "name": "[DEP] Subscription hsn-handshake-notifications: Too Many Rejected Events",
     "options": {
@@ -22,6 +22,7 @@
     "query": "avg(last_15m):max:DEP.inbox.rejected_event.count{subscription:hsn-handshake-notifications} by {project} > 250",
     "tags": [
         "dep_monitor:too_many_rejected_events",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "team:notifications",

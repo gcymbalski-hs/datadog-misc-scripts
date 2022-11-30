@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 92846868,
+    "matching_downtimes": [],
+    "message": "Testing Anomaly Alerts for Unacked Message Count\n\n@omar@joinhandshake.com",
+    "multi": true,
+    "name": "[DEP-TEST] Anomaly Unacked Message Count for DEP Subscriptions",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "threshold_windows": {
+            "recovery_window": "last_15m",
+            "trigger_window": "last_1h"
+        },
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_1d):anomalies(min:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:hsn*} by {project_id,subscription_id}, 'robust', 5, direction='above', interval=300, alert_window='last_1h', count_default_zero='true', seasonality='daily') >= 1",
+    "tags": [],
+    "type": "query alert"
+}

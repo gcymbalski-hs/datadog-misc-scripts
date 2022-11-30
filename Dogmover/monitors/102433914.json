@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 102433914,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nThere are events in the system that do not have a valid schema and cannot be processed.\nRunbook: https://joinhandshake.atlassian.net/l/cp/SJ4LGuf6\n{{/is_alert}}\n{{#is_recovery}}\nInvalid schema counts are trending downward for hsn-handshake-skills.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services @slack-incidents-te-skills\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-handshake-skills: Event with Invalid Schema",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_15m):max:DEP.inbox.invalid_payload.count{subscription:hsn-handshake-skills} by {project} > 1",
+    "tags": [
+        "dep_monitor:invalid_schema",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "terraform:true",
+        "squad:skills",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

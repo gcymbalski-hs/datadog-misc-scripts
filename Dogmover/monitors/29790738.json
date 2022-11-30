@@ -2,13 +2,13 @@
     "deleted": null,
     "id": 29790738,
     "matching_downtimes": [],
-    "message": "The unsent campaign date check has not completed recently, and no campaigns are sending. Please confirm that the clock process is still running and sidekiq is up.\n\n**Priority Level: P0**\n\n@slack-incidents-emp-outreach <!subteam^S022HA38ZRA> @jira-campaigns",
-    "multi": false,
+    "message": "The unsent campaign date check has not completed recently, and no campaigns are sending. Please confirm that the clock process is still running and sidekiq is up.\n\n**Priority Level: P0**",
+    "multi": true,
     "name": "UnsentCampaignDateCheck has stopped running",
     "options": {
         "escalation_message": "",
         "include_tags": true,
-        "new_host_delay": 300,
+        "new_group_delay": 60,
         "no_data_timeframe": 30,
         "notify_audit": false,
         "notify_no_data": true,
@@ -16,11 +16,12 @@
         "require_full_window": false,
         "silenced": {},
         "thresholds": {
-            "critical": 0.0
+            "critical": 0.0,
+            "critical_recovery": 1.0
         },
         "timeout_h": 0
     },
-    "query": "sum(last_15m):sum:trace.sidekiq.job.hits{env:production,resource_name:unsentcampaigndatecheck,service:handshake-sidekiq}.as_rate() <= 0",
+    "query": "sum(last_15m):sum:trace.sidekiq.job.hits{env:production,resource_name:unsentcampaigndatecheck,service:handshake-sidekiq} by {region}.as_count() <= 0",
     "tags": [
         "service:handshake-sidekiq",
         "env:production",

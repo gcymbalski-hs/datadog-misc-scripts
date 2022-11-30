@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 92801667,
+    "matching_downtimes": [],
+    "message": "[{{es-cluster-name}}] Elasticsearch cluster health is red. One or more of the replica shards are not allocated to a node.\n\n[Runbook](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2802843680/Troubleshooting+Elasticsearch#Alert%3A-Elasticsearch-Cluster-is-unhealthy)\n\n@slack-incidents-search-technologies",
+    "multi": true,
+    "name": "Elasticsearch Cluster Red",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        }
+    },
+    "query": "max(last_5m):avg:elasticsearch.cluster_status{*} by {es-cluster-name} <= 0",
+    "tags": [
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:monolith",
+        "squad:search-technologies",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

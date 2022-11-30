@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 93601773,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nPublish latency has a sustained increase over the threshold, slowing down publishing to Google Pub/Sub.\nRunbook: https://joinhandshake.atlassian.net/l/cp/kWSPQuG7\n{{/is_alert}}\n{{#is_recovery}}\nPublish latency is trending downward for access.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"db.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] Service access: Publish Latency Too High",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 500.0,
+            "critical_recovery": 375.0
+        }
+    },
+    "query": "min(last_15m):min:postgresql.dep_outbox.publish_latency.95percentile{db:access*} by {db} > 500",
+    "tags": [
+        "dep_monitor:publish_latency",
+        "maintenance:true",
+        "repo:terraform-access",
+        "service:dep",
+        "team:iam",
+        "team:platform",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

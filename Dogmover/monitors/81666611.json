@@ -2,9 +2,9 @@
     "deleted": null,
     "id": 81666611,
     "matching_downtimes": [],
-    "message": "The pods in deployment guidance-outbox-publisher have a lot of restarts.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n\nNotify: @slack-incidents-platform-services,@slack-incidents-edu\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nContainer restarts are trending downward for guidance-outbox-publisher.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThe pods in deployment guidance-hsn-outbox-publisher have a lot of restarts.\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n{{/is_alert}}\n{{#is_recovery}}\nContainer restarts are trending downward for guidance-hsn-outbox-publisher.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
-    "name": "[DEP] Container Restarts for guidance-outbox-publisher",
+    "name": "[DEP] Container Restarts for guidance-hsn-outbox-publisher",
     "options": {
         "include_tags": true,
         "new_group_delay": 60,
@@ -19,9 +19,10 @@
             "critical_recovery": 5.0
         }
     },
-    "query": "avg(last_15m):max:kubernetes.containers.restarts{kube_deployment:guidance-outbox-publisher,kube_namespace:handshake} by {project} >= 10",
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{kube_deployment:guidance-hsn-outbox-publisher,kube_namespace:handshake} by {project} >= 10",
     "tags": [
         "dep_monitor:outbox_pod_restarts",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "team:university",

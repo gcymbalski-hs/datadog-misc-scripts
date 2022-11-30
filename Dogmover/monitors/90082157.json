@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 90082157,
+    "matching_downtimes": [],
+    "message": "notifications-relevance-service has high CPU usage compared to CPU limits.\n\n@slack-incidents-notifications",
+    "multi": true,
+    "name": "High CPU Usage on notifications relevance service",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.9,
+            "warning": 0.8
+        }
+    },
+    "query": "avg(last_15m):(avg:kubernetes.cpu.usage.total{kube_service:notifications-relevance-service} by {cluster-location,project} / 1000000000) / avg:kubernetes.cpu.limits{kube_service:notifications-relevance-service} by {cluster-location,project} > 0.9",
+    "tags": [
+        "app:notifications-relevance",
+        "team:notifications"
+    ],
+    "type": "query alert"
+}

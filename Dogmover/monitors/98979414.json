@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 98979414,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\n1. Inspect records: select * from activities.dead_letter;\n2. Check DataFlow Pipeline: https://console.cloud.google.com/dataflow?organizationId=669046949600&project=handshake-production\n{{/is_alert}}\n\n{{#is_recovery}}No new records in {{dataset_id.name}} {{table.name}} table {{/is_recovery}} @slack-incidents-data",
+    "multi": true,
+    "name": "New records added to dead letter table for {{dataset_id.name}}",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 900,
+        "include_tags": true,
+        "locked": false,
+        "new_host_delay": 300,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 25.0,
+            "critical_recovery": 0.0,
+            "warning": 5.0,
+            "warning_recovery": 0.0
+        },
+        "timeout_h": 0
+    },
+    "query": "sum(last_1h):sum:gcp.bigquery.storage.uploaded_row_count{table:dead_letter} by {project_id,dataset_id} > 25",
+    "tags": [
+        "team:platform",
+        "team:data"
+    ],
+    "type": "query alert"
+}

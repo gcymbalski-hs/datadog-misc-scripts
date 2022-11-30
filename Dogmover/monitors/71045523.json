@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 71045523,
     "matching_downtimes": [],
-    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents-edu\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-MonolithEDUProduct\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Guidance's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n@pagerduty-MonolithEDUProduct\n{{/is_match}}\n{{/is_recovery}}",
+    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents-te-talent\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Guidance's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n\n{{/is_match}}\n{{/is_recovery}}",
     "multi": false,
     "name": "[handshake-staging] Guidance Automatic Database Table Partitioning not Running",
     "options": {
@@ -24,7 +24,10 @@
         "app:guidance",
         "env:staging",
         "maintenance:true",
-        "region:us-central1"
+        "region:us-central1",
+        "repo:terraform-web",
+        "squad:talent-guidance",
+        "team:talent-evolution"
     ],
     "type": "query alert"
 }

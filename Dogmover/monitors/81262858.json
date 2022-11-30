@@ -2,9 +2,9 @@
     "deleted": null,
     "id": 81262858,
     "matching_downtimes": [],
-    "message": "There are events in the system that could not be published to Google Pub/Sub.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/HEeNG0Aa\n\nNotify: @slack-incidents-platform-services,@slack-incidents\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nEvent failed to publish counts are tending downward for handshake.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThere are events in the system that could not be published to Google Pub/Sub.\nRunbook: https://joinhandshake.atlassian.net/l/cp/HEeNG0Aa\n{{/is_alert}}\n{{#is_recovery}}\nEvent failed to publish counts have reached zero in monolith.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
-    "name": "[DEP] Service handshake: Event Failed to Publish",
+    "name": "[DEP] Service monolith: Event Failed to Publish",
     "options": {
         "evaluation_delay": 300,
         "include_tags": true,
@@ -19,9 +19,10 @@
             "critical_recovery": 0.0
         }
     },
-    "query": "avg(last_15m):max:DEP.outbox_publisher_processor.pubsub_publish.failed.count{service:handshake} by {project} > 30",
+    "query": "avg(last_15m):max:DEP.outbox_publisher_processor.pubsub_publish.failed.count{service:monolith} by {project} > 30",
     "tags": [
         "dep_monitor:failed_to_publish",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "terraform:true"

@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 90080308,
+    "matching_downtimes": [],
+    "message": "notifications-relevance-service/* containers in handshake-production have a lot of restarts. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2295562637/K8+Container+Restarts for help debugging.\n\n@slack-incidents-notifications",
+    "multi": true,
+    "name": "Container Restarts for notifications-relevance-service/* in handshake-production",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{project:handshake-production,kube_deployment:*,kube_namespace:notifications-relevance-service} by {kube_deployment} > 10",
+    "tags": [
+        "env:production",
+        "project:handshake-production",
+        "region:us-central1",
+        "team:notifications",
+        "app:notifications-relevance"
+    ],
+    "type": "query alert"
+}

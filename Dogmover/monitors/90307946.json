@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 90307946,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nThe rate of events is exceeding the throughput of the inbox, leading to events not being handled in a timely manner.\nRunbook: https://joinhandshake.atlassian.net/l/c/N1u96XtT\n\n{{/is_alert}}\n{{#is_recovery}}\nUndelivered event counts are trending downward for hsn-handshake-messaging.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services,@slack-incidents-employer-connections-messaging\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": false,
+    "name": "[DEP] Subscription hsn-handshake-messaging: Undelivered Events Are Too High",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {}
+    },
+    "query": "90307945 && 90307944",
+    "tags": [
+        "dep_monitor:undelivered_events_too_high",
+        "maintenance:true",
+        "repo:terraform-messaging",
+        "service:dep",
+        "team:messaging",
+        "terraform:true"
+    ],
+    "type": "composite"
+}

@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 102420664,
+    "matching_downtimes": [],
+    "message": "The latency of the sidekiq mailer queue is high. This queue and the sidekiq workers need to be checked by the owning team.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Sidekiq Mailer Queue High Latency",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 120,
+        "no_data_timeframe": 120,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 900.0,
+            "critical_recovery": 450.0
+        }
+    },
+    "query": "min(last_5m):max:sidekiq.queue.latency{queue:mailer} by {env,region} > 900",
+    "tags": [
+        "app:sidekiq",
+        "env:production",
+        "project:handshake-production",
+        "region:us-central1",
+        "repo:terraform-web",
+        "squad:cloud-engineering",
+        "team:infrastructure"
+    ],
+    "type": "query alert"
+}

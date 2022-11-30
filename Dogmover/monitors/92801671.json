@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 92801671,
+    "matching_downtimes": [],
+    "message": "[{{es-cluster-name}}] A large amount of searches are queuing on {{node_name.name}} in cluster {{es-cluster-name.name}}. This likely means that the instance is under heavy load and can't keep up with incoming search queries. This can be exacerbated by garbage collection.\n\n[Runbook](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2802843680/Troubleshooting+Elasticsearch#Alert%3A-Large-Elasticsearch-Search-Queue)\n\n@slack-incidents-search-technologies\n\n{{#is_match \"es-cluster-name.name\" \"employers\"}} @slack-incidents-employers {{/is_match}}\n{{#is_match \"es-cluster-name.name\" \"student\"}} @slack-incidents-students {{/is_match}}\n{{#is_match \"es-cluster-name.name\" \"universities\"}} @slack-incidents-edu {{/is_match}}",
+    "multi": true,
+    "name": "Elasticsearch Cluster large search queue",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        }
+    },
+    "query": "min(last_1m):max:elasticsearch.thread_pool.search.queue{!es-cluster-name:*-marketplace-interactions} by {es-cluster-name,node_name} > 1",
+    "tags": [
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:monolith",
+        "squad:search-technologies",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 81262857,
     "matching_downtimes": [],
-    "message": "Not enough pods in deployment handshake-hsn-outbox-publisher are available.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n\nNotify: @slack-incidents-platform-services,@slack-incidents\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nPods for handshake-hsn-outbox-publisher are becoming available.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nNot enough pods in deployment handshake-hsn-outbox-publisher are available.\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n{{/is_alert}}\n{{#is_recovery}}\nPods for handshake-hsn-outbox-publisher are becoming available.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
     "name": "[DEP] High Number of Unavailable Pods for handshake-hsn-outbox-publisher",
     "options": {
@@ -22,6 +22,7 @@
     "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:handshake-hsn-outbox-publisher} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:handshake-hsn-outbox-publisher} by {project} > 0.99",
     "tags": [
         "dep_monitor:outbox_pods_unavailable",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "terraform:true"

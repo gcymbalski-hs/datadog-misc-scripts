@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 102972560,
+    "matching_downtimes": [],
+    "message": "Worker heartbeat stopped responding. The worker pods may not be processing correctly. Consider restarting the app, fixing broken code, or scaling up to handle more jobs.\n\n@slack-incidents, @slack-incidents-cloud-engineering\n{{#is_match \"env.name\" \"production\"}}\n{{#is_alert}} @pagerduty-CloudEngineering{{/is_alert}}\n{{#is_alert_recovery}} @pagerduty-CloudEngineering{{/is_alert_recovery}}\n{{/is_match}}",
+    "multi": true,
+    "name": "Sidekiq Worker Heartbeat Stopped",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 300,
+        "new_host_delay": 300,
+        "no_data_timeframe": 120,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2.0,
+            "warning": 1.5
+        }
+    },
+    "query": "avg(last_1m):avg:handshake.worker_heartbeat{*} by {env,region} > 2",
+    "tags": [
+        "app:sidekiq",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

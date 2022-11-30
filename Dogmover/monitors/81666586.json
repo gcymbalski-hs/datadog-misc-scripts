@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 81666586,
     "matching_downtimes": [],
-    "message": "There are events in the system that could not be published to Google Pub/Sub.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/HEeNG0Aa\n\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nEvent failed to publish counts are tending downward for identity.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThere are events in the system that could not be published to Google Pub/Sub.\nRunbook: https://joinhandshake.atlassian.net/l/cp/HEeNG0Aa\n{{/is_alert}}\n{{#is_recovery}}\nEvent failed to publish counts have reached zero in identity.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
     "name": "[DEP] Service identity: Event Failed to Publish",
     "options": {
@@ -22,6 +22,7 @@
     "query": "avg(last_15m):max:DEP.outbox_publisher_processor.pubsub_publish.failed.count{service:identity} by {project} > 30",
     "tags": [
         "dep_monitor:failed_to_publish",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "team:identity",

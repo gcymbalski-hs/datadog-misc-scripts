@@ -1,0 +1,31 @@
+{
+    "deleted": null,
+    "id": 102260321,
+    "matching_downtimes": [],
+    "message": "Datadog Deployment containers in handshake-staging have a lot of restarts. Refer to https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2295562637/K8+Container+Restarts for help debugging.\n\n@slack-incidents-cloud-engineering",
+    "multi": true,
+    "name": "Datadog Deployment Restarts in handshake-staging",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 20.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{project:handshake-staging,kube_namespace:datadog,kube_deployment:*} by {kube_deployment} > 20",
+    "tags": [
+        "app:datadog",
+        "env:staging",
+        "project:handshake-staging",
+        "region:us-central1",
+        "repo:terraform-web",
+        "squad:cloud-engineering",
+        "team:infrastructure"
+    ],
+    "type": "query alert"
+}

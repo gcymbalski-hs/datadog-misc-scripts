@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 89876255,
+    "matching_downtimes": [],
+    "message": "Review the APM for Applicant Analysis to determine if there has been a regression or spike in requests:\n\nhttps://app.datadoghq.com/apm/resource/handshake/rails.action_controller/2642085be1ccad81?query=env%3Aproduction%20region%3Aus-central1%20service%3Ahandshake%20operation_name%3Arails.action_controller%20resource_name%3A%22Next%3A%3AEmployer%3A%3ATes%3A%3AControlCenterController%23applicant_analysis%22&env=production&hostGroup=us-central1&topGraphs=latency%3Alatency%2CbreakdownAs%3Apercentage%2Cerrors%3Acount%2Chits%3Acount&start=1663168246994&end=1663773046994&paused=false @slack-incidents-employer-analytics",
+    "multi": false,
+    "name": "P95 for Applicant Analysis Endpoint has Exceeded 10 seconds",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0
+        }
+    },
+    "query": "percentile(last_5m):p95:trace.rack.request{env:production,region:us-central1,resource:2642085be1ccad81,service:handshake} > 10",
+    "tags": [],
+    "type": "query alert"
+}

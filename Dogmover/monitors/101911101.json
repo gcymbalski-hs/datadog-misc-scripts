@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 101911101,
+    "matching_downtimes": [],
+    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents-te-talent\n{{#is_alert}}\n{{#is_match  \"cluster_name.name\" \"production\"}}\n\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nAutomatic partitioning is now functioning on Edu-Email-Events's DB.\n\n{{#is_match  \"cluster_name.name\" \"production\"}}\n\n{{/is_match}}\n{{/is_recovery}}",
+    "multi": false,
+    "name": "[handshake-uk-staging] Edu-Email-Events Automatic Database Table Partitioning not Running",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 10,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 1440,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0,
+            "critical_recovery": 1.0
+        }
+    },
+    "query": "min(last_5m):avg:postgresql.pg_cron.runs{jobname:pg-partman-maintenance-edu-email-events,status:succeeded,app in (dd-postgres-edu-email-events-immense-toucan)} <= 0",
+    "tags": [
+        "app:edu-email-events",
+        "env:staging",
+        "maintenance:true",
+        "region:europe-west2",
+        "repo:terraform-web",
+        "squad:talent-guidance",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

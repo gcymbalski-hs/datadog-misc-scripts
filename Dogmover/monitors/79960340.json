@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 79960340,
     "matching_downtimes": [],
-    "message": "Memory usage on the Redis instance {{instance_id.name}} is high. Review the growth rate and determine if the instance needs to be replaced with a larger one.\n\n@slack-incidents-cloud-engineering",
+    "message": "Memory usage on the Redis instance {{instance_id.name}} is high. Review the growth rate and determine if the instance needs to be replaced with a larger one.\n\n{{#is_match \"instance_id.name\" \"ats\" }}\n@slack-incidents-te-analytics-int \n{{/is_match}}\n\n{{^is_match \"instance_id.name\" \"ats\" }}\n@slack-incidents-cloud-engineering\n{{/is_match}}",
     "multi": true,
     "name": "Redis High Memory",
     "options": {
@@ -21,7 +21,8 @@
     "query": "avg(last_15m):max:gcp.redis.stats.memory.usage_ratio{!project_id:handshake-development-204119,!instance_id:projects/handshake-production/locations/us-central1/instances/handshake-cache-fleet-tadpole} by {instance_id} > 0.9",
     "tags": [
         "repo:terraform-datadog",
-        "team:cloud-engineering",
+        "squad:cloud_engineering",
+        "team:infrastructure",
         "terraform:true"
     ],
     "type": "metric alert"

@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 102786199,
+    "matching_downtimes": [],
+    "message": "[[{{cluster_name.name}}] Clients are waiting to connect to pgbouncer {{kube_deployment.name}} and this could lead to issues with the website.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2601713670/\n\n{{#is_match \"cluster_name.name\" \"production\"}}\n{{#is_alert}} @slack-incident-cloud-engineering {{/is_alert}}\n{{#is_alert_recovery}} @slack-incident-cloud-engineering{{/is_alert_recovery}}\n{{/is_match}}\n\n{{#is_match \"cluster_name.name\" \"demo\"}}\n{{#is_alert}} @slack-incident-cloud-engineering{{/is_alert}}\n{{#is_alert_recovery}} @slack-incident-cloud-engineering{{/is_alert_recovery}}\n{{/is_match}}",
+    "multi": true,
+    "name": "[PGBouncer] MaxWait Time Has Increased",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "avg(last_10m):avg:pgbouncer.pools.maxwait{*} by {cluster_name, kube_deployment} > 0.1",
+    "tags": [
+        "app:pgbouncer",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

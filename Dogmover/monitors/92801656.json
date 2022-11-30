@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 92801656,
+    "matching_downtimes": [],
+    "message": "Elasticsearch Indexer document updates are delayed.\n\n[Runbook](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks#Elasticsearch:-Document-Updates-Delayed)\n\n@slack-incidents-search-technologies\n\n\n{{#is_match \"cluster.name\" \"employers\"}} @slack-incidents-employers {{/is_match}}\n{{#is_match \"cluster.name\" \"students\"}} @slack-incidents-students {{/is_match}}\n{{#is_match \"cluster.name\" \"universities\"}} @slack-incidents-edu {{/is_match}}",
+    "multi": true,
+    "name": "Elasticsearch Indexer very low priority document updates delayed",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 43200000.0
+        }
+    },
+    "query": "min(last_15m):avg:handshake.elasticsearch_indexer.delay.total.avg{priority:very_low,env:production} by {env,cluster,region} > 43200000",
+    "tags": [
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:monolith",
+        "squad:search-technologies",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

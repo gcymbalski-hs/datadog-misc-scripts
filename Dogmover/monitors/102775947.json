@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 102775947,
+    "matching_downtimes": [],
+    "message": "The Handshake monolith is in what appears to be a degraded state. This is likely impacting performance and should be investigated.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/CE/pages/2902688056/Handshake+Monolith+Apdex+Low\n\n{{#is_match \"cluster_name.name\" \"production\"}}\n{{#is_alert}} @slack-incident-cloud-engineering, @pagerduty-CloudEngineering{{/is_alert}}\n{{#is_alert_recovery}} @slack-incident-cloud-engineering, @pagerduty-CloudEngineering{{/is_alert_recovery}}\n{{/is_match}}\n\n{{#is_match \"cluster_name.name\" \"uk-production\"}}\n{{#is_alert}} @slack-incident-cloud-engineering{{/is_alert}}\n{{#is_alert_recovery}} @slack-incident-cloud-engineering{{/is_alert_recovery}}\n{{/is_match}}",
+    "multi": true,
+    "name": "High P95 Reponse Time (Handshake Monolith)",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 900,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 2000.0,
+            "warning": 1750.0
+        }
+    },
+    "query": "min(last_30m):max:envoy.cluster.cluster_handshake_web_service_handshake.upstream_rq_time.95percentile{*} by {cluster_name} > 2000",
+    "tags": [
+        "app:monolith",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

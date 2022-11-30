@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 102433095,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nThe oldest unacknowledged event exceeded the age threshold, leading to a single or group of events not being handled in a timely manner.\nRunbook: https://joinhandshake.atlassian.net/l/cp/6TJJkZc5\n{{/is_alert}}\n{{#is_recovery}}\nUnacknowledged event age is trending downward for hsn-handshake-skills.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services @slack-incidents-te-skills\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-handshake-skills: Oldest Unacknowledged Event Exceeds Age Threshold",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 600.0,
+            "critical_recovery": 450.0
+        }
+    },
+    "query": "min(last_15m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-handshake-skills} by {project_id} > 600",
+    "tags": [
+        "dep_monitor:oldest_event_exceeds_age",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "terraform:true",
+        "squad:skills",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

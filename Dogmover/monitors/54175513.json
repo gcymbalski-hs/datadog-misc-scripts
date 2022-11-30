@@ -1,27 +1,40 @@
 {
     "deleted": null,
     "id": 54175513,
-    "matching_downtimes": [],
-    "message": "@slack-emp-ats-alerts",
+    "matching_downtimes": [
+        {
+            "active": true,
+            "end": null,
+            "groups": [],
+            "id": 2445526350,
+            "monitor_id": 54175513,
+            "scope": [
+                "*"
+            ],
+            "start": 1668791421
+        }
+    ],
+    "message": "@slack-emp-ats-alerts,@slack-incidents-te-analytics-int",
     "multi": true,
     "name": "iCIMS rate limit",
     "options": {
         "escalation_message": "",
         "include_tags": true,
-        "locked": false,
         "new_group_delay": 60,
         "no_data_timeframe": null,
         "notify_audit": false,
         "notify_no_data": false,
         "renotify_interval": 0,
         "require_full_window": true,
-        "silenced": {},
+        "silenced": {
+            "*": null
+        },
         "thresholds": {
-            "critical": 50.0
+            "critical": 20.0
         },
         "timeout_h": 0
     },
-    "query": "min(last_5m):max:icims.rate.limit{env:staging} by {env} <= 50",
+    "query": "min(last_5m):max:icims.rate.limit{env:production} by {env} <= 20",
     "tags": [],
     "type": "query alert"
 }

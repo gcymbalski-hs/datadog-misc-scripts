@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 81666578,
     "matching_downtimes": [],
-    "message": "The pods in deployment handshake-identity-inbox have a lot of restarts.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nContainer restarts are trending downward for inbox handshake-identity-inbox.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThe pods in deployment handshake-identity-inbox have a lot of restarts.\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n{{/is_alert}}\n{{#is_recovery}}\nContainer restarts are trending downward for inbox handshake-identity-inbox.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
     "name": "[DEP] Container Restarts for handshake-identity-inbox",
     "options": {
@@ -22,6 +22,7 @@
     "query": "avg(last_15m):max:kubernetes.containers.restarts{kube_deployment:handshake-identity-inbox,kube_namespace:handshake} by {project} >= 10",
     "tags": [
         "dep_monitor:inbox_pod_restarts",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "team:identity",

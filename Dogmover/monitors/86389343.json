@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 86389343,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nThere are events in the dead letter queue for hsn-messaging-handshake.\nRunbook: https://joinhandshake.atlassian.net/l/cp/P06b5E2q\n{{/is_alert}}\n{{#is_recovery}}\nThere are no more events in the dead letter queue for hsn-messaging-handshake.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services,@slack-incidents-employer-connections-messaging\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-messaging-handshake: Events Moved to Dead Letter Queue",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1,
+            "critical_recovery": 0.0
+        }
+    },
+    "query": "max(last_15m):sum:gcp.pubsub.subscription.dead_letter_message_count{subscription_id:hsn-messaging-handshake} by {project_id} > 0.1",
+    "tags": [
+        "dep_monitor:events_moved_to_dead_letter_topic",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "team:messaging",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

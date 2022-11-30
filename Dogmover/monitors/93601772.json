@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 93601772,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nThe age of the oldest outbox event exceeds the threshold.\nRunbook: https://joinhandshake.atlassian.net/l/cp/aoWyVxs0\n{{/is_alert}}\n{{#is_recovery}}\nThe age of the oldest outbox event is trending downward for access.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] Service access: Oldest Outbox Event Exceeds Threshold",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 600.0
+        }
+    },
+    "query": "avg(last_15m):max:DEP.outbox_publisher_processor.unpublished_outbox_items.oldest_age{service:access} by {project} > 600",
+    "tags": [
+        "dep_monitor:oldest_unpublished_outbox_event",
+        "maintenance:true",
+        "repo:terraform-access",
+        "service:dep",
+        "team:iam",
+        "team:platform",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

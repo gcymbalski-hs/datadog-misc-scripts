@@ -8,8 +8,7 @@
     "options": {
         "escalation_message": "",
         "include_tags": true,
-        "locked": false,
-        "new_host_delay": 300,
+        "new_group_delay": 60,
         "no_data_timeframe": null,
         "notify_audit": false,
         "notify_no_data": false,
@@ -22,7 +21,7 @@
         },
         "timeout_h": 0
     },
-    "query": "avg(last_5m):max:pgbouncer.pools.sv_idle{!kube_deployment:edu-email-events-mint-fox-pgbouncer} by {kube_deployment,project} <= 0",
+    "query": "avg(last_5m):max:pgbouncer.pools.sv_idle{!kube_deployment:edu-email-events-mint-fox-pgbouncer,!kube_deployment:datadog-handshake-polished-hornet-pgbouncer} by {kube_deployment,project} <= 0",
     "tags": [],
     "type": "query alert"
 }

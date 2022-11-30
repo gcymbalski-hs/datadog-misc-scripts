@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 92801660,
+    "matching_downtimes": [],
+    "message": "The error rate on the `handshake-elasticsearch` service is high. To troubleshoot, check the [service page](/apm/service/handshake-elasticsearch/elasticsearch.query?env=production).\n\n[Runbook]()\n\n@slack-incidents-search-technologies",
+    "multi": true,
+    "name": "handshake-elasticsearch high error rate",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.6
+        }
+    },
+    "query": "avg(last_10m):( sum:trace.elasticsearch.query.errors{service:handshake-elasticsearch,env:production} by {region} / sum:trace.elasticsearch.query.hits{service:handshake-elasticsearch,env:production} by {region} ) > 0.6",
+    "tags": [
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:monolith",
+        "squad:search-technologies",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

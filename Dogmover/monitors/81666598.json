@@ -2,9 +2,9 @@
     "deleted": null,
     "id": 81666598,
     "matching_downtimes": [],
-    "message": "Not enough pods in deployment guidance-inbox are available.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n\nNotify: @slack-incidents-platform-services,@slack-incidents-edu\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nPods for guidance-inbox are becoming available.\n\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nNot enough pods in deployment handshake-guidance-inbox are available.\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n{{/is_alert}}\n{{#is_recovery}}\nPods for handshake-guidance-inbox are becoming available.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services,@slack-incidents-edu\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
-    "name": "[DEP] High Number of Unavailable Pods for guidance-inbox",
+    "name": "[DEP] High Number of Unavailable Pods for handshake-guidance-inbox",
     "options": {
         "include_tags": true,
         "new_group_delay": 60,
@@ -15,13 +15,14 @@
         "require_full_window": false,
         "silenced": {},
         "thresholds": {
-            "critical": 0.5,
-            "critical_recovery": 0.25
+            "critical": 0.6,
+            "critical_recovery": 0.5
         }
     },
-    "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:guidance-inbox} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:guidance-inbox} by {project} > 0.5",
+    "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:handshake-guidance-inbox} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:handshake-guidance-inbox} by {project} > 0.6",
     "tags": [
         "dep_monitor:inbox_pods_unavailable",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "team:university",

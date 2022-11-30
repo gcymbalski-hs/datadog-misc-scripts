@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 98979418,
+    "matching_downtimes": [],
+    "message": "@slack-Main_Account-incidents-data: Please monitor the {{location.name}} BigQuery capacity dashboard and sort out why commitments, reservations, and assignments haven't been properly filed and utilized. This will likely require us to manually create flat-rate resources and adjust the Terraform for automation: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2704769103/BigQuery+Flatrate+Reservations",
+    "multi": true,
+    "name": "BigQuery Reservations haven't rolled out successfully for {{location.name}}",
+    "options": {
+        "escalation_message": "@slack-Main_Account-incidents-data: Please monitor the {{location.name}} BigQuery capacity dashboard and sort out why commitments, reservations, and assignments haven't been properly filed and utilized. This will likely require us to manually create flat-rate resources and adjust the Terraform for automation: https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2704769103/BigQuery+Flatrate+Reservations",
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 30,
+        "renotify_statuses": [
+            "alert",
+            "no data"
+        ],
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0
+        },
+        "timeout_h": 1
+    },
+    "query": "max(last_390m):sum:gcp.bigquery.slots.assigned{project_id:handshake-production} by {location} <= 0",
+    "tags": [],
+    "type": "query alert"
+}

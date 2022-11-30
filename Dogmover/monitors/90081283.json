@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 90081283,
+    "matching_downtimes": [],
+    "message": "Notifications Relevance Service request p95 latency high on {{env.name}}.  \n\nNotify: @slack-incidents-notifications",
+    "multi": true,
+    "name": "Notifications Relevance Service Request P95 Latency High",
+    "options": {
+        "escalation_message": "",
+        "evaluation_delay": 30,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "no_data_timeframe": null,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.15,
+            "critical_recovery": 0.02,
+            "warning": 0.1
+        },
+        "timeout_h": 0
+    },
+    "query": "avg(last_10m):p95:trace.http.request{!env:staging,service:notifications-relevance-service} by {env,region} > 0.15",
+    "tags": [
+        "team:notifications",
+        "app:notifications-relevance"
+    ],
+    "type": "query alert"
+}

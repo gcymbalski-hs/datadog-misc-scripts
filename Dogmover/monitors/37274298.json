@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 37274298,
     "matching_downtimes": [],
-    "message": "{{repo_name.name}} appears to be stuck or delayed significantly for the {{environment.name}} environment. \n\nThere have been more than 8 undeployed commits for the past 60 minutes.\n\nWhat to do next:\n1. Navigate to the deployer - https://deployer.handshake-deploy.com/\n2. Inspect the queue and determine if things are stuck. The queue is probably stuck if there are multiple undeployed commits and no deploy in progress. The deployer automatically stops deploying after 8 consecutive failed builds. You will need to manually deploy a green build to start the process over.\n\nIf there is a big queue, but there is a deploy in progress, this should resolve itself once the queue drops below the alert limit (4 or fewer undeployed commits).\n\n@pagerduty-DeployerApp",
+    "message": "{{repo_name.name}} appears to be stuck or delayed significantly for the {{environment.name}} environment. \n\nThere have been more than 10 undeployed commits for the past 60 minutes.\n\nWhat to do next:\n1. Navigate to the deployer - https://deployer.handshake-deploy.com/\n2. Inspect the queue and determine if things are stuck. The queue is probably stuck if there are multiple undeployed commits and no deploy in progress. The deployer automatically stops deploying after 8 consecutive failed builds. You will need to manually deploy a green build to start the process over.\n\nIf there is a big queue, but there is a deploy in progress, this should resolve itself once the queue drops below the alert limit (4 or fewer undeployed commits).\n\n@pagerduty-DeployerApp",
     "multi": true,
     "name": "Deployer deployments delayed or stuck {{repo_name.name}}",
     "options": {
@@ -18,12 +18,12 @@
         "require_full_window": false,
         "silenced": {},
         "thresholds": {
-            "critical": 8.0,
-            "critical_recovery": 4.0
+            "critical": 10.0,
+            "critical_recovery": 5.0
         },
         "timeout_h": 0
     },
-    "query": "min(last_1h):sum:handshake.deployer.health.undeployed_commits_count{app:handshake-deployer,repo_name:handshake} by {environment,repo_name} > 8",
+    "query": "min(last_1h):sum:handshake.deployer.health.undeployed_commits_count{app:handshake-deployer,repo_name:handshake} by {environment,repo_name} > 10",
     "tags": [
         "env:internal",
         "team:devx"

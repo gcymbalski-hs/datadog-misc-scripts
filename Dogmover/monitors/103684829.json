@@ -1,0 +1,27 @@
+{
+    "deleted": null,
+    "id": 103684829,
+    "matching_downtimes": [],
+    "message": "The memory usage of the Redis instance projects/handshake-uk-production/locations/europe-west2/instances/handshake-cache-better-louse is growing rapidly. If this is sustained, then the instance may reach it's max capacity soon.\n\n@slack-incidents-infrastructure",
+    "multi": false,
+    "name": "Redis instance handshake-uk-production/handshake-cache-better-louse is growing rapidly",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.1,
+            "critical_recovery": 0.05
+        }
+    },
+    "query": "change(avg(last_1h),last_1h):avg:gcp.redis.stats.memory.usage_ratio{instance_id:projects/handshake-uk-production/locations/europe-west2/instances/handshake-cache-better-louse} > 0.1",
+    "tags": [
+        "env:production",
+        "project:handshake-uk-production",
+        "region:europe-west2"
+    ],
+    "type": "query alert"
+}

@@ -1,0 +1,32 @@
+{
+    "deleted": null,
+    "id": 102057978,
+    "matching_downtimes": [],
+    "message": "{{database_id.name}} database is approaching Disk Capacity.\n\n  {{#is_alert}}\n  To resolve, make sure autoscaling is working and/or add more nodes. https://joinhandshake.atlassian.net/wiki/x/4gELmw\n  {{/is_alert}}\n  {{#is_recovery}}\n  {{database_id.name}} database Disk Usage alert is off.\n  {{/is_recovery}}",
+    "multi": true,
+    "name": "[handshake-uk-production] Tracking Database Disk Usage High",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 60,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.95,
+            "critical_recovery": 0.9
+        }
+    },
+    "query": "max(last_1h):max:gcp.cloudsql.database.disk.utilization{database_id in (handshake-uk-production:tracking-notable-chicken)} by {database_id} > 0.95",
+    "tags": [
+        "app:tracking",
+        "env:production",
+        "maintenance:true",
+        "region:europe-west2",
+        "repo:terraform-web",
+        "squad:channels",
+        "team:core"
+    ],
+    "type": "query alert"
+}

@@ -2,7 +2,7 @@
     "deleted": null,
     "id": 81159270,
     "matching_downtimes": [],
-    "message": "There are events in the system that do not have a valid schema and cannot be processed.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/SJ4LGuf6\n\nNotify: @slack-incidents-platform-services\n\n{{#is_alert}}\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nInvalid schema counts are tending downward for hsn-access-access.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThere are events in the system that do not have a valid schema and cannot be processed.\nRunbook: https://joinhandshake.atlassian.net/l/cp/SJ4LGuf6\n{{/is_alert}}\n{{#is_recovery}}\nInvalid schema counts are trending downward for hsn-access-access.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services\n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
     "name": "[DEP] Subscription hsn-access-access: Event with Invalid Schema",
     "options": {
@@ -22,6 +22,7 @@
     "query": "avg(last_15m):max:DEP.inbox.invalid_payload.count{subscription:hsn-access-access} by {project} > 1",
     "tags": [
         "dep_monitor:invalid_schema",
+        "maintenance:true",
         "repo:terraform-access",
         "service:dep",
         "team:iam",

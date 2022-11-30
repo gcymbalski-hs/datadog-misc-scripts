@@ -14,7 +14,7 @@
             "start": 1646166675
         }
     ],
-    "message": "{{#is_warning}}\n{{event.text}} \n@slack-stu-relationships-incidents \n{{/is_warning}}\n{{#is_alert}}\n{{event.text}} \n@slack-stu-relationships-incidents \n{{/is_alert}}",
+    "message": "{{#is_warning}}\n{{event.text}} \n@slack-stu-relationships-incidents , @slack-incidents-live-cxns \n{{/is_warning}}\n{{#is_alert}}\n{{event.text}} \n@slack-stu-relationships-incidents , @slack-incidents-live-cxns\n{{/is_alert}}",
     "multi": true,
     "name": "[STU Relationships] Generating Follow Up Conversations",
     "options": {
@@ -22,10 +22,9 @@
         "escalation_message": "",
         "groupby_simple_monitor": false,
         "include_tags": true,
-        "locked": false,
-        "new_host_delay": 300,
+        "new_group_delay": 60,
         "notify_audit": false,
-        "notify_no_data": false,
+        "on_missing_data": "default",
         "renotify_interval": 0,
         "restriction_query": null,
         "silenced": {
@@ -34,10 +33,9 @@
         "thresholds": {
             "critical": 50.0,
             "warning": 1.0
-        },
-        "timeout_h": 1
+        }
     },
-    "query": "events(\"tags:(\"team:student\" AND \"env:production\") \\\"Generating Follow Up Conversations\\\"\").rollup(\"count\").by(\"project\").last(\"5m\") >= 50",
+    "query": "events(\"tags:(\\\"team:student\\\" \\\"env:production\\\") \\\"Generating Follow Up Conversations\\\"\").rollup(\"count\").by(\"project\").last(\"5m\") >= 50",
     "tags": [
         "team:student",
         "squad:stu-relationships"

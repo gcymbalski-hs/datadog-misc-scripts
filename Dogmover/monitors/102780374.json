@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 102780374,
+    "matching_downtimes": [],
+    "message": "P90 latency on the Redis instance {{instance_id.name}} is high.\n\nNotify: @slack-incidents-cloud-engineering\n\n{{#is_alert}}\n{{#is_match \"project_id.name\" \"handshake-production\" \"handshake-uk-production\"}}\nPager: @pagerduty-CloudEngineering\n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\n{{#is_match \"project_id.name\" \"handshake-production\" \"handshake-uk-production\"}}\nPager: @pagerduty-CloudEngineering\n{{/is_match}}\n{{/is_recovery}}",
+    "multi": true,
+    "name": "Redis High P90 Latency",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 900,
+        "no_data_timeframe": 30,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 4.0,
+            "warning": 3.0
+        }
+    },
+    "query": "avg(last_10m):p90:trace.redis.command{env:production,service:handshake-redis} by {region} > 4",
+    "tags": [
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}

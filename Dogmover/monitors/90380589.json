@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 90380589,
+    "matching_downtimes": [],
+    "message": "Non-alert monitor\n\nThis monitor notifies when the hsn-messaging-notifications pubsub subscription has old domain events.\n\nThe two monitors are used in the composite monitor \"[DEP] Subscription hsn-messaging-notifications: Undelivered Events Are Too High\" which will notify when the events are present on the subscription AND are not being processed. See that monitor for more info on how to handle incident.",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-messaging-notifications: Has old domain events",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 300.0,
+            "critical_recovery": 225.0
+        }
+    },
+    "query": "min(last_15m):max:gcp.pubsub.subscription.oldest_unacked_message_age{subscription_id:hsn-messaging-notifications} by {project_id} >= 300",
+    "tags": [
+        "dep_monitor:undelivered_events_too_high",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "team:notifications",
+        "team:platform",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

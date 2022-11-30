@@ -1,0 +1,34 @@
+{
+    "deleted": null,
+    "id": 102443737,
+    "matching_downtimes": [],
+    "message": "This will lead to degraded performance on partitioned tables in this database.\n\nRunbook: https://joinhandshake.atlassian.net/l/c/X4AkYEFo\n\n@slack-incidents-te-skills @pagerduty-Skills \n{{#is_recovery}}\nAutomatic partitioning is now functioning on Skills' DB.\n{{/is_recovery}}",
+    "multi": false,
+    "name": "[handshake-uk-production] Skills Automatic Database Table Partitioning not Running",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "no_data_timeframe": 10,
+        "notify_audit": false,
+        "notify_no_data": true,
+        "renotify_interval": 1440,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.0,
+            "critical_recovery": 1.0
+        }
+    },
+    "query": "min(last_5m):avg:postgresql.pg_cron.runs{jobname:pg-partman-maintenance-skills AND status:succeeded AND app IN (dd-postgres-skills-superb-macaque)} <= 0",
+    "tags": [
+        "env:production",
+        "maintenance:true",
+        "region:europe-west2",
+        "team:talent-evolution",
+        "app:skills",
+        "squad:skills",
+        "repo:terraform-skills"
+    ],
+    "type": "query alert"
+}

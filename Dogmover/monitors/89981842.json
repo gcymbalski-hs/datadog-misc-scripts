@@ -1,0 +1,25 @@
+{
+    "deleted": null,
+    "id": 89981842,
+    "matching_downtimes": [],
+    "message": "`handshake-elasticsearch` average latency is too high.",
+    "multi": false,
+    "name": "Service handshake-elasticsearch has a high average latency on env:production",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.3
+        }
+    },
+    "query": "avg(last_10m): ( sum:trace.elasticsearch.query.duration{env:production,service:handshake-elasticsearch}.rollup(sum).fill(zero) / sum:trace.elasticsearch.query.hits{env:production,service:handshake-elasticsearch} ) > 0.5",
+    "tags": [
+        "service:handshake-elasticsearch",
+        "env:production"
+    ],
+    "type": "metric alert"
+}

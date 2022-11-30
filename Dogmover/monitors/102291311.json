@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 102291311,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nNot enough pods in deployment handshake-skills-inbox are available.\nRunbook: https://joinhandshake.atlassian.net/l/cp/0yHB1qcN\n{{/is_alert}}\n{{#is_recovery}}\nPods for handshake-skills-inbox are becoming available.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services @slack-incidents-te-skills \n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] High Number of Unavailable Pods for handshake-skills-inbox",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.6,
+            "critical_recovery": 0.5
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes_state.deployment.replicas_unavailable{kube_namespace:handshake,kube_deployment:handshake-skills-inbox} by {project} / max:kubernetes_state.deployment.replicas_desired{kube_namespace:handshake,kube_deployment:handshake-skills-inbox} by {project} > 0.6",
+    "tags": [
+        "dep_monitor:inbox_pods_unavailable",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "terraform:true",
+        "squad:skills",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

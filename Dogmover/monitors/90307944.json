@@ -1,0 +1,28 @@
+{
+    "deleted": null,
+    "id": 90307944,
+    "matching_downtimes": [],
+    "message": "Non-alert monitor\n\nThis monitor notifies when the hsn-handshake-messaging subscription has stopped processing events.\n\nThe two monitors are used in the composite monitor \"[DEP] Subscription hsn-handshake-messaging: Undelivered Events Are Too High\" which will notify when the events are present on the subscription AND are not being processed. See that monitor for more info on how to handle incident.",
+    "multi": true,
+    "name": "[DEP] Subscription hsn-handshake-messaging: Not processing domain events",
+    "options": {
+        "evaluation_delay": 300,
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": true,
+        "silenced": {}
+    },
+    "query": "change(min(last_1h),last_1h):max:gcp.pubsub.subscription.num_unacked_messages_by_region{subscription_id:hsn-handshake-messaging} by {project_id} >= 0",
+    "tags": [
+        "dep_monitor:undelivered_events_too_high",
+        "maintenance:true",
+        "repo:terraform-messaging",
+        "service:dep",
+        "team:messaging",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

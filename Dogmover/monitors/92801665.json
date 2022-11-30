@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 92801665,
+    "matching_downtimes": [],
+    "message": "Elasticsearch Indexer document update high priority queue is too large.\n\n[Runbook](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/865566925/Education+Incident+Runbooks#Elasticsearch:-Document-Updates-Delayed)\n\n@slack-incidents-search-technologies\n\n\n{{#is_match \"cluster.name\" \"employers\"}} @slack-incidents-employers {{/is_match}}\n{{#is_match \"cluster.name\" \"students\"}} @slack-incidents-students {{/is_match}}\n{{#is_match \"cluster.name\" \"universities\"}} @slack-incidents-edu {{/is_match}}",
+    "multi": true,
+    "name": "Elasticsearch Indexer Document Update high priority queue large",
+    "options": {
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10000.0
+        }
+    },
+    "query": "avg(last_5m):avg:handshake.elasticsearch_indexer.document_update.count.high{env:production} by {env,cluster,region} > 10000",
+    "tags": [
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:monolith",
+        "squad:search-technologies",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "query alert"
+}

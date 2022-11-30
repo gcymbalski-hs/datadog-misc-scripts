@@ -1,0 +1,33 @@
+{
+    "deleted": null,
+    "id": 102290624,
+    "matching_downtimes": [],
+    "message": "{{#is_alert}}\nThe pods in deployment handshake-skills-inbox have a lot of restarts.\nRunbook: https://joinhandshake.atlassian.net/l/cp/YB2ZftPj\n{{/is_alert}}\n{{#is_recovery}}\nContainer restarts are trending downward for inbox handshake-skills-inbox.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services  @slack-incidents-te-skills \n{{#is_match \"project.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
+    "multi": true,
+    "name": "[DEP] Container Restarts for handshake-skills-inbox",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 240,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 10.0,
+            "critical_recovery": 5.0
+        }
+    },
+    "query": "avg(last_15m):max:kubernetes.containers.restarts{kube_deployment:handshake-skills-inbox,kube_namespace:handshake} by {project} >= 10",
+    "tags": [
+        "dep_monitor:inbox_pod_restarts",
+        "maintenance:true",
+        "repo:terraform-web",
+        "service:dep",
+        "terraform:true",
+        "squad:skills",
+        "team:talent-evolution"
+    ],
+    "type": "query alert"
+}

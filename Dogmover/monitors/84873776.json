@@ -2,9 +2,9 @@
     "deleted": null,
     "id": 84873776,
     "matching_downtimes": [],
-    "message": "After a finite number of retry attempts, The events are being moved to dead letter Queue.\n\nRunbook: https://joinhandshake.atlassian.net/l/cp/P06b5E2q\n\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n\n{{#is_alert}}\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_alert}}\n\n{{#is_recovery}}\nCount for events moved to Dead Letter Queue is trending downward for hsn-handshake-identity.\n\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}\n{{/is_recovery}}",
+    "message": "{{#is_alert}}\nThere are events in the dead letter queue for hsn-handshake-identity.\nRunbook: https://joinhandshake.atlassian.net/l/cp/P06b5E2q\n{{/is_alert}}\n{{#is_recovery}}\nThere are no more events in the dead letter queue for hsn-handshake-identity.\n{{/is_recovery}}\nNotify: @slack-incidents-platform-services,@slack-incidents-student\n{{#is_match \"project_id.name\" \"demo\" \"production\"}}\nPager: \n{{/is_match}}",
     "multi": true,
-    "name": "[DEP] Subscription hsn-handshake-identity: Events moved to Dead Letter Queue",
+    "name": "[DEP] Subscription hsn-handshake-identity: Events Moved to Dead Letter Queue",
     "options": {
         "evaluation_delay": 300,
         "include_tags": true,
@@ -12,16 +12,17 @@
         "notify_audit": false,
         "notify_no_data": false,
         "renotify_interval": 240,
-        "require_full_window": true,
+        "require_full_window": false,
         "silenced": {},
         "thresholds": {
-            "critical": 1.0,
+            "critical": 0.1,
             "critical_recovery": 0.0
         }
     },
-    "query": "avg(last_1h):min:gcp.pubsub.subscription.dead_letter_message_count{subscription_id:hsn-handshake-identity} by {project_id} > 1",
+    "query": "max(last_15m):sum:gcp.pubsub.subscription.dead_letter_message_count{subscription_id:hsn-handshake-identity} by {project_id} > 0.1",
     "tags": [
         "dep_monitor:events_moved_to_dead_letter_topic",
+        "maintenance:true",
         "repo:terraform-web",
         "service:dep",
         "team:identity",
