@@ -59,6 +59,15 @@ class Alert
       @query        = alert_object.query
       @alerts       = parse_slack_channels
       @pages        = parse_pagerduty_services
+    elsif alert_source.class == DatadogAPIClient::V1::SyntheticsTestDetails
+      alert_object  = alert_source
+      @alert_id     = alert_source.public_id
+      @name         = alert_source.name
+      @tags         = alert_object.tags
+      @message      = alert_object.message
+      @query        = "Synthetic - #{alert_source.type} - #{alert_source.subtype}"
+      @alerts       = parse_slack_channels
+      @pages        = parse_pagerduty_services
     end
   end
 
