@@ -423,7 +423,8 @@ class Alert
             'Squad-DataRelevance'
           else
             puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
-            nil
+            puts "#{@alert_id}: Falling back to default for team" if DEBUG
+            'AirflowandDataPipelines'
           end
         else
           puts "#{@alert_id}: Unknown team passed in: #{new_team}" if DEBUG
