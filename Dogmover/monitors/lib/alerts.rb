@@ -243,8 +243,6 @@ class Alert
     return if @alerts.empty?
     current_last_slack_channel = @alerts.last
     proposed_slack_channel = case @new_team
-        when 'shared-monilith'
-          'incidents'
         when 'jobs'
           'incidents-jobs'
         when 'spark-engagement'
@@ -294,15 +292,13 @@ class Alert
           end
         when 'data'
           'incidents-data'
-        when 'shared-monolith'
-          'incidents'
         else
           puts "#{@alert_id}: Unknown team passed in: #{new_team}" if DEBUG
           binding.pry if PRY
           nil
         end
-    if @new_slack_channel.nil?
-      puts "#{@alert_id}: Could not find a new Slack channelf for alert" if DEBUG
+    if proposed_slack_channel.nil?
+      puts "#{@alert_id}: Could not find a new Slack channel for alert" if DEBUG
     end
     @new_slack_channel = "@slack-#{proposed_slack_channel}" if proposed_slack_channel
   end
@@ -341,7 +337,7 @@ class Alert
       @alerts = parse_slack_channels
     else
       puts "#{@alert_id}: Not taking action due to invalid count of current channels" if DEBUG
-      nil
+      false
     end
   end
 
