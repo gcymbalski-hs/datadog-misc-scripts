@@ -74,7 +74,7 @@ class Alert
   def find_new_owner
     raw_owner = @raw_new_owner
     if raw_owner.nil? && @tags
-      # attempt to infer this from team tags
+      # attempt to infer this from team tags if no new owner already specified
       team_tags = @tags.select{|t| t =~ /^team:/}.collect{|t| t.split(':').last}
       squad_tags = @tags.select{|t| t =~ /^squad:/}.collect{|t| t.split(':').last}
       # filter out the 'overloaded' uses of the team tag
@@ -130,6 +130,7 @@ class Alert
     end
     if raw_owner.nil?
       # if we still couldn't find anything, oof
+      puts "#{@alert_id}: Unable to find new owner for alert" if DEBUG
       nil
     else
       raw_owner.gsub!(/&/, 'and')
@@ -150,7 +151,7 @@ class Alert
         @new_squad  = nil
       when 'data'
         @new_team   = 'data'
-        @new_squad  = nil
+        @new_squad  = raw_squad_guess
       when /^platform/
         @new_team   = 'platform-services'
         @new_squad  = raw_squad_guess
@@ -174,6 +175,8 @@ class Alert
                         'analytics and integrations'
                       when /guidance/
                         'guidance'
+                      when /skills/
+                        'skills'
                       else
                         raw_squad_guess
                       end
@@ -184,6 +187,8 @@ class Alert
                         'analytics and integrations'
                       when /guidance/
                         'guidance'
+                      when /skills/
+                        'skills'
                       else
                         raw_squad_guess
                       end
