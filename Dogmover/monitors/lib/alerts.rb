@@ -49,6 +49,7 @@ class Alert
       @pages        = parse_pagerduty_services
       find_new_owner
       find_new_slack_channel unless new_team == 'delete'
+      find_new_pagerduty_service if (PAGERDUTY == true)
     elsif alert_source.class == DatadogAPIClient::V1::Monitor
       alert_object  = alert_source
       @alert_id     = alert_source.id
@@ -304,6 +305,9 @@ class Alert
     when 1
       puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack mappings" if DEBUG
       reprocess_slack_mappings
+      if PAGERDUTY == true
+        reprocess_pagerduty_mappings
+      end
     else
       puts "#{@alert_id}: Not processing due to multiple Slack channel targets, please reprocess manually" if DEBUG
     end
@@ -340,7 +344,74 @@ class Alert
   def find_new_pagerduty_service
     # let's not change anything yet if this alert currently doesn't page
     return if @pages.empty?
-    puts "placeholder"
+    current_last_pagerduty_service = @pages.last
+    proposed_pagerduty_service = case @new_team
+        when 'jobs'
+          'jobs'
+        when 'spark-engagement'
+          'Team-SparkEngagement'
+        when 'core'
+          case @new_squad
+          when 'channels'
+            # XXX TODO
+            'TODO'
+          when 'basecamp'
+            # XXX TODO
+            'TODO'
+          else
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
+            nil
+          end
+        when 'live-connections'
+          'Team-LiveConnections'
+        when 'humans'
+          'Team-Humans'
+        when 'talent-evolution'
+          case @new_squad
+          when 'analytics-and-integrations'
+            'Squad-AnalyticsandIntegrations'
+          when 'talent-guidance'
+            'TalentGuidance'
+          when 'skills'
+            'Skills'
+          else
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
+            nil
+          end
+        when 'platform-services'
+          'Team-PlatformServices'
+        when 'infrastructure'
+          case @new_squad
+          when 'cloud-engineering'
+            'CloudEngineering'
+          when 'devx'
+            'DevelopmentEnvironmentRDE'
+          when 'search-technologies'
+            'Squad-SearchTechnologies'
+          else
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
+            nil
+          end
+        when 'data'
+          case @new_squad
+          when 'engineering'
+            'Squad-DataEngineering'
+          when 'relevance'
+            'Squad-DataRelevance'
+          else
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
+            nil
+          end
+        else
+          puts "#{@alert_id}: Unknown team passed in: #{new_team}" if DEBUG
+          binding.pry if PRY
+          nil
+        end
+    if proposed_pagerduty_service.nil?
+      puts "#{@alert_id}: Could not find a new Pagerduty service for alert" if DEBUG
+      false
+    end
+    @new_pagerduty_service = "@pagerduty-#{proposed_pagerduty_service}" if proposed_pagerduty_service
   end
 
   def parse_slack_channels
@@ -514,4 +585,3 @@ def get_missing_alerts(json_alerts, workbook_alerts)
   workbook_alert_ids = workbook_alerts.collect{|alert| alert.alert_id}
   return json_alert_ids - workbook_alert_ids
 end
-
