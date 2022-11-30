@@ -2,6 +2,11 @@
     "config": {
         "assertions": [
             {
+                "operator": "contains",
+                "target": "success",
+                "type": "body"
+            },
+            {
                 "operator": "is",
                 "target": 200,
                 "type": "statusCode"
@@ -12,12 +17,15 @@
                 "type": "responseTime"
             }
         ],
+        "configVariables": [],
         "request": {
             "headers": {
                 "Content-Type": "text/html",
                 "User-Agent": "Datadog"
             },
+            "host": "https://joinhandshake-demo.com/healthz",
             "method": "GET",
+            "timeout": 30,
             "url": "https://joinhandshake-demo.com/healthz"
         }
     },
@@ -33,14 +41,13 @@
         "aws:us-west-2",
         "aws:eu-west-2"
     ],
-    "message": "Uptime test on Handshake Demo failed.  @slack-incidents @pagerduty-MonolithSharedProduct ",
-    "modified_at": "2022-08-24T17:35:10.171253+00:00",
+    "message": "Handshake in Demo is unavailable. @slack-incidents-cloud-engineering @pagerduty-CloudEngineering",
+    "modified_at": "2022-11-23T23:38:37.163422+00:00",
     "monitor_id": 8793412,
-    "name": "Handshake Demo Unavailable",
+    "name": "Handshake Demo Availability",
     "options": {
-        "httpVersion": "http1",
         "min_failure_duration": 60,
-        "min_location_failed": 3,
+        "min_location_failed": 2,
         "monitor_options": {
             "renotify_interval": 0
         },
@@ -54,9 +61,13 @@
     "status": "live",
     "subtype": "http",
     "tags": [
+        "app:handshake",
+        "repo:terraform-datadog",
+        "env:demo",
+        "team:infrastructure",
+        "squad:cloud-engineering",
         "maintenance:true",
-        "region:us-central1",
-        "env:demo"
+        "region:us-central1"
     ],
     "type": "api"
 }
