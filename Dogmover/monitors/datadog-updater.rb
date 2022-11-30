@@ -15,6 +15,8 @@ require './lib/alerts.rb'
 
 DEBUG = ENV['DEBUG'] == 'true'
 PRY   = ENV['PRY'] == 'true'
+PAGERDUTY = ENV['PAGERDUTY'] == 'true'
+
 START_TIME = Time.now.strftime("%Y-%m-%d-%H%M%S")
 
 REALLY_UPDATE_DATADOG = ENV['DRY_RUN'] == 'false'
@@ -194,6 +196,8 @@ workbook_alerts.reject!{|x| x.to_delete == true }
 
 puts "Final amount of alerts to update: #{workbook_alerts.count}"
 
+binding.pry if (DEBUG && PRY)
+
 def report_diff(spreadsheet, workbook_name, new_alert_configs, old_alert_configs)
   output_sheet = spreadsheet.create_worksheet(name: workbook_name)
   new_message_col_name = if workbook_name =~ /terraform|multi/
@@ -212,7 +216,7 @@ def report_diff(spreadsheet, workbook_name, new_alert_configs, old_alert_configs
     new_pagerduty_service = new_alert.new_pagerduty_service
     # as of nov. 1
     update_slack      = true
-    update_pagerduty  = false
+    update_pagerduty  = PAGERDUTY
     original_message  = old_alert.message
     new_message       = new_alert.message
     output_sheet.row(i+1).concat [alert_id, new_team, new_squad, alert_name, new_slack_channel, new_pagerduty_service, update_slack, update_pagerduty, original_message, new_message]
@@ -249,6 +253,7 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
     old_alert         = get_alert(alert_id, local_alerts)
     # check old alert against LIVE API
     live_diff = true
+    missing = false
     begin
       original_message  = old_alert.message
       old_alert_live    = monitor_client.get_monitor(alert_id)
@@ -260,19 +265,21 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
       new_pagerduty_service = new_alert.new_pagerduty_service
       # as of nov. 1
       update_slack      = true
-      update_pagerduty  = false
+      update_pagerduty  = PAGERDUTY
       new_message       = new_alert.message
-	rescue DatadogAPIClient::APIError => e
+    rescue DatadogAPIClient::APIError => e
       case e.to_s
-	  when /HTTP status code: 404/
-		puts "#{alert_id}: Unable to find monitor, skipping"
+      when /HTTP status code: 404/
+        puts "#{alert_id}: Unable to find monitor, skipping"
         status = "Alert missing from Datadog"
-	  else
-		puts "#{alert_id}: Unknown failure retrieving alert from Datadog"
+        missing = true
+      else
+        puts "#{alert_id}: Unknown failure retrieving alert from Datadog"
         status = "Unknown failure retrieving alert from Datadog: #{e}"
       end
     end
-	begin
+    next if missing
+    begin
       if (! live_update_safe) || (original_message != old_alert_live.message)
         puts "#{alert_id}: Live differences detected, needs reprocessing" if DEBUG
         status = "Live differences, needs reprocessing"
@@ -306,14 +313,14 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
       puts "Hit control-c or broke pipe, adding status to spreadsheet and safely stopping"
       break
       raise Interrupt
-	rescue DatadogAPIClient::APIError => e
-	  if e.to_s =~ /HTTP status code: 404/
-		puts "#{alert_id}: Unable to update alert, not found; skipping"
-        status = "Alert not able to be updated, was deleted"
-	  else
-        puts "#{alert_id}: Unknown error when updating; skipping"
-        status = "Unknown error when updating: #{e}"
-	  end
+    rescue DatadogAPIClient::APIError => e
+      if e.to_s =~ /HTTP status code: 404/
+        puts "#{alert_id}: Alert not found; skipping"
+        status = "Alert not found, potentially deleted"
+      else
+        puts "#{alert_id}: Unknown API error; skipping"
+        status = "Unknown API error: #{e}"
+      end
       binding.pry if (DEBUG && PRY)
     ensure
       puts "#{alert_id}: Status updated in workbook" if DEBUG
