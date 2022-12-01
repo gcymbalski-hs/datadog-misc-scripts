@@ -92,6 +92,8 @@ class Alert
       # attempt to infer this from team tags if no new owner already specified
       team_tags = @tags.select{|t| t =~ /^team:/}.collect{|t| t.split(':').last}
       squad_tags = @tags.select{|t| t =~ /^squad:/}.collect{|t| t.split(':').last}
+      team_tags = team_tags.collect{|t| t.gsub(/_/,'-')}
+      squad_tags = squad_tags.collect{|t| t.gsub(/_/,'-')}
       # filter out the 'overloaded' uses of the team tag
       team_tags.reject! do |team|
         team.downcase =~ /university|student|employer/
