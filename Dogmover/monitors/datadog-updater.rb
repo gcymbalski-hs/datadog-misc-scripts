@@ -34,7 +34,7 @@ end.sort_by(&:alert_id)
 local_alerts = local_alerts.select{|alert| alert.alert_id != 3618226}
 
 #latest_exported_workbook = "./current-alert-status-10312022.xlsx"
-latest_exported_workbook = "./current-alert-status-11292022.xlsx"
+latest_exported_workbook = "./current-alert-status-12012022.xlsx"
 
 input_workbook = latest_exported_workbook
 
