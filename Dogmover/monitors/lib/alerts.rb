@@ -330,18 +330,21 @@ class Alert
 
   # add our new datadog/pagerduty notifications
   def reprocess_alert
-    if @alerts.include?(@new_slack_channel)
-      puts "#{@alert_id}: New alert channel already included, skipping" if DEBUG
-      return
-    end
     case @alerts.count
     when 0
       puts "#{@alert_id}: Not taking action on Slack mappings due to no previous mapping" if DEBUG
     when 1
-      puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack mappings" if DEBUG
-      reprocess_slack_mappings
+      if reprocess_slack_mappings
+        puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack mappings" if DEBUG
+      else
+        puts "#{@alert_id}: Unable to reprocess message to include both the original and the new Slack mappings" if DEBUG
+      end
       if PAGERDUTY == true
-        reprocess_pagerduty_mappings
+        if reprocess_pagerduty_mappings
+          puts "#{@alert_id}: Reprocessed message to include only the new PagerDuty service" if DEBUG
+        else
+          puts "#{@alert_id}: Unable to reprocess message to include only the new PagerDuty service" if DEBUG
+        end
       end
     else
       puts "#{@alert_id}: Not processing due to multiple Slack channel targets, please reprocess manually" if DEBUG
@@ -350,6 +353,12 @@ class Alert
   end
 
   def reprocess_slack_mappings
+    # do nothing if we don't have a new channel to deal with
+    return true unless @new_slack_channel
+    if @alerts.include?(@new_slack_channel)
+      puts "#{@alert_id}: New alert channel already included, skipping" if DEBUG
+      return true
+    end
     # this channel is deprecated but lives on in some places- not cleaning that up right now
     without_uk = @alerts.reject{|x| x == '@slack-incidents-uk' }
     if without_uk.count == 1
