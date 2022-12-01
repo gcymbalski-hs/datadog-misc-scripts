@@ -379,6 +379,11 @@ class Alert
   end
 
   def reprocess_pagerduty_mappings
+    return true unless @new_pagerduty_service
+    if @pages.include?(@new_pagerduty_service)
+      puts "#{@alert_id}: New pagerduty service already included, skipping" if DEBUG
+      return true
+    end
     if @pages.count == 1
       first_page = @pages.first
       @original_message = @message
