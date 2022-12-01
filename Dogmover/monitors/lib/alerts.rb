@@ -428,16 +428,27 @@ class Alert
         when 'humans'
           'Team-Humans'
         when 'talent-evolution'
-          case @new_squad
-          when 'analytics-and-integrations'
-            'Squad-AnalyticsandIntegrations'
-          when 'talent-guidance'
+          case @product_area
+          when /edu email events/
+            'EmailEvents'
+          when /ats/
+            'ATSApplication'
+          when /importer/
+            'ImporterApplication'
+          when /talent guidance/
             'TalentGuidance'
-          when 'skills'
-            'Skills'
           else
-            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
-            nil
+            case @new_squad
+            when 'analytics-and-integrations'
+              'Squad-AnalyticsandIntegrations'
+            when 'talent-guidance'
+              'TalentGuidance'
+            when 'skills'
+              'Skills'
+            else
+              puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
+              nil
+            end
           end
         when 'platform-services'
           'Team-PlatformServices'
