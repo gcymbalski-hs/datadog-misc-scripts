@@ -272,7 +272,15 @@ class Alert
             'incidents-spark-engagement'
           end
         when 'core'
-          'errors-core'
+          case @new_squad
+          when 'channels'
+            'incidents-channels'
+          when 'basecamp'
+            'incidents-core-basecamp'
+          else
+            puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
+            nil
+          end
         when 'live-connections'
           'incidents-live-cxns'
         when 'humans'
@@ -393,11 +401,9 @@ class Alert
         when 'core'
           case @new_squad
           when 'channels'
-            # XXX TODO
-            'TODO'
+            'Squad-Channels'
           when 'basecamp'
-            # XXX TODO
-            'TODO'
+            'Squad-Basecamp'
           else
             puts "#{@alert_id}: Unknown squad passed in for #{@new_team}: #{@new_squad}" if DEBUG
             nil
