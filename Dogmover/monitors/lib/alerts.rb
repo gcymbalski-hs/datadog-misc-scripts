@@ -387,7 +387,8 @@ class Alert
     if @pages.count == 1
       first_page = @pages.first
       @original_message = @message
-      @message = @message.sub(/#{first_page}/, @new_pagerduty_service)
+      #we only ever have one unique paging service in alerts, so replace it globally
+      @message = @message.gsub(/#{first_page}/, @new_pagerduty_service)
       @pages = parse_pagerduty_services
       true
     elsif @pages.count > 1
