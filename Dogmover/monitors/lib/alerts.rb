@@ -48,8 +48,23 @@ class Alert
       @alerts       = parse_slack_channels
       @pages        = parse_pagerduty_services
       find_new_owner
-      find_new_slack_channel unless new_team == 'delete'
-      find_new_pagerduty_service if (PAGERDUTY == true)
+      case @new_team
+      when 'delete'
+        puts "#{alert_id}: Marked for deletion, not finding new slack mapping"
+      when 'spark-engagement'
+        # specifically do not touch slack channels for campaign-related monitors from Spark
+        if ! (@name =~ /campaign/)
+          find_new_slack_channel
+        end
+      else
+        find_new_slack_channel
+      end
+      case @new_team
+      when 'delete'
+        puts "#{alert_id}: Marked for deletion, not finding new PD service"
+      else
+        find_new_pagerduty_service if (PAGERDUTY == true)
+      end
     elsif alert_source.class == DatadogAPIClient::V1::Monitor
       alert_object  = alert_source
       @alert_id     = alert_source.id
