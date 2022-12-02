@@ -48,6 +48,8 @@ puts "Using input workbook #{input_workbook}"
 # exported from the google sheet that EMs have been putting new mappings into
 exported_workbook = RubyXL::Parser.parse(input_workbook)
 
+# initialize a new alert starting from our export from datadog while including updates
+# from the workbook
 workbook_alerts = local_alerts.collect do |alert|
   get_alert_from_workbook(alert.alert_id, exported_workbook, alert)
 end.compact
@@ -63,6 +65,8 @@ else
 end
 
 puts "Amount of relevant alerts found in workbook: #{workbook_alerts.count}"
+
+binding.pry if (DEBUG && PRY)
 
 inconsistent_alerts = []
 workbook_inconsistent = local_alerts.any? do |local_alert|
@@ -86,7 +90,9 @@ workbook_inconsistent = local_alerts.any? do |local_alert|
   end
 end
 
-puts "Reprocessing alerts with data from latest workbook..."
+binding.pry if (DEBUG && PRY)
+
+puts "Reprocessing alert message bodies with data from latest workbook..."
 workbook_alerts.each{|x| x.reprocess_alert}
 
 puts ''
@@ -104,7 +110,6 @@ owners_that_need_remapping = workbook_alerts.collect do |x|
 end.compact.uniq
 
 puts owners_that_need_remapping.join("\n")
-
 
 # find alerts that may be missing entirely from the workbook that existed during the original export
 missing_alerts            = get_missing_alerts(local_alerts, workbook_alerts)
@@ -146,8 +151,10 @@ File.write(shared_alert_log, shared_alerts.collect{|x| "#{x.alert_id} - #{[x.new
 puts 'END OF SANITY CHECKS'
 puts ''
 
+no_diff_alerts = workbook_alerts.select{|x| ! alert_diff(x.alert_id, local_alerts, workbook_alerts)}
 puts "Excluding alerts that do not have diffs from the desired and actual state..."
 workbook_alerts.reject!{|x| ! alert_diff(x.alert_id, local_alerts, workbook_alerts)}
+puts "Excluded #{no_diff_alerts.count} alerts"
 
 puts "Initial amount of alerts that will need to be updated: #{workbook_alerts.count}"
 
@@ -297,7 +304,7 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
           status = "Failed validation, update not saved"
           binding.pry if (DEBUG && PRY)
         end
-        sleep 1
+        sleep 0.5
       elsif REALLY_UPDATE_DATADOG == false
         # dry run- validate
         old_alert_live.message=new_message

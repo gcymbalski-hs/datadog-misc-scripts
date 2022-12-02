@@ -214,7 +214,7 @@ class Alert
         @new_squad  = raw_owner.split(' ').last.strip.downcase
       when /^spark/
         @new_team   = 'spark-engagement'
-        @new_squad  = nil
+        @new_squad  = product_area
       when 'monetization'
         @new_team   = 'jobs'
         @new_squad  = 'monetization'
@@ -301,6 +301,8 @@ class Alert
           case @new_squad
           when 'notifications'
             'incidents-notifications'
+          when 'mobile'
+            'eng-mobile-bugs'
           else
             'incidents-platform-services'
           end
@@ -335,19 +337,24 @@ class Alert
       puts "#{@alert_id}: Not taking action on Slack mappings due to no previous mapping" if DEBUG
     when 1
       if reprocess_slack_mappings
-        puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack mappings" if DEBUG
+        puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack channel #{@new_slack_channel}" if DEBUG
       else
-        puts "#{@alert_id}: Unable to reprocess message to include both the original and the new Slack mappings" if DEBUG
-      end
-      if PAGERDUTY == true
-        if reprocess_pagerduty_mappings
-          puts "#{@alert_id}: Reprocessed message to include only the new PagerDuty service" if DEBUG
-        else
-          puts "#{@alert_id}: Unable to reprocess message to include only the new PagerDuty service" if DEBUG
-        end
+        puts "#{@alert_id}: Unable to reprocess message to include both the original and the new Slack channel #{@new_slack_channel}" if DEBUG
       end
     else
-      puts "#{@alert_id}: Not processing due to multiple Slack channel targets, please reprocess manually" if DEBUG
+      puts "#{@alert_id}: Not reprocessing Slack channels due to multiple targets, please reprocess manually" if DEBUG
+    end
+    if PAGERDUTY
+      case @pages.count
+      when 0
+        true
+      when 1
+        if reprocess_pagerduty_mappings
+          puts "#{@alert_id}: Reprocessed message to include only the new PagerDuty service #{@new_pagerduty_service}" if DEBUG
+        else
+          puts "#{@alert_id}: Unable to reprocess message to include only the new PagerDuty service #{@new_pagerduty_service}" if DEBUG
+        end
+      end
     end
     reprocess_tags
   end
@@ -407,6 +414,14 @@ class Alert
   def find_new_pagerduty_service
     # let's not change anything yet if this alert currently doesn't page
     return if @pages.empty?
+    case @pages.first
+    when /Networking/
+      @new_pagerduty_service = @pages.first
+      return true
+    when /DeployerApp/
+      @new_pagerduty_service = @pages.first
+      return true
+    end
     current_last_pagerduty_service = @pages.last
     proposed_pagerduty_service = case @new_team
         when 'jobs'
@@ -426,7 +441,7 @@ class Alert
         when 'live-connections'
           'Team-LiveConnections'
         when 'humans'
-          'Team-Humans'
+          'Humans'
         when 'talent-evolution'
           case @product_area
           when /edu email events/
@@ -619,7 +634,7 @@ def alert_diff(alert_id, json_alerts, workbook_alerts)
     puts "#{alert_id}: No matching alert found in workbook- probably deleted intentionally" if DEBUG
     return nil
   end
-
+  
   diff = false
   if json_alert.name != workbook_alert.name
     diff = true
