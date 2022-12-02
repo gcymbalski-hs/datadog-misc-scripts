@@ -1,0 +1,30 @@
+{
+    "deleted": null,
+    "id": 104656185,
+    "matching_downtimes": [],
+    "message": "A high number of emissary pods are in a bad state in cluster {{cluster-name.name}}.\n\nRunbook: https://joinhandshake.atlassian.net/wiki/spaces/CE/pages/2340356289/High+Number+of+Unavailable+Pods\n\n@slack-incidents-cloud-engineering\n{{#is_match \"cluster-name.name\" \"production\"}}\n{{#is_alert}} @pagerduty-CloudEngineering{{/is_alert}}\n{{#is_alert_recovery}} @pagerduty-CloudEngineering{{/is_alert_recovery}}\n{{/is_match}}",
+    "multi": true,
+    "name": "High Number of Unavailable Emissary Pods",
+    "options": {
+        "include_tags": true,
+        "new_group_delay": 300,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "require_full_window": true,
+        "silenced": {},
+        "thresholds": {
+            "critical": 0.5,
+            "warning": 0.4
+        }
+    },
+    "query": "min(last_15m):sum:kubernetes_state.deployment.replicas_unavailable{namespace:emissary} by {cluster-name,deployment} / sum:kubernetes_state.deployment.replicas_desired{namespace:emissary} by {cluster-name,deployment} > 0.5",
+    "tags": [
+        "app:emissary",
+        "repo:terraform-datadog",
+        "squad:cloud_engineering",
+        "team:infrastructure",
+        "terraform:true"
+    ],
+    "type": "metric alert"
+}
