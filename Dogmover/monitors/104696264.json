@@ -1,0 +1,23 @@
+{
+    "deleted": null,
+    "id": 104696264,
+    "matching_downtimes": [],
+    "message": "@slack-eng-mobile-bugs\u00a0we're seeing more 422 responses from the version check than normal. This indicates students are using a version we're trying to get them to update from.",
+    "multi": false,
+    "name": "[iOS] 422 HTTP Status Error From Version Check Abnormality Detected",
+    "options": {
+        "include_tags": false,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1000.0
+        }
+    },
+    "query": "sum(last_1h):sum:trace.rack.request.hits.by_http_status{resource_name:next::student::mobile::v2::appversionscontroller_version_check,http.status_code:422,env:production}.as_count() > 1000",
+    "tags": [],
+    "type": "query alert"
+}

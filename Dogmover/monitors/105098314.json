@@ -1,0 +1,29 @@
+{
+    "deleted": null,
+    "id": 105098314,
+    "matching_downtimes": [],
+    "message": "`next::student::postingscontroller_index` p95 latency is too high. @elli@joinhandshake.com",
+    "multi": false,
+    "name": "Resource next::student::postingscontroller_index has a high p95 latency on env:production",
+    "options": {
+        "escalation_message": "",
+        "include_tags": true,
+        "new_host_delay": 300,
+        "notify_audit": false,
+        "notify_no_data": false,
+        "renotify_interval": 0,
+        "require_full_window": false,
+        "silenced": {},
+        "thresholds": {
+            "critical": 3.0,
+            "warning": 2.5
+        }
+    },
+    "query": "percentile(last_10m):(p95:trace.rack.request{env:production,resource_name:next::student::postingscontroller_index,service:handshake}) > 3",
+    "tags": [
+        "service:handshake",
+        "env:production",
+        "resource_name:next::student::postingscontroller_index"
+    ],
+    "type": "query alert"
+}

@@ -6,19 +6,18 @@
     "multi": false,
     "name": "Demographic Data CF Errors are high",
     "options": {
-        "escalation_message": "",
         "include_tags": true,
         "new_host_delay": 300,
         "notify_audit": false,
         "notify_no_data": false,
         "renotify_interval": 60,
         "require_full_window": true,
-        "silenced": {},
-        "thresholds": {
-            "critical": 20.0
-        }
+        "silenced": {}
     },
     "query": "change(sum(last_1h),last_5m):sum:cloud_functions.demographic_data.un_recoverable_errors{function_name:demographic_data,project_id:handshake-production*}.as_count() > 20",
-    "tags": [],
+    "tags": [
+        "repo:terraform-data",
+        "terraform:true"
+    ],
     "type": "query alert"
 }

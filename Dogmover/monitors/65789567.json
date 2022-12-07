@@ -18,7 +18,7 @@
             "critical": 0.0
         }
     },
-    "query": "sum(last_5m):sum:trace.rack.request.errors{resource_name:next::employer::selfservice::subscriptioncontroller_index,service:handshake,env:production}.as_count() > 0",
+    "query": "sum(last_5m):(sum:trace.rack.request.errors{resource_name:next::employer::selfservice::subscriptioncontroller_index,service:handshake,env:production}.as_count() / sum:trace.rack.request.hits{resource_name:next::employer::selfservice::subscriptioncontroller_index,service:handshake,env:production}.as_count()) > 0",
     "tags": [
         "emp-lifecycle",
         "team:employer",

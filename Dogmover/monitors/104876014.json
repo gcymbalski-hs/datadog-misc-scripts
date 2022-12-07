@@ -1,0 +1,24 @@
+{
+    "deleted": null,
+    "id": 104876014,
+    "matching_downtimes": [],
+    "message": "*UnsentCampaignDateCheck has not sent a heartbeat in >= 10 minutes.*\n\n**Priority Level: P1**\n\n[Unsent Campaign Date Check Not Running RUNBOOK](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2848882783/Unsent+Campaign+Date+Check+Not+Running)\n\n[Sidekiq Unique Job Lock](https://joinhandshake.atlassian.net/wiki/spaces/DA/pages/2670592052/Sidekiq+job+lock+utilizing+sidekiq-unique-jobs+fails+to+unlock)\n\n[Employer Marketplace Outreach Dashboard](https://app.datadoghq.com/dashboard/eub-a6y-kau/employer-outreach-squad)\n\n[Campaign Load Metrics](https://app.datadoghq.com/dashboard/szc-c5n-hu8/campaign-load-metrics)\n   \n @slack-incidents-spk-campaign <!subteam^S022HA38ZRA>",
+    "multi": true,
+    "name": "UnsentCampaignDateCheck Heartbeat (staging test)",
+    "options": {
+        "enable_logs_sample": true,
+        "groupby_simple_monitor": false,
+        "include_tags": true,
+        "new_group_delay": 60,
+        "notify_audit": false,
+        "on_missing_data": "default",
+        "restriction_query": null,
+        "silenced": {},
+        "thresholds": {
+            "critical": 1.0
+        }
+    },
+    "query": "events(\"\\\"UnsentCampaignDateCheck Executing\\\" env:staging\").rollup(\"count\").by(\"kube_cluster_name\").last(\"10m\") < 1",
+    "tags": [],
+    "type": "event-v2 alert"
+}

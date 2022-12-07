@@ -1,10 +1,10 @@
 {
     "deleted": null,
-    "id": 98979413,
+    "id": 105079685,
     "matching_downtimes": [],
     "message": "[{{project_id}} - {{subscription_id}}] subscription is backed up. Either it is receiving more messages than it can handle, or it is not processing messages properly.\n\n{{#is_alert}}\nTo resolve, investigate why the subscription is backed up, such as workers are not running properly. If there is a surge of events, it may be fine and we just need to consider scaling up.\n{{/is_alert}} \n\n{{#is_recovery}}\n[{{project_id}} - {{subscription_id}}] subscription backed up alert has recovered\n{{/is_recovery}} @slack-incidents-data",
     "multi": true,
-    "name": "Google Pub Sub Mailgun to BigQuery Subscription Backed Up",
+    "name": "Google Pub Sub Mailgun to Postgres Subscription Backed Up",
     "options": {
         "escalation_message": "",
         "include_tags": false,
@@ -22,7 +22,7 @@
         },
         "timeout_h": 0
     },
-    "query": "avg(last_10m):max:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:mailgun-events-to-bq} by {subscription_id,project_id} > 20000",
+    "query": "avg(last_10m):max:gcp.pubsub.subscription.num_undelivered_messages{subscription_id:mailgun-events-to-postgres} by {subscription_id,project_id} > 20000",
     "tags": [
         "team:data",
         "terraform:true",
