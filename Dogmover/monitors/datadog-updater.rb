@@ -171,9 +171,11 @@ puts ''
 non_terraform_non_uk_multialerts = workbook_alerts.select do |x|
     x.alerts.reject{|x| x == '@slack-incidents-uk' }.count > 1
   end.select do |x|
-    x.alerts_in_conditionals?
+    ! x.alerts_in_conditionals?
   end.select do |x|
     ! x.terraform?
+  end.select do |x|
+    ! x.correct_channels?
   end
 
 multialertcount = non_terraform_non_uk_multialerts.count
@@ -308,15 +310,6 @@ def attempt_datadog_updates(workbook_alerts, local_alerts, report_workbook, moni
       elsif REALLY_UPDATE_DATADOG == false
         # dry run- validate
         old_alert_live.message=new_message
-        if monitor_client.validate_monitor(old_alert_live.to_body)
-          puts "#{alert_id}: Validated successfully, not saving changes due to dry run mode, dry run" if DEBUG
-          status = "Validated successfully in dry run mode"
-        else
-          puts "#{alert_id}: Alert failed validation in dry run mode" if DEBUG
-          status = "Failed validation in dry run mode"
-          binding.pry if (DEBUG && PRY)
-        end
-        sleep 1
       end
     rescue Interrupt, Errno::EPIPE
       puts "Hit control-c or broke pipe, adding status to spreadsheet and safely stopping"

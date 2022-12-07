@@ -4,6 +4,7 @@ require 'uri'
 DEBUG             = ENV['DEBUG'] == true
 SLACK_REGEXP      = /(@slack(?:-[[:word:]]*)*)/
 PAGERDUTY_REGEXP  = /(@pagerduty(?:-[[:word:]]*)*)/
+PAGERDUTY         = ENV['PAGERDUTY'] || false
 
 class Alert
   attr_reader :alert_object
@@ -335,26 +336,11 @@ class Alert
     case @alerts.count
     when 0
       puts "#{@alert_id}: Not taking action on Slack mappings due to no previous mapping" if DEBUG
-    when 1
-      if reprocess_slack_mappings
-        puts "#{@alert_id}: Reprocessed message to include both the original and the new Slack channel #{@new_slack_channel}" if DEBUG
-      else
-        puts "#{@alert_id}: Unable to reprocess message to include both the original and the new Slack channel #{@new_slack_channel}" if DEBUG
-      end
     else
-      puts "#{@alert_id}: Not reprocessing Slack channels due to multiple targets, please reprocess manually" if DEBUG
+      reprocess_slack_mappings
     end
     if PAGERDUTY
-      case @pages.count
-      when 0
-        true
-      when 1
-        if reprocess_pagerduty_mappings
-          puts "#{@alert_id}: Reprocessed message to include only the new PagerDuty service #{@new_pagerduty_service}" if DEBUG
-        else
-          puts "#{@alert_id}: Unable to reprocess message to include only the new PagerDuty service #{@new_pagerduty_service}" if DEBUG
-        end
-      end
+      reprocess_pagerduty_mappings
     end
     reprocess_tags
   end
@@ -368,20 +354,18 @@ class Alert
     end
     # this channel is deprecated but lives on in some places- not cleaning that up right now
     without_uk = @alerts.reject{|x| x == '@slack-incidents-uk' }
-    if without_uk.count == 1
+    if without_uk.count == 1 || (! alerts_in_conditionals?)
       # note that *every* alert with multiple slack channel mappings uses a comma to separate them
       #   (except when things are separated by a conditional)
       # a side effect is that we always know that our 'new' slack channel is always the second one
       @original_message = @message
-      @message          = @message.sub(/#{without_uk.first}/, "#{without_uk.first},#{@new_slack_channel}")
+      @message          = @message.sub(/#{without_uk.last}/, "#{without_uk.last},#{@new_slack_channel}")
       # update alert metadata in memory
       @alerts = parse_slack_channels
       true
-    elsif without_uk.count > 1
-      puts "#{@alert_id}: Not taking action due to invalid count of current channels" if DEBUG
-      false
     else
-      true
+      puts "#{@alert_id}: Not taking action due to invalid count of current channels or channel placementg inside conditionals" if DEBUG
+      false
     end
   end
 
@@ -532,6 +516,18 @@ class Alert
       else
         false
       end
+    end
+  end
+
+  def correct_channels?
+    @alerts.uniq.sort == (@alerts + [@new_slack_channel]).uniq.sort
+  end
+
+  def terraform_repo
+    if terraform? && @tags.any?{|tag| tag =~ /repo:terraform/ }
+      @tags.select{|tag| tag =~ /repo:terraform/}.first.sub(/^repo:/,'')
+    else
+      false
     end
   end
 
