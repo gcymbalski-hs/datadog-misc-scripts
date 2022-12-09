@@ -359,7 +359,7 @@ class Alert
       #   (except when things are separated by a conditional)
       # a side effect is that we always know that our 'new' slack channel is always the second one
       @original_message = @message
-      @message          = @message.sub(/#{without_uk.last}/, "#{without_uk.last},#{@new_slack_channel}")
+      @message          = @message.sub(/#{without_uk.last}(?=([^-]|\Z))/, "#{without_uk.last},#{@new_slack_channel}")
       # update alert metadata in memory
       @alerts = parse_slack_channels
       true
@@ -379,7 +379,7 @@ class Alert
       first_page = @pages.first
       @original_message = @message
       #we only ever have one unique paging service in alerts, so replace it globally
-      @message = @message.gsub(/#{first_page}/, @new_pagerduty_service)
+      @message = @message.gsub(/#{first_page}(?=([^-]|\Z))/, @new_pagerduty_service)
       @pages = parse_pagerduty_services
       true
     elsif @pages.count > 1
