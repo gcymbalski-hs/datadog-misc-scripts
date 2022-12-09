@@ -54,7 +54,7 @@ class Alert
         puts "#{alert_id}: Marked for deletion, not finding new slack mapping"
       when 'spark-engagement'
         # specifically do not touch slack channels for campaign-related monitors from Spark
-        if ! (@name =~ /campaign/)
+        if ! (@name.downcase =~ /campaign/)
           find_new_slack_channel
         end
       else
@@ -212,7 +212,15 @@ class Alert
                       end
       when /^se /
         @new_team   = 'spark-engagement'
-        @new_squad  = raw_owner.split(' ').last.strip.downcase
+        if raw_owner.split(' ').last.strip.downcase =~ /outreach/
+          if product_area.downcase =~ /campaigns/
+            @new_squad = 'campaigns'
+          else
+            @new_squad = product_area
+          end
+        else
+          @new_squad  = raw_owner.split(' ').last.strip.downcase
+        end
       when /^spark/
         @new_team   = 'spark-engagement'
         @new_squad  = product_area
